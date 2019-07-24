@@ -324,7 +324,7 @@
 
 
   
-	  4 minute read
+	  5 minute read
 	
 </p>
 				
@@ -346,80 +346,309 @@
 				<p>This cookbook is built for quick and easy search for Git commands
 <!--more--></p>
 
-<h1 id="git">Git</h1>
-
-<h2 id="git-configuration">Git configuration</h2>
+<h2 id="configuration">Configuration</h2>
 
 <ul>
   <li>SSH reset</li>
 </ul>
 
-<pre><code class="language-git">ssh-keygen -t rsa -C "youremail@example.com"
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen -t rsa -C "youremail@example.com"
 
 # -C: comment
 # -t: type
-</code></pre>
+</code></pre></div></div>
 <ul>
-  <li>configure global user and email</li>
+  <li>configure global/local user and email</li>
 </ul>
 
-<pre><code class="language-git">git config --global user.name "Your Name"
-git config --global user.email "email@example.com"
-</code></pre>
-<ul>
-  <li>configure local user and email</li>
-</ul>
-
-<pre><code class="language-git">git config user.name "Your Name"
-git config user.email "email@xx.com"
-</code></pre>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config [--global] user.name "Your Name"
+git config [--global] user.email "email@example.com"
+</code></pre></div></div>
 
 <ul>
-  <li>set ssh-key
-    <pre><code class="language-git">ssh-keygen -o
-</code></pre>
-  </li>
-  <li>add ssh_pub key
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim ~/.ssh/authorized_keys
-</code></pre></div>    </div>
-  </li>
-  <li>查看配置文件内容
-    <pre><code class="language-git">git config --list
-</code></pre>
-  </li>
-  <li>文件权限变更不敏感
-    <pre><code class="language-git">git config core.filemode false  # 当前版本库
-git config --global core.fileMode false # 所有版本库
-</code></pre>
-  </li>
+  <li>set ssh-key</li>
 </ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen -o
+</code></pre></div></div>
+<ul>
+  <li>add ssh_pub key</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim ~/.ssh/authorized_keys
+</code></pre></div></div>
+
+<ul>
+  <li>list the content of config file</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --list
+</code></pre></div></div>
+
+<ul>
+  <li>set the exectuable of files</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config core.filemode false  # local
+git config --global core.fileMode false # global
+</code></pre></div></div>
+
+<ul>
+  <li>set editor from nano to vim</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git config --global core.editor "vim"
+</code></pre></div></div>
+
+<p>or append <code class="highlighter-rouge">editor = vim</code> in <code class="highlighter-rouge">core</code> of config file</p>
 
 <h2 id="elementary">Elementary</h2>
 
+<h3 id="three-sectors">Three sectors</h3>
+
+<ol>
+  <li>
+    <p>working tree: editing space</p>
+  </li>
+  <li>
+    <p>index file: cache after <code class="highlighter-rouge">add</code></p>
+  </li>
+  <li>
+    <p>repository: storage after <code class="highlighter-rouge">commit</code></p>
+  </li>
+</ol>
+
+<h3 id="basic-pipeline">Basic pipeline</h3>
+
 <ul>
-  <li>initialization
-    <pre><code class="language-git">git init  
-</code></pre>
-  </li>
-  <li>add file contents in working tree
-    <pre><code class="language-git">git add &lt;file&gt;
-</code></pre>
-  </li>
-  <li>record changes to the repository
-    <pre><code class="language-git">git commit -m "xxx"
-</code></pre>
-  </li>
-  <li>提交本地工作目录下所有修改，而不需要先 git add,相当于：git add 和 git commit</li>
+  <li>initialization</li>
 </ul>
 
-<pre><code class="language-git">git commit -am "message"
-</code></pre>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init  
+</code></pre></div></div>
+
+<ul>
+  <li>add file contents of working tree to index files</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add &lt;file&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>record changes to the repository</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -m "&lt;message&gt;"
+</code></pre></div></div>
+
+<ul>
+  <li>add files to index files and record to the repo</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -am "&lt;message&gt;"
+</code></pre></div></div>
+
+<ul>
+  <li>check the status of the repository</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+</code></pre></div></div>
+
+<ul>
+  <li>show changes between commits, commit and working tree</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># compare the working tree with index files
+git diff
+# compare the index files with HEAD repo (&lt;commit_id&gt; repo)
+git diff --cached &lt;commit_id&gt;
+# compare the two repos
+git diff &lt;commit_id&gt; &lt;commit_id&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard contents of working tree after editing</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -- &lt;file&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard files of index file after <code class="highlighter-rouge">add</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset HEAD file
+</code></pre></div></div>
+
+<ul>
+  <li>discard new commit before <code class="highlighter-rouge">push</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard HEAD^
+git reset --hard &lt;commit_id&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard a commit after <code class="highlighter-rouge">push</code></li>
+</ul>
+
+<ol>
+  <li>use <code class="highlighter-rouge">reset</code></li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard &lt;commit_id&gt;
+...
+git push --force
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="highlighter-rouge">rebase</code> <strong>TODO</strong></li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase -i HEAD^2 # where 2 refers to the 2 most latest commit
+# delete the most latest commit
+git push --force
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="highlighter-rouge">revert</code></li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git revert &lt;commit_id&gt; # traceback to the history commit with a new commit
+</code></pre></div></div>
+
+<ul>
+  <li>tail the log</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log
+git log --pretty=oneline --abbrev-commit --graph
+</code></pre></div></div>
+
+<ul>
+  <li>tail the command log</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reflog
+</code></pre></div></div>
+
+<ul>
+  <li>remove
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm &lt;file&gt;
+git commit -m "xxxx"
+</code></pre></div>    </div>
+  </li>
+  <li>remove files of index files</li>
+</ul>
+
+<p><strong>Note</strong>: remove the cache after delete the directory if it has committed, or add .gitignore after commit the directory</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm -r --cached $DIR
+</code></pre></div></div>
+
+<h2 id="branch">Branch</h2>
+
+<h3 id="basic">Basic</h3>
+
+<ul>
+  <li>create branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch &lt;new_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>rename the branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -m [&lt;old_name&gt;] &lt;new_name&gt; # omitted old_name will signify the current branch
+</code></pre></div></div>
+
+<ul>
+  <li>switch branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>switch to the created branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b &lt;branch_name&gt;
+</code></pre></div></div>
+
+<h3 id="merge">Merge</h3>
+
+<ul>
+  <li>merge branch to the current branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete local branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -d &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete branch by force before merge</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -D &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete remote branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin --delete &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>check the relation between local branch and remote branch</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -vv 
+</code></pre></div></div>
+
+<h3 id="fetch-remote-branch">Fetch remote branch</h3>
+
+<ul>
+  <li>change current branch to specified branch after clone</li>
+</ul>
+
+<ol>
+  <li>use <code class="highlighter-rouge">clone</code></li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone -b &lt;remote_branch_name&gt; &lt;repo_link&gt;
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="highlighter-rouge">checkout</code> after initialization</li>
+</ol>
+
+<p><a href="https://www.jianshu.com/p/856ce249ed78">reference link</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git remote add origin &lt;repo_link&gt;
+git checkout -b &lt;new_name&gt; &lt;origin/remote_name&gt;
+</code></pre></div></div>
+
+<h2 id="advanced">Advanced</h2>
+
+<h3 id="modify-the-commit">Modify the commit</h3>
 
 <ul>
   <li>modify the commit log</li>
 </ul>
 
 <p>Reference <a href="https://blog.csdn.net/sodaslay/article/details/72948722">here</a></p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit --amend # to modify the
 git push -f origin master # to push by force
 </code></pre></div></div>
@@ -430,58 +659,6 @@ git push -f origin master # to push by force
 </code></pre></div>    </div>
     <p>where +0800 refers to Beijing time region</p>
   </li>
-  <li>check the status of the repository
-    <pre><code class="language-git">git status
-</code></pre>
-  </li>
-  <li>show changes between commits, commit and working tree
-    <pre><code class="language-git">git diff &lt;file&gt;
-</code></pre>
-  </li>
-  <li>评论区
-    <pre><code class="language-git">git diff   #是工作区(work dict)和暂存区(stage)的比较
-git diff --cached    #是暂存区(stage)和分支(master)的比较
-git diff HEAD  #查看工作区和版本库里面最新版本的区别
-</code></pre>
-  </li>
-  <li>查看提交日志
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log
-git log --pretty=oneline
-</code></pre></div>    </div>
-  </li>
-  <li>版本回退到上一个版本
-    <pre><code class="language-git">git reset --hard HEAD^
-git reset --hard 3628164
-</code></pre>
-  </li>
-  <li>查看命令日志
-    <pre><code class="language-git">git reflog
-</code></pre>
-  </li>
-  <li>丢弃工作区修改
-    <pre><code class="language-git">git checkout -- file
-</code></pre>
-  </li>
-  <li>撤销暂存区修改
-    <pre><code class="language-git">git reset HEAD file
-</code></pre>
-  </li>
-  <li>删除暂存区文件
-    <pre><code class="language-git">git rm &lt;file&gt;
-git commit -m "xxxx"
-</code></pre>
-  </li>
-</ul>
-
-<p><strong>Note</strong>: remove the cache after delete the directory if it has committed, or add .gitignore after commit the directory</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm -r --cached $DIR
-</code></pre></div></div>
-
-<ul>
-  <li>从暂存区恢复删除文件
-    <pre><code class="language-git">git checkout --&lt;file&gt;
-</code></pre>
-  </li>
 </ul>
 
 <h1 id="创建远程仓库">创建远程仓库</h1>
@@ -490,114 +667,56 @@ git commit -m "xxxx"
 
 <ul>
   <li>关联远程仓库：首次在Github上创建repository
-    <pre><code class="language-git">git remote add origin git@server-name:path/repo-name.git
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin git@server-name:path/repo-name.git
+</code></pre></div>    </div>
   </li>
   <li>删除关联远程仓库</li>
 </ul>
 
-<pre><code class="language-git">git remote rm origin
-</code></pre>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote rm origin
+</code></pre></div></div>
 
 <ul>
   <li>首次 push 到远程仓库
-    <pre><code class="language-git"> git push -u origin master 
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git push -u origin master 
+</code></pre></div>    </div>
   </li>
   <li>非首次推送到远程仓库
-    <pre><code class="language-git">git push origin master 
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin master 
+</code></pre></div>    </div>
   </li>
   <li>从远程仓库克隆
-    <pre><code class="language-git">git clone &lt;gitURL&gt;
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone &lt;gitURL&gt;
+</code></pre></div>    </div>
   </li>
 </ul>
 
-<h1 id="branch">Branch</h1>
+<h1 id="branch-1">Branch</h1>
 
 <h2 id="创建与合并分支">创建与合并分支</h2>
 
 <ul>
   <li>查看分支
-    <pre><code class="language-git">git branch
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch
+</code></pre></div>    </div>
   </li>
   <li>创建分支
-    <pre><code class="language-git">git branch &lt;name&gt;
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch &lt;branch_name&gt;
+</code></pre></div>    </div>
   </li>
-  <li>切换分支
-    <pre><code class="language-git">git checkout &lt;name&gt;
-</code></pre>
-  </li>
-  <li>创建并切换分支
-    <pre><code class="language-git">git checkout -b &lt;name&gt;
-</code></pre>
-    <p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384908811773187a597e2d844eefb11f5cf5d56135ca000/0" alt="new_branch" />
-<img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/0013849088235627813efe7649b4f008900e5365bb72323000/0" alt="new_branch" /></p>
-  </li>
-  <li>合并某分支到当前分支</li>
 </ul>
-
-<pre><code class="language-git">git merge &lt;name&gt;
-</code></pre>
-<p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/00138490883510324231a837e5d4aee844d3e4692ba50f5000/0" alt="new_branch" /></p>
-
-<ul>
-  <li>delete local branch</li>
-</ul>
-
-<pre><code class="language-git">git branch -d &lt;name&gt;
-</code></pre>
-<p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384908867187c83ca970bf0f46efa19badad99c40235000/0" alt="new_branch" /></p>
-
-<ul>
-  <li>delete branch by force, that is to delete before merge</li>
-</ul>
-
-<pre><code class="language-git">git branch -D &lt;name&gt;
-</code></pre>
-
-<ul>
-  <li>delete remote branch</li>
-</ul>
-
-<pre><code class="language-git">git push origin --delete &lt;name&gt;
-</code></pre>
-
-<ul>
-  <li>check the relation between local branch and remote branch</li>
-</ul>
-
-<pre><code class="language-git">git branch -vv 
-</code></pre>
-
-<ul>
-  <li>rename the branch</li>
-</ul>
-
-<pre><code class="language-git">git branch -m &lt;oldName&gt; &lt;newName&gt;
-</code></pre>
-
-<ul>
-  <li>change current branch to specified branch after clone</li>
-</ul>
-
-<pre><code class="language-git">git checkout -b &lt;newName&gt; &lt;origin/remoteName&gt;
-</code></pre>
 
 <h2 id="解决冲突">解决冲突</h2>
 
 <ul>
   <li>禁止使用 fast forward merge 方式：当master 与 branch分别更改无法快速合并时，用普通模式合并，合并后的历史有分支，能看出来曾经做过合并
-    <pre><code class="language-git">git merge --no-ff -m "xxx"  &lt;branch name&gt;
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge --no-ff -m "xxx"  &lt;branch name&gt;
+</code></pre></div>    </div>
     <p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384909115478645b93e2b5ae4dc78da049a0d1704a41000/0" alt="new_branch" /></p>
   </li>
   <li>git 查看分支情况
-    <pre><code class="language-git">git log --graph --pretty=oneline --abbrev-commit
-</code></pre>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log --graph --pretty=oneline --abbrev-commit
+</code></pre></div>    </div>
     <p>解决后：</p>
   </li>
 </ul>
@@ -607,42 +726,42 @@ git commit -m "xxxx"
 <h2 id="bug分支">Bug分支</h2>
 <ul>
   <li>隐藏现场及回复现场
-    <pre><code class="language-git">git stash #保存现场
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git stash #保存现场
 git stash apply  #保存现场
 git stash drop  #删除现场
 git stash pop #恢复并删除现场
 git stash list #查看现场
-</code></pre>
+</code></pre></div>    </div>
   </li>
 </ul>
 
 <h2 id="多人协作">多人协作</h2>
-<pre><code class="language-git">git remote #查看远程库信息
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote #查看远程库信息
 git remote -v #查看远程库信息详细
 git push origin master #推送本地 master 分支
 git checkout -b dev origin/dev #创建本地 dev 并关联远程 dev 分支
 git branch --set-upstream branch-name origin/branch-name #建立本地分支与远程分支得关联
 git pull #抓取远程分支
-</code></pre>
+</code></pre></div></div>
 
 <ul>
   <li>创建标签
-    <pre><code class="language-git">git tag &lt;name&gt;  #创建标签
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag &lt;branch_name&gt;  #创建标签
 git tag #查看所有标签
 git tag v0.9 6224937 #对某一次 commit 打标签
 git show &lt;tagname&gt; #查看标签信息
 git tag -a v0.1 -m "version 0.1 released" 3628164 #创建有说明的标签
-</code></pre>
+</code></pre></div>    </div>
   </li>
   <li>操作标签
-    <pre><code class="language-git">git tag -d v0.1 #删除标签
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag -d v0.1 #删除标签
 git push origin &lt;tagname&gt; #推送标签到远程
 git push origin --tags #推送本地所有未推送到远程的标签
 git push origin :refs/tags/&lt;tagname&gt; #删除远程标签
-</code></pre>
+</code></pre></div>    </div>
   </li>
   <li>自定义git
-    <pre><code class="language-git">git config --global color.ui true #配置颜色开启
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --global color.ui true #配置颜色开启
 git config --global alias.st status
 git config --global alias.co checkout
 git config --global alias.ci commit
@@ -651,16 +770,16 @@ git config --global alias.unstage 'reset HEAD'
 git config --global alias.last 'log -1'
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"
 git config --global core.quotepath false # 设置显示中文文件名
-</code></pre>
+</code></pre></div>    </div>
   </li>
   <li>清楚ssh密码
-    <pre><code class="language-git">$ ssh-keygen -p
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -p
 当提升你输入新的密码的时候，按enter就可以啦，继续确认enter就可以
 当然上面还有别的办法自己也可以试一下。
-</code></pre>
+</code></pre></div>    </div>
   </li>
   <li>git rm与git rm –cached的区别
-    <pre><code class="language-git">当我们需要删除暂存区或分支上的文件, 同时工作区也不需要这个文件了, 可以使用
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>当我们需要删除暂存区或分支上的文件, 同时工作区也不需要这个文件了, 可以使用
 git rm file_path
 git commit -m 'delete somefile'
 git push
@@ -668,14 +787,14 @@ git push
 git rm --cached file_path
 git commit -m 'delete remote somefile'
 git push
-</code></pre>
+</code></pre></div>    </div>
   </li>
 </ul>
 
 <h1 id="git-命令行删除远程分支">git 命令行删除远程分支</h1>
-<pre><code class="language-git">git branch -r -d origin/branch-name
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -r -d origin/branch-name
 git push origin :branch-name
-</code></pre>
+</code></pre></div></div>
 
 <h1 id="git默认路径修改">Git默认路径修改</h1>
 <p>在/etc/profile中最后加入</p>
@@ -728,29 +847,30 @@ git gc --aggressive --prune=now
                         </h4>
                     </header>
                     <ul class="toc__menu">
-  <li><a href="#git">Git</a>
+  <li><a href="#configuration">Configuration</a></li>
+  <li><a href="#elementary">Elementary</a>
     <ul>
-      <li><a href="#git-configuration">Git configuration</a></li>
-      <li><a href="#elementary">Elementary</a></li>
-    </ul>
-  </li>
-  <li><a href="#创建远程仓库">创建远程仓库</a>
-    <ul>
-      <li><a href="#添加远程库">添加远程库</a></li>
+      <li><a href="#three-sectors">Three sectors</a></li>
+      <li><a href="#basic-pipeline">Basic pipeline</a></li>
     </ul>
   </li>
   <li><a href="#branch">Branch</a>
     <ul>
-      <li><a href="#创建与合并分支">创建与合并分支</a></li>
-      <li><a href="#解决冲突">解决冲突</a></li>
-      <li><a href="#bug分支">Bug分支</a></li>
-      <li><a href="#多人协作">多人协作</a></li>
+      <li><a href="#basic">Basic</a></li>
+      <li><a href="#merge">Merge</a></li>
+      <li><a href="#fetch-remote-branch">Fetch remote branch</a></li>
     </ul>
   </li>
-  <li><a href="#git-命令行删除远程分支">git 命令行删除远程分支</a></li>
-  <li><a href="#git默认路径修改">Git默认路径修改</a></li>
-  <li><a href="#git-仓库清空">Git 仓库清空</a></li>
-  <li><a href="#git-删除历史内容">Git 删除历史内容</a></li>
+  <li><a href="#advanced">Advanced</a>
+    <ul>
+      <li><a href="#modify-the-commit">Modify the commit</a></li>
+    </ul>
+  </li>
+  <li><a href="#添加远程库">添加远程库</a></li>
+  <li><a href="#创建与合并分支">创建与合并分支</a></li>
+  <li><a href="#解决冲突">解决冲突</a></li>
+  <li><a href="#bug分支">Bug分支</a></li>
+  <li><a href="#多人协作">多人协作</a></li>
 </ul>
                 </nav>
             </aside>
