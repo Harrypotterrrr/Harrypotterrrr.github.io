@@ -1,4 +1,365 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://harrypotterrrr.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io/" rel="alternate" type="text/html" /><updated>2019-07-23T23:51:11-07:00</updated><id>https://harrypotterrrr.github.io/feed.xml</id><title type="html">Haolin’s Homepage</title><subtitle>Your description here</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><entry><title type="html">Future Blog Post</title><link href="https://harrypotterrrr.github.io/posts/2012/08/blog-post-4/" rel="alternate" type="text/html" title="Future Blog Post" /><published>2199-01-01T00:00:00-08:00</published><updated>2199-01-01T00:00:00-08:00</updated><id>https://harrypotterrrr.github.io/posts/2012/08/future-post</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2012/08/blog-post-4/">&lt;p&gt;This post will show up by default. To disable scheduling of future posts, edit &lt;code class=&quot;highlighter-rouge&quot;&gt;config.yml&lt;/code&gt; and set &lt;code class=&quot;highlighter-rouge&quot;&gt;future: false&lt;/code&gt;.&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="cool posts" /><category term="category1" /><category term="category2" /><summary type="html">This post will show up by default. To disable scheduling of future posts, edit config.yml and set future: false.</summary></entry><entry><title type="html">Object-driven Text-to-Image Synthesis via Adversarial Training</title><link href="https://harrypotterrrr.github.io/posts/2019/07/objGAN/" rel="alternate" type="text/html" title="Object-driven Text-to-Image Synthesis via Adversarial Training" /><published>2019-07-16T00:00:00-07:00</published><updated>2019-07-16T00:00:00-07:00</updated><id>https://harrypotterrrr.github.io/posts/2019/07/ObjGAN</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2019/07/objGAN/">&lt;p&gt;The note of &lt;a href=&quot;https://arxiv.org/abs/1902.10740&quot;&gt;&lt;em&gt;Object-driven Text-to-Image Synthesis via Adversarial Training&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://harrypotterrrr.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io/" rel="alternate" type="text/html" /><updated>2019-08-03T23:33:29-07:00</updated><id>https://harrypotterrrr.github.io/feed.xml</id><title type="html">Haolin’s Homepage</title><subtitle>Your description here</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><entry><title type="html">Future Blog Post</title><link href="https://harrypotterrrr.github.io/posts/2012/08/blog-post-4/" rel="alternate" type="text/html" title="Future Blog Post" /><published>2199-01-01T00:00:00-08:00</published><updated>2199-01-01T00:00:00-08:00</updated><id>https://harrypotterrrr.github.io/posts/2012/08/future-post</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2012/08/blog-post-4/">&lt;p&gt;This post will show up by default. To disable scheduling of future posts, edit &lt;code class=&quot;highlighter-rouge&quot;&gt;config.yml&lt;/code&gt; and set &lt;code class=&quot;highlighter-rouge&quot;&gt;future: false&lt;/code&gt;.&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="cool posts" /><category term="category1" /><category term="category2" /><summary type="html">This post will show up by default. To disable scheduling of future posts, edit config.yml and set future: false.</summary></entry><entry><title type="html">Vim cookbook</title><link href="https://harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/" rel="alternate" type="text/html" title="Vim cookbook" /><published>2019-08-03T00:00:00-07:00</published><updated>2019-08-03T00:00:00-07:00</updated><id>https://harrypotterrrr.github.io/posts/2019/08/Vim-cookbook</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/">&lt;p&gt;This is a cheatsheet for vim commands and operations.
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;display-line-numbers&quot;&gt;Display line numbers&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;in the current file&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:set number # to enable line numbers
+:set nonumber # to disable line numbers
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;to change config&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;add &lt;code class=&quot;highlighter-rouge&quot;&gt;set number&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.vimrc&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;navigating&quot;&gt;Navigating&lt;/h2&gt;
+
+&lt;h3 id=&quot;basic-movement&quot;&gt;Basic movement&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; move to the left by one position&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;l&lt;/code&gt; move to the right by one position&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;j&lt;/code&gt; move to the downward direction by one line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt; move to the upward direction by one line&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;inline-movement&quot;&gt;Inline movement&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt; move to the start of the current word&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; move to the end of the current word&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; move to the start of the next word&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine movement with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;3w&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;9k&lt;/code&gt; is the same as pressing &lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; three times, pressing &lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt; nine times, respectively.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; move to the first non-blank character&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;g_&lt;/code&gt; move to the last non-blank character&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;n + Space&lt;/code&gt; move to the nth character of the current line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; move to the &lt;strong&gt;start column&lt;/strong&gt; of the current line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; move to the &lt;strong&gt;end column&lt;/strong&gt; of the current line&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;text-movement&quot;&gt;Text movement&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; move to the first non-blank character of the next line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-&lt;/code&gt; move to the first non-blank character of the previous line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:n&lt;/code&gt; jump to the nth line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:+n&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;n + Enter&lt;/code&gt; jump down n lines&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:-n&lt;/code&gt; jump up n lines&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gg&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;:0&lt;/code&gt; move to the &lt;strong&gt;first line&lt;/strong&gt; of the file&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;G&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;:$&lt;/code&gt; move to the &lt;strong&gt;end line&lt;/strong&gt; of the file&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine movement with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;3G&lt;/code&gt; move to the third line of the file&lt;/p&gt;
+
+&lt;h3 id=&quot;screen-movement&quot;&gt;screen movement&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + e&lt;/code&gt; scroll down a line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + y&lt;/code&gt; scroll up a line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + d&lt;/code&gt; scroll down the half of page&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + u&lt;/code&gt; scroll up the half page&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + f&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Page down&lt;/code&gt; scroll down the entire page&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + b&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Page up&lt;/code&gt; scroll up the entire page&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + o&lt;/code&gt; jump to the previous position&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + i&lt;/code&gt; jump to the next position&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;editing&quot;&gt;Editing&lt;/h2&gt;
+
+&lt;h3 id=&quot;insert&quot;&gt;Insert&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt; insert the text before the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;I&lt;/code&gt; insert the text at the beginning of the line&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;open-a-new-line&quot;&gt;Open a new line&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;o&lt;/code&gt; open new line below the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;O&lt;/code&gt; open new line above the cursor&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;append&quot;&gt;Append&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; append the text after the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; append the text at the end of line&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;delete&quot;&gt;Delete&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; delete the character on the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; delete the character before the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dw&lt;/code&gt; delete a word beginning at the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d0&lt;/code&gt; delete from the beginning of current line to the cursor position (including current character)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d$&lt;/code&gt; delete from current position to the end of the line (including current character)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt; delete entire line beginning at the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dd&lt;/code&gt; delete entire line，&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d1G&lt;/code&gt; delete from the first line to the current line (including current line)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dG&lt;/code&gt; delete from the current line to the end (including current line)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine movement with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;3dw&lt;/code&gt; delete 3 words at a time, &lt;code class=&quot;highlighter-rouge&quot;&gt;4D&lt;/code&gt; delete 4 lines at a time&lt;/p&gt;
+
+&lt;p class=&quot;notice--warning&quot;&gt;&lt;strong&gt;Mention:&lt;/strong&gt; all of these commands is will ‘cut’ the text to the clipboard, so the following &lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt; will works!&lt;/p&gt;
+
+&lt;h3 id=&quot;delete-and-insert&quot;&gt;Delete and insert&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; delete the character under the cursor and switch to insert mode&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;S&lt;/code&gt; delete the whole line and switch to insert mode&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;C&lt;/code&gt; delete the following text after the cursor and switch to insert mode&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;replace&quot;&gt;Replace&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;r&lt;/code&gt; replace the character on the cursor but not switch to insert mode&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; replace the following text&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;copy--paste&quot;&gt;Copy &amp;amp; Paste&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; copy a single character on the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yy&lt;/code&gt; copy entire line&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt; paste text after the cursor&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;P&lt;/code&gt; paste text before the cursor&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine movement with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;3yy&lt;/code&gt; copy the following three lines including the current line&lt;/p&gt;
+
+&lt;h3 id=&quot;join-lines&quot;&gt;Join lines&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;J&lt;/code&gt; remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;line breaks&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;whitespace&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine inserting with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;5igo&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt; wil insert ‘go’ five times&lt;/p&gt;
+
+&lt;h3 id=&quot;undo--redo&quot;&gt;Undo &amp;amp; Redo&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;u&lt;/code&gt; undo single action&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; combine inserting with a number, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;3u&lt;/code&gt; will undo action five times&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + r&lt;/code&gt; redo single action&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;searching&quot;&gt;Searching&lt;/h2&gt;
+
+&lt;h3 id=&quot;inline-searching&quot;&gt;Inline searching&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f&amp;lt;char&amp;gt;&lt;/code&gt; jump to the next occurrence of &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;char&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;t&amp;lt;char&amp;gt;&lt;/code&gt; jump before the next occurrence of &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;char&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--success&quot;&gt;&lt;strong&gt;e.g. delete until specified char:&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;dt&quot;&lt;/code&gt; delete text until &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;global-searching&quot;&gt;Global searching&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; search the next occurrence of the word cursor on&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; search the previous occurrence of the word cursor on&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/&amp;lt;expression&amp;gt;&lt;/code&gt; search the expression in forward direction&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&amp;lt;expression&amp;gt;&lt;/code&gt; search the expression in backward direction&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt; find the next/previous occurence in &lt;code class=&quot;highlighter-rouge&quot;&gt;/&amp;lt;expression&amp;gt;&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;?&amp;lt;expression&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;N&lt;/code&gt; find the previous/next occurence in &lt;code class=&quot;highlighter-rouge&quot;&gt;/&amp;lt;expression&amp;gt;&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;?&amp;lt;expression&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;//&lt;/code&gt; repeat the previous searching&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;advance&quot;&gt;Advance&lt;/h2&gt;
+
+&lt;h3 id=&quot;replace-1&quot;&gt;Replace&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:&amp;lt;line1&amp;gt;,&amp;lt;line2&amp;gt;s/&amp;lt;word1&amp;gt;/&amp;lt;word2&amp;gt;/g&lt;/code&gt; replace &lt;code class=&quot;highlighter-rouge&quot;&gt;word1&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;word2&lt;/code&gt; between &lt;code class=&quot;highlighter-rouge&quot;&gt;line1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;line2&lt;/code&gt;, flag &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; refers to global&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:%s/&amp;lt;word1&amp;gt;/&amp;lt;word2&amp;gt;/gc&lt;/code&gt; replace &lt;code class=&quot;highlighter-rouge&quot;&gt;word1&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;word2&lt;/code&gt; to the whole text, &lt;code class=&quot;highlighter-rouge&quot;&gt;%&lt;/code&gt; means for every line, flag &lt;code class=&quot;highlighter-rouge&quot;&gt;gc&lt;/code&gt; refers to global and need confirmation&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ddp&lt;/code&gt; swap the current line to the next one&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;visual-mode&quot;&gt;Visual mode&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt; switch to visual mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--success&quot;&gt;&lt;strong&gt;e.g. delete the whole word:&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt; for visual mode, &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; jump to the end of the current word, &lt;code class=&quot;highlighter-rouge&quot;&gt;d&lt;/code&gt; to delete&lt;/p&gt;
+
+&lt;h3 id=&quot;visual-block-mode&quot;&gt;Visual block mode&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + v&lt;/code&gt; switch to visual block mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--success&quot;&gt;&lt;strong&gt;e.g. Comment quickly:&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl + v&lt;/code&gt; for block mode, select some lines, &lt;code class=&quot;highlighter-rouge&quot;&gt;I&lt;/code&gt; to insect at the beginning of each line, input the annotation symbol, &lt;code class=&quot;highlighter-rouge&quot;&gt;Esc&lt;/code&gt; twice finally comment several lines quickly&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:10,20s#^#//#g&lt;/code&gt; comment &lt;code class=&quot;highlighter-rouge&quot;&gt;//&lt;/code&gt; from line 10 to line 20&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:10,20s#^//##g&lt;/code&gt; uncomment &lt;code class=&quot;highlighter-rouge&quot;&gt;//&lt;/code&gt; from line 10 to line 20&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:10,20s/^/#/g&lt;/code&gt; comment &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; from line 10 to line 20&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:10,20s/^#//g&lt;/code&gt; uncomment &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; from line 10 to line 20&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:%s/$/\r/g&lt;/code&gt; add a newline to each line&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;others&quot;&gt;Others&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:! &amp;lt;command&amp;gt;&lt;/code&gt; run the command and show the output outside of vim environment&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="cookbook" /><summary type="html">This is a cheatsheet for vim commands and operations.</summary></entry><entry><title type="html">Object-driven Text-to-Image Synthesis via Adversarial Training</title><link href="https://harrypotterrrr.github.io/posts/2019/07/objGAN/" rel="alternate" type="text/html" title="Object-driven Text-to-Image Synthesis via Adversarial Training" /><published>2019-07-16T00:00:00-07:00</published><updated>2019-07-16T00:00:00-07:00</updated><id>https://harrypotterrrr.github.io/posts/2019/07/ObjGAN</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2019/07/objGAN/">&lt;p&gt;The note of &lt;a href=&quot;https://arxiv.org/abs/1902.10740&quot;&gt;&lt;em&gt;Object-driven Text-to-Image Synthesis via Adversarial Training&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -822,669 +1183,4 @@ be near the data manifold  (Bengio et al., 2013) &lt;strong&gt;TOREAD&lt;/strong
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2019/05/text_to_image_1/ROC_curve.png&quot; alt=&quot;ROC_curve&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;For evaluation, &lt;code class=&quot;highlighter-rouge&quot;&gt;cosine similarity&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ROC&lt;/code&gt; is used as showed in the above figure. Images with similar and dissimilar content and style is selected and constructed as a pair, and if GAN has disentangled ability, the similarity between noises inverted from images of the same style (e.g. similar pose) should be higher than that of different styles (e.g. different pose).&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="paper" /><category term="computer vision" /><category term="deep learning" /><summary type="html">The note of Generative Adversarial Text to Image Synthesis</summary></entry><entry><title type="html">Linux cookbook</title><link href="https://harrypotterrrr.github.io/posts/2019/02/Linux-cookbook/" rel="alternate" type="text/html" title="Linux cookbook" /><published>2019-02-16T00:00:00-08:00</published><updated>2019-02-16T00:00:00-08:00</updated><id>https://harrypotterrrr.github.io/posts/2019/02/Linux-cookbook</id><content type="html" xml:base="https://harrypotterrrr.github.io/posts/2019/02/Linux-cookbook/">&lt;p&gt;This cookbook is built for quick and easy search for commands and deployments of Linux, Pip, Conda, Jupyter, Remote pycharm, Apache
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
-
-&lt;h3 id=&quot;commands&quot;&gt;Commands&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;open HTTP server with specific port&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python -m SimpleHTTPServer $PORT &amp;amp;&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;python -m http.server $PORT&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Recursively count the number of file under current dirctory, including subdirctory&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ls -lR | grep &quot;^-&quot;| wc -l&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;get the size of the file&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;du -sh&lt;/code&gt;
-where &lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; refers to SUM, and &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; refers to be friendly to human to view&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;display port usage&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -tunlp | grep $PORT&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;print CUDA version&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat /usr/local/cuda/version.txt&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;nvcc -V&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Trash bin path&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~/.local/share/Trash/files/&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Look up self public ip&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;curl cip.cc&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;look up public ip of the domain address&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;nslookup $DOMAIN_ADDRESS&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;count the number of line of files&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;wc -l $FILE_NAME&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;change access permission&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod [Option] [ugoa][+-=][rwx] $FILE_NAME&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Option: -R recursive&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;User&lt;/th&gt;
-      &lt;th&gt;letter&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;The user who owns it&lt;/td&gt;
-      &lt;td&gt;u&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Other users in the file’s Group&lt;/td&gt;
-      &lt;td&gt;g&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Other users not in the file’s group&lt;/td&gt;
-      &lt;td&gt;o&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;All users&lt;/td&gt;
-      &lt;td&gt;a&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Permission&lt;/th&gt;
-      &lt;th&gt;letter&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Read&lt;/td&gt;
-      &lt;td&gt;r&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Write&lt;/td&gt;
-      &lt;td&gt;w&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Execute (or access for directories)&lt;/td&gt;
-      &lt;td&gt;x&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;bashrc-file&quot;&gt;.bashrc file&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; is to segregate the &lt;code class=&quot;highlighter-rouge&quot;&gt;PATH&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; /home/jiahl/code-server/:/home/jiahl/.linuxbrew/bin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;append local executable file to environment variable&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; is a file to store &lt;code class=&quot;highlighter-rouge&quot;&gt;alias&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;path&lt;/code&gt; etc.&lt;/p&gt;
-
-&lt;p&gt;For example, after appending the following to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.bashrc&lt;/code&gt; file, everything executable can be executed in any directory.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;CODE_SERVER_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/jiahl/code-server/
-&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CODE_SERVER_PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;CODE_SERVER_PATH PATH
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Note that&lt;/strong&gt; using &lt;code class=&quot;highlighter-rouge&quot;&gt;source ~/.bashrc&lt;/code&gt; to make bash resource file effect.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-x&lt;/code&gt; make &lt;code class=&quot;highlighter-rouge&quot;&gt;.sh&lt;/code&gt; file executable&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Generally, &lt;code class=&quot;highlighter-rouge&quot;&gt;.sh&lt;/code&gt; file is not executable execept its mode has been changed:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod a+x &amp;lt;FILE_NAME&amp;gt;.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;ruby&quot;&gt;Ruby&lt;/h2&gt;
-
-&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
-
-&lt;p&gt;To install the ruby &lt;strong&gt;without privilege of root&lt;/strong&gt;, the third-party package &lt;code class=&quot;highlighter-rouge&quot;&gt;RVM&lt;/code&gt; is strongly suggested. &lt;a href=&quot;https://blog.codeminer42.com/4-5-ways-to-install-ruby-in-userspace-d26b0ba43610&quot;&gt;reference link&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;using RVM&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;RVM installer script uses GPG to check signatures; because of that, the first thing to do is to download the gpg key&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gpg &lt;span class=&quot;nt&quot;&gt;--keyserver&lt;/span&gt; hkp://keys.gnupg.net &lt;span class=&quot;nt&quot;&gt;--recv-keys&lt;/span&gt; 409B6B1796C275462A1703113804BB82D39DC0E3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;then download and execute the script from https://get.rvm.io:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://get.rvm.io | bash &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; stable
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;source the file&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.rvm/scripts/rvm
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;disable RVM from trying to install necessary software via apt-get&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rvm autolibs disable
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;get the listt of known Ruby versions&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rvm list known
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;install the latest, eg:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rvm install 2.6.3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;shell&quot;&gt;Shell&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;leave no space&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;STR &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;foo&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# wrong&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;STR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;foo&quot;&lt;/span&gt; 	&lt;span class=&quot;c&quot;&gt;# correct&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;use ```` or &lt;code class=&quot;highlighter-rouge&quot;&gt;$()&lt;/code&gt; to assign a command&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;DIRS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;find &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-type&lt;/span&gt; d | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DIRS&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;calculate and loop&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assign&lt;/code&gt; must not leave space&lt;/strong&gt;
-&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;expr&lt;/code&gt; must leave space&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;c&quot;&gt;# no space&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;seq 1 2 20&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;do
-	&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;expr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; + 1&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Welcome &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; times&quot;&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a = &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;output:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh clear.sh
-Welcome 1 times
-a = 2
-Welcome 3 times
-a = 3
-Welcome 5 times
-a = 4
-Welcome 7 times
-a = 5
-Welcome 9 times
-a = 6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;pip&quot;&gt;Pip&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;pip accelerate&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install -i https://pypi.tuna.tsinghua.edu.cn/simple $PACKAGE
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;pip ungrade package&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install $PACKAGE --upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;conda&quot;&gt;Conda&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;check all envs&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda info -e
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create the env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda create -n xxxx 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create and clone the env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda create -n xxxx1 --clone xxxx2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;remove the env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda remove -n xxxxx --all
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;activate the env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source activate xxxx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;deactivate the env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source deactivate xxxx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;reference: https://blog.csdn.net/menc15/article/details/71477949&lt;/p&gt;
-
-&lt;h2 id=&quot;jupyter&quot;&gt;Jupyter&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;convert *.ipynb to .py&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter nbconvert --to script *.ipynb&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;start the jupyter with specific port&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;nohup jupyter notebook --port=7141 --ip=0.0.0.0 --allow-root --notebook-dir='~/' &amp;amp;&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create a passowrd to avoid using TOKEN to log in&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;check if the config file exists or not&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter notebook --generate-config&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;generate password&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter notebook password&lt;/code&gt;&lt;/p&gt;
-
-&lt;p class=&quot;notice--warning&quot;&gt;&lt;strong&gt;Warning:&lt;/strong&gt; Starting the notebook server before setting up the password&lt;/p&gt;
-
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; After using this way to creat a port, &lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter notebook stop&lt;/code&gt; command is usually invalid, therefore &lt;code class=&quot;highlighter-rouge&quot;&gt;kill&lt;/code&gt; is commended&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;stop the jupyter with specific port&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter notebook stop $PORT&lt;/code&gt; where PORT is the port got to stop&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;insert true tabs in jupyter editor/notebook&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jupyter --config-dir&lt;/code&gt; to create config file for user&lt;/p&gt;
-
-&lt;p&gt;then create &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.jupyter/nbconfig/edit.json&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;Editor&quot;: {
-        &quot;codemirror_options&quot;: {
-            &quot;indentWithTabs&quot;: true
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And create &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.jupyter/nbconfig/notebook.json&lt;/code&gt; with:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;CodeCell&quot;: {
-        &quot;cm_config&quot;: {
-            &quot;indentWithTabs&quot;: 2
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;add conda env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python -m ipykernel install --user --name $ENV_NAME --display-name &quot;$DISPLAY_NAME&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;remove conda env&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter kernelspec remove $ENV_NAME
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;import technique&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;working directory:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;WorkingDirectory--
-                 |--MyPackage--
-                 |            |--__init__.py
-                 |            |--module1.py
-                 |            |--module2.py
-                 |
-                 |--notebook.ipynb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;,&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;module1&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;module2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;notebook.ipynb&lt;/code&gt;,&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getcwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;MyPackage.modeul1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Note that&lt;/strong&gt; there are several reason for &lt;code class=&quot;highlighter-rouge&quot;&gt;No module named 'XXXX'&lt;/code&gt;, one is that &lt;code class=&quot;highlighter-rouge&quot;&gt;packages&lt;/code&gt; of &lt;code class=&quot;highlighter-rouge&quot;&gt;.py&lt;/code&gt; must be in one &lt;code class=&quot;highlighter-rouge&quot;&gt;utility directory&lt;/code&gt;, 
-and &lt;code class=&quot;highlighter-rouge&quot;&gt;init file&lt;/code&gt; of the package must be built in previous. Another is that &lt;code class=&quot;highlighter-rouge&quot;&gt;current working directory(cwd)&lt;/code&gt; must be appended to &lt;code class=&quot;highlighter-rouge&quot;&gt;system path&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;virtualenv&quot;&gt;Virtualenv&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create virtual environment&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;virtualenv &amp;lt;env_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;activate the virtualenv&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; &amp;lt;env_name&amp;gt;/bin/activate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;deactivate the virtualenv&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;deactivate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;remote-pycharm&quot;&gt;Remote pycharm&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;import tf error&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'LD_LIBRARY_PATH'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;add path of output to env variable in configuration&lt;/p&gt;
-
-&lt;h2 id=&quot;shadowsocks&quot;&gt;Shadowsocks&lt;/h2&gt;
-
-&lt;h3 id=&quot;server&quot;&gt;Server&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;install on Ubuntu&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apt-get install python-pip python-setuptools
-pip install git+https://github.com/shadowsocks/shadowsocks.git@master
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;run in the background&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssserver -p $PORT -k $PASSWORD -m aes-256-cfb --user nobody -d start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;where PORT and PASSWORD are refered to the ones of the server.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;stop the ss&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssserver -d stop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;check the log&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;less /var/log/shadowsocks.log
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;client&quot;&gt;Client&lt;/h3&gt;
-
-&lt;p&gt;For linux operating system:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt; proxy&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nohup sslocal &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$IP&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SERVER_PORT&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-k&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PASSWORD&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CLIENT_PORT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; 0.0.0.0] &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 600 &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; aes-256-cfb &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;a id=&quot;sslocal&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;$SERVER_IP&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;$PASSWORD&lt;/code&gt; are refered to the ones of the server and &lt;code class=&quot;highlighter-rouge&quot;&gt;$CLIENT_PORT&lt;/code&gt; is refered to the one of the client.&lt;/p&gt;
-
-&lt;p class=&quot;notice--danger&quot;&gt;&lt;strong&gt;Note that&lt;/strong&gt; different from &lt;code class=&quot;highlighter-rouge&quot;&gt;vpn&lt;/code&gt; global proxy,&lt;code class=&quot;highlighter-rouge&quot;&gt;sslocal&lt;/code&gt;(shadowsocks on linux) creates a tunnel of &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt; proxy and only works for browsers rather than running files or applications such as &lt;code class=&quot;highlighter-rouge&quot;&gt;curl&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; or any other commands in bash.&lt;/p&gt;
-
-&lt;p&gt;There are two ways to hook calls from local programs to sockets and redirect it through one or more socks/http proxies.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;proxychains4&lt;/code&gt; to force applications to go through &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt; proxy. &lt;a href=&quot;#Proxychains&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;privoxy&lt;/code&gt; to convert &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt; into &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; proxy, and support program using it by exporting the environment variable. &lt;a href=&quot;https://blog.liuguofeng.com/p/4010&quot;&gt;link&lt;/a&gt; &lt;strong&gt;TO BE DONE BY SELF&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;check running status&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status rc-local.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;use shadowsockssr JSON config file to run&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/shadowsocksrr/shadowsocksr
-vim config.json
-cd shadowsocks/
-./local.py -c ../config.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;proxychains&quot;&gt;Proxychains&lt;/h2&gt;
-
-&lt;p&gt;Here I demonstrate to download a large file from google drive.&lt;/p&gt;
-
-&lt;h3 id=&quot;preliminaries&quot;&gt;Preliminaries&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;installation&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For the non-root user of the server, using &lt;code class=&quot;highlighter-rouge&quot;&gt;Linuxbrew&lt;/code&gt; to install it is recommended&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;modify the config file&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim ~/.linuxbrew/etc/proxychains.conf&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;change the last line of the config file to your specified port with &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt;, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;socks5  127.0.0.1 $LOCAL_PORT&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;where the &lt;code class=&quot;highlighter-rouge&quot;&gt;$LOCAL_PORT&lt;/code&gt; is same to the one in &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCKS5&lt;/code&gt; creating command as &lt;code class=&quot;highlighter-rouge&quot;&gt;sslocal ... $CLIENT_PORT&lt;/code&gt; &lt;a href=&quot;#sslocal&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
-
-&lt;p&gt;Comparing &lt;code class=&quot;highlighter-rouge&quot;&gt;curl google.com&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;proxychains4 curl google.com&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;fetching-file&quot;&gt;Fetching file&lt;/h3&gt;
-
-&lt;p&gt;Each file shared on Google drive has a unique id (&lt;code class=&quot;highlighter-rouge&quot;&gt;$FILE_ID&lt;/code&gt;), like &lt;code class=&quot;highlighter-rouge&quot;&gt;1UFaRl_3EGK0hSBlmB6AJVeZZ_r-SHQLm&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;https://drive.google.com/uc?id=1UFaRl_3EGK0hSBlmB6AJVeZZ_r-SHQLm&amp;amp;export=download&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;There are two ways to download it&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;By &lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; command (Recommand)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;append proxychains4 as the prefix to any commands&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;proxychains4 wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&amp;amp;id=$FILE_ID' -O $FILE_NAME&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;where &lt;code class=&quot;highlighter-rouge&quot;&gt;$FILE_ID&lt;/code&gt; is an identifier to the shared file, and &lt;code class=&quot;highlighter-rouge&quot;&gt;$FILE_NAME&lt;/code&gt; is the name of the output file.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note that&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt; is crucial and decide &lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; in recursive mode.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;By &lt;code class=&quot;highlighter-rouge&quot;&gt;gdrive.sh&lt;/code&gt; script&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;proxychains4 curl gdrive.sh | proxychains4 bash -s $FILE_ID&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;This solution is &lt;strong&gt;unstable&lt;/strong&gt; in some cases, the above $FILE_ID mentioned is a case.&lt;/p&gt;
-
-&lt;h2 id=&quot;apache&quot;&gt;Apache&lt;/h2&gt;
-
-&lt;h3 id=&quot;installation-1&quot;&gt;installation&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;install the apache package&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;apt install apache2&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;adjust the firewall, check the available ufw application profiles&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ufw app list&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Check your Web Server, Check with the systemd init system to make sure the service is running by typing:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;systemctl status apache2&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;config-your-own-indexhtml&quot;&gt;config your own index.html&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;build an index.html file in anywhere, take ‘/home/test_html/’ as an example&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim /home/test_html/index.html&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;add the below in the file&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-  Hello world!
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;append the specified path to the virtualHost statement&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim /etc/apache2/sites-available/000-default.conf&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;modify the listen port into &lt;code class=&quot;highlighter-rouge&quot;&gt;7146&lt;/code&gt; in the first line as an example&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;VirtualHost *:7146&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;change the virtualHost root to the specified path in &lt;code class=&quot;highlighter-rouge&quot;&gt;DocumentRoot&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;for the above example, we modify the below,&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DocumentRoot /home/test_html&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;config the port.conf to add listen port&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim /etc/apache2/ports.conf&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;then add Listen ports into the config file&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;modify the main config file to add your own web file&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;for the default security mode, apache doesn’t allow access outside of &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/share&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;therefore we should add an item to allow the specified path to be accessed.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim /etc/apache2/apache2.conf&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;for the above example, we add the below,&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Directory /home/test_html/&amp;gt;
-        Options Indexes FollowSymLinks
-        AllowOverride None
-        Require all granted
-&amp;lt;/Directory&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;then restart the apache service after modify any config files&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;systemctl restart apache2&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;view apache log, if there is something wrong&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tail -f /var/log/apache2/error.log&lt;/code&gt;&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="cookbook" /><summary type="html">This cookbook is built for quick and easy search for commands and deployments of Linux, Pip, Conda, Jupyter, Remote pycharm, Apache</summary></entry></feed>
+&lt;p&gt;For evaluation, &lt;code class=&quot;highlighter-rouge&quot;&gt;cosine similarity&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ROC&lt;/code&gt; is used as showed in the above figure. Images with similar and dissimilar content and style is selected and constructed as a pair, and if GAN has disentangled ability, the similarity between noises inverted from images of the same style (e.g. similar pose) should be higher than that of different styles (e.g. different pose).&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email><uri>http://Harrypotterrrr.github.io</uri></author><category term="paper" /><category term="computer vision" /><category term="deep learning" /><summary type="html">The note of Generative Adversarial Text to Image Synthesis</summary></entry></feed>

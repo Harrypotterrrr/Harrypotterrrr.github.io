@@ -1,0 +1,1093 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Vim cookbook - Haolin’s Homepage</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Haolin's Homepage">
+<meta property="og:title" content="Vim cookbook">
+
+
+  <link rel="canonical" href="https://Harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/">
+  <meta property="og:url" content="https://Harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/">
+
+
+
+  <meta property="og:description" content="This is a cheatsheet for vim commands and operations.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2019-08-03T00:00:00-07:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Haolin Jia",
+      "url" : "https://Harrypotterrrr.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://Harrypotterrrr.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Haolin's Homepage Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://Harrypotterrrr.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js"></script>
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="https://Harrypotterrrr.github.io/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="https://Harrypotterrrr.github.io/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="https://Harrypotterrrr.github.io/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="https://Harrypotterrrr.github.io/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="https://Harrypotterrrr.github.io/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="https://Harrypotterrrr.github.io/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="https://Harrypotterrrr.github.io/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="https://Harrypotterrrr.github.io/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="https://Harrypotterrrr.github.io/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="https://Harrypotterrrr.github.io/assets/css/academicons.css"/>
+
+<!-- For the mathJax rendering -->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      processEscapes: true
+    },
+    TeX: {
+      equationNumbers: {
+          autoNumber: "none",
+          useLabelIds: true
+      }
+    },
+    "HTML-CSS": {
+      linebreaks: {
+          automatic: true
+      },
+      scale: 100,
+      styles: {
+          ".MathJax_Display": {
+              "text-align": "left",
+              "width": "auto",
+              "margin": "10px 0px 10px 0px !important",
+              "background-color": "#fafafa !important",
+              "border-radius": "3px !important",
+              border: "1px solid #ccc !important",
+              padding: "5px 5px 5px 5px !important"
+          },
+          ".MathJax": {
+              "background-color": "#fafafa !important",
+              padding: "2px 2px 2px 2px !important"
+          },
+      }
+    },
+    SVG: {
+      scale: 120,
+      font: "Tex",
+      linebreaks: {
+        automatic: true
+      }
+    }
+  });
+</script> -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://Harrypotterrrr.github.io/">Haolin's Homepage</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://Harrypotterrrr.github.io/year-archive/">Blogs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://Harrypotterrrr.github.io/cv/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://Harrypotterrrr.github.io/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://Harrypotterrrr.github.io/markdown/">Guide</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+	
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://Harrypotterrrr.github.io/images/avatar.jfif" class="author__avatar" alt="Haolin Jia">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Haolin Jia</h3>
+    <p class="author__bio">Undergraduate in Computer Science. 🎨Interested in classical algorithms and techniques related to artificial intelligence.☀️</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+        
+        <li><a href="/maps/map.html"><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i>Shanghai, China</a></li>
+        
+        
+        
+        <li><a href="http://Harrypotterrrr.github.io"><i class="fas fa-link" aria-hidden="true"></i> Website</a></li>
+        
+        
+        <li><a href="mailto:jiahaolin19971119@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i> Email</a></li>
+        
+        
+        <li><a href="https://github.com/Harrypotterrrr"><i class="fab fa-github" aria-hidden="true"></i> Github</a></li>
+        
+        
+        <li><a href="https://www.linkedin.com/in/haolin-jia-7b4b49173/"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+        
+        <li><a href="https://twitter.com/Harrypotterrrr7"><i class="fab fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+        
+        <li><a href="https://www.facebook.com/100012241788050"><i class="fab fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+        
+        
+        <li><a href="https://music.163.com/#/user/home?id=263691122"><i class="fas fa-podcast" aria-hidden="true"></i> Netease</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+	<article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+		
+		<meta itemprop="headline" content="Vim cookbook">
+		
+		
+		<meta itemprop="description" content="This is a cheatsheet for vim commands and operations.">
+		
+		
+		<meta itemprop="datePublished" content="August 03, 2019">
+		
+		<meta itemprop="dateModified" content="August 03, 2019">
+
+		<div class="page__inner-wrap">
+            
+            
+			<header>
+				<h1 class="page__title" itemprop="headline">
+					Vim cookbook
+</h1>
+				
+				<p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+				
+
+				
+				<p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+						Modified:</strong> <time
+						datetime="2019-08-03">August 03, 2019</time>
+				</p>
+				
+
+
+				
+
+			</header>
+			
+
+			<section class="page__content" itemprop="text">
+				<p>This is a cheatsheet for vim commands and operations.
+<!--more--></p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="display-line-numbers">Display line numbers</h3>
+
+<ul>
+  <li>in the current file</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:set number # to enable line numbers
+:set nonumber # to disable line numbers
+</code></pre></div></div>
+
+<ul>
+  <li>to change config</li>
+</ul>
+
+<p>add <code class="highlighter-rouge">set number</code> in <code class="highlighter-rouge">~/.vimrc</code></p>
+
+<h2 id="navigating">Navigating</h2>
+
+<h3 id="basic-movement">Basic movement</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">h</code> move to the left by one position</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">l</code> move to the right by one position</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">j</code> move to the downward direction by one line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">k</code> move to the upward direction by one line</p>
+  </li>
+</ul>
+
+<h3 id="inline-movement">Inline movement</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">b</code> move to the start of the current word</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">e</code> move to the end of the current word</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">w</code> move to the start of the next word</p>
+  </li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine movement with a number, e.g. <code class="highlighter-rouge">3w</code>, <code class="highlighter-rouge">9k</code> is the same as pressing <code class="highlighter-rouge">w</code> three times, pressing <code class="highlighter-rouge">k</code> nine times, respectively.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">^</code> move to the first non-blank character</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">g_</code> move to the last non-blank character</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">n + Space</code> move to the nth character of the current line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">0</code> move to the <strong>start column</strong> of the current line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">$</code> move to the <strong>end column</strong> of the current line</p>
+  </li>
+</ul>
+
+<h3 id="text-movement">Text movement</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">+</code> move to the first non-blank character of the next line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-</code> move to the first non-blank character of the previous line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:n</code> jump to the nth line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:+n</code> or <code class="highlighter-rouge">n + Enter</code> jump down n lines</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:-n</code> jump up n lines</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">gg</code> or <code class="highlighter-rouge">:0</code> move to the <strong>first line</strong> of the file</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">G</code> or <code class="highlighter-rouge">:$</code> move to the <strong>end line</strong> of the file</p>
+  </li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine movement with a number, e.g. <code class="highlighter-rouge">3G</code> move to the third line of the file</p>
+
+<h3 id="screen-movement">screen movement</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + e</code> scroll down a line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + y</code> scroll up a line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + d</code> scroll down the half of page</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + u</code> scroll up the half page</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + f</code> or <code class="highlighter-rouge">Page down</code> scroll down the entire page</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + b</code> or <code class="highlighter-rouge">Page up</code> scroll up the entire page</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + o</code> jump to the previous position</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ctrl + i</code> jump to the next position</p>
+  </li>
+</ul>
+
+<h2 id="editing">Editing</h2>
+
+<h3 id="insert">Insert</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">i</code> insert the text before the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">I</code> insert the text at the beginning of the line</p>
+  </li>
+</ul>
+
+<h3 id="open-a-new-line">Open a new line</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">o</code> open new line below the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">O</code> open new line above the cursor</p>
+  </li>
+</ul>
+
+<h3 id="append">Append</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">a</code> append the text after the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">A</code> append the text at the end of line</p>
+  </li>
+</ul>
+
+<h3 id="delete">Delete</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">x</code> delete the character on the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">X</code> delete the character before the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">dw</code> delete a word beginning at the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">d0</code> delete from the beginning of current line to the cursor position (including current character)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">d$</code> delete from current position to the end of the line (including current character)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">D</code> delete entire line beginning at the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">dd</code> delete entire line，</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">d1G</code> delete from the first line to the current line (including current line)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">dG</code> delete from the current line to the end (including current line)</p>
+  </li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine movement with a number, e.g. <code class="highlighter-rouge">3dw</code> delete 3 words at a time, <code class="highlighter-rouge">4D</code> delete 4 lines at a time</p>
+
+<p class="notice--warning"><strong>Mention:</strong> all of these commands is will ‘cut’ the text to the clipboard, so the following <code class="highlighter-rouge">p</code> will works!</p>
+
+<h3 id="delete-and-insert">Delete and insert</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">s</code> delete the character under the cursor and switch to insert mode</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">S</code> delete the whole line and switch to insert mode</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">C</code> delete the following text after the cursor and switch to insert mode</p>
+  </li>
+</ul>
+
+<h3 id="replace">Replace</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">r</code> replace the character on the cursor but not switch to insert mode</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">R</code> replace the following text</p>
+  </li>
+</ul>
+
+<h3 id="copy--paste">Copy &amp; Paste</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">y</code> copy a single character on the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">yy</code> copy entire line</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">p</code> paste text after the cursor</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">P</code> paste text before the cursor</p>
+  </li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine movement with a number, e.g. <code class="highlighter-rouge">3yy</code> copy the following three lines including the current line</p>
+
+<h3 id="join-lines">Join lines</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">J</code> remove the <code class="highlighter-rouge">line breaks</code> to <code class="highlighter-rouge">whitespace</code></li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine inserting with a number, e.g. <code class="highlighter-rouge">5igo</code> + <code class="highlighter-rouge">Esc</code> wil insert ‘go’ five times</p>
+
+<h3 id="undo--redo">Undo &amp; Redo</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">u</code> undo single action</li>
+</ul>
+
+<p class="notice--info"><strong>Info:</strong> combine inserting with a number, e.g. <code class="highlighter-rouge">3u</code> will undo action five times</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ctrl + r</code> redo single action</li>
+</ul>
+
+<h2 id="searching">Searching</h2>
+
+<h3 id="inline-searching">Inline searching</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">f&lt;char&gt;</code> jump to the next occurrence of <code class="highlighter-rouge">&lt;char&gt;</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">t&lt;char&gt;</code> jump before the next occurrence of <code class="highlighter-rouge">&lt;char&gt;</code></p>
+  </li>
+</ul>
+
+<p class="notice--success"><strong>e.g. delete until specified char:</strong> <code class="highlighter-rouge">dt"</code> delete text until <code class="highlighter-rouge">"</code></p>
+
+<h3 id="global-searching">Global searching</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">*</code> search the next occurrence of the word cursor on</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">#</code> search the previous occurrence of the word cursor on</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">/&lt;expression&gt;</code> search the expression in forward direction</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">?&lt;expression&gt;</code> search the expression in backward direction</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">n</code> find the next/previous occurence in <code class="highlighter-rouge">/&lt;expression&gt;</code>/<code class="highlighter-rouge">?&lt;expression&gt;</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">N</code> find the previous/next occurence in <code class="highlighter-rouge">/&lt;expression&gt;</code>/<code class="highlighter-rouge">?&lt;expression&gt;</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">//</code> repeat the previous searching</p>
+  </li>
+</ul>
+
+<h2 id="advance">Advance</h2>
+
+<h3 id="replace-1">Replace</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">:&lt;line1&gt;,&lt;line2&gt;s/&lt;word1&gt;/&lt;word2&gt;/g</code> replace <code class="highlighter-rouge">word1</code> with <code class="highlighter-rouge">word2</code> between <code class="highlighter-rouge">line1</code> and <code class="highlighter-rouge">line2</code>, flag <code class="highlighter-rouge">g</code> refers to global</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:%s/&lt;word1&gt;/&lt;word2&gt;/gc</code> replace <code class="highlighter-rouge">word1</code> with <code class="highlighter-rouge">word2</code> to the whole text, <code class="highlighter-rouge">%</code> means for every line, flag <code class="highlighter-rouge">gc</code> refers to global and need confirmation</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ddp</code> swap the current line to the next one</p>
+  </li>
+</ul>
+
+<h3 id="visual-mode">Visual mode</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">v</code> switch to visual mode</li>
+</ul>
+
+<p class="notice--success"><strong>e.g. delete the whole word:</strong> <code class="highlighter-rouge">v</code> for visual mode, <code class="highlighter-rouge">e</code> jump to the end of the current word, <code class="highlighter-rouge">d</code> to delete</p>
+
+<h3 id="visual-block-mode">Visual block mode</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">ctrl + v</code> switch to visual block mode</li>
+</ul>
+
+<p class="notice--success"><strong>e.g. Comment quickly:</strong> <code class="highlighter-rouge">ctrl + v</code> for block mode, select some lines, <code class="highlighter-rouge">I</code> to insect at the beginning of each line, input the annotation symbol, <code class="highlighter-rouge">Esc</code> twice finally comment several lines quickly</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">:10,20s#^#//#g</code> comment <code class="highlighter-rouge">//</code> from line 10 to line 20</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:10,20s#^//##g</code> uncomment <code class="highlighter-rouge">//</code> from line 10 to line 20</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:10,20s/^/#/g</code> comment <code class="highlighter-rouge">#</code> from line 10 to line 20</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:10,20s/^#//g</code> uncomment <code class="highlighter-rouge">#</code> from line 10 to line 20</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">:%s/$/\r/g</code> add a newline to each line</p>
+  </li>
+</ul>
+
+<h3 id="others">Others</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">:! &lt;command&gt;</code> run the command and show the output outside of vim environment</li>
+</ul>
+
+				
+            </section>
+            
+            
+            <aside class="sidebar__right ">
+                <nav class="toc">
+                    <header>
+                        <h4 class="nav__title">
+                            <i class="fas fa-file-alt"></i>
+                            Content
+                        </h4>
+                    </header>
+                    <ul class="toc__menu">
+  <li><a href="#configuration">Configuration</a>
+    <ul>
+      <li><a href="#display-line-numbers">Display line numbers</a></li>
+    </ul>
+  </li>
+  <li><a href="#navigating">Navigating</a>
+    <ul>
+      <li><a href="#basic-movement">Basic movement</a></li>
+      <li><a href="#inline-movement">Inline movement</a></li>
+      <li><a href="#text-movement">Text movement</a></li>
+      <li><a href="#screen-movement">screen movement</a></li>
+    </ul>
+  </li>
+  <li><a href="#editing">Editing</a>
+    <ul>
+      <li><a href="#insert">Insert</a></li>
+      <li><a href="#open-a-new-line">Open a new line</a></li>
+      <li><a href="#append">Append</a></li>
+      <li><a href="#delete">Delete</a></li>
+      <li><a href="#delete-and-insert">Delete and insert</a></li>
+      <li><a href="#replace">Replace</a></li>
+      <li><a href="#copy--paste">Copy &amp; Paste</a></li>
+      <li><a href="#join-lines">Join lines</a></li>
+      <li><a href="#undo--redo">Undo &amp; Redo</a></li>
+    </ul>
+  </li>
+  <li><a href="#searching">Searching</a>
+    <ul>
+      <li><a href="#inline-searching">Inline searching</a></li>
+      <li><a href="#global-searching">Global searching</a></li>
+    </ul>
+  </li>
+  <li><a href="#advance">Advance</a>
+    <ul>
+      <li><a href="#replace-1">Replace</a></li>
+      <li><a href="#visual-mode">Visual mode</a></li>
+      <li><a href="#visual-block-mode">Visual block mode</a></li>
+      <li><a href="#others">Others</a></li>
+    </ul>
+  </li>
+</ul>
+                </nav>
+            </aside>
+            
+
+			<footer class="page__meta">
+				
+				
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://Harrypotterrrr.github.io/tags/#cookbook" class="page__taxonomy-item" rel="tag">cookbook</a>
+    
+    </span>
+  </p>
+
+
+
+
+			</footer>
+
+			
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://Harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://Harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://Harrypotterrrr.github.io/posts/2019/08/Vim-cookbook/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+			
+
+
+  <nav class="pagination">
+    
+      <a href="https://Harrypotterrrr.github.io/posts/2019/07/objGAN/" class="pagination--pager" title="Object-driven Text-to-Image Synthesis via Adversarial Training
+">Previous</a>
+    
+    
+      <a href="https://Harrypotterrrr.github.io/posts/2012/08/blog-post-4/" class="pagination--pager" title="Future Blog Post
+">Next</a>
+    
+  </nav>
+
+		</div>
+
+		
+	</article>
+
+	
+
+	
+		<div class="page__related">
+			
+			<h4 class="page__related-title">
+				You May Also Enjoy
+			</h4>
+			
+			<div class="grid__wrapper">
+				
+				
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://Harrypotterrrr.github.io/posts/2012/08/blog-post-4/" rel="permalink">Future Blog Post
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  less than 1 minute read
+	
+</p>
+    
+
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>This post will show up by default. To disable scheduling of future posts, edit <code class="highlighter-rouge">config.yml</code> and set <code class="highlighter-rouge">future: false</code>.</p>
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+				
+				
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://Harrypotterrrr.github.io/posts/2019/07/objGAN/" rel="permalink">Object-driven Text-to-Image Synthesis via Adversarial Training
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  less than 1 minute read
+	
+</p>
+    
+
+        
+		<p class="page__date">
+			<strong>
+				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+				Modified:
+			</strong> 
+			<time datetime="2019-07-16T00:00:00-07:00"> 
+				July 16, 2019
+			</time>
+		</p>  
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>The note of <a href="https://arxiv.org/abs/1902.10740"><em>Object-driven Text-to-Image Synthesis via Adversarial Training</em></a></p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+				
+				
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://Harrypotterrrr.github.io/posts/2019/07/storyGAN/" rel="permalink">StoryGAN: A Sequential Conditional GAN for Story Visualization
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+    
+
+        
+		<p class="page__date">
+			<strong>
+				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+				Modified:
+			</strong> 
+			<time datetime="2019-07-14T00:00:00-07:00"> 
+				July 14, 2019
+			</time>
+		</p>  
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>The note of <a href="https://arxiv.org/abs/1812.02784"><em>StoryGAN: A Sequential Conditional GAN for Story Visualization</em></a></p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+				
+				
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://Harrypotterrrr.github.io/posts/2019/07/sg2im/" rel="permalink">Image generation from scene graphs
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+    
+
+        
+		<p class="page__date">
+			<strong>
+				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+				Modified:
+			</strong> 
+			<time datetime="2019-07-17T00:00:00-07:00"> 
+				July 17, 2019
+			</time>
+		</p>  
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>The note of <a href="https://arxiv.org/abs/1804.01622"><em>Image generation from scene graphs</em></a></p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+				
+			</div>
+		</div>
+	
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<!-- <a href="/sitemap/">Sitemap</a> -->
+
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/Harrypotterrrr"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://Harrypotterrrr.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 Haolin Jia. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+      <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=243&t=n&d=qOXeHp0OGGl8hNUWgl974rBjv8tmDtApaSsfA6pK-3Q&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353">
+      </script>
+    </div>
+
+    <script src="https://Harrypotterrrr.github.io/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
