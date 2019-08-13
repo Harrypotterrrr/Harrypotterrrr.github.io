@@ -310,7 +310,7 @@
 		
 		<meta itemprop="datePublished" content="February 16, 2019">
 		
-		<meta itemprop="dateModified" content="August 04, 2019">
+		<meta itemprop="dateModified" content="August 12, 2019">
 
 		<div class="page__inner-wrap">
             
@@ -332,7 +332,7 @@
 				
 				<p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
 						Modified:</strong> <time
-						datetime="2019-08-04">August 04, 2019</time>
+						datetime="2019-08-12">August 12, 2019</time>
 				</p>
 				
 
@@ -354,8 +354,9 @@
   <li>open HTTP server with specific port</li>
 </ul>
 
-<p><code class="highlighter-rouge">python -m SimpleHTTPServer $PORT &amp;</code>
-<code class="highlighter-rouge">python -m http.server $PORT</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m SimpleHTTPServer $PORT &amp;
+python -m http.server $PORT
+</code></pre></div></div>
 
 <ul>
   <li>Recursively count the number of file under current dirctory, including subdirctory</li>
@@ -399,19 +400,22 @@ where <code class="highlighter-rouge">s</code> refers to SUM, and <code class="h
   <li>look up public ip of the domain address</li>
 </ul>
 
-<p><code class="highlighter-rouge">nslookup $DOMAIN_ADDRESS</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nslookup $DOMAIN_ADDRESS
+</code></pre></div></div>
 
 <ul>
   <li>count the number of line of files</li>
 </ul>
 
-<p><code class="highlighter-rouge">wc -l $FILE_NAME</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wc -l $FILE_NAME
+</code></pre></div></div>
 
 <ul>
   <li>change access permission</li>
 </ul>
 
-<p><code class="highlighter-rouge">chmod [Option] [ugoa][+-=][rwx] $FILE_NAME</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod [Option] [ugoa][+-=][rwx] $FILE_NAME
+</code></pre></div></div>
 
 <p>Option: -R recursive</p>
 
@@ -464,6 +468,15 @@ where <code class="highlighter-rouge">s</code> refers to SUM, and <code class="h
     </tr>
   </tbody>
 </table>
+
+<ul>
+  <li>convert py2 to py3</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2to3 [-w] [-n] &lt;file_name&gt;
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">-w</code> will write to the origin file, <code class="highlighter-rouge">-n</code> will save a backup</p>
 
 <h3 id="bashrc-file">.bashrc file</h3>
 
