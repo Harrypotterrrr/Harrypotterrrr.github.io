@@ -310,7 +310,7 @@
 		
 		<meta itemprop="datePublished" content="February 16, 2019">
 		
-		<meta itemprop="dateModified" content="August 12, 2019">
+		<meta itemprop="dateModified" content="September 07, 2019">
 
 		<div class="page__inner-wrap">
             
@@ -332,7 +332,7 @@
 				
 				<p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
 						Modified:</strong> <time
-						datetime="2019-08-12">August 12, 2019</time>
+						datetime="2019-09-07">September 07, 2019</time>
 				</p>
 				
 
@@ -478,6 +478,21 @@ where <code class="highlighter-rouge">s</code> refers to SUM, and <code class="h
 
 <p><code class="highlighter-rouge">-w</code> will write to the origin file, <code class="highlighter-rouge">-n</code> will save a backup</p>
 
+<ul>
+  <li>change default gpu to run xorg and gnome process</li>
+</ul>
+
+<p>modify <code class="highlighter-rouge">/usr/X11/xorg.conf</code> and replace BusID:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce TitanX"
+    BusID          "PCI:2:0:0" # change the BusID to what lspci | grep VGA shown
+EndSection
+</code></pre></div></div>
+
 <h3 id="bashrc-file">.bashrc file</h3>
 
 <ul>
@@ -548,6 +563,22 @@ where <code class="highlighter-rouge">s</code> refers to SUM, and <code class="h
     <p><code class="highlighter-rouge">N</code> search the previous occurrence of the string</p>
   </li>
 </ul>
+
+<h2 id="ssh">Ssh</h2>
+
+<ul>
+  <li>Automatic log in to remote server</li>
+</ul>
+
+<p>add following to <code class="highlighter-rouge">~/.ssh/config</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host &lt;host_var&gt;
+    HostName    &lt;host_name&gt;
+    Port        22
+    User        &lt;user_name&gt;
+</code></pre></div></div>
+
+<p>if public key is appended to the <code class="highlighter-rouge">server:/~/.ssh/authorized_keys</code>, password won’t be needed</p>
 
 <h2 id="ruby">Ruby</h2>
 
@@ -1082,6 +1113,7 @@ cd shadowsocks/
       <li><a href="#less-mode">less mode</a></li>
     </ul>
   </li>
+  <li><a href="#ssh">Ssh</a></li>
   <li><a href="#ruby">Ruby</a>
     <ul>
       <li><a href="#installation">Installation</a></li>
