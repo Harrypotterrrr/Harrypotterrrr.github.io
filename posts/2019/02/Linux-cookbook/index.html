@@ -324,7 +324,7 @@
 
 
   
-	  9 minute read
+	  10 minute read
 	
 </p>
 				
@@ -561,6 +561,35 @@ EndSection
   </li>
   <li>
     <p><code class="highlighter-rouge">N</code> search the previous occurrence of the string</p>
+  </li>
+</ul>
+
+<h3 id="nvidia-driver">nvidia-driver</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">sudo dpkg -l | grep nvidia</code> list all drivers relative to nvidia</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">sudo apt remove --purge '*nvidia*'</code> remove and clear specified package or drivers</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">sudo dpkg --force-all -P &lt;package&gt;</code> forcely remove the library difficult to deleted in previous step</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">sudo add-apt-repository ppa:graphics-drivers/ppa</code> add ppa for the installation</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ubuntu-drivers devices</code> show available drivers online</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">sudo apt install nvidia-driver-&lt;version&gt; nvidia-settings</code> install nvidia driver</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cat /usr/local/cuda/version.txt</code> or <code class="highlighter-rouge">nvidia-smi</code> show the version of cuda</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">cat /proc/driver/nvidia/version</code> or <code class="highlighter-rouge">nvidia-smi</code> show the version of nvidia-driver</p>
   </li>
 </ul>
 
@@ -1111,6 +1140,7 @@ cd shadowsocks/
       <li><a href="#commands">Commands</a></li>
       <li><a href="#bashrc-file">.bashrc file</a></li>
       <li><a href="#less-mode">less mode</a></li>
+      <li><a href="#nvidia-driver">nvidia-driver</a></li>
     </ul>
   </li>
   <li><a href="#ssh">Ssh</a></li>
@@ -1309,8 +1339,8 @@ cd shadowsocks/
 				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
 				Modified:
 			</strong> 
-			<time datetime="2019-09-06T00:00:00-07:00"> 
-				September 06, 2019
+			<time datetime="2019-09-13T00:00:00-07:00"> 
+				September 13, 2019
 			</time>
 		</p>  
         
