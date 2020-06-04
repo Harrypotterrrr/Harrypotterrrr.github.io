@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>StoryGAN: A Sequential Conditional GAN for Story Visualization - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Your Site Description23333
-">
-<link rel="canonical" href="/about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="The note of StoryGAN: A Sequential Conditional GAN for Story Visualization">
+<link rel="canonical" href="/2019/07/14/storyGAN.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -255,7 +254,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=text2image">Text2Image</a></li><li class="toc-h2"><a href="/2019/07/16/ObjGAN">Object-driven Text-to-Image Synthesis via Adversarial Training</a></li><li class="toc-h2"><a href="/2019/07/13/Sg2im">Image generation from scene graphs</a></li><li class="toc-h2"><a href="/2019/05/28/Semi-param_img_syn">Semi-parametric Image Synthesis</a></li><li class="toc-h2"><a href="/2019/05/22/Text_to_scene">Text to scene</a></li><li class="toc-h2 active"><a href="/2019/07/14/storyGAN">StoryGAN</a></li><li class="toc-h2"><a href="/2019/05/18/Text_to_image-2">Learning where and what to draw</a></li><li class="toc-h2"><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></li><li class="toc-h1"><a href="/archive.html?tag=video">Video</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -269,51 +279,141 @@
 </svg>
 <a title="Your Site Description23333
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>StoryGAN: A Sequential Conditional GAN for Story Visualization</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/harrypotterrrr.github.io/tree/master/_posts/2019/2019-07-14-storyGAN.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="StoryGAN: A Sequential Conditional GAN for Story Visualization"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=paper+read">paper read</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=text2image">text2image</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Jul 14, 2019</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2019-07-14T00:00:00+08:00">
+    <meta itemprop="keywords" content="paper read,computer vision,text2image"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>The note of <a href="https://arxiv.org/abs/1812.02784"><em>StoryGAN: A Sequential Conditional GAN for Story Visualization</em></a></p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="overview">Overview</h2>
 
-<h2 id="features">Features</h2>
+<p>Given a paragraph consisting of multiple sentences, this paper proposed a <em>sequential conditional GAN framework</em> to generate a sequence of images, one for each sentence, to depict the total story.</p>
 
-<ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
-</ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+<p>Different from the video generation, story visualization mainly focuses less on the continuity of motions in frames, such as a running man move dynamically which is smoothly represented in the clip, but more on global consistency across scenes and characters.</p>
+
+<h2 id="main-challenge">Main challenge</h2>
+
+<p>There are two main challenges for story visualization:</p>
+
+<p>One is that the sequence of images should be coherently describe the total story. In other words, if the model is highly based on the previous strategy where each generation is solely based on the single sentence, the final result will be inconsistent. For instance, ‘A rectangular is at the center. Then add a round at the right’. In this case, the result will fail to represent the relationship between two object.</p>
+
+<p>Another challenge is how to keep the appearance and layout of objects and background in a coherent way as the story progresses. For example, Harry and the surrounding around him appeared in the paragraph description should be uniform in some way.</p>
+
+<h2 id="difference-between-video-generation-and-story-visualization">Difference between video generation and story visualization</h2>
+
+<p>For video generation, models focus on extract dynamic feature to maintain motions, like the man is running. It pay attention to the body movement as time goes by, while story visualization is devoted to a sequence of key static frames representing the whole plots, like this man runs from the garden with many flowers to the bus station and inquiry the people around him. From this point of view, motion features of story visualization are less important while scene changes with variation of multiple objects should be captured, comparing to the relatively static background in video clips.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>The architecture is relatively easy to understand, as shown below. It is composed of <em>Story Encoder</em>, <em>Context Enocder</em>, <em>Image Generator</em>, <em>Image Discriminator</em> and <em>Story Discriminator</em>.</p>
+
+<p><img src="/assets/images/2019/07/storyGAN/net_arch.jpg" alt="net_arch" /></p>
+
+<h3 id="story-encoder">Story encoder</h3>
+
+<p>Story encoder is to map the story description into the low dimensional vector, story context $h_{0}$, which contains all information of the story.</p>
+
+<p>Specifically, … <strong>TODO</strong></p>
+
+<p>To smooth the representation manifold in latent semantic space, KL divergence is imported.</p>
+
+\[\mathcal{L}_{K L}=K L\left(\mathcal{N}\left(\boldsymbol{\mu}(\boldsymbol{S}), \operatorname{diag}\left(\boldsymbol{\sigma}^{2}(\boldsymbol{S})\right)\right) \| \mathcal{N}(\mathbf{0}, \boldsymbol{I})\right)\]
+
+<p>where $S$ is the encoded feature vecotrs for the paragraph, different with the notation in the image for the convenience of interpretation.</p>
+
+<h3 id="context-encoder">Context encoder</h3>
+
+<p>A deep RNN based Context encoder is imported to capture contextual information during sequential generation. It contains two parts, standard GRU cells and Text2Gist cells.</p>
+
+<p><img src="/assets/images/2019/07/storyGAN/context_encoder.jpg" alt="context_encoder" /></p>
+
+<p>For each time $t$, GRU takes as input sentence $s_{t}$ and noise $\epsilon_{t}$, and outputs $i_{t}$ which contains the local information of each sentence.</p>
+
+<p>Then Text2Gist module combines $i_{t}$ with the story context $h_{t}$ to generate so-called <em>‘Gist’ vector</em> $o_{t}$ which contains both global and local context information.</p>
+
+\[\begin{aligned} \boldsymbol{i}_{t}, \boldsymbol{g}_{t} &amp;=\operatorname{GRU}\left(\boldsymbol{s}_{t}, \boldsymbol{\epsilon}_{t}, \boldsymbol{g}_{t-1}\right) \\ \boldsymbol{o}_{t}, \boldsymbol{h}_{t} &amp;=\operatorname{Text} 2 \operatorname{Gist}\left(\boldsymbol{i}_{t}, \boldsymbol{h}_{t-1}\right) \end{aligned}\]
+
+<p>To be explicit for the Text2Gist, as shown below:</p>
+
+\[\begin{aligned} \boldsymbol{z}_{t} &amp;=\sigma_{z}\left(\boldsymbol{W}_{z} \boldsymbol{i}_{t}+\boldsymbol{U}_{t} \boldsymbol{h}_{t-1}+\boldsymbol{b}_{z}\right) \\ \boldsymbol{r}_{t} &amp;=\sigma_{r}\left(\boldsymbol{W}_{r} \boldsymbol{i}_{t}+\boldsymbol{U}_{r} \boldsymbol{h}_{t-1}+\boldsymbol{b}_{r}\right) \\ \boldsymbol{h}_{t} &amp;=\left(\mathbf{1}-\boldsymbol{z}_{t}\right) \odot \boldsymbol{h}_{t-1} +\boldsymbol{z}_{t} \odot \sigma_{h}\left(\boldsymbol{W}_{h} \boldsymbol{i}_{t}+\boldsymbol{U}_{h}\left(\boldsymbol{r}_{t} \odot \boldsymbol{h}_{t-1}\right)+\boldsymbol{b}_{h}\right) \\ \boldsymbol{o}_{t} &amp;=\text { Filter }\left(\boldsymbol{i}_{t}\right) * \boldsymbol{h}_{t} \end{aligned}\]
+
+<p>$z_{t}$ and $r_{t}$ are the update and reset gates, respectively. The update gate decide how much information from the previous step should be kept, while the reset gate determines what to forget from $h_{t-1}$.</p>
+
+<p>$Filter\left(\boldsymbol{i}_{t}\right)$ is used to choose the necessary part for image generation. <strong>TODO</strong></p>
+
+<h3 id="discriminator">Discriminator</h3>
+
+<p>Image and Story discriminator is introduced to ensure the local and global consistency of the story, respectively.</p>
+
+<p>Image discriminator measures whether the generated image $\hat{\boldsymbol{x}}_{t}$ matches the sentecne $s_{t}$ by comparing triplet $\left\{s_{t}, h_{0}, \hat{x}_{t}\right\}$ to the real $\left\{s_{t}, h_{0}, x_{t}\right\}$</p>
+
+<p>Story discriminator enforce the global consistency of image sequence given story $S$. It differs from video generation using 3D convolution to smooth the changes between frames. The framework is shown as follows:</p>
+
+<p><img src="/assets/images/2019/07/storyGAN/story_dis.jpg" alt="story_dis" /></p>
+
+<p>Each side of image or text descriptions are firstly embedded and concatenated separately in to two single vectors, shown as the blue and red one.</p>
+
+\[D_{S}=\sigma\left(\boldsymbol{w}^{\top}\left(E_{i m g}(\boldsymbol{X}) \odot E_{t x t}(\boldsymbol{S})\right)+b\right)\]
+
+<p>where $\odot$ is element-wise product.</p>
+
+<h2 id="training-strategy">Training strategy</h2>
+
+<p>The objective for StoryGAN is:</p>
+
+\[\min _{\boldsymbol{\theta}} \max _{\boldsymbol{\psi}_{I}, \boldsymbol{\psi}_{S}} \alpha \mathcal{L}_{\text {Image}}+\beta \mathcal{L}_{\text {Story}}+\mathcal{L}_{K L}\]
+
+\[\begin{aligned}
+\mathcal{L}_{\text {Image}} &amp;=\sum_{t=1}^{T}\left(\mathbb{E}_{\left(\boldsymbol{x}_{t}, \boldsymbol{s}_{t}\right)}\left[\log D_{I}\left(\boldsymbol{x}_{t}, \boldsymbol{s}_{t}, \boldsymbol{h}_{0} ; \boldsymbol{\psi}_{I}\right)\right]\right.+\mathbb{E}_{\left(\boldsymbol{\epsilon}_{t}, \boldsymbol{s}_{t}\right)}\left[\log \left(1-D_{I}\left(G\left(\boldsymbol{\epsilon}_{t}, \boldsymbol{s}_{t} ; \boldsymbol{\theta}\right), \boldsymbol{s}_{t}, \boldsymbol{h}_{0} ; \boldsymbol{\psi}_{I}\right)\right)\right] ) \\ 
+\mathcal{L}_{S t o r y} &amp;=\mathbb{E}_{(\boldsymbol{X}, \boldsymbol{S})}\left[\log D_{S}\left(\boldsymbol{X}, \boldsymbol{S} ; \boldsymbol{\psi}_{S}\right)\right]+\mathbb{E}_{(\epsilon, \boldsymbol{S})}\left[\log \left(1-D_{S}\left(\left[G\left(\boldsymbol{\epsilon}_{t}, \boldsymbol{s}_{t} ; \boldsymbol{\theta}\right)\right]_{t=1}^{T}, \boldsymbol{S} ; \boldsymbol{\psi}_{S}\right)\right)\right]
+\end{aligned}\]
+
+<p>where $\theta$, $\psi_{I}$ and $\psi_{S}$ denotes the parametes of generator, image discriminator and story discriminator, respectively.</p>
+
+<p>The algorithm outlines is given:</p>
+
+<p><img src="/assets/images/2019/07/storyGAN/algo.jpg" alt="algo" /></p>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2019-07-14T00:00:00+08:00">Jul 14, 2019</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></div></div></div>
 
 </div>
 
@@ -372,7 +472,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -889,7 +989,105 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 /*(function () {
 
 })();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
 </script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
     </div>
     <script>(function () {
   var $root = document.getElementsByClassName('root')[0];

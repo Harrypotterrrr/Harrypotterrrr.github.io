@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Image generation from scene graphs - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Your Site Description23333
-">
-<link rel="canonical" href="/about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="The note of Image generation from scene graphs">
+<link rel="canonical" href="/2019/07/13/Sg2im.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -255,7 +254,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=text2image">Text2Image</a></li><li class="toc-h2"><a href="/2019/07/16/ObjGAN">Object-driven Text-to-Image Synthesis via Adversarial Training</a></li><li class="toc-h2 active"><a href="/2019/07/13/Sg2im">Image generation from scene graphs</a></li><li class="toc-h2"><a href="/2019/05/28/Semi-param_img_syn">Semi-parametric Image Synthesis</a></li><li class="toc-h2"><a href="/2019/05/22/Text_to_scene">Text to scene</a></li><li class="toc-h2"><a href="/2019/07/14/storyGAN">StoryGAN</a></li><li class="toc-h2"><a href="/2019/05/18/Text_to_image-2">Learning where and what to draw</a></li><li class="toc-h2"><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></li><li class="toc-h1"><a href="/archive.html?tag=video">Video</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -269,51 +279,157 @@
 </svg>
 <a title="Your Site Description23333
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Image generation from scene graphs</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/harrypotterrrr.github.io/tree/master/_posts/2019/2019-07-13-Sg2im.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Image generation from scene graphs"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=paper+read">paper read</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=text2image">text2image</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>Jul 13, 2019</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2019-07-13T00:00:00+08:00">
+    <meta itemprop="keywords" content="paper read,computer vision,text2image"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>The note of <a href="https://arxiv.org/abs/1804.01622"><em>Image generation from scene graphs</em></a></p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="overview">Overview</h2>
 
-<h2 id="features">Features</h2>
+<p>Previous work only performs well on <strong>limited domains</strong> such as followers or birds, but struggle to generate complex sentences with <strong>many objects and relationships</strong>.</p>
+
+<p>This paper proposes a method for generating images from scene graphs with graph convolution which enable reasoning about objects and their relationships.</p>
+
+<p><img src="/assets/images/2019/07/sg2im/comp_stackG_sg2im.jpg" alt="comp_stackG_sg2im" /></p>
+
+<h2 id="method">Method</h2>
+
+<p>In summary, <em>image generation network</em> $f$ takes a scene graph $G$ and noise $z$ as input and outputs and image $\hat{I}=f(G, z)$.</p>
+
+<p>Firstly, embedding vectors representing objects and edges were generated from graph convolution network, which is then concatenated to predict bounding boxes and segementation masks for each predicted object.</p>
+
+<p>After obtaining the scene layout, which contains several bounding-boxes and masks, this high-dimensional representation is fed into <em>cascaded refinement network</em> <strong>TODO</strong> combined with noise to generate the final result.</p>
+
+<p><img src="/assets/images/2019/07/sg2im/net_arch.jpg" alt="net_arch" /></p>
+
+<h3 id="scene-graph">Scene graph</h3>
+
+<p>As the first stage of processing, each node and edge of the graph from the dataset is converted to a dense vector by an embedding layer, analogous to the embedding layer which is used to get word-embeddings in neural language model.</p>
+
+<h3 id="graph-convolution-network">Graph Convolution Network</h3>
+
+<p>A 2D convolution layer takes the above vectors as an input, and produces the output vectors with neighbourhood information of its corresponding input vector. In this way, convolution operation aggregates the information across the neighbourhood of the input.</p>
+
+<p><img src="/assets/images/2019/07/sg2im/graph_conv.jpg" alt="graph_conv" /></p>
+
+<p>As the picture shown and concretely speaking, the output vectors $v_{i}^{\prime}$ for edges is simply computed by $v_{r}^{\prime}=g_{p}\left(v_{i}, v_{r}, v_{j}\right)$, while the calculation of objects vectors is a bit more complicated since the same object may participate in many relationships, e.g. A car is on the street. The street is besides the buildings. where ‘street’ acts as the starting node in the first edge while being the ending node in the second.</p>
+
+<p>To this end, $g_{s}$ and $g_{o}$ is used to compute a <strong>candidate vector</strong>:</p>
+
+\[\begin{array}{l}{V_{i}^{s}=\left\{g_{s}\left(v_{i}, v_{r}, v_{j}\right) :\left(o_{i}, r, o_{j}\right) \in E\right\}} \\ {V_{i}^{o}=\left\{g_{o}\left(v_{j}, v_{r}, v_{i}\right) :\left(o_{j}, r, o_{i}\right) \in E\right\}}\end{array}\]
+
+<p>Then the ouput vector $v_{i}^{\prime}$ for object is computed as $v_{i}^{\prime}=h\left(V_{i}^{s} \cup V_{i}^{o}\right)$ where $h$ is a symmetric function <strong>TODO</strong>.</p>
+
+<h3 id="scene-layout">Scene layout</h3>
+
+<p>After embedding vectors for objects was obtained, which aggregates all information across all objects and relationships in the edge, <em>scene layout</em> will be calculated to give the coarse 2D location information.</p>
+
+<p>As below image shown, <em>mask regression network</em> and <em>box regression network</em> are built to predict a soft binary mask and a bounding-box respectively. The previous consists of several transpose convolutions terminating in sigmoid nonlinear function so that the mask lies in the range $(0,1)$ while the second is a MLP.</p>
+
+<p><img src="/assets/images/2019/07/sg2im/scene_layout.jpg" alt="scene_layout" /></p>
+
+<p>The mask embedding of shape $D \times M \times M$ <strong>TODO</strong></p>
+
+<h3 id="cascaded-refinement-network">Cascaded refinement network</h3>
+
+<p>This network consists of a series of convolutional refinement modules, doubling the resolution and proceeding in a corase-to-fine manner.</p>
+
+<p>Each module receives both the <em>scene layout</em> and the output from the prvious module as its input, concatenated them channelwise, upsampling them with nearest-neighbor interpolation and then passing it to the next, and finally generate the output result.</p>
+
+<h2 id="training">Training</h2>
+
+<h3 id="discriminator">Discriminator</h3>
+
+<p>A pair of discriminator is built.</p>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>
+    <p>The patch-based image discriminator <strong>TODO</strong> $D_{img}$ ensures the overall appearance of generated images are realistic.</p>
+  </li>
+  <li>
+    <p>The object discriminator $D_{obj}$ has two functions:</p>
+
+    <ul>
+      <li>
+        <p>ensuring objects in the image appears realistic by taking picels of object as inputs.</p>
+      </li>
+      <li>
+        <p>ensuring each object is recognizable by an auxiliary classifier to predict category.</p>
+      </li>
+    </ul>
+  </li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<h3 id="loss">Loss</h3>
+
+<p>The loss consists of six components.</p>
+
+<ul>
+  <li>
+    <p>Box loss $\mathcal{L}_{b o x}=\sum_{i=1}^{n}\left\|b_{i}-\hat{b}_{i}\right\|_{1}$  penalizing the $L_{1}$ distance between ground-truth and predicted boxes.</p>
+  </li>
+  <li>
+    <p>Mask loss $\mathcal{L}_{\text { mask }}$ penalizing differences between ground-truth and predicted masks with pixelwise cross-entropy.</p>
+  </li>
+  <li>
+    <p>Overal pixel loss $\mathcal{L}_{p i x}=\|I-\hat{I}\|_{1}$ penalizing the $L_{1}$ distance between ground-truth and generated images.</p>
+  </li>
+  <li>
+    <p>Image adversarial loss $\mathcal{L}_{G A N}^{i m g}$ from $D_{img}$ encouraging generated image patches to appear realistic.</p>
+  </li>
+  <li>
+    <p>Object adversarial loss $\mathcal{L}_{G A N}^{o b j}$ from $D_{obj}$ encouraging each generated object to look realistic.</p>
+  </li>
+  <li>
+    <p>Auxiliarly classifier loss $\mathcal{L}_{A C}^{o b j}$ from $D_{obj}$ ensuring each generated object can be classified by $D_{obj}$.</p>
+  </li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Compared to previous work, this paper uses structured text description to reason more explictly about objects and its relationships and generate more complex images with multiple objects.</p>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2019-07-13T00:00:00+08:00">Jul 13, 2019</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></div></div></div>
 
 </div>
 
@@ -372,7 +488,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -889,7 +1005,105 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 /*(function () {
 
 })();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
 </script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
     </div>
     <script>(function () {
   var $root = document.getElementsByClassName('root')[0];

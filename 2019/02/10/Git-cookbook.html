@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Git cookbook - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Your Site Description23333
-">
-<link rel="canonical" href="/about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="This cookbook is built for quick and easy search for Git commands">
+<link rel="canonical" href="/2019/02/10/Git-cookbook.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -255,7 +254,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=cookbook">Cookbook</a></li><li class="toc-h2"><a href="/2019/02/06/Linux-cookbook">Linux-cookbook</a></li><li class="toc-h2 active"><a href="/2019/02/10/Git-cookbook">Git-cookbook</a></li><li class="toc-h2"><a href="/2019/06/20/Tmux-cookbook">Tmux-cookbook</a></li><li class="toc-h2"><a href="/2019/08/03/Vim-cookbook">Vim-cookbook</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -269,51 +279,536 @@
 </svg>
 <a title="Your Site Description23333
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Git cookbook</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/harrypotterrrr.github.io/tree/master/_posts/2019/2019-02-10-Git-cookbook.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Git cookbook"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=cookbook">cookbook</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>May 02, 2019</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2019-02-10T00:00:00+08:00">
+    <meta itemprop="keywords" content="cookbook"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>This cookbook is built for quick and easy search for Git commands
+<!--more--></p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
-
-<h2 id="features">Features</h2>
+<h2 id="configuration">Configuration</h2>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>SSH reset</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-C</span> <span class="s2">"youremail@example.com"</span>
+
+<span class="c"># -C: comment</span>
+<span class="c"># -t: type</span>
+</code></pre></div></div>
+<ul>
+  <li>configure global/local user and email</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="o">[</span><span class="nt">--global</span><span class="o">]</span> user.name <span class="s2">"Your Name"</span>
+git config <span class="o">[</span><span class="nt">--global</span><span class="o">]</span> user.email <span class="s2">"email@example.com"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>set ssh-key</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-o</span>
+</code></pre></div></div>
+<ul>
+  <li>add ssh_pub key</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim ~/.ssh/authorized_keys
+</code></pre></div></div>
+
+<ul>
+  <li>list the content of config file</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --list
+</code></pre></div></div>
+
+<ul>
+  <li>set the exectuable of files</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config core.filemode false  # local
+git config --global core.fileMode false # global
+</code></pre></div></div>
+
+<ul>
+  <li>set editor from nano to vim</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git config --global core.editor "vim"
+</code></pre></div></div>
+
+<p>or append <code class="language-plaintext highlighter-rouge">editor = vim</code> in <code class="language-plaintext highlighter-rouge">core</code> of config file</p>
+
+<h2 id="elementary">Elementary</h2>
+
+<h3 id="three-sectors">Three sectors</h3>
+
+<ol>
+  <li>
+    <p>working tree: editing space</p>
+  </li>
+  <li>
+    <p>index file: cache after <code class="language-plaintext highlighter-rouge">add</code></p>
+  </li>
+  <li>
+    <p>repository: storage after <code class="language-plaintext highlighter-rouge">commit</code></p>
+  </li>
+</ol>
+
+<h3 id="basic-pipeline">Basic pipeline</h3>
+
+<ul>
+  <li>initialization</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init  
+</code></pre></div></div>
+
+<ul>
+  <li>add file contents of working tree to index files</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add &lt;file&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>record changes to the repository</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -m "&lt;message&gt;"
+</code></pre></div></div>
+
+<ul>
+  <li>add files to index files and record to the repo</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -am "&lt;message&gt;"
+</code></pre></div></div>
+
+<ul>
+  <li>check the status of the repository</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+</code></pre></div></div>
+
+<ul>
+  <li>show changes between commits, commit and working tree</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># compare the working tree with index files
+git diff
+# compare the index files with HEAD repo (&lt;commit_id&gt; repo)
+git diff --cached &lt;commit_id&gt;
+# compare the two repos
+git diff &lt;commit_id&gt; &lt;commit_id&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard contents of working tree after editing</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -- &lt;file&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard files of index file after <code class="language-plaintext highlighter-rouge">add</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset HEAD file
+</code></pre></div></div>
+
+<ul>
+  <li>discard new commit before <code class="language-plaintext highlighter-rouge">push</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard HEAD^
+git reset --hard &lt;commit_id&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>discard a commit after <code class="language-plaintext highlighter-rouge">push</code></li>
+</ul>
+
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">reset</code></li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset --hard &lt;commit_id&gt;
+...
+git push --force
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">rebase</code> <strong>TODO</strong></li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase -i HEAD^2 # where 2 refers to the 2 most latest commit
+# delete the most latest commit
+git push --force
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">revert</code></li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git revert &lt;commit_id&gt; # traceback to the history commit with a new commit
+</code></pre></div></div>
+
+<ul>
+  <li>tail the log</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log
+git log --pretty=oneline --abbrev-commit --graph
+</code></pre></div></div>
+
+<ul>
+  <li>tail the command log</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reflog
+</code></pre></div></div>
+
+<ul>
+  <li>remove</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm &lt;file&gt;
+git commit -m "xxxx"
+</code></pre></div></div>
+
+<ul>
+  <li>remove files of index files</li>
+</ul>
+
+<p><strong>Note</strong>: remove the cache after delete the directory if it has committed, or add .gitignore after commit the directory</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rm -r --cached $DIR
+</code></pre></div></div>
+
+<h2 id="branch">Branch</h2>
+
+<h3 id="basic">Basic</h3>
+
+<ul>
+  <li>create branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch &lt;new_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>rename the branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -m [&lt;old_name&gt;] &lt;new_name&gt; # omitted old_name will signify the current branch
+</code></pre></div></div>
+
+<ul>
+  <li>switch branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>switch to the created branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b &lt;branch_name&gt;
+</code></pre></div></div>
+
+<h3 id="merge">Merge</h3>
+
+<ul>
+  <li>merge branch to the current branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete local branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -d &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete branch by force before merge</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -D &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>delete remote branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin --delete &lt;branch_name&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>check the relation between local branch and remote branch</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -vv 
+</code></pre></div></div>
+
+<h3 id="fetch-remote-branch">Fetch remote branch</h3>
+
+<ul>
+  <li>change current branch to specified branch after clone</li>
+</ul>
+
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">clone</code></li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone -b &lt;remote_branch_name&gt; &lt;repo_link&gt;
+</code></pre></div></div>
+
+<ol>
+  <li>use <code class="language-plaintext highlighter-rouge">checkout</code> after initialization</li>
+</ol>
+
+<p><a href="https://www.jianshu.com/p/856ce249ed78">reference link</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git remote add origin &lt;repo_link&gt;
+git checkout -b &lt;new_name&gt; &lt;origin/remote_name&gt;
+</code></pre></div></div>
+
+<h2 id="advanced">Advanced</h2>
+
+<h3 id="modify-the-commit">Modify the commit</h3>
+
+<ul>
+  <li>modify the commit log</li>
+</ul>
+
+<p>Reference <a href="https://blog.csdn.net/sodaslay/article/details/72948722">here</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit --amend # to modify the
+git push -f origin master # to push by force
+</code></pre></div></div>
+
+<ul>
+  <li>modify the commit date</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit --amend --date="$WEEK, $DAY $MONTH $YEAR $HOUR:$MINUTE:$SECOND +0800"
+</code></pre></div></div>
+<p>where +0800 refers to Beijing time region</p>
+
+<h1 id="创建远程仓库">创建远程仓库</h1>
+
+<h2 id="添加远程库">添加远程库</h2>
+
+<ul>
+  <li>关联远程仓库：首次在Github上创建repository
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin git@server-name:path/repo-name.git
+</code></pre></div>    </div>
+  </li>
+  <li>删除关联远程仓库</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote rm origin
+</code></pre></div></div>
+
+<ul>
+  <li>首次 push 到远程仓库
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git push -u origin master 
+</code></pre></div>    </div>
+  </li>
+  <li>非首次推送到远程仓库
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin master 
+</code></pre></div>    </div>
+  </li>
+  <li>从远程仓库克隆
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone &lt;gitURL&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="branch-1">Branch</h1>
+
+<h2 id="创建与合并分支">创建与合并分支</h2>
+
+<ul>
+  <li>查看分支
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch
+</code></pre></div>    </div>
+  </li>
+  <li>创建分支
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch &lt;branch_name&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="解决冲突">解决冲突</h2>
+
+<ul>
+  <li>禁止使用 fast forward merge 方式：当master 与 branch分别更改无法快速合并时，用普通模式合并，合并后的历史有分支，能看出来曾经做过合并
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge --no-ff -m "xxx"  &lt;branch name&gt;
+</code></pre></div>    </div>
+    <p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384909115478645b93e2b5ae4dc78da049a0d1704a41000/0" alt="new_branch" /></p>
+  </li>
+  <li>git 查看分支情况
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log --graph --pretty=oneline --abbrev-commit
+</code></pre></div>    </div>
+    <p>解决后：</p>
+  </li>
+</ul>
+
+<p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384909115478645b93e2b5ae4dc78da049a0d1704a41000/0" alt="new_branch" /></p>
+
+<h2 id="bug分支">Bug分支</h2>
+<ul>
+  <li>隐藏现场及回复现场
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git stash #保存现场
+git stash apply  #保存现场
+git stash drop  #删除现场
+git stash pop #恢复并删除现场
+git stash list #查看现场
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="多人协作">多人协作</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote #查看远程库信息
+git remote -v #查看远程库信息详细
+git push origin master #推送本地 master 分支
+git checkout -b dev origin/dev #创建本地 dev 并关联远程 dev 分支
+git branch --set-upstream branch-name origin/branch-name #建立本地分支与远程分支得关联
+git pull #抓取远程分支
+</code></pre></div></div>
+
+<ul>
+  <li>创建标签
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag &lt;branch_name&gt;  #创建标签
+git tag #查看所有标签
+git tag v0.9 6224937 #对某一次 commit 打标签
+git show &lt;tagname&gt; #查看标签信息
+git tag -a v0.1 -m "version 0.1 released" 3628164 #创建有说明的标签
+</code></pre></div>    </div>
+  </li>
+  <li>操作标签
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag -d v0.1 #删除标签
+git push origin &lt;tagname&gt; #推送标签到远程
+git push origin --tags #推送本地所有未推送到远程的标签
+git push origin :refs/tags/&lt;tagname&gt; #删除远程标签
+</code></pre></div>    </div>
+  </li>
+  <li>自定义git
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --global color.ui true #配置颜色开启
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.br branch
+git config --global alias.unstage 'reset HEAD'
+git config --global alias.last 'log -1'
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"
+git config --global core.quotepath false # 设置显示中文文件名
+</code></pre></div>    </div>
+  </li>
+  <li>清楚ssh密码
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -p
+当提升你输入新的密码的时候，按enter就可以啦，继续确认enter就可以
+当然上面还有别的办法自己也可以试一下。
+</code></pre></div>    </div>
+  </li>
+  <li>git rm与git rm –cached的区别
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>当我们需要删除暂存区或分支上的文件, 同时工作区也不需要这个文件了, 可以使用
+git rm file_path
+git commit -m 'delete somefile'
+git push
+当我们需要删除暂存区或分支上的文件, 但本地又需要使用, 只是不希望这个文件被版本控制, 可以使用
+git rm --cached file_path
+git commit -m 'delete remote somefile'
+git push
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="git-命令行删除远程分支">git 命令行删除远程分支</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -r -d origin/branch-name
+git push origin :branch-name
+</code></pre></div></div>
+
+<h1 id="git默认路径修改">Git默认路径修改</h1>
+<p>在/etc/profile中最后加入</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># set Project Path
+proj="G:\Github" 
+cd $proj
+</code></pre></div></div>
+
+<h1 id="git-仓库清空">Git 仓库清空</h1>
+
+<p><a href="http://www.mamicode.com/info-detail-2158130.html">link</a></p>
+
+<h1 id="git-删除历史内容">Git 删除历史内容</h1>
+<p>首先找出git中前五大的文件：</p>
+<pre><code class="language-gitbash">git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -5
+</code></pre>
+<p>第一行的字母其实相当于文件的id,用以下命令可以找出id 对应的文件名</p>
+<pre><code class="language-gitbash">git rev-list --objects --all | grep 8f10eff91bb6aa2de1f5d096ee2e1687b0eab007
+</code></pre>
+<p>删除匹配*.db的所有文件</p>
+<pre><code class="language-gitbash">git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch *.db' --prune-empty --tag-name-filter cat -- --all
+</code></pre>
+
+<p>删除操作</p>
+<pre><code class="language-gitbash">git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch &lt;FILL YOUR FILE NAME OR ID HERE&gt;' --prune-empty --tag-name-filter cat -- --all
+</code></pre>
+
+<p>收回空间</p>
+<pre><code class="language-gitbash">rm -rf .git/refs/original/ 
+git reflog expire --expire=now --all
+git gc --aggressive --prune=now
+</code></pre>
+
+<p>强行push</p>
+<pre><code class="language-gitbash">git push -f origin master
+</code></pre>
+<p><a href="https://www.cnblogs.com/lout/p/6111739.html"></a>
+<a href="https://blog.csdn.net/u010295496/article/details/72862671"></a></p>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2019-02-10T00:00:00+08:00">May 02, 2019</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/08/03/Vim-cookbook">Vim-cookbook</a></div></div></div>
 
 </div>
 
@@ -372,7 +867,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -889,6 +1384,98 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 /*(function () {
 
 })();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
 </script>
     </div>
     <script>(function () {

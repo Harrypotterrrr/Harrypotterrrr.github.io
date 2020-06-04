@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Generative Adversarial Text to Image Synthesis - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Your Site Description23333
-">
-<link rel="canonical" href="/about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="The note of Generative Adversarial Text to Image Synthesis">
+<link rel="canonical" href="/2019/05/11/Text_to_image-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -255,7 +254,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=text2image">Text2Image</a></li><li class="toc-h2"><a href="/2019/07/16/ObjGAN">Object-driven Text-to-Image Synthesis via Adversarial Training</a></li><li class="toc-h2"><a href="/2019/07/13/Sg2im">Image generation from scene graphs</a></li><li class="toc-h2"><a href="/2019/05/28/Semi-param_img_syn">Semi-parametric Image Synthesis</a></li><li class="toc-h2"><a href="/2019/05/22/Text_to_scene">Text to scene</a></li><li class="toc-h2"><a href="/2019/07/14/storyGAN">StoryGAN</a></li><li class="toc-h2"><a href="/2019/05/18/Text_to_image-2">Learning where and what to draw</a></li><li class="toc-h2 active"><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></li><li class="toc-h1"><a href="/archive.html?tag=video">Video</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -269,51 +279,137 @@
 </svg>
 <a title="Your Site Description23333
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Generative Adversarial Text to Image Synthesis</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/harrypotterrrr.github.io/tree/master/_posts/2019/2019-05-11-Text_to_image-1.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Generative Adversarial Text to Image Synthesis"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=paper+read">paper read</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=text2image">text2image</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>May 19, 2019</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2019-05-11T00:00:00+08:00">
+    <meta itemprop="keywords" content="paper read,computer vision,text2image"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>The note of <a href="https://arxiv.org/abs/1605.05396"><em>Generative Adversarial Text to Image Synthesis</em></a></p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="overview">Overview</h2>
 
-<h2 id="features">Features</h2>
+<p>For text to image, there are many plausible value to one pixel that correctly illustrate the description of the text, since the the distribution of image conditioned on the text is highly multimodal, e.g. small changes of text description may affect pixel values with low correlation across a wide range.</p>
 
-<ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
-</ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+<p>For image to text, it is much practical to decompose the sequence according to the chain rule to generate captions. <strong>TOREAD</strong></p>
+
+<h2 id="preliminaries">Preliminaries</h2>
+
+<h3 id="gan">GAN</h3>
+
+<p>It is common to maximize $\log (D(G(z)))$ for the generator, while it is found to be more effective to minimize maximize $\log (1-D(G(z)))$ instead.</p>
+
+\[\begin{aligned} \min _{G} \max _{D} V(D, G)=&amp; \mathbb{E}_{x \sim p_{\text { data }}(x)}[\log D(x)]+\mathbb{E}_{x \sim p_{z}(z)}[\log (1-D(G(z)))] \end{aligned}\]
+
+<h3 id="joint-embedding-with-symmetric-structure">Joint embedding with symmetric structure</h3>
+
+<p>The purpose of this structure is to obtain $\varphi(t)$ which can encode text description to visually-discriminative vector.</p>
+
+<p>Denote the classifier as followed, where $\phi(v)$ is the image encoder, and $\varphi(t)$ is the text encoder. Inner-product of vectors can be interpreted to some degree as the distance or similarity of two vectors.</p>
+
+\[f_{v}(v) =\underset{y \in \mathcal{Y}}{\arg \max } \mathbb{E}_{t \sim \mathcal{T}(y)}\left[\phi(v)^{T} \varphi(t)\right]\]
+
+\[f_{t}(t) =\underset{y \in \mathcal{Y}}{\arg \max } \mathbb{E}_{v \sim \mathcal{V}(y)}\left[\phi(v)^{T} \varphi(t)\right]\]
+
+<p>Then optimize the following structured loss:</p>
+
+\[\frac{1}{N} \sum_{n=1}^{N} \Delta\left(y_{n}, f_{v}\left(v_{n}\right)\right)+\Delta\left(y_{n}, f_{t}\left(t_{n}\right)\right)\]
+
+<p>The intuition here is that a text encoding should have a higher compatibility score with image of the corresponding class and vice-versa <strong>TOREAD</strong></p>
+
+<h2 id="network-structure">Network structure</h2>
+
+<p>There is no particular to the total architecture of network, except for the conditions which is encoded from the text description and concatenated to noise afterwards. Two different full-connected layers are implemented to encode text description both in upsampling and downsampling model.</p>
+
+<p><img src="/assets/images/2019/05/text_to_image_1/network_arch.png" alt="network_arch" /></p>
+
+<h3 id="gan-cls">GAN-CLS</h3>
+
+<p>Two sources of error should be considered: unrealistic (bad generation) images, and realistic image yet dismatched with the text.</p>
+
+<p>For this reason, apart from origin losses: real image with right text and fake image with false text, additional loss: real image with false text, is added to train the discriminator to have the ability of discriminate whether the generated image match the text or not, instead of only to measure the quality of output image.</p>
+
+\[\begin{aligned}
+  s_{r} \leftarrow &amp; D(x, h)\{\text { real image, right text }\} \\ 
+  s_{w} \leftarrow &amp; D(x, \hat{h})\{\text { real image, wrong text }\} \\ 
+  s_{f} \leftarrow &amp; D(\hat{x}, h)\{\text { fake image, right text }\} \\ 
+  \mathcal{L}_{D} \leftarrow &amp; \log \left(s_{r}\right)+\left(\log \left(1-s_{w}\right)+\log \left(1-s_{f}\right)\right) / 2
+\end{aligned}\]
+
+<h3 id="gan_int">GAN_INT</h3>
+
+<blockquote>
+  <p>Deep networks have been shown to learn representations in which interpolations between embedding pairs tend to
+be near the data manifold  (Bengio et al., 2013) <strong>TOREAD</strong></p>
+</blockquote>
+
+<p>Then laryge amount of additional text embeddings can be generated by simply interpolation between captions of training samples.</p>
+
+<p>The generator can learn an ability of generate the ‘interpolated image’ and fill in gaps on the data manifold between training points <strong>TOREAD</strong>, while discriminator can learn to predict whether image and text pairs match or not.</p>
+
+<p>Note that there is no need to add label of interpolated vector for they are synthetic and fake.</p>
+
+\[\mathbb{E}_{t_{1}, t_{2} \sim p_{d a t a}}\left[\log \left(1-D\left(G\left(z, \beta t_{1}+(1-\beta) t_{2}\right)\right)\right)\right]\]
+
+<h3 id="disentangling-style-and-content">Disentangling style and content</h3>
+
+<p>It is a <strong>validation method</strong> to qualitify the ability of each proposed model to use the noise as style information, in other words, to determine the strength of the effect of noise z in different training methods</p>
+
+<p>By content, we mean the visual attributes of the bird itself, such as shape, size and color of each body part. By style, we mean all of the other factors of variation in the image such as background color and the pose orientation of the bird.</p>
+
+<p>Therefore, generative model must learn to use noise, the prior-condition, to represent style variations in order to generate realistic image.</p>
+
+<p>Inverting generative model $S$ for style transfer is designed to transfer the generative image back into noise z with the following loss,</p>
+
+\[\mathcal{L}_{\text {style}}=\mathbb{E}_{t, z \sim \mathcal{N}(0,1)}\|z-S(G(z, \varphi(t)))\|_{2}^{2}\]
+
+<blockquote>
+  <p>It is a bit difficult to understand the implication this model. To make sense of this, we can interpret this inverted model $S$ as to measure the ability of $G$ to output a generative image with both decent content and style in convergence case where $\mathcal{L}_{\text {style}}$ comes close to 0.</p>
+</blockquote>
+
+<p><img src="/assets/images/2019/05/text_to_image_1/ROC_curve.png" alt="ROC_curve" /></p>
+
+<p>For evaluation, <code class="language-plaintext highlighter-rouge">cosine similarity</code> and <code class="language-plaintext highlighter-rouge">ROC</code> is used as showed in the above figure. Images with similar and dissimilar content and style is selected and constructed as a pair, and if GAN has disentangled ability, the similarity between noises inverted from images of the same style (e.g. similar pose) should be higher than that of different styles (e.g. different pose).</p>
+
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2019-05-11T00:00:00+08:00">May 19, 2019</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></div></div></div>
 
 </div>
 
@@ -372,7 +468,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -889,7 +985,105 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 /*(function () {
 
 })();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
 </script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
     </div>
     <script>(function () {
   var $root = document.getElementsByClassName('root')[0];

@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="en">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Text2Scene: Generating Compositional Scenes from Textual Descriptions - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Your Site Description23333
-">
-<link rel="canonical" href="/about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="The note of Text2Scene: Generating Compositional Scenes from Textual Descriptions">
+<link rel="canonical" href="/2019/05/22/Text_to_scene.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -255,7 +254,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=text2image">Text2Image</a></li><li class="toc-h2"><a href="/2019/07/16/ObjGAN">Object-driven Text-to-Image Synthesis via Adversarial Training</a></li><li class="toc-h2"><a href="/2019/07/13/Sg2im">Image generation from scene graphs</a></li><li class="toc-h2"><a href="/2019/05/28/Semi-param_img_syn">Semi-parametric Image Synthesis</a></li><li class="toc-h2 active"><a href="/2019/05/22/Text_to_scene">Text to scene</a></li><li class="toc-h2"><a href="/2019/07/14/storyGAN">StoryGAN</a></li><li class="toc-h2"><a href="/2019/05/18/Text_to_image-2">Learning where and what to draw</a></li><li class="toc-h2"><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></li><li class="toc-h1"><a href="/archive.html?tag=video">Video</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -269,51 +279,182 @@
 </svg>
 <a title="Your Site Description23333
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Text2Scene: Generating Compositional Scenes from Textual Descriptions</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/harrypotterrrr.github.io/tree/master/_posts/2019/2019-05-22-Text_to_scene.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Text2Scene: Generating Compositional Scenes from Textual Descriptions"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=paper+read">paper read</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=text2image">text2image</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>May 25, 2019</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2019-05-22T00:00:00+08:00">
+    <meta itemprop="keywords" content="paper read,computer vision,text2image"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>The note of <a href="https://arxiv.org/pdf/1809.01110"><em>Text2Scene: Generating Compositional Scenes from Textual Descriptions</em></a></p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="overview">Overview</h2>
 
-<h2 id="features">Features</h2>
+<p>Unlike the previous work, this paper doesn’t adopt Generative adversarial network, but a combination of encoder-decoder architecture with a semi-parametric retrieval-based approach <strong>TOREAD</strong>. Under minor modification, this model performs decent generation of different forms of scene representation, including clip-art generation on <em>Abstract Scenes</em>, semantic layout on <em>COCO</em> and compositional image generation on <em>COCO</em>.</p>
+
+<h2 id="preliminaries">Preliminaries</h2>
+
+<h3 id="difficulties-encountered">Difficulties encountered</h3>
+
+<p>Generating rich textual representation has two main challenges, one is indirect hint at the presense of attributes from input textual description (e.g. “Mike is surprised” should change facial attributes on the generated object “Mike”), and another is relative spatial configurations within the text (e.g. “Mike is runing towards to his girlfriend” confines the orientation of “Mike” dependent on “his girlfriend”)</p>
+
+<h3 id="related-work">Related work</h3>
+
+<p>Relative work is as follows:</p>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>
+    <p><a href="https://arxiv.org/abs/1804.10992"><em>Semi-parametric Image Synthesis</em></a> proposed a retrieval-based semi-parametric method for image synthesis given an input by a human. But different from the previous work using ground-truth semantic layout as input, this work learns to <strong>predict</strong> the location and layout of the object indirectly from the text.</p>
+  </li>
+  <li>
+    <p><a href=""><em>Image generation from scene graphs</em></a>, it proposed a graph-convolution model to generate from structured scene graph where objects and their relationship are provided as inputs, while this work the presence of objects is inferred from text.</p>
+  </li>
+  <li>
+    <p><a href=""><em>Inferring semantic layout for hierarchical text-to-image synthesis</em></a> generates the layout as the intermediate representations in separably trained modules, but this work generate pixel-wise outputs with semi-parametric retrieval module without advesarial training.</p>
+  </li>
+  <li>
+    <p><a href=""><em>Visual dialog for collaborative drawing</em></a> performs pictorial generation from chat logs, compared to out works that need text much considerably more underspecified.</p>
+  </li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<h2 id="network-structure">Network structure</h2>
+
+<p>Using a sequence-to-sequence approach, this model arranges the generated object sequentially along with their attributes (locations, sizes, aspect ratios, pose, appearance and more) on an initially empty canvas.</p>
+
+<p>Generally, Text2Scene model consists of</p>
+<ul>
+  <li>a text encoder that maps input sentence to a set of embedding representations</li>
+  <li>an object decoder that predicts the next generated object conditioned on the current scene state</li>
+  <li>an attribute decoder that determines the attribute of the next object</li>
+</ul>
+
+<p><img src="/assets/images/2019/05/text_to_scene/network_arch.png" alt="network_arch" /></p>
+
+<h3 id="text-encoder">Text encoder</h3>
+
+<p>To compute for each word $i$ given input text</p>
+
+\[h_{i}^{E}=\operatorname{BiGRU}\left(x_{i}, h_{i-1}^{E}, h_{i+1}^{E}\right)\]
+
+<p>here BIGRU is a bidirectional GRU cell, $ x_{i} $ is a word embedding and $h_{i}^{E}$ is a vector encoding the current word and its context.</p>
+
+<h3 id="image-encoder-and-recurrent-module">Image encoder and recurrent module</h3>
+
+<p>To use a convolutional network $\Omega$ to encode current canvas ${B}_{t}$ into a $\mathcal{C} \times H \times W$ feature map representing the current scene state, and to model the history of the scene state $ \left\{ h_{t}^{D} \right\} $ by a convolutional GRU. $ h_{t}^{D}$ is an important representation of both temporal and spatial dynamical information.</p>
+
+\[h_{t}^{D}=\operatorname{ConvGRU}\left(\Omega\left(B_{t}\right), h_{t-1}^{D}\right)\]
+
+<p>In case that $h_{t}^{D}$ fails to capture small objects, previous step $ {o}_{t-1} $ is provided as input to the downstream decoders.</p>
+
+<h3 id="attention-based-object-decoder">Attention-based object decoder</h3>
+
+<p>The object decoder based on attention mechanism outputs the likelihhod score on all objects in object vocabulary library $\mathcal{V}$, and takes as input:</p>
+<ul>
+  <li>the current scene state $ \left\{ h_{t}^{D} \right\} $</li>
+  <li>the text features $ \left\{\left(h_{i}^{E}, x_{i}\right)\right\} $</li>
+  <li>the preiviously predicted object $ o_{t-1} $</li>
+</ul>
+
+<h4 id="spatial-attention-convolutional-network">Spatial attention convolutional network</h4>
+
+<p>where $\Psi$ is a convolutional network with <strong>spatial attention</strong> on $ \left\{ h_{t}^{D} \right\} $ to collect spatial contexts for the object prediction, e.g. what objects have already been added. Then by average pooling layer, the attended features are fused into a vector $u_{t}^{o}$.</p>
+
+\[u_{t}^{o}=\text { AvgPooling }\left(\Psi^{o}\left(h_{t}^{D}\right)\right)\]
+
+<h4 id="text-based-attention-module">Text-based attention module</h4>
+
+<p>Text-based attention module $\Phi$ uses $u_{t}^{o}$ to attend to the text features $ \left\{\left(h_{i}^{E}, x_{i}\right)\right\} $, and encodes the knowledge of all described objects having been added to the scene thus far ideally.</p>
+
+\[c_{t}^{o}=\Phi^{o}\left(\left[u_{t}^{o} ; o_{t-1}\right],\left\{\left(h_{i}^{E}, x_{i}\right)\right\}\right)\]
+
+<h4 id="likelihood-predicting-perceptrons">Likelihood predicting perceptrons</h4>
+
+<p>$\Theta^{o}$ is two-layers perceptrons to predict <em>the likelihhod of the next object</em> $p\left(o_{t}\right)$ using a softmax function.</p>
+
+\[p\left(o_{t}\right) \propto \Theta^{o}\left(\left[u_{t}^{o} ; o_{t-1} ; c_{t}^{o}\right]\right)\]
+
+<h3 id="attention-based-attribute-decoder">Attention-based attribute decoder</h3>
+
+<p>For each spatial location in $h_{t}^{D}$, This part predicts both location likelihood $ \left\{l_{t}^{i}\right\}_{i=1 \ldots N} $ and attribute likelihoods $\left\{R_{t}^{k}\right\}$ to the object $o_{t}$. Here possible locations are discretized into the same resolution of $h_{t}^{D}$. <strong>TOREAD</strong></p>
+
+<h4 id="zoom-in-module">“Zoom in” module</h4>
+
+<p>$\Phi^{a}$ is to zoom in the language context of $o_{t}$ by attending to the input text feature.</p>
+
+\[{c_{t}^{a}=\Phi^{a}\left(o_{t},\left\{\left(h_{i}^{E}, x_{i}\right)\right\}\right)}\]
+
+<h4 id="location-prediction-convolution-network">Location prediction convolution network</h4>
+
+<p>Compared to $c_{t}^{o}$ which contain information of objects that have not been added yet, $c_{t}^{a}$ focuses more specifically on contents realted to the current object $o_{t}$.</p>
+
+\[{u_{t}^{a}=\Psi^{a}\left(\left[h_{t}^{D} ; c_{t}^{a}\right]\right)}\]
+
+<p>Then $\Psi^{a}$, a CNN spatially attending to $h_{t}^{D}$, is to find an affordable location to append $o_{t}$.</p>
+
+<h4 id="likelihood-predicting-convolutional-network">Likelihood predicting convolutional network</h4>
+
+<p>$\Theta^{a}$ is implemented by a convolutional network with softmax classifiers over each value of $l_{t}$ and the discrete $R_{t}^{k}$.</p>
+
+\[{p\left(l_{t},\left\{R_{t}^{k}\right\}\right)=\Theta^{a}\left(\left[u_{t}^{a} ; o_{t} ; c_{t}^{a}\right]\right)}\]
+
+<h3 id="foreground-patch-embedding">Foreground patch embedding</h3>
+
+<p>For the third mission to generate images composed of patches retrieved from others, a particular $Q_{t}$ is proposed to predict every location in the output feature map but is used at test time to retrieve similar patches from pre-computed collection of object segments from other images <strong>TOREAD</strong>. A patch embedding network using a CNN reduces the foreground patch of target image into a 1D vector $F_{t}$. To minimize the $\ell_{2}$-distance between $Q_{t}$ and $F_{t}$, it uses the triplet embedding loss ($P^\text {color}$, $P^\text {mask}$, $P^\text {context}$) to minimize the distance of $\left\|Q_{t}, F_{t}\right\|_{2}$ and maximize the distance of $\left\|Q_{t}, F_{k}\right\|_{2}$. Here $F_{k}$ is the feature of a <em>negative</em> patch randonly selected from the same category of $F_{t}$. <strong>TOREAD</strong></p>
+
+\[L_{\text {triplet}}\left(Q_{t}, F_{t}\right)=\max \left\{\left\|Q_{t}, F_{t}\right\|_{2}-\left\|Q_{t}, F_{k}\right\|_{2}+\alpha, 0\right\}\]
+
+<p>where $\alpha$ is a margin hyper-parameter.</p>
+
+<h2 id="objective">Objective</h2>
+
+<p>The loss function with reference values $\left(O_{t}, l_{t},\left\{R_{t}^{k}\right\}, F_{t}\right)$ is:</p>
+
+\[L= -w_{o} \sum_{t} \log p\left(o_{t}\right)-w_{l} \sum_{t} \log p\left(l_{t}\right) -\sum_{k} w_{k} \sum_{t} \log p\left(R_{t}^{k}\right)\\ 
++w_{e} \sum_{t} L_{t r i p l e t}\left(Q_{t}, F_{t}\right) +w_{a}^{O} L_{a t t n}^{O}+w_{a}^{A} L_{a t t n}^{A}\]
+
+<p>where $L_{a t t n}^{*}$ are regularization terms inspired by the doubly stochastic attention module propose in section 4.2.1 of <a href="https://arxiv.org/abs/1502.03044"><em>Show, attend and tell: Neural image caption generation with visual attention</em></a> and $w$ are hyper-parameters controlling the relative contribution of each loss.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Text2Scene model demonstrates the capacity on both abstract and real images, which opens the possibility for future work on transfer learning across domains.</p>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2019-05-22T00:00:00+08:00">May 25, 2019</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/05/11/Text_to_image-1">Generative Adversarial Text to Image Synthesis</a></div></div></div>
 
 </div>
 
@@ -372,7 +513,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -889,7 +1030,105 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 /*(function () {
 
 })();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
 </script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
     </div>
     <script>(function () {
   var $root = document.getElementsByClassName('root')[0];
