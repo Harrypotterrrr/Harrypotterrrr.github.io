@@ -1,5 +1,150 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2020-08-28T22:09:50+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
-</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">Vim cookbook</title><link href="https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook.html" rel="alternate" type="text/html" title="Vim cookbook" /><published>2019-08-03T00:00:00+08:00</published><updated>2019-08-03T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook</id><content type="html" xml:base="https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook.html">&lt;p&gt;This is a cheatsheet for vim commands and operations.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2020-11-07T00:34:55+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
+</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">Port forward</title><link href="https://harrypotterrrr.github.io//2020/04/01/Port-forward.html" rel="alternate" type="text/html" title="Port forward" /><published>2020-04-01T00:00:00+08:00</published><updated>2020-04-01T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/04/01/Port-forward</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/04/01/Port-forward.html">&lt;p&gt;Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the outside server with public IP.
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;preparation&quot;&gt;Preparation&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One internal server without public IP, has an account named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;. This server has resources you want to access remotely.&lt;/li&gt;
+  &lt;li&gt;One global server with public IP &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xx.xx.xx.xx&lt;/code&gt;, has an account named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. This server is used to forward ports.&lt;/li&gt;
+  &lt;li&gt;Personal PC, named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;. This one is the only PC around you, enabling you to fetch data from remote nodes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;target&quot;&gt;Target&lt;/h2&gt;
+
+&lt;p&gt;Manipulate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt; to access remote resources from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;procedure&quot;&gt;Procedure&lt;/h2&gt;
+
+&lt;h3 id=&quot;forward-the-app-port-to-the-public-server&quot;&gt;Forward the app port to the public server&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; Remote port forwarding to enable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; to listen applications residing in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;. Run the command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-NfR&lt;/span&gt; &amp;lt;remote_port&amp;gt;:localhost:&amp;lt;inner_port&amp;gt; publicServer@xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;remote_port&amp;gt;&lt;/code&gt; is the port specified as the listening port on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inner_port&lt;/code&gt; is the port of the running application on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;, e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inner_port&lt;/code&gt; sets to 22 as ssh service is to be forwarded.&lt;/p&gt;
+
+&lt;p&gt;If the error &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh : Permission denied (publickey,gssapi-with-mic)&lt;/code&gt; appears, please check &lt;a href=&quot;#faq&quot;&gt;FAQ&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It is also helpful to check whether the ports are being listened at backend both on two server:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat &lt;span class=&quot;nt&quot;&gt;-nultp&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &amp;lt;port&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Test on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; to check if port forwarding works. Run command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;remote_port&amp;gt; innerServer@localhost
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Note that the innerServer is the account name of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then there are &lt;strong&gt;two ways&lt;/strong&gt; to fetch data to your local PC.&lt;/p&gt;
+
+&lt;h3 id=&quot;forward-the-listening-port-to-the-local-server&quot;&gt;Forward the listening port to the local server&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; Local port forwarding let a connection from a local computer to another server. Run the command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-NfL&lt;/span&gt; &amp;lt;local_port&amp;gt;:localhost:&amp;lt;remote_port&amp;gt; publicServer@xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; is the same to the previous setting in remote forwarding step, and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;local_port&lt;/code&gt; is an available port on your personal PC.&lt;/p&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; If the SSH connection and the port forwarding both go in the same direction, then it is said to be a local forwarding, otherwise remote forwarding.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; Test connection on your personal PC. Execute the command following or use the third-party app like MobaXTerm to log in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;local_port&amp;gt; innerServer@xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;While it would be convenient to fetch remotely in this way, every time local forwarding the port from the local PC to the public server is not handy. Then comes another way.&lt;/p&gt;
+
+&lt;h3 id=&quot;access-resources-directly-through-visiting-the-remote-server&quot;&gt;Access resources directly through visiting the remote server&lt;/h3&gt;
+
+&lt;p&gt;Without step 3 and 4, you directly access the listening port of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. Try the following command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;remote_port&amp;gt; innerServer@xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If time out comes out or the connection failed, it is time to check the firewall checking of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. The following steps are helpful to the public server deployed on google cloud.&lt;/p&gt;
+
+&lt;h2 id=&quot;firewall-setting&quot;&gt;Firewall setting&lt;/h2&gt;
+
+&lt;p&gt;Google cloud has a series of extremely strict regulations and mechanism to prevent from DDOS and other sorts of malevolent attacks. Thus the available port on the google engine is limited and have to be appended whenever it needed. Google issues a useful firewall documentation to manage ports. Check this &lt;a href=&quot;https://cloud.google.com/sdk/gcloud/reference/compute/firewall-rules/create&quot;&gt;link&lt;/a&gt; for more info.&lt;/p&gt;
+
+&lt;p&gt;Shortly, you could firstly try to find out where Firewall Rules option is available by going to look at &lt;strong&gt;VPC Networking&lt;/strong&gt; title of the google cloud console. Then in the &lt;strong&gt;firewall&lt;/strong&gt; tab, all port rules are listed.&lt;/p&gt;
+
+&lt;p&gt;It is a good way to append personal rules by click &lt;strong&gt;CREATE FIREWALL RULE&lt;/strong&gt;, but it is more recommended to use commands on Google Engine:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; First authorize gcloud to access the Cloud Platform with personal credentials:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gcloud auth login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;filling in the verification code through the link command line provides.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Append the port through the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gcloud compute firewall-rules create &amp;lt;rule_name&amp;gt; &lt;span class=&quot;nt&quot;&gt;--allow&lt;/span&gt; tcp:&amp;lt;remote_port&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rule_name&lt;/code&gt; should satisfy the naming rule, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; is the same to the above specified remote port.&lt;/p&gt;
+
+&lt;p&gt;Then you could return to the &lt;strong&gt;VPC Networking&lt;/strong&gt; website to check if the rule is appended. Now it is time to test if you could access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; directly from you &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt; through this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;advanced&quot;&gt;Advanced&lt;/h2&gt;
+
+&lt;p&gt;The connection frequently invalid and too tricky to deal with the disconnection?
+Here is a more convenient way to automatically check the tunnel you built between two server.&lt;/p&gt;
+
+&lt;h3 id=&quot;waive-password-to-log-in&quot;&gt;Waive password to log in&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; Build public&amp;amp;private ssh key on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;, execute:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;known_hosts&lt;/code&gt; three files are generated in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Add ssh key to the public server to authorize identity, then no more password needed next time when log in. Here are two ways to reach this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;copy the content of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh/authorized_keys&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;resort to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh-copy-id&lt;/code&gt; command: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh-copy-id &amp;lt;publicServer&amp;gt;@xx.xx.xx.xx&lt;/code&gt;, which will automatically copy the public key to the authorized list.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;auto-reconnect-the-broken-ssh&quot;&gt;Auto reconnect the broken ssh&lt;/h3&gt;
+
+&lt;p&gt;Specify a new port &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;listen_port&amp;gt;&lt;/code&gt; to listen the state of the ssh connection and replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; instructions:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;autossh &lt;span class=&quot;nt&quot;&gt;-M&lt;/span&gt; &amp;lt;listen_port&amp;gt; &lt;span class=&quot;nt&quot;&gt;-NfR&lt;/span&gt; &amp;lt;remote_port&amp;gt;:localhost:&amp;lt;inner_port&amp;gt; publicServer@xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;warning:&lt;/strong&gt; The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; flag of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; is different with the one in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt;, which means &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; will run in the background without a chance to input password. Thus, it is preferable to append &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InnerServer&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authorized_keys&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; before using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh -f&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;more-extention&quot;&gt;More extention&lt;/h3&gt;
+
+&lt;p&gt;Fill the above instructions in the startup setting in terms of the system version so as to launch the autossh service whenever the system starts up:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SysV：/etc/inid.d/autossh
+Upstart: /etc/init/autossh.conf
+systemd: /usr/lib/systemd/system/autossh.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;faq&quot;&gt;FAQ&lt;/h2&gt;
+
+&lt;h3 id=&quot;ssh-permission-denied&quot;&gt;SSH Permission Denied&lt;/h3&gt;
+
+&lt;p&gt;It is common problem happens on the newly deployed server.
+Solved it by amending in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/ssh/sshd_config&lt;/code&gt;:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PasswordAuthentication yes&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GatewayPorts yes&lt;/code&gt; and also &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PermitRootLogin yes&lt;/code&gt; if you use root identity to log in, then re-started the service using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;service sshd restart&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/irockcode/p/6629526.html&quot;&gt;SSH反向连接及Autossh&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/bgao86/article/details/80233913&quot;&gt;使用 ssh 端口转发实现登陆内网主机&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot&quot;&gt;port forward sketches&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/keerya/p/7612715.html&quot;&gt;端口转发详解及实例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="cookbook" /><summary type="html">Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the outside server with public IP.</summary></entry><entry><title type="html">Vim cookbook</title><link href="https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook.html" rel="alternate" type="text/html" title="Vim cookbook" /><published>2019-08-03T00:00:00+08:00</published><updated>2019-08-03T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook</id><content type="html" xml:base="https://harrypotterrrr.github.io//2019/08/03/Vim-cookbook.html">&lt;p&gt;This is a cheatsheet for vim commands and operations.
 &lt;!--more--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
@@ -1125,496 +1270,4 @@ be near the data manifold  (Bengio et al., 2013) &lt;strong&gt;TOREAD&lt;/strong
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/2019/05/text_to_image_1/ROC_curve.png&quot; alt=&quot;ROC_curve&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;For evaluation, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cosine similarity&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROC&lt;/code&gt; is used as showed in the above figure. Images with similar and dissimilar content and style is selected and constructed as a pair, and if GAN has disentangled ability, the similarity between noises inverted from images of the same style (e.g. similar pose) should be higher than that of different styles (e.g. different pose).&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="paper read" /><category term="computer vision" /><category term="text2image" /><summary type="html">The note of Generative Adversarial Text to Image Synthesis</summary></entry><entry><title type="html">Git cookbook</title><link href="https://harrypotterrrr.github.io//2019/02/10/Git-cookbook.html" rel="alternate" type="text/html" title="Git cookbook" /><published>2019-02-10T00:00:00+08:00</published><updated>2019-02-10T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2019/02/10/Git-cookbook</id><content type="html" xml:base="https://harrypotterrrr.github.io//2019/02/10/Git-cookbook.html">&lt;p&gt;This cookbook is built for quick and easy search for Git commands
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;SSH reset&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; rsa &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;youremail@example.com&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# -C: comment&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# -t: type&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;configure global/local user and email&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; user.name &lt;span class=&quot;s2&quot;&gt;&quot;Your Name&quot;&lt;/span&gt;
-git config &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--global&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; user.email &lt;span class=&quot;s2&quot;&gt;&quot;email@example.com&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;set ssh-key&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;add ssh_pub key&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim ~/.ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;list the content of config file&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --list
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;set the exectuable of files&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config core.filemode false  # local
-git config --global core.fileMode false # global
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;set editor from nano to vim&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git config --global core.editor &quot;vim&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;or append &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;editor = vim&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;core&lt;/code&gt; of config file&lt;/p&gt;
-
-&lt;h2 id=&quot;elementary&quot;&gt;Elementary&lt;/h2&gt;
-
-&lt;h3 id=&quot;three-sectors&quot;&gt;Three sectors&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;working tree: editing space&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;index file: cache after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;repository: storage after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;commit&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;basic-pipeline&quot;&gt;Basic pipeline&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;initialization&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;add file contents of working tree to index files&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add &amp;lt;file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;record changes to the repository&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;&amp;lt;message&amp;gt;&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;add files to index files and record to the repo&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -am &quot;&amp;lt;message&amp;gt;&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;check the status of the repository&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git status
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;show changes between commits, commit and working tree&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# compare the working tree with index files
-git diff
-# compare the index files with HEAD repo (&amp;lt;commit_id&amp;gt; repo)
-git diff --cached &amp;lt;commit_id&amp;gt;
-# compare the two repos
-git diff &amp;lt;commit_id&amp;gt; &amp;lt;commit_id&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;discard contents of working tree after editing&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -- &amp;lt;file&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;discard files of index file after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset HEAD file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;discard new commit before &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;push&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard HEAD^
-git reset --hard &amp;lt;commit_id&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;discard a commit after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;push&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reset&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard &amp;lt;commit_id&amp;gt;
-...
-git push --force
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rebase&lt;/code&gt; &lt;strong&gt;TODO&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git rebase -i HEAD^2 # where 2 refers to the 2 most latest commit
-# delete the most latest commit
-git push --force
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;revert&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git revert &amp;lt;commit_id&amp;gt; # traceback to the history commit with a new commit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;tail the log&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log
-git log --pretty=oneline --abbrev-commit --graph
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;tail the command log&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reflog
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;remove&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git rm &amp;lt;file&amp;gt;
-git commit -m &quot;xxxx&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;remove files of index files&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: remove the cache after delete the directory if it has committed, or add .gitignore after commit the directory&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git rm -r --cached $DIR
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;branch&quot;&gt;Branch&lt;/h2&gt;
-
-&lt;h3 id=&quot;basic&quot;&gt;Basic&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch &amp;lt;new_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;rename the branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -m [&amp;lt;old_name&amp;gt;] &amp;lt;new_name&amp;gt; # omitted old_name will signify the current branch
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;switch branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;switch to the created branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;merge&quot;&gt;Merge&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;merge branch to the current branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git merge &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;delete local branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -d &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;delete branch by force before merge&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -D &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;delete remote branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push origin --delete &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;check the relation between local branch and remote branch&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -vv 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;fetch-remote-branch&quot;&gt;Fetch remote branch&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;change current branch to specified branch after clone&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clone&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone -b &amp;lt;remote_branch_name&amp;gt; &amp;lt;repo_link&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;checkout&lt;/code&gt; after initialization&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/856ce249ed78&quot;&gt;reference link&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init
-git remote add origin &amp;lt;repo_link&amp;gt;
-git checkout -b &amp;lt;new_name&amp;gt; &amp;lt;origin/remote_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;advanced&quot;&gt;Advanced&lt;/h2&gt;
-
-&lt;h3 id=&quot;modify-the-commit&quot;&gt;Modify the commit&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;modify the commit log&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Reference &lt;a href=&quot;https://blog.csdn.net/sodaslay/article/details/72948722&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit --amend # to modify the
-git push -f origin master # to push by force
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;modify the commit date&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit --amend --date=&quot;$WEEK, $DAY $MONTH $YEAR $HOUR:$MINUTE:$SECOND +0800&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;where +0800 refers to Beijing time region&lt;/p&gt;
-
-&lt;h1 id=&quot;创建远程仓库&quot;&gt;创建远程仓库&lt;/h1&gt;
-
-&lt;h2 id=&quot;添加远程库&quot;&gt;添加远程库&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;关联远程仓库：首次在Github上创建repository
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add origin git@server-name:path/repo-name.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;删除关联远程仓库&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote rm origin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;首次 push 到远程仓库
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; git push -u origin master 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;非首次推送到远程仓库
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push origin master 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;从远程仓库克隆
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone &amp;lt;gitURL&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;branch-1&quot;&gt;Branch&lt;/h1&gt;
-
-&lt;h2 id=&quot;创建与合并分支&quot;&gt;创建与合并分支&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;查看分支
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;创建分支
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch &amp;lt;branch_name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;解决冲突&quot;&gt;解决冲突&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;禁止使用 fast forward merge 方式：当master 与 branch分别更改无法快速合并时，用普通模式合并，合并后的历史有分支，能看出来曾经做过合并
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git merge --no-ff -m &quot;xxx&quot;  &amp;lt;branch name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;&lt;img src=&quot;https://cdn.liaoxuefeng.com/cdn/files/attachments/001384909115478645b93e2b5ae4dc78da049a0d1704a41000/0&quot; alt=&quot;new_branch&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;git 查看分支情况
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --graph --pretty=oneline --abbrev-commit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;解决后：&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn.liaoxuefeng.com/cdn/files/attachments/001384909115478645b93e2b5ae4dc78da049a0d1704a41000/0&quot; alt=&quot;new_branch&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;bug分支&quot;&gt;Bug分支&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;隐藏现场及回复现场
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git stash #保存现场
-git stash apply  #保存现场
-git stash drop  #删除现场
-git stash pop #恢复并删除现场
-git stash list #查看现场
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;多人协作&quot;&gt;多人协作&lt;/h2&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote #查看远程库信息
-git remote -v #查看远程库信息详细
-git push origin master #推送本地 master 分支
-git checkout -b dev origin/dev #创建本地 dev 并关联远程 dev 分支
-git branch --set-upstream branch-name origin/branch-name #建立本地分支与远程分支得关联
-git pull #抓取远程分支
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;创建标签
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag &amp;lt;branch_name&amp;gt;  #创建标签
-git tag #查看所有标签
-git tag v0.9 6224937 #对某一次 commit 打标签
-git show &amp;lt;tagname&amp;gt; #查看标签信息
-git tag -a v0.1 -m &quot;version 0.1 released&quot; 3628164 #创建有说明的标签
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;操作标签
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag -d v0.1 #删除标签
-git push origin &amp;lt;tagname&amp;gt; #推送标签到远程
-git push origin --tags #推送本地所有未推送到远程的标签
-git push origin :refs/tags/&amp;lt;tagname&amp;gt; #删除远程标签
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;自定义git
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config --global color.ui true #配置颜色开启
-git config --global alias.st status
-git config --global alias.co checkout
-git config --global alias.ci commit
-git config --global alias.br branch
-git config --global alias.unstage 'reset HEAD'
-git config --global alias.last 'log -1'
-git config --global alias.lg &quot;log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&amp;lt;%an&amp;gt;%Creset' --abbrev-commit&quot;
-git config --global core.quotepath false # 设置显示中文文件名
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;清楚ssh密码
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh-keygen -p
-当提升你输入新的密码的时候，按enter就可以啦，继续确认enter就可以
-当然上面还有别的办法自己也可以试一下。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;git rm与git rm –cached的区别
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;当我们需要删除暂存区或分支上的文件, 同时工作区也不需要这个文件了, 可以使用
-git rm file_path
-git commit -m 'delete somefile'
-git push
-当我们需要删除暂存区或分支上的文件, 但本地又需要使用, 只是不希望这个文件被版本控制, 可以使用
-git rm --cached file_path
-git commit -m 'delete remote somefile'
-git push
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;git-命令行删除远程分支&quot;&gt;git 命令行删除远程分支&lt;/h1&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch -r -d origin/branch-name
-git push origin :branch-name
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;git默认路径修改&quot;&gt;Git默认路径修改&lt;/h1&gt;
-&lt;p&gt;在/etc/profile中最后加入&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# set Project Path
-proj=&quot;G:\Github&quot; 
-cd $proj
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;git-仓库清空&quot;&gt;Git 仓库清空&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.mamicode.com/info-detail-2158130.html&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;git-删除历史内容&quot;&gt;Git 删除历史内容&lt;/h1&gt;
-&lt;p&gt;首先找出git中前五大的文件：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;git verify-pack -v .git/objects/pack/pack-*.idx | sort -k 3 -g | tail -5
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;第一行的字母其实相当于文件的id,用以下命令可以找出id 对应的文件名&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;git rev-list --objects --all | grep 8f10eff91bb6aa2de1f5d096ee2e1687b0eab007
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;删除匹配*.db的所有文件&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch *.db' --prune-empty --tag-name-filter cat -- --all
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;删除操作&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch &amp;lt;FILL YOUR FILE NAME OR ID HERE&amp;gt;' --prune-empty --tag-name-filter cat -- --all
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;收回空间&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;rm -rf .git/refs/original/ 
-git reflog expire --expire=now --all
-git gc --aggressive --prune=now
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;强行push&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-gitbash&quot;&gt;git push -f origin master
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/lout/p/6111739.html&quot;&gt;&lt;/a&gt;
-&lt;a href=&quot;https://blog.csdn.net/u010295496/article/details/72862671&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="cookbook" /><summary type="html">This cookbook is built for quick and easy search for Git commands</summary></entry></feed>
+&lt;p&gt;For evaluation, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cosine similarity&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROC&lt;/code&gt; is used as showed in the above figure. Images with similar and dissimilar content and style is selected and constructed as a pair, and if GAN has disentangled ability, the similarity between noises inverted from images of the same style (e.g. similar pose) should be higher than that of different styles (e.g. different pose).&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="paper read" /><category term="computer vision" /><category term="text2image" /><summary type="html">The note of Generative Adversarial Text to Image Synthesis</summary></entry></feed>

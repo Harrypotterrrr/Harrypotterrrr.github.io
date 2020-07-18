@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Tongji University - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Port forward - Haolin Jia's Homepage</title>
 
-<meta name="description" content="I received my Bachelor degree at Tongji University, China, majoring in computer science. I extended my computer science scope into different fields, from cla...">
-<link rel="canonical" href="https://harrypotterrrr.github.io//experience/tongji"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the o...">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/04/01/Port-forward.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -263,9 +263,20 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__main--immersive page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
 
-      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header header--dark"><div class="main">
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=cookbook">Cookbook</a></li><li class="toc-h2"><a href="/2019/02/06/Linux-cookbook">Linux-cookbook</a></li><li class="toc-h2"><a href="/2019/02/10/Git-cookbook">Git-cookbook</a></li><li class="toc-h2"><a href="/2019/06/20/Tmux-cookbook">Tmux-cookbook</a></li><li class="toc-h2"><a href="/2019/08/03/Vim-cookbook">Vim-cookbook</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
         <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="24px" height="24px" viewBox="0 0 24 24">
@@ -280,27 +291,186 @@
         <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
-</div><div class="page__content"><div class="article__header--overlay"><div class="hero hero--dark overlay" style="background-image:linear-gradient(135deg, rgba(34, 139, 87 , .4), rgba(139, 34, 139, .4)),url(https://s1.ax1x.com/2020/08/26/d2wKED.jpg);background-color:#203028;"><div class="hero__content"><div class ="main"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="experience-tongji">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span></span>
-            </li></ul></div><div class="article__header"><header><h1>Tongji University</h1></header></div><p class="overlay__excerpt">I received my Bachelor degree at Tongji University, China, majoring in computer science. I extended my computer science scope into different fields, from classrooms to research labs and companies i...</p></div></div>
-              </div>
-            </div><div class ="main"><div class="grid grid--reverse">
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><meta itemprop="headline" content="Tongji University"><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-11-07T00:34:55+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Port forward</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-04-01-Port-forward.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Port forward"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=cookbook">cookbook</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-04-01-Port-forward">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Jul 15, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-04-01T00:00:00+08:00">
+    <meta itemprop="keywords" content="cookbook"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>I received my Bachelor degree at Tongji University, China, majoring in computer science. I extended my computer science scope into different fields, from classrooms to research labs and companies in the industry, as well as from elementary engineering skills like classical algorithm to increasingly promising knowledge of computer vision, artificial intelligence.</p>
+<div class="article__content" itemprop="articleBody"><p>Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the outside server with public IP.
+<!--more--></p>
 
-<!--more-->
-</div><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2020-11-07T00:34:55+08:00"><!-- start custom article footer snippet -->
+<h2 id="preparation">Preparation</h2>
+
+<ul>
+  <li>One internal server without public IP, has an account named <code class="language-plaintext highlighter-rouge">innerServer</code>. This server has resources you want to access remotely.</li>
+  <li>One global server with public IP <code class="language-plaintext highlighter-rouge">xx.xx.xx.xx</code>, has an account named <code class="language-plaintext highlighter-rouge">publicServer</code>. This server is used to forward ports.</li>
+  <li>Personal PC, named <code class="language-plaintext highlighter-rouge">personalPC</code>. This one is the only PC around you, enabling you to fetch data from remote nodes.</li>
+</ul>
+
+<h2 id="target">Target</h2>
+
+<p>Manipulate <code class="language-plaintext highlighter-rouge">personalPC</code> to access remote resources from <code class="language-plaintext highlighter-rouge">innerServer</code> through <code class="language-plaintext highlighter-rouge">publicServer</code>.</p>
+
+<h2 id="procedure">Procedure</h2>
+
+<h3 id="forward-the-app-port-to-the-public-server">Forward the app port to the public server</h3>
+
+<p><strong>1.</strong> Remote port forwarding to enable <code class="language-plaintext highlighter-rouge">publicServer</code> to listen applications residing in <code class="language-plaintext highlighter-rouge">innerServer</code>. Run the command on <code class="language-plaintext highlighter-rouge">innerServer</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-NfR</span> &lt;remote_port&gt;:localhost:&lt;inner_port&gt; publicServer@xx.xx.xx.xx
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">&lt;remote_port&gt;</code> is the port specified as the listening port on <code class="language-plaintext highlighter-rouge">publicServer</code>, and <code class="language-plaintext highlighter-rouge">inner_port</code> is the port of the running application on <code class="language-plaintext highlighter-rouge">innerServer</code>, e.g. <code class="language-plaintext highlighter-rouge">inner_port</code> sets to 22 as ssh service is to be forwarded.</p>
+
+<p>If the error <code class="language-plaintext highlighter-rouge">ssh : Permission denied (publickey,gssapi-with-mic)</code> appears, please check <a href="#faq">FAQ</a>.</p>
+
+<p>It is also helpful to check whether the ports are being listened at backend both on two server:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-nultp</span> | <span class="nb">grep</span> &lt;port&gt;
+</code></pre></div></div>
+
+<p><strong>2.</strong> Test on <code class="language-plaintext highlighter-rouge">publicServer</code> to check if port forwarding works. Run command on <code class="language-plaintext highlighter-rouge">publicServer</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> &lt;remote_port&gt; innerServer@localhost
+</code></pre></div></div>
+<p>Note that the innerServer is the account name of <code class="language-plaintext highlighter-rouge">innerServer</code>.</p>
+
+<p>Then there are <strong>two ways</strong> to fetch data to your local PC.</p>
+
+<h3 id="forward-the-listening-port-to-the-local-server">Forward the listening port to the local server</h3>
+
+<p><strong>3.</strong> Local port forwarding let a connection from a local computer to another server. Run the command on <code class="language-plaintext highlighter-rouge">personalPC</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-NfL</span> &lt;local_port&gt;:localhost:&lt;remote_port&gt; publicServer@xx.xx.xx.xx
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">remote_port</code> is the same to the previous setting in remote forwarding step, and the <code class="language-plaintext highlighter-rouge">local_port</code> is an available port on your personal PC.</p>
+
+<p class="info"><strong>Info:</strong> If the SSH connection and the port forwarding both go in the same direction, then it is said to be a local forwarding, otherwise remote forwarding.</p>
+
+<p><strong>4.</strong> Test connection on your personal PC. Execute the command following or use the third-party app like MobaXTerm to log in the <code class="language-plaintext highlighter-rouge">innerServer</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> &lt;local_port&gt; innerServer@xx.xx.xx.xx
+</code></pre></div></div>
+
+<p>While it would be convenient to fetch remotely in this way, every time local forwarding the port from the local PC to the public server is not handy. Then comes another way.</p>
+
+<h3 id="access-resources-directly-through-visiting-the-remote-server">Access resources directly through visiting the remote server</h3>
+
+<p>Without step 3 and 4, you directly access the listening port of the <code class="language-plaintext highlighter-rouge">publicServer</code>. Try the following command on <code class="language-plaintext highlighter-rouge">personalPC</code>:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-p</span> &lt;remote_port&gt; innerServer@xx.xx.xx.xx
+</code></pre></div></div>
+
+<p>If time out comes out or the connection failed, it is time to check the firewall checking of the <code class="language-plaintext highlighter-rouge">publicServer</code>. The following steps are helpful to the public server deployed on google cloud.</p>
+
+<h2 id="firewall-setting">Firewall setting</h2>
+
+<p>Google cloud has a series of extremely strict regulations and mechanism to prevent from DDOS and other sorts of malevolent attacks. Thus the available port on the google engine is limited and have to be appended whenever it needed. Google issues a useful firewall documentation to manage ports. Check this <a href="https://cloud.google.com/sdk/gcloud/reference/compute/firewall-rules/create">link</a> for more info.</p>
+
+<p>Shortly, you could firstly try to find out where Firewall Rules option is available by going to look at <strong>VPC Networking</strong> title of the google cloud console. Then in the <strong>firewall</strong> tab, all port rules are listed.</p>
+
+<p>It is a good way to append personal rules by click <strong>CREATE FIREWALL RULE</strong>, but it is more recommended to use commands on Google Engine:</p>
+
+<p><strong>1.</strong> First authorize gcloud to access the Cloud Platform with personal credentials:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud auth login
+</code></pre></div></div>
+
+<p>filling in the verification code through the link command line provides.</p>
+
+<p><strong>2.</strong> Append the port through the following command:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud compute firewall-rules create &lt;rule_name&gt; <span class="nt">--allow</span> tcp:&lt;remote_port&gt;
+</code></pre></div></div>
+
+<p>where the <code class="language-plaintext highlighter-rouge">rule_name</code> should satisfy the naming rule, and <code class="language-plaintext highlighter-rouge">remote_port</code> is the same to the above specified remote port.</p>
+
+<p>Then you could return to the <strong>VPC Networking</strong> website to check if the rule is appended. Now it is time to test if you could access the <code class="language-plaintext highlighter-rouge">innerServer</code> directly from you <code class="language-plaintext highlighter-rouge">personalPC</code> through this <code class="language-plaintext highlighter-rouge">remote_port</code> on <code class="language-plaintext highlighter-rouge">publicServer</code></p>
+
+<h2 id="advanced">Advanced</h2>
+
+<p>The connection frequently invalid and too tricky to deal with the disconnection?
+Here is a more convenient way to automatically check the tunnel you built between two server.</p>
+
+<h3 id="waive-password-to-log-in">Waive password to log in</h3>
+
+<p><strong>1.</strong> Build public&amp;private ssh key on <code class="language-plaintext highlighter-rouge">innerServer</code>, execute:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen
+</code></pre></div></div>
+<p>then <code class="language-plaintext highlighter-rouge">id_rsa</code>, <code class="language-plaintext highlighter-rouge">id_rsa.pub</code> and <code class="language-plaintext highlighter-rouge">known_hosts</code> three files are generated in <code class="language-plaintext highlighter-rouge">~/.ssh</code></p>
+
+<p><strong>2.</strong> Add ssh key to the public server to authorize identity, then no more password needed next time when log in. Here are two ways to reach this:</p>
+
+<ul>
+  <li>copy the content of <code class="language-plaintext highlighter-rouge">id_rsa.pub</code> of <code class="language-plaintext highlighter-rouge">innerServer</code> to <code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code> of <code class="language-plaintext highlighter-rouge">publicServer</code>.</li>
+  <li>resort to <code class="language-plaintext highlighter-rouge">ssh-copy-id</code> command: <code class="language-plaintext highlighter-rouge">ssh-copy-id &lt;publicServer&gt;@xx.xx.xx.xx</code>, which will automatically copy the public key to the authorized list.</li>
+</ul>
+
+<h3 id="auto-reconnect-the-broken-ssh">Auto reconnect the broken ssh</h3>
+
+<p>Specify a new port <code class="language-plaintext highlighter-rouge">&lt;listen_port&gt;</code> to listen the state of the ssh connection and replace <code class="language-plaintext highlighter-rouge">ssh</code> with <code class="language-plaintext highlighter-rouge">autossh</code> instructions:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>autossh <span class="nt">-M</span> &lt;listen_port&gt; <span class="nt">-NfR</span> &lt;remote_port&gt;:localhost:&lt;inner_port&gt; publicServer@xx.xx.xx.xx
+</code></pre></div></div>
+
+<p class="warning"><strong>warning:</strong> The <code class="language-plaintext highlighter-rouge">-f</code> flag of <code class="language-plaintext highlighter-rouge">autossh</code> is different with the one in <code class="language-plaintext highlighter-rouge">ssh</code>, which means <code class="language-plaintext highlighter-rouge">autossh</code> will run in the background without a chance to input password. Thus, it is preferable to append <code class="language-plaintext highlighter-rouge">id_rsa.pub</code> of <code class="language-plaintext highlighter-rouge">InnerServer</code> to <code class="language-plaintext highlighter-rouge">authorized_keys</code> of <code class="language-plaintext highlighter-rouge">publicServer</code> before using <code class="language-plaintext highlighter-rouge">autossh -f</code></p>
+
+<h3 id="more-extention">More extention</h3>
+
+<p>Fill the above instructions in the startup setting in terms of the system version so as to launch the autossh service whenever the system starts up:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SysV：/etc/inid.d/autossh
+Upstart: /etc/init/autossh.conf
+systemd: /usr/lib/systemd/system/autossh.service
+</code></pre></div></div>
+
+<h2 id="faq">FAQ</h2>
+
+<h3 id="ssh-permission-denied">SSH Permission Denied</h3>
+
+<p>It is common problem happens on the newly deployed server.
+Solved it by amending in <code class="language-plaintext highlighter-rouge">/etc/ssh/sshd_config</code>:
+<code class="language-plaintext highlighter-rouge">PasswordAuthentication yes</code>, <code class="language-plaintext highlighter-rouge">GatewayPorts yes</code> and also <code class="language-plaintext highlighter-rouge">PermitRootLogin yes</code> if you use root identity to log in, then re-started the service using <code class="language-plaintext highlighter-rouge">service sshd restart</code>.</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://www.cnblogs.com/irockcode/p/6629526.html">SSH反向连接及Autossh</a></li>
+  <li><a href="https://blog.csdn.net/bgao86/article/details/80233913">使用 ssh 端口转发实现登陆内网主机</a></li>
+  <li><a href="https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot">port forward sketches</a></li>
+  <li><a href="https://www.cnblogs.com/keerya/p/7612715.html">端口转发详解及实例</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-04-01T00:00:00+08:00">Jul 15, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/experience/high_school">The Experimental High School Attached To Beijing Normal University</a></div><div class="next"><span>NEXT</span><a href="/experience/ucm">University of California, Merced</a></div></div></div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2019/08/03/Vim-cookbook">Vim-cookbook</a></div></div></div>
 
 </div>
 
@@ -329,7 +499,25 @@
   });
 })();
 </script>
-</div></article><!-- start custom main bottom snippet -->
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.css');
+		window.Lazyload.js('https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: 'e0f286445f2236869beb',
+				clientSecret: 'e40b9a7441954a0e2c51b57c4181c48154fcd1d6',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2020-04-01-Port-forward'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
 
 <!-- end custom main bottom snippet -->
 </div>
@@ -387,7 +575,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -905,6 +1093,98 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -983,10 +1263,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'experience-tongji';
-      var title = "Tongji University";
+      var key =   'blog-2020-04-01-Port-forward';
+      var title = "Port forward";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='experience-tongji']").text(view);
+        $("[data-page-key='blog-2020-04-01-Port-forward']").text(view);
       });
     });
   </script>

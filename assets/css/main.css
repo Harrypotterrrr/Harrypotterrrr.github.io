@@ -2776,17 +2776,21 @@ body, html, .root, .layout--page { height: 100%; }
 
 .layout--landing .hero__cover--full-width { max-width: none; }
 
-.layout--homepage .heros { max-width: 1900px; margin-right: auto; margin-left: auto; }
+.layout--homepage .heros { margin-right: auto; margin-left: auto; }
+
+.layout--homepage .hero { margin: 0; margin-top: 3em; }
 
 .layout--homepage .hero img { display: block; width: 100%; margin: 0 auto; }
 
 .layout--homepage .hero__content { margin-bottom: 0; }
 
+.layout--homepage .hero__content p { font-family: 'Architects Daughter', cursive; }
+
 .layout--homepage .hero__cover { max-width: 950px; }
 
 .layout--homepage .hero__cover--full-width { max-width: none; }
 
-.layout--homepage .hero__title { margin-top: auto; font-family: 'Merienda', cursive; }
+.layout--homepage .hero__title { font-size: 1.8em; margin-top: auto; font-family: 'Merienda', cursive; }
 
 .layout--homepage .hero__title strong { position: relative; }
 
@@ -2795,6 +2799,8 @@ body, html, .root, .layout--page { height: 100%; }
 .layout--homepage .hero__title strong:before { right: 100%; }
 
 .layout--homepage .hero__title strong:after { left: 100%; }
+
+.layout--homepage .hero--dark .hero__title strong::before, .layout--homepage .hero--dark .hero__title strong::after { background: rgba(255, 255, 255, 0.95); }
 
 .layout--homepage .article-list .item { border-bottom-width: 0; }
 
@@ -2808,7 +2814,7 @@ body, html, .root, .layout--page { height: 100%; }
 
 .layout--homepage .article-list .item__content .item__head .item__location { color: #494949; font-size: 1.1rem; font-family: 'Satisfy', cursive; }
 
-.layout--homepage .layout--experience { width: 60%; max-width: 60%; margin-left: auto; margin-right: auto; }
+.layout--homepage .layout--experience { width: 60%; max-width: 60%; margin-top: 3em; margin-left: auto; margin-right: auto; }
 
 .layout--homepage .image--experience { margin-right: 3rem; border-radius: 12%; width: 18em; height: 14em; }
 
