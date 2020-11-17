@@ -10,11 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅵ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Keep working hard!
-">
-<link rel="canonical" href="https://harrypotterrrr.github.io//about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Texture, Texture Mapping, Interpolation, Texture Filtering">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/09/07/cg-6.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -265,7 +264,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2 active"><a href="/2020/09/07/cg-6">Texture</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -279,51 +289,486 @@
 </svg>
 <a title="Keep working hard!
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="page-about">0</span> views</li></ul></div><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅵ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-09-07-cg-6.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅵ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Sep 08, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>Texture, Texture Mapping, Interpolation, Texture Filtering</p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
-
-<h2 id="features">Features</h2>
+<h2 id="texture-mapping">Texture Mapping</h2>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li><strong>Texture mapping</strong> is to apply different colors at different places</li>
+  <li><strong>Texture</strong> defines property and color for each vertex</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<h3 id="surface">Surface</h3>
+
+<ul>
+  <li>Surfaces are 2D though lives in 3D world space</li>
+  <li>Every 3D surface point also has a place where it goes in the 2D image (<strong>texture</strong>)</li>
+  <li>In other words, each vertex of primitives in 3D world corresponds to the vertex of the primitive in 2D texture.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVCEp4.jpg" alt="cg-6-1" /></p>
+
+<h3 id="texture">Texture</h3>
+
+<ul>
+  <li>
+    <p>Texture is applied to Surface</p>
+  </li>
+  <li>
+    <p>We didn’t care about how mapping relationship of triangles produces between model and texture. The mapping and definition of primitives (triangles) are known.</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVCZc9.jpg" alt="cg-6-2" /></p>
+
+<ul>
+  <li>Generally, texture comes in two ways:
+    <ul>
+      <li>Art designer design and produce the texture</li>
+      <li>Parameterization of triangular meshes</li>
+    </ul>
+  </li>
+  <li><strong>Parameterization</strong> is the process of finding parametric equations of a curve, a surface, a manifold or a variety, defined by an implicit equation.</li>
+</ul>
+
+<h3 id="texture-coordinates">Texture Coordinates</h3>
+
+<ul>
+  <li>Each triangle vertex is assigned a texture coordinate $(u,v)$.</li>
+  <li>Define mapping between points on triangle’s surface (object coordinate space) to points in texture coordinate space.</li>
+  <li>Each vertex corresponds to one texture mapping. Again, this mapping is known and we don’t care how this mapping come from.</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: No matter the texture is square or not, $u$ and $v$ are in range of $(0,1)$.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVeE90.jpg" alt="cg-6-3" /></p>
+
+<h3 id="texture-tile">Texture Tile</h3>
+
+<ul>
+  <li>Textures can be applied multiple times</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVZlSf.jpg" alt="cg-6-4" /></p>
+
+<ul>
+  <li>Well-designed texture is tileable when multiple textures blend together profesionally and seamlessly together, borders of texture is not easily conspicuous.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVi2kV.png" alt="cg-6-5" /></p>
+
+<h2 id="interpolation">Interpolation</h2>
+
+<h3 id="interpolation-across-triangles-barycentric-coordinates">Interpolation Across Triangles: Barycentric Coordinates</h3>
+
+<ul>
+  <li>Why to interpolate
+    <ul>
+      <li>Specify values at vertices</li>
+      <li>Obtain smoothly varying values across triangles</li>
+    </ul>
+  </li>
+  <li>What to interpolate
+    <ul>
+      <li>Texture coordinates, colors, normal vectors. etc.</li>
+    </ul>
+  </li>
+  <li>How to interpolate
+    <ul>
+      <li>Barycentric coordinate</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="barycentric-coordinate">Barycentric Coordinate</h3>
+
+<ul>
+  <li>Any point $(x,y)$ in the plane can be represented as a linear combination of triangular vertices.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
+
+<ul>
+  <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$</li>
+</ul>
+
+\[\begin{aligned}(x, &amp;y)= \alpha A+\beta B+\gamma C \\ &amp; \alpha+\beta+\gamma=1 \end{aligned}\]
+
+<ul>
+  <li>
+    <p>Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$</p>
+  </li>
+  <li>Point $(x,y)$ is inside the triangle if and only if all three $(\alpha, \beta, \gamma)$ are non-negative.</li>
+  <li>
+    <p>e.g. $A$ is when $(\alpha, \beta, \gamma) = (1, 0, 0)$</p>
+  </li>
+  <li>Geometric viewpoint: proportional areas
+    <ul>
+      <li>It is available to get $(\alpha, \beta, \gamma)$ by given a spcified point $(x,y)$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned} \alpha &amp;=\frac{A_{A}}{A_{A}+A_{B}+A_{C}} \\ \beta &amp;=\frac{A_{B}}{A_{A}+A_{B}+A_{C}} \\ \gamma &amp;=\frac{A_{C}}{A_{A}+A_{B}+A_{C}} \end{aligned}\]
+
+<ul>
+  <li>
+    <p><strong>Barycentric coordinate</strong> of centroid: $(\alpha, \beta, \gamma) = (\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$, then $(x, y)=\frac{1}{3} A+\frac{1}{3} B+\frac{1}{3} C$</p>
+  </li>
+  <li>
+    <p>Linear interpolate values at vertices</p>
+    <ul>
+      <li>$V_A, V_B, V_C$ can be positions, texture coordinates, color, normal, depth, material attributes…</li>
+    </ul>
+  </li>
+</ul>
+
+\[V=\alpha V_{A}+\beta V_{B}+\gamma V_{C}\]
+
+<p class="warning"><strong>Note</strong>: barycentric coordinates are not invariant under projection! Thus interpolate every time after projections.</p>
+
+<h3 id="texture-applying">Texture Applying</h3>
+
+<ul>
+  <li>Simple texture mapping: diffuse color</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">each</span> <span class="n">rasterized</span> <span class="n">screen</span> <span class="nf">sample</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>           <span class="c1">// Usually a pixel's center</span>
+    <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">evaluate</span> <span class="n">texture</span> <span class="n">coordinate</span> <span class="n">at</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="c1">// Using barycentric coordinates</span>
+    <span class="n">texcolor</span> <span class="o">=</span> <span class="n">texture</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>                <span class="c1">// get texture (u,v)</span>
+    <span class="n">set</span> <span class="n">sample</span><span class="err">'</span><span class="n">s</span> <span class="n">color</span> <span class="n">to</span> <span class="n">texcolor</span><span class="p">;</span>                 <span class="c1">// Usually the diffuse albedo Kd of Blinn-Phong reflectance model</span>
+
+</code></pre></div></div>
+
+<h2 id="texture-filtering">Texture Filtering</h2>
+
+<ul>
+  <li>To determine the texture color for a texture mapped pixel, using the colors near by <strong>texels</strong>.</li>
+  <li><strong>Texel</strong> (纹素): a pixel on a texture</li>
+  <li>Two main categories of texture filtering, depending on the situation texture filtering
+    <ul>
+      <li><strong>Magnification filtering</strong>: a type of reconstruction filter where sparse data is interpolated to fill gaps</li>
+      <li><strong>Minification filtering</strong>: a type of anti-aliasing (AA), where texture samples exist at a higher frequency than required for the sample frequency needed for texture fill</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="texture-magnification">Texture Magnification</h3>
+
+<ul>
+  <li>Insufficient texture resolution: texture is too small comparing to the object, then the texture has to be enlarged than its actual resolution.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: For each point on the object or scene, mapping it to the corresponding point on the low resolution texture will get non-integer coordinates of texture. Rounding off is the common process to obtain non-floating coordinate texel. As a result, multiple pixels of the object or scene will corresponds to the same texel of the texture, which means the generated figure is obscure of low quality. Thus interpolation handle it.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sZN7cD.jpg" alt="cg-6-7" /></p>
+
+<h4 id="bilinear-interpolation">Bilinear Interpolation</h4>
+
+<ul>
+  <li>Linear interpolation (1D)</li>
+</ul>
+
+\[\operatorname{lerp}\left(x, v_{0}, v_{1}\right)=v_{0}+x\left(v_{1}-v_{0}\right)\]
+
+<ul>
+  <li>Two horizontal interpolations</li>
+</ul>
+
+\[u_{0}=\operatorname{lerp}\left(s, u_{00}, u_{10}\right) \\
+u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
+
+<ul>
+  <li>Final vertical interpolation</li>
+</ul>
+
+\[f(x, y)=\operatorname{lerp}\left(t, u_{0}, u_{1}\right)\]
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sZNOHA.jpg" alt="cg-6-8" width="350px" /></p>
+
+<ul>
+  <li>Red point: want to sample texture value $f(x,y)$</li>
+  <li>
+    <p>Black points: indicate texture sample locations (the center of texel)</p>
+  </li>
+  <li>
+    <p>For the nearest method of texture applying, take the red point as an example, any mapping point in the square which the red point and $u_{11}$ locates at will take $u_{11}$ as a texel. When the object or scene is very large comparing to the texture, multiple pixels will map to the same texel as $u_{11}$. That is the reason why jaggies and artifacts are consipicuous in the above nearest figure.</p>
+  </li>
+  <li>
+    <p>For the bilinear interpolation, it takes 4 nearest sample locations with textrue values as labeled, blending the property and information of 4 texels, so the result is more smooth and realistic.</p>
+  </li>
+  <li>Bilinear interpolation usually gives pretty good results at reasonable costs.</li>
+</ul>
+
+<h4 id="bicubic-interpolation">Bicubic Interpolation</h4>
+
+<ul>
+  <li>Bicubic interpolation is to use 4 x 4 point to do interpolation, which has better performance but higher costs. (Look into the canthus of the above figure, bilinear create jaggies but bicubic is more realistic)</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sZNjAI.png" alt="cg-6-9" width="650px" /></p>
+
+<h3 id="texture-minification">Texture Minification</h3>
+
+<ul>
+  <li>Superadundant texture resolution: Texture is too large comparing to the screen space required, so it has to be shrunken relative to its natural resolution.
+    <ul>
+      <li>Intuitively, when the texture is large, every information is available. But it is incorrect.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sehxtP.jpg" alt="cg-6-10" /></p>
+
+<ul>
+  <li>Screen Pixel’s “Footprint” in Texture
+    <ul>
+      <li>As the pixel in the screen space get growingly further, the number of corresponding texels in texture gets more and more.</li>
+      <li>Take the above image as an example, the pixels close to the horizon represent a large region of texture. The information lost happens when the square which the blue point is inside is selected as texel</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/07/sehvkt.jpg" alt="cg-6-11" /></p>
+
+<ul>
+  <li>
+    <p>Supersampling to antialiasing: yes, high quality, but costly.</p>
+  </li>
+  <li>The reason of aliasing when perform minification
+    <ul>
+      <li>When highly minified, many texels in pixel footprint</li>
+      <li>Signal frequency too large in a pixel</li>
+      <li>Need even higher sampling frequency</li>
+    </ul>
+  </li>
+  <li>Solution: Not do sampling but get the average value within a range, <strong>Range Query</strong>.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Some data structure like K-d tree, segment tree, binary indexed tree etc. are good ways to solve range query problem.</p>
+
+<h4 id="mipmap">Mipmap</h4>
+
+<ul>
+  <li>Precompute and store the averages of the texture over various areas of different size and position.</li>
+  <li>Allowing <strong>fast</strong>, <strong>approximate</strong>, <strong>square</strong> range queries.
+    <ul>
+      <li>“Mip” comes from the Latin, meaning a multitude in a small space.</li>
+      <li>A sequence of textures that contains the same image but at lower and lower resolution. 
+ <img src="https://s3.ax1x.com/2021/01/07/sehXTI.jpg" alt="cg-6-12" /></li>
+      <li>
+        <p>There are total of $log(n)$ images<br />
+ <img src="https://s3.ax1x.com/2021/01/07/sehO0A.jpg" alt="cg-6-13" width="400px" /></p>
+      </li>
+      <li>The total storage overhead of a mipmap is the summation of series: $\frac{4}{3}$ to the original image.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: We call this kind of structure, with images that represent the same content at a series of lower and lower sampling rates, <code class="language-plaintext highlighter-rouge">image pyramid</code> in computer vision field.</p>
+
+<ul>
+  <li>Computing Mipmap at level $D$: estimate texture footprint using texture coordinates of <strong>neighboring</strong> screen samples</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/su7yKx.jpg" alt="cg-6-14" /></p>
+
+<ul>
+  <li>
+    <p>The distance between the pixel and neighbouring in screen space is 1</p>
+  </li>
+  <li>
+    <p>Denote the pixel $(x,y)$ in screen space and texel $(u,v)$ in texture space</p>
+  </li>
+  <li>
+    <p>Denote transformation $\psi$ the mapping from image sapce to texture space as a linear mapping, the transformation equation, thus $u = \psi_{x}(x, y), v = \psi_{y}(x, y)$.</p>
+  </li>
+  <li>
+    <p><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix"><em>Jacobian matrix</em></a> $J$ is the best linear approximation of $\psi$ in a neighbourhood of $(u,v)$ where $\psi$ is differentiable.</p>
+  </li>
+</ul>
+
+\[\lim_{\Delta p \to 0}\psi(\mathbf{p}+\Delta \mathbf{p})=\psi(\mathbf{p} )+ \mathbf{J}\Delta \mathbf{p}\]
+
+\[\mathbf{J}=\frac{\partial (u, v)}{\partial (x, y)}=\left[\begin{array}{ll}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\]
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKmMo8.gif" alt="cg-6-15" /></p>
+
+<ul>
+  <li>
+    <p>Recall that in linear transformation \(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]=\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]\),\(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\) is transformation matrix, the two columns of it \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) and \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) are two basis vector of the new space if the original basis is  \(\left[\begin{array}{l}1 \\ 0\end{array}\right]\) and \(\left[\begin{array}{l}0 \\ 1\end{array}\right]\). Thus, we could take Jacobian matrix as transformation matrix mapping the pixel $(x, y)$ in screen space to the texture space $(u, v)$.</p>
+  </li>
+  <li>
+    <p>In screen space, suppose $(u, v)_{10}$ and $(u, v)_{01}$ as $(1, 0)$ and $(0, 1)$ relatively, the corresponding texel coordinate is computed by multiplying the transformation Jacobian matrix $J$:</p>
+  </li>
+</ul>
+
+\[\left(\begin{array}{l}u^{\prime}_{10} \\ v^{\prime}_{10}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}1 \\ 0\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial x} \\ \frac{\partial v}{\partial x}\end{array}\right)\]
+
+\[\left(\begin{array}{l}u^{\prime}_{01} \\ v^{\prime}_{01}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}0 \\ 1\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial y}\end{array}\right)\]
+
+<p class="info"><strong>Tip</strong>: Each column of Jacobian matrix is the new basis vector of the transformed space. <a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/jacobian-prerequisite-knowledge">More details</a></p>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sK3AKg.jpg" alt="cg-6-17" /></p>
+
+<ul>
+  <li>Choose the level $D$ so that the size covered by the texels at that level is roughly the same as the overall size of the pixel footprint.</li>
+</ul>
+
+\[D=\log _{2} L\]
+
+\[\quad L=\max \left(\sqrt{\left(\frac{d u}{d x}\right)^{2}+\left(\frac{d v}{d x}\right)^{2}}, \sqrt{\left(\frac{d u}{d y}\right)^{2}+\left(\frac{d v}{d y}\right)^{2}}\right)\]
+
+<p><img src="https://s3.ax1x.com/2021/01/08/su7UVU.jpg" alt="cg-6-16" /></p>
+
+<ul>
+  <li>$D$ rounded to nearest integer level
+    <ul>
+      <li>near (in red) corresponds to low level of texture</li>
+      <li>far (in blue) corresponds to high level of texture</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKJYZQ.jpg" alt="cg-6-18" /></p>
+
+<ul>
+  <li>
+    <p>But Bilinear filtering only, where $D$ is clamped to nearest level, not support floating $D$ and the level $D$ is not continuous.</p>
+  </li>
+  <li>
+    <p><strong>Trilinear Interpolation</strong>: perform two Bilinear interpolation in neighbouring levels and interpolate the interpolated result again.</p>
+  </li>
+</ul>
+
+\[u_{d}= BilinearInterpolate(p_{d})\\
+u_{d+1}= BilinearInterpolate(p_{d+1})\\
+f(x, y) = lerp(r, u_{d}, u_{d+1})\]
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKs5lQ.jpg" alt="cg-6-19" width="650px" /></p>
+
+<h4 id="isotrpic-limitation">Isotrpic Limitation</h4>
+
+<ul>
+  <li>Mipmap limitation
+    <ul>
+      <li>the pixel footprint might be quite different in shape from the area represented by the texel, not always approximately square</li>
+      <li>Mipmap is unable to handle the pixel footprint with an elongated shape</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKs4Sg.jpg" alt="cg-6-20" /></p>
+
+<ul>
+  <li>Tilinear (<strong>isotropic</strong>) sampling will cause overblur problem most commonly when the points are on the floor that are far away viewed at very steep angles, which results in the pixel footprint covering much larger square areas.</li>
+  <li>As a result, most footprints far from the viewer are averaged over the large area of the texture, which causes <strong>overblur</strong>.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKsffS.jpg" alt="cg-6-21" /></p>
+
+<h4 id="anisotropic-filtering">Anisotropic filtering</h4>
+
+<ul>
+  <li><strong>Anisotropic filtering</strong>(Ripmap, or abbreviated <strong>AF</strong>): use multiple lookups to approximate an elongated footprint better
+    <ul>
+      <li>select the mipmap level based on the shortest axis of the footprint rather than the largest</li>
+      <li>average together several lookups spaced along the long axis</li>
+    </ul>
+  </li>
+  <li>Look up axis-aligned rectangular zones and preserve detail at extreme viewing angles.</li>
+  <li>Comparing to isotropic filtering which consume on third of extra space, anisotropic filtering takes three times of extra space consumption.
+    <ul>
+      <li>Bilinear / trilinear filtering is insotropic and thus will overblur to avoid aliasing</li>
+      <li>Anisotropic texture filtering provides higher image quality at higher computation and memory bandwidth cost</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/08/sKsIyj.png" alt="cg-6-22" /></p>
+
+<p class="success"><strong>Info</strong>: N x Anisotropic filtering in video games means the original figure will be copied of reduced size up to N times along horizontal and vertial axis. No matter the N increases to 4x, 8x, 16x or more, the ceiling of the space consumption is 4 times of the original texture. Generally, as long as the graphics memory is enough, the larger anisotropy will has no influence on the computing performance.</p>
+
+<ul>
+  <li>Limitation so far: diagonal footprints still a problem</li>
+  <li><strong>EWA filtering</strong> (Elliptically Weighted Average Filtering) to enhance further
+    <ul>
+      <li>Use multiple lookups</li>
+      <li>Weighted average</li>
+      <li>Mipmap hierarchy still helps</li>
+      <li>Can handle irregular footprints</li>
+      <li>Trade time for better performance</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="short-summary">Short summary</h3>
+
+<ul>
+  <li>Texture mapping is a sampling operation and is prone to aliasing.</li>
+  <li>Solution: prefilter texture map to eliminate high frequencies in texture signal.</li>
+  <li>Mip-map: precompute and store multiple resampled versions of the texture image, each of which has different amounts of low-pass filtering.</li>
+  <li>During rendering: dynamically select how much low-pass filtering is required based on distance between nighbouring screen samples in texture space.
+    <ul>
+      <li>Goal is to retain as much high-frequency content (detail) in the texture as possible, while avoiding aliasing.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www3.cs.stonybrook.edu/~gu/lectures/2020/">计算共形几何, 顾险峰，丘成桐</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Texture_filtering">Texture filtering</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian matrix and determinant</a></li>
+  <li><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix">Jacobian matrix, Khan Academy</a></li>
+  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.htm">雅可比行列式</a></li>
+  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.html">多变量微积分———变量替换</a></li>
+  <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-09-07T00:00:00+08:00">Sep 08, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/09/07/cg-6">Texture</a></div></div></div>
 
 </div>
 
@@ -366,7 +811,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'page-about'
+				id: 'blog-2020-09-07-cg-6'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -428,7 +873,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -946,6 +1391,104 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1024,10 +1567,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'page-about';
-      var title = null;
+      var key =   'blog-2020-09-07-cg-6';
+      var title = "The Notes of Computer Graphics Ⅵ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='page-about']").text(view);
+        $("[data-page-key='blog-2020-09-07-cg-6']").text(view);
       });
     });
   </script>

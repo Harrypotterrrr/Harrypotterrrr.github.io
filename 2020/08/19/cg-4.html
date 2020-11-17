@@ -10,11 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅳ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Keep working hard!
-">
-<link rel="canonical" href="https://harrypotterrrr.github.io//about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/19/cg-4.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -265,7 +264,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2 active"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -279,51 +289,576 @@
 </svg>
 <a title="Keep working hard!
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="page-about">0</span> views</li></ul></div><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅳ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-19-cg-4.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅳ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-19-cg-4">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 31, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-19T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer</p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
-
-<h2 id="features">Features</h2>
+<h2 id="after-viewing-transformation">After Viewing transformation</h2>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li><strong>Viewport transformation</strong>: project the canonical cube $\left[-1, 1\right]^3$, we get from viewing transformation, to the screen.</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<h3 id="screen">Screen</h3>
+
+<ul>
+  <li>An array of pixels</li>
+  <li>Size of the array: resolution (i.e. 1920 x 1080)</li>
+  <li>A typical kind of raster display</li>
+</ul>
+
+<h3 id="raster">Raster</h3>
+
+<ul>
+  <li><strong>Raster</strong> == screen in German</li>
+  <li>Rasterize – drawing onto the screen</li>
+</ul>
+
+<h3 id="pixel">Pixel</h3>
+
+<ul>
+  <li>short for <code class="language-plaintext highlighter-rouge">picture element</code></li>
+  <li>For now: A pixel is a little square with uniform color. [Not strictly]</li>
+  <li>Color is a mixture of (red, green, blue)</li>
+</ul>
+
+<p>For the real displays of LCD screen. Each pixel is not uniform color, but R,G,B pixel geometry. Even so, now we assume a colored square full-color pixel.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rx0xXT.jpg" alt="cg-4-7" width="600px" /></p>
+
+<p class="success"><strong>Info</strong>: Bayer Pattern(Filter) is shown on the right, where green elements are twice as many as  red or blue to mimic the physiology of the human eye which is more sensitive to green light.</p>
+
+<h3 id="screen-space">Screen space</h3>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxwcR0.jpg" alt="cg-4-1" width="450px" /></p>
+
+<ul>
+  <li>
+    <p>Following definition is slightly different from <code class="language-plaintext highlighter-rouge">tiger book</code></p>
+
+    <ul>
+      <li>Pixels indices are in the form of $(x,y)$, where both $x$ and $y$ are integers</li>
+      <li>Pixels indices are from $(0,0)$ to $(width-1, height-1)$</li>
+      <li>Pixel $(x,y)$ is centered at $(x+0.5, y+0.5)$</li>
+      <li>The screen covers range $(0,0)$ to $(width, height)$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="canonical-cube-to-screen">Canonical Cube to Screen</h3>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxw6Gq.jpg" alt="cg-4-2" /></p>
+
+<ul>
+  <li>irrelevant to $z$</li>
+  <li>Transform in $xy$ plane: $\left[-1, 1\right]^2$ to $\left[0, width\right]^2 \times \left[0, height\right]^2$</li>
+  <li>Viewport transform matrix</li>
+</ul>
+
+\[M_{\text {viewport}}=\left(\begin{array}{cccc}\frac{\text {width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text {width}}{2} \\ 0 &amp; \frac{\text {height}}{2} &amp; 0 &amp; \frac{\text {height}}{2} \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\]
+
+<h3 id="raster-displays">Raster Displays</h3>
+
+<ul>
+  <li>CRT (Cathode Ray Tube)</li>
+  <li>Television: Raster Display CRT</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: On the memory of PC or Graphic Processing Unit (GPU), <code class="language-plaintext highlighter-rouge">Frame Buffer</code> is the memory for a raster display.</p>
+
+<ul>
+  <li>LCD (Liquid Crystal Display)
+    <ul>
+      <li>Principle: block or transmit light by twisting polarization(极化, 偏振方向)</li>
+      <li>Base on the wave property of light</li>
+    </ul>
+  </li>
+  <li>Electrophoretic</li>
+</ul>
+
+<h2 id="rasterization">Rasterization</h2>
+
+<p><strong>Rasterization</strong>: Drawing to Raster Display</p>
+
+<h3 id="triangles--fundamental-shape">Triangles = Fundamental Shape</h3>
+
+<ul>
+  <li>Most basic polygon
+    <ul>
+      <li>break up other polygons</li>
+    </ul>
+  </li>
+  <li>Unique properties
+    <ul>
+      <li>Guaranteed to be planar</li>
+      <li>Well-defined interior (How about the polygon which has holes in it, and how about concave polygons?)</li>
+      <li>Well-defined method for interpolating values at vertices over triangle (barycentric interpolation)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="from-triangle-to-pixels">From Triangle to pixels</h3>
+
+<ul>
+  <li>Input: position of traingle vertices projected on screen</li>
+  <li>Output: set of pixel values approximating triangle</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxUIII.jpg" alt="cg-4-3" /></p>
+
+<h3 id="sampling-a-function">Sampling a Function</h3>
+
+<ul>
+  <li>Evaluating a function at a point is sampling, we can <strong>discretize</strong> a function by sampling</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxbGnO.jpg" alt="cg-4-8" /></p>
+
+<p class="success"><strong>Info</strong>: Sampling is a core idea in graphics. i.e. We sample time(1D), area (2D), direction (2D), volumn (3D). Here, <strong>the centers</strong> of pixels are used to sample <strong>screen space</strong>.</p>
+
+<h3 id="rasterization-as-2d-sampling">Rasterization as 2D Sampling</h3>
+
+<ul>
+  <li>Sample if each pixel center is inside triangle</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxU5dA.jpg" alt="cg-4-4" width="430px" /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">inside</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// x, y: not necessarily integers</span>
+    <span class="k">if</span> <span class="n">Point</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="n">in</span> <span class="n">triangle</span> <span class="n">t</span><span class="o">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">xmax</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">ymax</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">inside</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use three <a href="2020-08-11-cg-2.md#cross-product">cross product</a> to check if the Point is inside the triangle or not.</li>
+  <li>Disregard edge cases when the sample point is exactly on the edge of the triangle.</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: Pixel values are integers so the center should be additional 0.5 amount.</p>
+
+<ul>
+  <li>Use Bounding Box (axis aligned) to avoid checking all pixels on the screen and reduce great time consumption.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxUfqH.jpg" alt="cg-4-5" width="450px" /></p>
+
+<ul>
+  <li>Incremental triangle traversal: traverse from the beginning of the left side of the triangle to the right.
+    <ul>
+      <li>Suitable for thin and rotated triangles, especially for those which has small area but consume the large proportion of bounding box</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rxUTit.jpg" alt="cg-4-6" width="450px" /></p>
+
+<h2 id="sampling">Sampling</h2>
+
+<h3 id="ubiquitous-sampling">Ubiquitous Sampling</h3>
+
+<ul>
+  <li>Rasterization = Sample 2D Positions</li>
+  <li>Photograph = Sample Image Sensor Plane</li>
+  <li>Video =  Sample Time</li>
+</ul>
+
+<h3 id="artifacts">Artifacts</h3>
+
+<ul>
+  <li>
+    <p><strong>Artifacts</strong>: Errors, Mistakes, Inaccuracies</p>
+  </li>
+  <li>
+    <p>Aliasing Artifacts due to sampling</p>
+    <ul>
+      <li>Jaggies: sampling in space
+<img src="https://s3.ax1x.com/2021/01/01/rxbJBD.jpg" alt="cg-4-9" width="600px" /></li>
+      <li>Moire pattern: undersampling (skip odd rows and columns) images
+<img src="https://s3.ax1x.com/2021/01/01/rxbh3q.jpg" alt="cg-4-10" width="600px" /></li>
+      <li>Wagon wheel effect: sampling in time of our eyes
+<img src="https://s3.ax1x.com/2021/01/01/rxbgEQ.gif" alt="cg-4-11" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="the-reason-behind-the-aliasing-artifact">The reason behind the Aliasing Artifact</h3>
+
+<ul>
+  <li>Signals are changing too <strong>fast</strong> (high frequency) but sampled too <strong>slowly</strong></li>
+</ul>
+
+<h2 id="frequency-and-filtering">Frequency and Filtering</h2>
+
+<ul>
+  <li>
+    <p>Central Idea: Blurring (pre-filtering) before sampling</p>
+  </li>
+  <li>
+    <p>Directly sample: pixel values of jaggies in rasterized triangle are pure red or white</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/rzHG59.jpg" alt="cg-4-12" /></p>
+
+<ul>
+  <li>Pre-filter before sample: pixel values of antialiased edges have intermediate values</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/rzH8UJ.jpg" alt="cg-4-13" /></p>
+
+<p class="info"><strong>Tip</strong>: remove frequencies above <a href="#nyquist-theory">Nyquist</a>.</p>
+
+<ul>
+  <li>The order of blurring and sampling matters</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/rzH3E4.jpg" alt="cg-4-14" /></p>
+
+<p>The above figures are sampling, antialiasing (filter then sample), blurred alisaing (sample then filter)</p>
+
+<p>The reason why undersampling introduces aliasing, and prefiltering then sampling can do antialiasing instead of the inversed operation will be explained at <a href="#antialiasing">Antialiasing</a>.</p>
+
+<h3 id="fourier-transform">Fourier Transform</h3>
+
+<ul>
+  <li>
+    <p><strong>Frequency</strong>: $f$ in $sin(2\pi fx)$, where $f = \frac{1}{T}$</p>
+  </li>
+  <li>
+    <p>Represent a function as a weighted sum of sines and cosines.</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/sS9m8O.jpg" alt="cg-4-15" /></p>
+
+<ul>
+  <li>Fourier transform decomposes a signal into frequencies, from spatial domain to frequency domain</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPyISO.png" alt="cg-4-27" width="500px" /></p>
+
+<h3 id="nyquist-theory">Nyquist Theory</h3>
+
+<ul>
+  <li>Low frequency signal: sampled adequately for reasonable reconstruction</li>
+  <li>High frequency signal: insufficiently sampled and reconstruction is correct</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/sSiDZd.jpg" alt="cg-4-16" width="650px" /></p>
+
+<ul>
+  <li>Thus, higher frequencies need faster sampling</li>
+  <li>Strictly, the sampling frequency should at least be <strong>twice</strong> the signal bandwidth. This frequency is called <strong>Nyquist rate</strong></li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/sSi0qH.jpg" alt="cg-4-17" width="500px" /></p>
+
+<ul>
+  <li>Two frequencies (above blue and black) that are indistinguishable at a given sampling rate called <strong>aliases</strong>.</li>
+</ul>
+
+<h3 id="filtering">Filtering</h3>
+
+<p><strong>Filtering</strong>: Getting rid of certain frequency contents</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/02/sSTicV.jpg" alt="cg-4-18" /></p>
+
+<ul>
+  <li>The right image shows the value of frequency domain which is transformed by Fourier Transform from the left image, spatial domain.</li>
+</ul>
+
+\[F(u, v)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x, y) e^{-j 2 \pi(u x+v y)} d x d y\]
+
+<ul>
+  <li>
+    <p>Above two-dimensional transform formula shows that the original image $f(x,y)$ is transformed into $F(u,v)$</p>
+  </li>
+  <li>
+    <p>In the right figure, the center represents $u =0,v=0$, that is $F(0,0)$. This means the center of the image is the low frequency region, otherwise high frequency region.</p>
+  </li>
+  <li>
+    <p>High-pass filter will get rid of all low frequency and keep edges of the image.</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/03/spKY6A.jpg" alt="cg-4-19" /></p>
+
+<ul>
+  <li>Low-pass filter will filter the high frequency and retain the smooth part of the image.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/03/spKJld.jpg" alt="cg-4-20" /></p>
+
+<p class="info"><strong>Tip</strong>: For the two-dimensional Fourier Transform, the image can be thought of as being tiled (stacked vertically and horizontally) infinitely. Thus two highlight strips in a cross shape at the center of the image is caused by the drastic change of the edges of the left figures.</p>
+
+<h3 id="convolution">Convolution</h3>
+
+<ul>
+  <li>Convolution in spatial domain is equivalent to multiplication in frequency domain, and vice versa</li>
+</ul>
+
+<p class="warning"><strong>An intuitive proof</strong>: The spatial domain signal can be decomposed into a series of sinusoidal signals with different frequencies. According to the distributive property of convolution operation, the convolution of two spatial signals can be regarded as the sum of the convolutions of pairwise sinusoidal signals. Since the result of the convolution of sinusodial signals with different frequencies is zero, only the convolution of sinusoidal signals with the same frequency is left. As a result, the output of convolution is that the frequency remains unchanged and the amplitude is to be multiplied. For frequency domain, it appears as direct multiplication.</p>
+
+<ul>
+  <li>Option 1:
+    <ul>
+      <li>Filter by convolution in the spatial domain</li>
+    </ul>
+  </li>
+  <li>Option 2:
+    <ul>
+      <li>Transform to frequency domain (Fourier transform)</li>
+      <li>Multiply by Fourier transform of convolution kernel</li>
+      <li>Transform back to spatial domain (inverse Fourier)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sCjpr9.jpg" alt="cg-4-21" /></p>
+
+<ul>
+  <li>
+    <p>Regularization term (i.e. $\frac{1}{9}$ in the above image) is to ensure the brightness of theimage does not change after transformation.</p>
+  </li>
+  <li>
+    <p>Wider Filter Kernel = Lower Frequency</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPyhY6.jpg" alt="cg-4-22" /></p>
+
+<ul>
+  <li>Sampling = Repeating Frequency Contents</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPy4fK.jpg" alt="cg-4-23" /></p>
+
+<ul>
+  <li>(a) band-unlimited signal</li>
+  <li>(b) frequency spectrum of (a)</li>
+  <li>(c) unit-impulse function, which is used to simulate sampling</li>
+  <li>(d) frequency spectrum of (b)</li>
+  <li>(e) result of convolution of (a) and (c)</li>
+  <li>
+    <p>(f) result of multiplication of (d) and (f). More intuitive, (f) is copied for many times along the frequency axis.</p>
+  </li>
+  <li>Aliasing = Mixed Frequency Contents</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPygm9.jpg" alt="cg-4-24" /></p>
+
+<ul>
+  <li>When the sampling interval becomes small, the corresponding sampling frequency will become relatively large, which will lead to the overlapping phenomenon in final frequency spectrum. Thus, aliasing is caused by information lost.</li>
+</ul>
+
+<h2 id="antialiasing">Antialiasing</h2>
+
+<h3 id="basic-theory">Basic theory</h3>
+
+<ul>
+  <li>Option 1: Increase sampling rate
+    <ul>
+      <li>Eseentially increasing the distance between replicas in the Fourier domain</li>
+      <li>Higher resolution displays, sensors, framebuffers..</li>
+      <li>Disadvantage: costly &amp; may need very high resolution</li>
+    </ul>
+  </li>
+  <li>Option 2: Antialiasing
+    <ul>
+      <li>Making Fourier contents “narrower” before repeating</li>
+      <li>i.e. Filtering out high frequencies before sampling</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPy2wR.jpg" alt="cg-4-25" /></p>
+
+<p>Perform filtering before the sampling will discard the high frequency and reduce the overlapping phenomenon, consequently reduce the loss of information and aliasing.</p>
+
+<ul>
+  <li>Antialiasing by averaging values in pixel area
+    <ul>
+      <li><strong>Convolve</strong> by a 1-pixel box-blur (convolving = filtering = averaing)</li>
+      <li><strong>Sample</strong> at every pixel’s center</li>
+    </ul>
+  </li>
+  <li>In rasterizing one triangle, the average value inside a pixel area is equal to the area of the pixel covered by the triangle</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/sPyRT1.jpg" alt="cg-4-26" /></p>
+
+<ul>
+  <li>
+    <p>Sampling is an irreversable mapping, so the combination of convolution mapping and sampling is not commutative.</p>
+  </li>
+  <li>
+    <p>Generally, antialiasing is to filter the high frequency signal so that the sampling frequency could catch up with the signal frequency.</p>
+  </li>
+</ul>
+
+<h3 id="msaa">MSAA</h3>
+
+<ul>
+  <li>MSAA (multi-sample antialiasing) is to antialias by supersampling: Approximate the effect of the 1-pixel box filter by sampling multiple locations within a pixel and averagin their values.
+    <ul>
+      <li>One sample per pixel
+<img src="https://s3.ax1x.com/2021/01/04/sP2Ghq.jpg" alt="cg-4-28" width="650px" /></li>
+      <li>Take N x N samples in each pixel
+<img src="https://s3.ax1x.com/2021/01/04/sP2t3V.jpg" alt="cg-4-29" width="650px" /></li>
+      <li>Average the N x N samples inside each pixel
+<img src="https://s3.ax1x.com/2021/01/04/sP2Y90.jpg" alt="cg-4-30" width="650px" /></li>
+      <li>Until all pixel are averaged
+<img src="https://s3.ax1x.com/2021/01/04/sP28Nn.jpg" alt="cg-4-31" width="650px" /></li>
+      <li>Corresponding signal emitted by the display
+<img src="https://s3.ax1x.com/2021/01/04/sP23As.jpg" alt="cg-4-32" width="650px" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Take 4 x MSAA as an example, given a screen with a resolution of 800 x 600, MSAA firstly render the image to the buffer of 1600 x 1200, and downsample it back to the original 800 x 600.</p>
+
+<ul>
+  <li>
+    <p>The cost of MSAA is time consuming, the size of render target increases to the MSAA multiple times.</p>
+  </li>
+  <li>
+    <p>The more multiplier of MSAA, the better performace of antialiasing, the more cost of time.</p>
+  </li>
+</ul>
+
+<h3 id="milestones-of-antialiasing">Milestones of Antialiasing</h3>
+
+<ul>
+  <li>
+    <p>FXAA (Fast Approximate AA): screen-space anti-aliasing algorithm. Different with MSAA which process the image before the sampling, FXAA postprocess the image after sampled and rasterized. FXAA contrast pixels to heuristically find edges and optimize jaggies in different directions. Very fast!</p>
+  </li>
+  <li>
+    <p>TAA (Temporal AA) : reuse the previous frame and accordingly reduce the effects of temporal aliasing caused by the sampling rate of a scene being too low compared to the transformation speed of objects inside of the scene.</p>
+  </li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: We often pronounce <code class="language-plaintext highlighter-rouge">[temˈporəl]</code> in industry to distinguish with ‘temporary’ meaning.</p>
+
+<ul>
+  <li>Super resolution / super sampling
+    <ul>
+      <li>low resolution to high resolution</li>
+      <li>DLSS (Deep Learning Super Sampling): to understand and predict the missing information</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="visibility-and-occlusion">Visibility and Occlusion</h2>
+
+<h3 id="painters-algorithm">Painter’s Algorithm</h3>
+
+<ul>
+  <li>
+    <p>Solve the problem of triangles rendering order</p>
+  </li>
+  <li>
+    <p>Inspired by how painters paint: Paint from back to front, <strong>overwrite</strong> in the framebuffer.</p>
+  </li>
+  <li>
+    <p>Require sorting in depth $Olog(n)$ for n triangles</p>
+  </li>
+  <li>
+    <p>unresolvable depth order exist:</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/si29sS.png" alt="cg-4-33" width="250px" /></p>
+
+<h3 id="z-buffer">Z-Buffer</h3>
+
+<ul>
+  <li>store current minimum of <code class="language-plaintext highlighter-rouge">z-value</code> for each pixel</li>
+  <li>need an additional buffer for depth values
+    <ul>
+      <li>frame buffer stores color values</li>
+      <li>depth buffer (z-buffer) stores depth</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Note</strong>: For simplicity we suppose <em>z is always positive</em> (smaller z is closer, larger z is further)</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/04/si2pM8.jpg" alt="cg-4-34" /></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Initialize</span> <span class="n">depth</span> <span class="n">buffer</span> <span class="n">to</span> <span class="o">+</span><span class="n">inf</span>
+<span class="c1">// During rasterization</span>
+<span class="k">for</span> <span class="n">each</span> <span class="n">triangle</span> <span class="n">T</span><span class="o">:</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="n">in</span> <span class="n">T</span><span class="o">:</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span><span class="o">:</span>  <span class="c1">// closest sample so far</span>
+            <span class="n">frame_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span> <span class="c1">// update color</span>
+            <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span>  <span class="c1">// update depth</span>
+        <span class="k">else</span>
+            <span class="n">pass</span> <span class="c1">// do nothing, this sample is occluded</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Complexity: $O(n)$ for traversing $n$ triangles</li>
+  <li>Different order of drawing triangles has nothing to do with the result</li>
+  <li>Most important visibility algorithm implemented in hardware for all GPUs</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: z-buffer can not deal with transparent objects.</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www.zhihu.com/question/29246532">图像傅里叶变换的频率</a></li>
+  <li><a href="https://www.zhihu.com/question/22611929">二维傅里叶变换</a></li>
+  <li><a href="https://www.zhihu.com/question/20236638">FXAA、MSAA区别</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-08-19T00:00:00+08:00">Aug 31, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/09/07/cg-6">Texture</a></div></div></div>
 
 </div>
 
@@ -366,7 +901,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'page-about'
+				id: 'blog-2020-08-19-cg-4'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -428,7 +963,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -946,6 +1481,104 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1024,10 +1657,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'page-about';
-      var title = null;
+      var key =   'blog-2020-08-19-cg-4';
+      var title = "The Notes of Computer Graphics Ⅳ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='page-about']").text(view);
+        $("[data-page-key='blog-2020-08-19-cg-4']").text(view);
       });
     });
   </script>

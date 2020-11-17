@@ -18,7 +18,8 @@
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
 <meta name="theme-color" content="#ffffff">
-<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" ><!-- start custom head snippets -->
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><script src="https://kit.fontawesome.com/0970362a03.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/0970362a03.js" > --><!-- start custom head snippets -->
 
 <!-- end custom head snippets -->
 <script>(function() {
@@ -236,7 +237,7 @@
     var TEXT_VARIABLES = {
       version: '2.2.6',
       sources: {
-        font_awesome: 'https://use.fontawesome.com/releases/v5.14.0/css/all.css',
+        font_awesome: 'https://kit.fontawesome.com/0970362a03.js',
         jquery: 'https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js',
         leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
         chart: 'https://cdn.bootcss.com/Chart.js/2.7.2/Chart.bundle.min.js',
@@ -439,6 +440,39 @@ Here is a more convenient way to automatically check the tunnel you built betwee
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SysV：/etc/inid.d/autossh
 Upstart: /etc/init/autossh.conf
 systemd: /usr/lib/systemd/system/autossh.service
+</code></pre></div></div>
+
+<h3 id="startup-script-example">Startup script example</h3>
+
+<p>Here is an example of a <code class="language-plaintext highlighter-rouge">xxx.service</code> file as Ubuntu startup script under <code class="language-plaintext highlighter-rouge">/etc/systemd/systme/</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Port forward
+After=network.target syslog.target
+Wants=network.target default.target
+
+[Service]
+Type=forking
+User=lz
+Group=lz
+ExecStart=/bin/bash /home/lz/potter/scripts/portf.sh
+ExecReload=/bin/pkill autossh &amp;&amp; /home/lz/potter/scripts/portf.sh
+ExecStop=/bin/pkill autossh
+
+[Install]
+WantedBy=default.target
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">portf.sh</code> script is to describe which port to forward under specified path:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>autossh -M 9230 -NfR 9220:localhost:22 root@106.13.58.57
+autossh -M 8895 -NfR 8894:localhost:8894 root@106.13.58.57
+</code></pre></div></div>
+
+<p>then refresh the system daemon and start your service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
+systemctl start xxx.service
 </code></pre></div></div>
 
 <h2 id="faq">FAQ</h2>

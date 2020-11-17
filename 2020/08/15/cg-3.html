@@ -10,11 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅲ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Keep working hard!
-">
-<link rel="canonical" href="https://harrypotterrrr.github.io//about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="2D/3D Transformation, Viewing Transformation">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/15/cg-3.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -265,7 +264,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2 active"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -279,51 +289,476 @@
 </svg>
 <a title="Keep working hard!
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="page-about">0</span> views</li></ul></div><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅲ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-15-cg-3.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅲ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-15-cg-3">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 19, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-15T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>2D/3D Transformation, Viewing Transformation</p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="linear-transformations">Linear Transformations</h2>
 
-<h2 id="features">Features</h2>
+<h3 id="scale">Scale</h3>
+
+\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}s_{x} &amp; 0 \\ 0 &amp; s_{y}\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
+
+<h3 id="reflection">Reflection</h3>
+
+\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{cc}-1 &amp; 0 \\ 0 &amp; 1\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
+
+<h3 id="shear">Shear</h3>
+
+\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}1 &amp; a \\ 0 &amp; 1\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
+
+<h3 id="rotation">Rotation</h3>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rHDd58.jpg" alt="cg-3-1" /></p>
+
+\[\mathbf{R}_{\theta}=\left[\begin{array}{cc}\cos \theta &amp; -\sin \theta \\ \sin \theta &amp; \cos \hat{\theta}\end{array}\right]\]
+
+<p class="info"><strong>Tip</strong>: For the rotation matrix $M$, which is always normalized in orthogonal form. Thus the transposed matrix $M^{T}$ is exactly inversed matrix $M^{-1}$, that is:
+$M^{T}=M^{-1}$, where $M$ is orthogonal matrix</p>
+
+<h3 id="linear-transformations-1">Linear Transformations</h3>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>Use the same dimension matrix</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+\[\begin{aligned}\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right] &amp;=\left[\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right] \\ \mathbf{x}^{\prime} &amp;=\mathbf{M} \mathbf{x} \end{aligned}\]
+
+<h2 id="affine-transformations">Affine Transformations</h2>
+
+<h3 id="homogeneous-coordinate">Homogeneous Coordinate</h3>
+
+<ul>
+  <li>Translation cannot be represented in matrix form</li>
+</ul>
+
+\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]+\left[\begin{array}{l}t_{x} \\ t_{y}\end{array}\right]\]
+
+<p>Hence, translation is <strong>Not</strong> linear transform</p>
+
+<ul>
+  <li>
+    <p>But we don’t want translation to be a special case, so is there a unified way to represent all transformations?</p>
+  </li>
+  <li>
+    <p>Add a third coordinate, and use 3D matrix to represent translations:</p>
+    <ul>
+      <li>2D point $=(x, y, 1)^{\top}$</li>
+      <li>2D vector $=(x, y, 0)^{\top}$</li>
+    </ul>
+  </li>
+</ul>
+
+\[\left(\begin{array}{c}x^{\prime} \\ y^{\prime} \\ w^{\prime}\end{array}\right)=\left(\begin{array}{ccc}1 &amp; 0 &amp; t_{x} \\ 0 &amp; 1 &amp; t_{y} \\ 0 &amp; 0 &amp; 1\end{array}\right) \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)=\left(\begin{array}{c}x+t_{x} \\ y+t_{y} \\ 1\end{array}\right)\]
+
+<ul>
+  <li>Valid operation if w-coordinate of result is 1 or 0
+    <ul>
+      <li>vector + vector = vector</li>
+      <li>point - point = vector</li>
+      <li>point + vector = point</li>
+      <li>point + point = ?</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: In homogenous coordinates,<br />
+\(\left(\begin{array}{l}x \\ y \\ w\end{array}\right)\) is the 2D point \(\left(\begin{array}{c}x / w \\ y / w \\ 1\end{array}\right), w \neq 0\)<br />
+Thus, <strong>point + point = midpoint of two points</strong></p>
+
+<h3 id="affine-transformations-1">Affine Transformations</h3>
+
+<ul>
+  <li>Affine map = linear map + translation</li>
+</ul>
+
+\[\left(\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right)=\left(\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right) \cdot\left(\begin{array}{l}x \\ y\end{array}\right)+\left(\begin{array}{l}t_{x} \\ t_{y}\end{array}\right)\]
+
+<ul>
+  <li>Using homogenous coordinates:</li>
+</ul>
+
+\[\left(\begin{array}{l}x^{\prime} \\ y^{\prime} \\ 1\end{array}\right)=\left(\begin{array}{lll}a &amp; b &amp; t_{x} \\ c &amp; d &amp; t_{y} \\ 0 &amp; 0 &amp; 1\end{array}\right) \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)\]
+
+<p class="warning"><strong>Note</strong>: This means linear transform first, and then translation.</p>
+
+<h3 id="inverse-transform">Inverse Transform</h3>
+
+<p>$\mathbf{M}^{-1}$ is the inverse of transform $\mathbf{M}$ in both a matrix and geometric sense.</p>
+
+<h2 id="composite-transform">Composite transform</h2>
+
+<h3 id="composing-transforms">Composing Transforms</h3>
+
+<ul>
+  <li>Matrix multiplication is not <strong>commutative</strong></li>
+  <li>For a sequence of affine transforms $A_{1}, A_{2}, A_{3}, \ldots$
+    <ul>
+      <li>Compose by matrix multiplication to speed up:
+  \(A_{n}\left(\ldots A_{2}\left(A_{1}(\mathbf{x})\right)\right)=\mathbf{A}_{n} \cdots \mathbf{A}_{2} \cdot \mathbf{A}_{1} \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)\)</li>
+      <li>Pre-multiply n matrices to obtain a single matrix $\mathbf{A}_{n} \cdots \mathbf{A}_{2} \cdot \mathbf{A}_{1}$ representing combined transform</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="decomposing-complex-transforms">Decomposing Complex Transforms</h3>
+
+<p>How to rotate around a given point c?</p>
+<ol>
+  <li>Translate center to origin</li>
+  <li>Rotate</li>
+  <li>Translate Back</li>
+</ol>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rH7d3j.jpg" alt="cg-3-2" /></p>
+
+<h2 id="3d-transformations">3D transformations</h2>
+
+<h3 id="rotation-around-x-y-z-axis">Rotation around x, y, z-axis</h3>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rHLZMd.jpg" alt="cg-3-3" /></p>
+
+<p>\(\mathbf{R}_{x}(\alpha)=\left(\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; \cos \alpha &amp; -\sin \alpha &amp; 0 \\ 0 &amp; \sin \alpha &amp; \cos \alpha &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)<br />
+\(\mathbf{R}_{y}(\alpha)=\left(\begin{array}{cccc}\cos \alpha &amp; 0 &amp; \sin \alpha &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ -\sin \alpha &amp; 0 &amp; \cos \alpha &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)<br />
+\(\mathbf{R}_{z}(\alpha)=\left(\begin{array}{cccc}\cos \alpha &amp; -\sin \alpha &amp; 0 &amp; 0 \\ \sin \alpha &amp; \cos \alpha &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)</p>
+
+<p class="error"><strong>Caveat</strong>: In $\mathbf{R}_{y}$, where we use right-hand rule $z \times x$ get $y$, so the $\alpha$ is opposite.</p>
+
+<h3 id="euler-angles">Euler angles</h3>
+
+<ul>
+  <li>To represent any 3D rotation from $\mathbf{R}_{x}, \mathbf{R}_{y}, \mathbf{R}_{z}$,</li>
+</ul>
+
+<p>$\mathbf{R}_{x y z}(\alpha, \beta, \gamma)=\mathbf{R}_{x}(\alpha) \mathbf{R}_{y}(\beta) \mathbf{R}_{z}(\gamma)$</p>
+
+<ul>
+  <li>
+    <p>$(\alpha, \beta, \gamma)$ is <strong>Euler angles</strong></p>
+  </li>
+  <li>
+    <p>Often used in flight simulator:</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rb2SjU.jpg" alt="cg-3-4" width="450px" /></p>
+
+<ul>
+  <li>Eluer angles may cause <a href="https://en.wikipedia.org/wiki/Gimbal_lock">Gimbal lock</a>: The loss of one degree of <strong>freedom</strong>.
+    <ul>
+      <li>This suitation occurs when the axes of two of the three gimbals are driven into a parallel configuration as the below shows.</li>
+      <li>Use <a href="https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation">Unit quaternions</a> to solve this problem</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rbh2WR.gif" alt="cg-3-5" /></p>
+
+<h3 id="rodrigues-rotation-formula">Rodrigues’ Rotation Formula</h3>
+
+<ul>
+  <li>Rotation by angle $\alpha$ around axis $n$ (axis $n$ goes through the origin)</li>
+</ul>
+
+\[\mathbf{R}(\mathbf{n}, \alpha)=\cos (\alpha) \mathbf{I}+(1-\cos (\alpha)) \mathbf{n} \mathbf{n}^{T}+\sin (\alpha) \underbrace{\left(\begin{array}{ccc}0 &amp; -n_{z} &amp; n_{y} \\ n_{z} &amp; 0 &amp; -n_{x} \\ -n_{y} &amp; n_{x} &amp; 0\end{array}\right)}_{\mathbf{N}}\]
+
+<ul>
+  <li>
+    <p>Formula <a href="https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula#Derivation">derivation</a></p>
+  </li>
+  <li>
+    <p>If the rotation axis doesn’t go through the origin, but at $p$</p>
+    <ul>
+      <li>Translate the axis to origin. $T(-p)$</li>
+      <li>Rotate. $R(n, \alpha)$</li>
+      <li>Translate the axis back: $T(p)$</li>
+      <li>Thus: $T(p)R(n, \alpha)T(-p)$</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="viewing-transformation">Viewing transformation</h2>
+
+<ul>
+  <li>View / Camera Transformation</li>
+  <li>Projection transformation
+    <ul>
+      <li>Orthographics projection</li>
+      <li>Perspective projection</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="a-vivid-analogy">A vivid analogy</h3>
+
+<ul>
+  <li>Analogous to taking a photo:
+    <ul>
+      <li>Find a good place and arrage people (<strong>model</strong> transformation)</li>
+      <li>Find a good “angle” to put the camera (<strong>view</strong> transformation)</li>
+      <li>Cheese! (<strong>projection</strong> transformation)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="view--camera-transformation">View / Camera Transformation</h3>
+
+<h4 id="define-the-camera">Define the camera</h4>
+
+<ul>
+  <li>Define the camera first (suppose every objects has been arranged properly)
+    <ul>
+      <li>Position $\vec{e}$</li>
+      <li>Look-at / gaze direction $\hat{g}$</li>
+      <li>up direction $\hat{t}$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rbgzcT.jpg" alt="cg-3-6" width="380px" /></p>
+
+<ul>
+  <li>Key observation: If the camera and all objects move together, the photo will be the same. Thus we transform the camera to the fixed origin point.
+    <ul>
+      <li>Position: the origin</li>
+      <li>Look-at direction: -Z</li>
+      <li>up  direction: Y</li>
+      <li>Then transform the objects along with the fixed camera</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rbgx3V.jpg" alt="cg-3-7" width="400px" /></p>
+
+<h4 id="transform-the-camera">Transform the camera</h4>
+
+<ul>
+  <li>Transform the camera by $M_{\text {view}}$
+    <ul>
+      <li>To locate it at the origin, up at $Y$, look at $Z$
+        <ul>
+          <li>Translates $e$ to origin</li>
+          <li>Rotates $t$ to $Y$</li>
+          <li>Rotates $g$ to $-Z$</li>
+          <li>If $t$ to $Y$ and $g$ to $-Z$, then $\hat{g} \times \hat{t}$ will be to $X$</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/rqnfI0.jpg" alt="cg-3-8" /></p>
+
+<ul>
+  <li>$M_{\text {view}}=R_{\text {view}}T_{\text {view}}$
+    <ul>
+      <li>Translate $e$ to origin<br />
+\(T_{v i e w}=\left[\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; -x_{e} \\ 0 &amp; 1 &amp; 0 &amp; -y_{e} \\ 0 &amp; 0 &amp; 1 &amp; -z_{e} \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\)</li>
+      <li>Difficult to directly get $R_{view}$, so consider its inverse rotation: <br />
+\(R_{v i e w}^{-1}=\left[\begin{array}{cccc}x_{\hat{g} \times \hat{t}} &amp; x_{t} &amp; x_{-g} &amp; 0 \\ y_{\hat{g} \times \hat{t}} &amp; y_{t} &amp; y_{-g} &amp; 0 \\ z_{\hat{g} \times \hat{t}} &amp; z_{t} &amp; z_{-g} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right] \quad \Rightarrow  \quad R_{v i e w} = (R_{v i e w}^{-1})^{T} = \left[\begin{array}{cccc}x_{\hat{g} \times \hat{t}} &amp; y_{\hat{g} \times \hat{t}} &amp; z_{\hat{g} \times \hat{t}} &amp; 0 \\ x_{t} &amp; y_{t} &amp; z_{t} &amp; 0 \\ x_{-g} &amp; y_{-g} &amp; z_{-g} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: We can validate the result of the multiplication of $R_{v i e w}^{-1}$ and the vector $\left(\begin{array}{llll}1 &amp; 0 &amp; 0 &amp; 0\end{array}\right)$ which represents $X$ axis, the vector $\left(\begin{array}{llll}0 &amp; 1 &amp; 0 &amp; 0\end{array}\right)$ which represents $Y$ axis, and the vector $\left(\begin{array}{llll}0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)$ which represents $Z$ axis. We could find $X$ axis rotates to $\hat{g} \times \hat{t}$, $Y$ rotates to $t$ and $Z$ rotates to $-g$.</p>
+
+<p class="warning"><strong>Note</strong>: Each column of the $R_{view}$ except for the last column is the <strong>unit</strong> vector describing the camera, so the transposed matrix of it is its inversed matrix itself.</p>
+
+<h3 id="projection-transformation">Projection transformation</h3>
+
+<h4 id="projection-in-computer-graphics">Projection in Computer Graphics</h4>
+
+<ul>
+  <li>In orthogonal projection, the camera can be supposed to be placed infinite way from the viewing frustum (now the frustum becomes cuboid).</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/31/rvExG6.jpg" alt="cg-3-9" /></p>
+
+<h4 id="orthographic-projection">Orthographic Projection</h4>
+
+<ul>
+  <li>Camera located at origin, looking at -Z, up at Y</li>
+  <li>Drop Z coordinate</li>
+  <li>Translate and scale the resulting rectangle to $\left[-1, 1\right]^2$</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/31/rvEvPx.jpg" alt="cg-3-10" /></p>
+
+<ul>
+  <li>More in general: map a cuboid $\left[l, r\right] \times \left[b, t\right] \times \left[f, n\right]$ to the canonical cube $\left[-1, 1\right]^3$. (left, right, bottom, top, far, near)
+    <ul>
+      <li>Translate the center to origin first, then scale each edge to 2.</li>
+    </ul>
+  </li>
+</ul>
+
+\[M_{\text {ortho}}=\left[\begin{array}{cccc}\frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\left[\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; -\frac{r+l}{2} \\ 0 &amp; 1 &amp; 0 &amp; -\frac{t+b}{2} \\ 0 &amp; 0 &amp; 1 &amp; -\frac{n+f}{2} \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\]
+
+<p class="warning"><strong>Note</strong>: Objects may be stretched out of the original scale, so the next <a href="2020-08-19-cg-4.md#canonical-cube-to-screen">viewport transform</a> will deal with this and draw it back to the original scale.</p>
+
+<p class="error"><strong>Caveat</strong>: Looking along $-Z$ makes <code class="language-plaintext highlighter-rouge">n</code> &gt; <code class="language-plaintext highlighter-rouge">f</code> (<code class="language-plaintext highlighter-rouge">near</code> &gt; <code class="language-plaintext highlighter-rouge">far</code>) and this is the reason why OpenGL uses left hand coords.</p>
+
+<h4 id="perspective-projection">Perspective Projection</h4>
+
+<ul>
+  <li>Most common in Computer Graphics, art, visual system</li>
+  <li>Further objects are smaller</li>
+  <li>Parallel lines not parallel, converge to single point</li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: We only consider Euclidean Geometry (Not Riemannian Geometry)</p>
+
+<p>The step to do perspective projection</p>
+
+<ol>
+  <li>First squish the frustum into a cuboid $M_{\text {persp} \rightarrow \text {ortho}}$</li>
+  <li>Do orthographic projection $M_{ortho}$</li>
+</ol>
+
+<p><img src="https://s3.ax1x.com/2020/12/31/rvVBw9.jpg" alt="cg-3-11" width="640px" /></p>
+
+<ul>
+  <li>Denote vertical <strong>field-of-view (fovY)</strong> and <strong>aspect</strong> ratio (assume symmetry i.e. $l=-r\ b=-t$)</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rvvjfJ.jpg" alt="cg-3-13" width="500px" /></p>
+
+\[Aspect\ Ratio=\frac{width}{height}\]
+
+<ul>
+  <li>Convert <code class="language-plaintext highlighter-rouge">fovY</code> and aspect to <code class="language-plaintext highlighter-rouge">l, r, b, t</code></li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/01/rvxiTO.jpg" alt="cg-3-14" width="500px" /></p>
+
+\[\begin{aligned} \tan \frac{f o v Y}{2} &amp;=\frac{t}{|n|} \\ \text { aspect } &amp;=\frac{r}{t} \end{aligned}\]
+
+<ul>
+  <li>Find the relationship between transformed points $\left(x^{\prime}, y^{\prime}, z^{\prime}\right)$ and original points $\left(x, y, z)\right)$</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2020/12/31/rvVL6S.jpg" alt="cg-3-12" width="500px" /></p>
+
+\[y^{\prime}=\frac{n}{z} y\]
+
+<p>Similar to $x$:</p>
+
+\[x^{\prime}=\frac{n}{z} x\]
+
+<ul>
+  <li>Use homogenous coordinates to represent this relationship:</li>
+</ul>
+
+\[\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{c}n x / z \\ n y / z \\ \text { unknown } \\ 1\end{array}\right) \begin{array}{l} == \end{array}\left(\begin{array}{c}n x \\ n y \\ \text { still unknown } \\ z\end{array}\right)\]
+
+<p class="info"><strong>Tip</strong>: according to the points defined in homogenous coordinates. <a href="#homogeneous-coordinate">reference</a></p>
+
+<ul>
+  <li>So the operation squish should be the following form:</li>
+</ul>
+
+\[M_{\text {persp} \rightarrow \text {ortho}}^{(4 \times 4)}\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right)=\left(\begin{array}{c}n x \\ n y \\ \text { unknown } \\ z\end{array}\right)\]
+
+<ul>
+  <li>Three known parameters could get a good reference of three rows of $M_{\text {persp} \rightarrow \text {ortho}}$:</li>
+</ul>
+
+\[M_{\text {persp} \rightarrow \text {ortho}}=\left(\begin{array}{cccc}n &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; n &amp; 0 &amp; 0 \\ ? &amp; ? &amp; ? &amp; ? \\ 0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)\]
+
+<ul>
+  <li>Two important observations, which is responsible for $z^{\prime}$:</li>
+</ul>
+
+<p>1. Any point on the near plane will not change</p>
+
+\[M_{\text {persp} \rightarrow \text {ortho}}^{(4 \times 4)}\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right)=\left(\begin{array}{c}n x \\ n y \\ \text { unknown } \\ z\end{array}\right) \quad \begin{array}{l}\end{array}\]
+
+<p>Replace $z$ with $n$:</p>
+
+\[\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right)==\left(\begin{array}{c}n x \\ n y \\ n^{2} \\ n\end{array}\right)\]
+
+<p>Thus, the third row must be of the form $(0\ 0\ A\ B)$:</p>
+
+\[\left(\begin{array}{llll}0 &amp; 0 &amp; A &amp; B\end{array}\right)\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right)=n^{2}\]
+
+\[A n+B=n^{2}\]
+
+<p class="info"><strong>Tip</strong>: $n$ is only the known paramter, and has nothing to do with $z$, so $A$ and $B$ can not be determined yet.</p>
+
+<p>2. Any $z$ of points on the far plane will not change</p>
+
+\[\left(\begin{array}{l}0 \\ 0 \\ f \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{l}0 \\ 0 \\ f \\ 1\end{array}\right)==\left(\begin{array}{l}0 \\ 0 \\ f^{2} \\ f\end{array}\right)\]
+
+\[A f+B=f^{2}\]
+
+<ul>
+  <li>From the two above equations we get, we could solve $A$ and $B$:</li>
+</ul>
+
+\[\left\{\begin{array}{l}A n+B=n^{2} \\ A f+B=f^{2}\end{array}\right. \Rightarrow \left\{\begin{array}{l}A=n+f \\ B=-n f\end{array}\right.\]
+
+<ul>
+  <li>Now, every entry of $M_{\text {persp} \rightarrow \text {ortho}}$ is known:</li>
+</ul>
+
+\[M_{\text {persp} \rightarrow \text {ortho}}=\left(\begin{array}{cccc}n &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; n &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; n+f &amp; -nf \\ 0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)\]
+
+<ul>
+  <li>
+    <p>Finally, do orthographic projection $M_{ortho}$ to finish</p>
+  </li>
+  <li>
+    <p>In summary: $M_{\text {persp}}=M_{\text {ortho}} M_{\text {persp} \rightarrow \text {ortho}}$</p>
+  </li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www.zhihu.com/question/47736315">如何通俗地解释欧拉角？</a></li>
+  <li><a href="https://blog.csdn.net/AndrewFan/article/details/60981437#">欧拉角与万向节死锁</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-08-15T00:00:00+08:00">Aug 19, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/09/07/cg-6">Texture</a></div></div></div>
 
 </div>
 
@@ -366,7 +801,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'page-about'
+				id: 'blog-2020-08-15-cg-3'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -428,7 +863,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -946,6 +1381,104 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1024,10 +1557,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'page-about';
-      var title = null;
+      var key =   'blog-2020-08-15-cg-3';
+      var title = "The Notes of Computer Graphics Ⅲ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='page-about']").text(view);
+        $("[data-page-key='blog-2020-08-15-cg-3']").text(view);
       });
     });
   </script>

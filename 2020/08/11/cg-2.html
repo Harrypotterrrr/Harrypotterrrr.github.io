@@ -10,11 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅱ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Keep working hard!
-">
-<link rel="canonical" href="https://harrypotterrrr.github.io//about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="A swift and brutal review of Linear Algebra">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/11/cg-2.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -265,7 +264,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2 active"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -279,51 +289,233 @@
 </svg>
 <a title="Keep working hard!
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="page-about">0</span> views</li></ul></div><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅱ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-11-cg-2.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅱ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-11-cg-2">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 15, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-11T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>A swift and brutal review of Linear Algebra</p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
-
-<h2 id="features">Features</h2>
+<h2 id="computer-graphics-dependencies">Computer Graphics’ Dependencies</h2>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>Basic mathematics
+    <ul>
+      <li>Linear algebra</li>
+      <li>Calculus</li>
+      <li>Statistics</li>
+    </ul>
+  </li>
+  <li>Basic physics
+    <ul>
+      <li>Optics (Advanced: if we could not suppose the light travels in straight lines but interacts with a surface material in a form of light wave?)</li>
+      <li>Mechanics</li>
+    </ul>
+  </li>
+  <li>Misc.
+    <ul>
+      <li>Signal processing (for anti-alias)</li>
+      <li>Numerical analysis (rendering is to find a solution of calculus defined by recursion, simulation is to solve FEA, Finite Element Analysis, or diffusion equation)</li>
+    </ul>
+  </li>
+  <li>A bit of aesthetics</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<h2 id="vector">Vector</h2>
+
+<ul>
+  <li>Direction and length</li>
+  <li>Usually written as $\vec{a}$ or using start and end point $\overrightarrow{AB}$</li>
+  <li>No absolute starting position</li>
+</ul>
+
+<h3 id="vector-normalization">Vector Normalization</h3>
+
+<ul>
+  <li>Magnitude (length) of a vector written as $|\vec{a}|$</li>
+  <li>Unit vector
+    <ul>
+      <li>A vector with length of 1</li>
+      <li>$\hat{a}=\vec{a} /|\vec{a}|$</li>
+      <li>represent directions</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="vector-addition">Vector Addition</h3>
+
+<ul>
+  <li>Geometrically: Parallelogram law &amp; Triangle law</li>
+  <li>Algebraically: Simply add coordinates</li>
+</ul>
+
+<h3 id="dot-scalar-product">Dot (scalar) Product</h3>
+
+<p>$\vec{a} \cdot \vec{b}=|\vec{a}||\vec{b}| \cos \theta$</p>
+
+<p>For unit vectors:</p>
+
+\[\cos \theta=\hat{a} \cdot \hat{b}\]
+
+<p>For component-wise multiplication of vectors in Cartesian coordinates:</p>
+
+\[\vec{a} \cdot \vec{b}=\left(\begin{matrix}x_{a} \\ y_{a} \\ z_{a}\end{matrix}\right) \cdot\left(\begin{matrix}x_{b} \\ y_{b} \\ z_{b}\end{matrix}\right)=x_{a} x_{b}+y_{a} y_{b}+z_{a} z_{b}\]
+
+<p><strong>Four common usages of dot product</strong>:</p>
+
+<ol>
+  <li>To find angle between two vectors</li>
+  <li>
+    <p>To find projection of one vector on another:</p>
+
+    <p>To Calculate $\vec{b}_{\perp}$: projection of $\vec{b}$ onto $\vec{a}$</p>
+    <ul>
+      <li>$\vec{b}_{\perp}$ must be along $\vec{a}$, thus $\vec{b}_{\perp}=k \hat{a}$</li>
+      <li>The magnitude of $k$ is $\left|\vec{b}_{\perp}\right|=|\vec{b}| \cos \theta$</li>
+    </ul>
+  </li>
+  <li>To measure how close two directions are</li>
+  <li>To decompose a vector:  $\vec{b}$, $\vec{b}_{\perp}$, $\vec{b}-\vec{b}_{\perp}$</li>
+</ol>
+
+<h3 id="cross-product">Cross Product</h3>
+
+<p>$|a \times b|=|a||b| \sin \phi$</p>
+
+<ul>
+  <li>Cross product is orthogonal to two initial vectors</li>
+  <li>Direction determined by right-hand rule</li>
+  <li>To construct coordinate systems</li>
+</ul>
+
+<p>Some properties:</p>
+
+<p>$\vec{a} \times \vec{b}=-\vec{b} \times \vec{a}$</p>
+
+<p>$\vec{a} \times \vec{a}=\overrightarrow{0}$</p>
+
+<p>$\vec{a} \times(\vec{b}+\vec{c})=\vec{a} \times \vec{b}+\vec{a} \times \vec{c}$</p>
+
+<p>$\vec{a} \times(k \vec{b})=k(\vec{a} \times \vec{b})$</p>
+
+<p>For cross product in Cartesian Formula:</p>
+
+\[\vec{a} \times \vec{b}=\left(\begin{array}{l}y_{a} z_{b}-y_{b} z_{a} \\ z_{a} x_{b}-x_{a} z_{b} \\ x_{a} y_{b}-y_{a} x_{b}\end{array}\right)\]
+
+<p>Or using matrix form:</p>
+
+\[\vec{a} \times \vec{b}=A^{*} b=\left(\begin{array}{ccc}0 &amp; -z_{a} &amp; y_{a} \\ z_{a} &amp; 0 &amp; -x_{a} \\ -y_{a} &amp; x_{a} &amp; 0\end{array}\right)\left(\begin{array}{l}x_{b} \\ y_{b} \\ z_{b}\end{array}\right)\]
+
+<p><strong>Two common usages of cross product:</strong></p>
+
+<p><img src="https://s3.ax1x.com/2020/12/29/r7oeXV.jpg" alt="cg-2-1" /></p>
+
+<ol>
+  <li>To determine left/right: check if the cross product of two vectors points to the outside of the screen or out.</li>
+  <li>To determine inside/outside: check if the cross product of $\overrightarrow{AB} \times \overrightarrow{AP}$ and $\overrightarrow{BP} \times \overrightarrow{BP}$ and $\overrightarrow{CA} \times \overrightarrow{CP}$ all directed to the outside of the screen.</li>
+</ol>
+
+<h3 id="orthonormal-coordinate">Orthonormal Coordinate</h3>
+
+<p>We can decompose any vectors $\vec{p}$ by 3 unit vectors:</p>
+
+<p>$\vec{p}=(\vec{p} \cdot \vec{u}) \vec{u}+(\vec{p} \cdot \vec{v}) \vec{v}+(\vec{p} \cdot \vec{w}) \vec{w}$<br />
+, where<br />
+$|\vec{u}|=|\vec{v}|=|\vec{w}|=1$<br />
+$\vec{u} \cdot \vec{v}=\vec{v} \cdot \vec{w}=\vec{u} \cdot \vec{w}=0$<br />
+$\vec{w}=\vec{u} \times \vec{v} \quad$</p>
+
+<h2 id="matrix">Matrix</h2>
+
+<ul>
+  <li>2D arrays that haunt in every CS course</li>
+  <li>In Graphics, pervasively used to represent <strong>transformations</strong></li>
+</ul>
+
+<h3 id="matrix-matrix-multiplication">Matrix-Matrix Multiplication</h3>
+
+<ul>
+  <li>columns in A must = rows in B</li>
+  <li>Element (i, j) in the product is the dot product of <code class="language-plaintext highlighter-rouge">row i from A</code> and <code class="language-plaintext highlighter-rouge">column j from B</code></li>
+</ul>
+
+<p>Some properties:</p>
+
+<ul>
+  <li>Non-commutative: ($AB$ and $BA$ are different in general)</li>
+  <li>Associative and distributive:
+    <ul>
+      <li>$(AB)C = A(BC)$</li>
+      <li>$A(B+C) = AB + AC$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="matrix-vecotr-multiplication">Matrix-Vecotr Multiplication</h3>
+
+<ul>
+  <li>Treat vector as a <strong>column matrix</strong> (Mx1)</li>
+  <li>Treat vector as the right multiplier of the matrix (as a point)</li>
+  <li>Key for transforming points</li>
+</ul>
+
+<h3 id="transpose-of-a-matrix">Transpose of a Matrix</h3>
+
+<ul>
+  <li>Switch rows and columns ($ij$ to $ji$)</li>
+  <li>$(A B)^{T}=B^{T} A^{T}$</li>
+</ul>
+
+<h3 id="identity-matrix-and-inverses">Identity Matrix and Inverses</h3>
+
+\[I_{3 \times 3}=\left(\begin{array}{lll}1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1\end{array}\right)\]
+
+<p>$A A^{-1}=A^{-1} A=I$</p>
+
+<p>$(A B)^{-1}=B^{-1} A^{-1}$</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-08-11T00:00:00+08:00">Aug 15, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/09/07/cg-6">Texture</a></div></div></div>
 
 </div>
 
@@ -366,7 +558,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'page-about'
+				id: 'blog-2020-08-11-cg-2'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -428,7 +620,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -946,6 +1138,104 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1024,10 +1314,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'page-about';
-      var title = null;
+      var key =   'blog-2020-08-11-cg-2';
+      var title = "The Notes of Computer Graphics Ⅱ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='page-about']").text(view);
+        $("[data-page-key='blog-2020-08-11-cg-2']").text(view);
       });
     });
   </script>

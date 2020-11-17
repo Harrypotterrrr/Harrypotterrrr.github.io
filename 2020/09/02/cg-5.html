@@ -10,11 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>About - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅴ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Keep working hard!
-">
-<link rel="canonical" href="https://harrypotterrrr.github.io//about"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -265,7 +264,18 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2 active"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -279,51 +289,452 @@
 </svg>
 <a title="Keep working hard!
 " href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item navigation__item--active"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>About</h1></header></div><meta itemprop="headline" content="About"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="page-about">0</span> views</li></ul></div><meta itemprop="author" content="Haolin Jia"/><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅴ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-09-02-cg-5.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅴ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-02-cg-5">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Sep 07, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-02T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/TeXt-home.jpg" alt="TeXt Theme" /></p>
+<div class="article__content" itemprop="articleBody"><p>Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline</p>
 
-<p>TeXt is a super customizable Jekyll theme for personal site, team site, blog, project, documentation, etc. Similar to iOS 11 style, it has large and prominent titles, round buttons and cards.</p>
+<!--more-->
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
-</code></pre></div></div>
+<h2 id="shading">Shading</h2>
 
-<h2 id="features">Features</h2>
+<h3 id="what-we-done-so-far">What we done so far</h3>
 
 <ul>
-  <li>Responsive</li>
-  <li>Semantic HTML</li>
-  <li>Skins</li>
-  <li>Highlight Theme</li>
-  <li>Internationalization</li>
-  <li>Search</li>
-  <li>Table of contents</li>
-  <li>Authors</li>
-  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
-  <li>Extensions (audios, videos, slides, demos)</li>
-  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
-  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
-  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
-  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
-  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
-  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+  <li>Model transformation</li>
+  <li>View transformation</li>
+  <li>Projection transformation</li>
+  <li>Viewport transformation</li>
+  <li>Rasterization</li>
 </ul>
-</div><div class="d-print-none"><footer class="article__footer"><!-- start custom article footer snippet -->
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwP9U.jpg" alt="cg-5-1" width="600px" /></p>
+
+<ul>
+  <li>The color applied to each pixel has not been determined yet.</li>
+</ul>
+
+<h3 id="blinn-phong-reflectance-model">Blinn-Phong Reflectance Model</h3>
+
+<p><strong>Shading</strong>: The process of applying a material to an object.</p>
+
+<ul>
+  <li><strong>Specular highlight</strong>: the bright spot of light that apperas on shiny objects when illuminated. Direct light</li>
+  <li><strong>Diffuse lighting</strong>: when a surface that faces an angle 90 degrees or less of the light, it will get a percentage of the light source. Direct light, but diverted from the light source</li>
+  <li><strong>Ambient lighting</strong>: light of the environment, most of which comes from reflected surfaces (by diffusion). Indirect light and not in the path of light source</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: We often assume ambient lighting is a constant.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skw9hT.jpg" alt="cg-5-2" width="600px" /></p>
+
+<h3 id="shading-point">Shading point</h3>
+
+<ul>
+  <li>Compute light reflected toward camera at a specific <strong>shading point</strong></li>
+  <li>Inputs:
+    <ul>
+      <li>Viewer direction $v$</li>
+      <li>Surface normal $n$</li>
+      <li>Light direction $l$</li>
+      <li>Surface parameters, properties (color, shininess, etc.)</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="error"><strong>Caveat</strong>: Above are all <strong>unit</strong> vectors.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwFc4.jpg" alt="cg-5-3" width="400px" /></p>
+
+<ul>
+  <li>
+    <p>Shading is local, so <strong>No Shadows</strong> will be generated! (<strong>shading ≠ shadow</strong>)</p>
+  </li>
+  <li>
+    <p>The below region in red rectangular is blocked by the object from the light source, but we still shade color to it since <strong>shading is local</strong>. The shadow of this area will be discussed <a href="">later</a></p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwi3F.jpg" alt="cg-5-4" width="400px" /></p>
+
+<h2 id="blinn-phong-model">Blinn-Phong Model</h2>
+
+<h3 id="diffuse-reflection">Diffuse reflection</h3>
+
+<ul>
+  <li>Light is scattered uniformly in all directions</li>
+  <li>Surface color is the same for all viewing directions</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwkjJ.jpg" alt="cg-5-5" width="400px" /></p>
+
+<ul>
+  <li>Lambert’s cosine law: determine how much light is received</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwZH1.jpg" alt="cg-5-6" /></p>
+
+<h3 id="light-falloff">Light Falloff</h3>
+
+<ul>
+  <li>Assume that ideally there is no loss of energy, for each moment of energy transmission, each spherical shell carries the same amount of luminous energy. For each unit space $dS$ on the spherical shell, we assume the energy is the same, so the for each spherical shell, the total amount of energy is $\oint IdS = 4\pi r^2 I$. Thus $I$ is inversely proportional to the square of the distance $r$.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwEu9.jpg" alt="cg-5-7" /></p>
+
+<p class="warning"><strong>Note</strong>: Above proof is not strict, but intuitive. More strict prove is as follows:
+We assume there is no energy loss, so the luminous energy $Q$ from the light source per unit time is the same. According to $\Phi = dQ / dt$, we can get the luminous flux $\Phi$ per time unit is the same. From the definition of luminance: $L_{v} = d^2\Phi / d\Omega dA cos\theta$, the total of luminance $4\pi r^2 L_{v} = d\Phi / d\Omega cos\theta$ should be the same. Thus luminance $L_{v}$ is inversely proportional to the square of  the distance $r$.</p>
+
+<p class="error"><strong>Caveat</strong>: The relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ is not clear in CG.</p>
+
+<h3 id="diffuse-term">Diffuse Term</h3>
+
+<ul>
+  <li>
+    <p>Lambertian Shading (Diffuse shading)</p>
+  </li>
+  <li>
+    <p>Shading <strong>independent</strong> of view direction $v$</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skwVBR.jpg" alt="cg-5-8" /></p>
+
+<ul>
+  <li>$\max (0, \mathbf{n} \cdot \mathbf{l})$ is to ensure the shading value is always positive even if the light comes from the back of the object</li>
+</ul>
+
+<p class="success"><strong>info</strong>: The energy received is relative to the angle between normal $n$ and light $l$. This is also the reason why we feel cold in winter and hot in summer.</p>
+
+<ul>
+  <li><strong>Diffuse coefficient</strong>: often defined as 3 or 4 dimensional vector to store the percentage of energy the shading point reflects (not absorb in). Indirectly contain the material information of the object.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/skDi38.jpg" alt="cg-5-9" /></p>
+
+<h3 id="specular-term">Specular Term</h3>
+
+<ul>
+  <li>Intensity <strong>depends</strong> on view direction
+    <ul>
+      <li>Specular highlight close to mirror reflection direction</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAURfS.jpg" alt="cg-5-10" width="450px" /></p>
+
+<ul>
+  <li>$v$ close to mirror direction $\Leftrightarrow$ half vector close to normal</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUhlQ.jpg" alt="cg-5-11" /></p>
+
+<ul>
+  <li>
+    <p><strong>Specular coefficient</strong>: similar to <strong>diffuse coefficient</strong>, to describe the property and material of the object, but specular coefficient always set to 1, which means the shading point emmits white color when the specular reflection happens.</p>
+  </li>
+  <li>
+    <p><strong>phong exponent</strong>: increasing phong exponent $p$ will narrow the reflection lobe and accelerate the decay rate of the specular reflection effect as the angle increased.</p>
+    <ul>
+      <li>When the angle between the reflected light and view direction more than 3~5 degree, we suppose specular reflection disappears.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUfSg.jpg" alt="cg-5-12" /></p>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAU2Y8.jpg" alt="cg-5-13" width="780px" /></p>
+
+<p><strong>Tip</strong>: Compared to diffuse reflection, we ignore the <code class="language-plaintext highlighter-rouge">energy received term</code> for simplicity. Note that Blinn-Phong model is just an empirical model.</p>
+
+<h3 id="ambient-term">Ambient Term</h3>
+
+<ul>
+  <li>Shading that does not depend on anything
+    <ul>
+      <li>Independent of light $l$ and view direction $v$</li>
+      <li>Add constant color to account for disregarded illumination and fill in black shadows</li>
+      <li>This is approximate / fake!</li>
+    </ul>
+  </li>
+  <li><strong>Ambient coefficient</strong>: similar to <strong>specular coefficient</strong> and <strong>diffuse coefficient</strong>, but this is always a constant.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUgFf.jpg" alt="cg-5-14" width="750px" /></p>
+
+<h3 id="blinn-phong-model-1">Blinn-Phong Model</h3>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAU5Os.jpg" alt="cg-5-15" /></p>
+
+\[\begin{aligned} L &amp;=L_{a}+L_{d}+L_{s} \\ &amp;=k_{a} I_{a}+k_{d}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{l})+k_{s}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{h})^{p} \end{aligned}\]
+
+<h2 id="shading-frequencies">Shading Frequencies</h2>
+
+<ul>
+  <li>Flat (Face) shading (逐片元)</li>
+  <li>Gouraud (Vertex) shading (逐顶点)</li>
+  <li>Phong (Pixel) shading (逐像素)</li>
+</ul>
+
+<h3 id="flat-shading">Flat shading</h3>
+
+<ul>
+  <li>Shading for each triangle</li>
+  <li><code class="language-plaintext highlighter-rouge">normal vector</code> of each face is caluculated by cross product of triangle’s two edges</li>
+  <li>Not good for smooth surfaces</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUomn.jpg" alt="cg-5-16" width="500px" /></p>
+
+<h3 id="gouraud-shading">Gouraud shading</h3>
+
+<ul>
+  <li>Shading for each vertices and <strong>interpolate</strong> triangle from vertices</li>
+  <li>Each vertex has a normal vector</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAU7T0.jpg" alt="cg-5-17" width="500px" /></p>
+
+<ul>
+  <li>It is easy to obtain vertex normal from the underlying known geometry. e.g. sphere</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAaOEt.jpg" alt="cg-5-20" width="700px" /></p>
+
+<ul>
+  <li>Otherwise vertex normal can be inferred from surrounding triangle:
+    <ul>
+      <li>average surrounding face normals</li>
+      <li>weighted average surrounding face normals according to the area of each triangle</li>
+    </ul>
+  </li>
+</ul>
+
+\[N_{v}=\frac{\sum_{i} N_{i}}{\left\|\sum_{i} N_{i}\right\|}\]
+
+<h3 id="phong-shading">Phong shading</h3>
+
+<ul>
+  <li>Shading for each pixels across triangle</li>
+  <li><code class="language-plaintext highlighter-rouge">normal vector</code> of each pixels is interpolated by vertex vector</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUTwq.jpg" alt="cg-5-18" width="500px" /></p>
+
+<p class="info"><strong>Tip</strong>: <code class="language-plaintext highlighter-rouge">Phong shading</code> is distinct from <code class="language-plaintext highlighter-rouge">Blinn-Phong reflectance model</code></p>
+
+<ul>
+  <li>pixel vector is computed by Barycentric interpolation of vertex normal</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUXpF.jpg" alt="cg-5-22" width="650px" /></p>
+
+<p class="error"><strong>Caveat</strong>: remember to normalize each normal vector after each step of interpolation.</p>
+
+<h3 id="shading-difference">Shading difference</h3>
+
+<ul>
+  <li>As the model becomes more complex and has more vertices, the difference between three shading models become smaller</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/05/sAUqYT.jpg" alt="cg-5-19" width="750px" /></p>
+
+<h2 id="graphics-pipeline">Graphics Pipeline</h2>
+
+<h3 id="real-time-rendering-pipeline">Real-time Rendering pipeline</h3>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sEh9XR.jpg" alt="cg-5-22" /></p>
+
+<ul>
+  <li>
+    <p>According to different shading frequency (face, vertex, pixel), Shading happens in Vertex Processing or Fragment Processing.</p>
+  </li>
+  <li>
+    <p>Texture mapping also happens in Vertex Processing and Fragment Processing.</p>
+  </li>
+  <li>
+    <p>Texture mapping is to assign vertices with different colors (properties, materials). This is the reason why objects look different in color and material after rendering. Detail in <a href="/2020/09/07/cg-6">Texture</a> later.</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sEhPn1.png" alt="cg-5-23" /></p>
+
+<p class="warning"><strong>Note</strong>: Fragment (片元) is widely used in OpenGL and other modern API, which commonly means Pixel. Fragment shading (processing) = Pixel shading (processing).</p>
+
+<h3 id="shader-programs">Shader Programs</h3>
+
+<ul>
+  <li>Modern GPU allows to custom various shader by writing <strong>shader program</strong>
+    <ul>
+      <li>Program vertex and fragment processing stages</li>
+      <li>Describe operation on a single vertex or fragment. Shader function executes once per fragment, thus there is no need to loop or traverse each vertex or fragment</li>
+      <li>Outputs color of surface at the current fragment’s screen sample position</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example GLSL fragment shader program</span>
+<span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">myTexture</span><span class="p">;</span>        <span class="c1">// texture property</span>
+<span class="n">uniform</span> <span class="n">vec3</span> <span class="n">lightDir</span><span class="p">;</span>              <span class="c1">// inversed light direction vector</span>
+<span class="n">varying</span> <span class="n">vec2</span> <span class="n">uv</span><span class="p">;</span>                    <span class="c1">// perfragment value (interp. by rasterizer)</span>
+<span class="n">varying</span> <span class="n">vec3</span> <span class="n">norm</span><span class="p">;</span>                  <span class="c1">// norm vector, perfragment value (interp. by rasterizer)</span>
+
+<span class="kt">void</span> <span class="nf">diffuseShader</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">vec3</span> <span class="n">kd</span><span class="p">;</span>                        <span class="c1">// vector3d to store color value</span>
+    <span class="n">kd</span> <span class="o">=</span> <span class="n">texture2d</span><span class="p">(</span><span class="n">myTexture</span><span class="p">,</span> <span class="n">uv</span><span class="p">);</span>  <span class="c1">// material color and property from texture</span>
+    <span class="n">kd</span> <span class="o">*=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="err">–</span><span class="n">lightDir</span><span class="p">,</span> <span class="n">norm</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span> <span class="c1">// diffuse shading</span>
+    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>   <span class="c1">// assign fragment color value to gl_FragColor</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>This shader performs a texture lookup to obtain the surface’s material color at this point</li>
+  <li>Then performs a diffuse lighting calculation</li>
+  <li>Vertex shader (顶点着色器) programs to each vertex, fragment shader （片元/像素着色器) programs to each pixel</li>
+</ul>
+
+<p><strong>Info</strong>: Incredible shader program and website: shadertoy.com</p>
+
+<h3 id="highly-complex-3d-scenes-in-realtime">Highly Complex 3D Scenes in Realtime</h3>
+
+<ul>
+  <li>Modern GPU could handle much complex 3D scenes in realtime by deploying great amount of computation in parallel.
+    <ul>
+      <li>thousands to millions of triangles in a scene</li>
+      <li>Complex vertex and fragment shader computations</li>
+      <li>High resolution (2-4 megapixel and supersampling)</li>
+      <li>30-60 fps (frames per second) and even higher for VR</li>
+    </ul>
+  </li>
+  <li><strong>Game engine</strong> (architecture) is designed for developers to focus more on constructing games instead of techniques of graphics or rendering. The core functionality typically by a game engine includes a rendering engine (renderer) for 2D or 3D graphics (including shadows, global illumination etc.), a physics engine including collision detection and response, animation, artifical intelligence, sounding, memory management, threading, precomputation etc.</li>
+</ul>
+
+<h3 id="gpu-graphics-pipeline-implementation">GPU: Graphics Pipeline Implementation</h3>
+
+<ul>
+  <li>Specialized processors for executing graphics pipeline computations</li>
+  <li>Heterogeneous, Multi-core Processor</li>
+  <li>Emerge different new shaders:
+    <ul>
+      <li>Geometry shader: govern the processing of primitives and produce more triangles</li>
+      <li>Compute shader: more general purpose for different computing</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/06/sVF90I.jpg" alt="cg-5-24" /></p>
+
+<ul>
+  <li>FLOPS (floating point operatins per second): measure of computer performance:</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Prefix</th>
+      <th style="text-align: center">Abbreviation</th>
+      <th style="text-align: center">Order of magnitude</th>
+      <th style="text-align: center">Computer performance</th>
+      <th style="text-align: center">Storage capacity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">mega-</td>
+      <td style="text-align: center">M</td>
+      <td style="text-align: center">$10^6$</td>
+      <td style="text-align: center">megaFLOPS (MFLOPS)</td>
+      <td style="text-align: center">megabyte (MB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">giga-</td>
+      <td style="text-align: center">G</td>
+      <td style="text-align: center">$10^9$</td>
+      <td style="text-align: center">gigaFLOPS (GFLOPS)</td>
+      <td style="text-align: center">gigabyte (GB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">tera-</td>
+      <td style="text-align: center">T</td>
+      <td style="text-align: center">$10^{12}$</td>
+      <td style="text-align: center">teraFLOPS (TFLOPS)</td>
+      <td style="text-align: center">terabyte (TB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">peta-</td>
+      <td style="text-align: center">P</td>
+      <td style="text-align: center">$10^{15}$</td>
+      <td style="text-align: center">petaFLOPS (PFLOPS)</td>
+      <td style="text-align: center">petabyte (PB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">exa-</td>
+      <td style="text-align: center">E</td>
+      <td style="text-align: center">$10^{18}$</td>
+      <td style="text-align: center">exaFLOPS (EFLOPS)</td>
+      <td style="text-align: center">exabyte (EB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">zetta-</td>
+      <td style="text-align: center">Z</td>
+      <td style="text-align: center">$10^{21}$</td>
+      <td style="text-align: center">zettaFLOPS (ZFLOPS)</td>
+      <td style="text-align: center">zettabyte (ZB)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">yotta-</td>
+      <td style="text-align: center">Y</td>
+      <td style="text-align: center">$10^{24}$</td>
+      <td style="text-align: center">yottaFLOPS (YFLOPS)</td>
+      <td style="text-align: center">yottabyte (YB)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www.zhihu.com/question/53080536/answer/133398317">光能、光通量、光强、亮度</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-09-02T00:00:00+08:00">Sep 07, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-</div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/09/07/cg-6">Texture</a></div></div></div>
 
 </div>
 
@@ -366,7 +777,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'page-about'
+				id: 'blog-2020-09-02-cg-5'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -428,7 +839,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -946,6 +1357,104 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1024,10 +1533,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'page-about';
-      var title = null;
+      var key =   'blog-2020-09-02-cg-5';
+      var title = "The Notes of Computer Graphics Ⅴ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='page-about']").text(view);
+        $("[data-page-key='blog-2020-09-02-cg-5']").text(view);
       });
     });
   </script>
