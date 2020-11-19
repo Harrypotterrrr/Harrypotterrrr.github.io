@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅵ - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅶ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Texture, Texture Mapping, Interpolation, Texture Filtering">
-<link rel="canonical" href="https://harrypotterrrr.github.io//2020/09/07/cg-6.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Geometry, Implicit &amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/11/19/cg-7.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2 active"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2 active"><a href="/2020/11/19/cg-7">Geometry</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -300,632 +300,657 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅵ</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅶ</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-09-07-cg-6.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅵ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-11-19-cg-7.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅶ"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=computer+graphics">computer graphics</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Sep 08, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00+08:00">
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-11-19-cg-7">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 19, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-11-19T00:00:00+08:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Texture, Texture Mapping, Interpolation, Texture Filtering</p>
+<div class="article__content" itemprop="articleBody"><p>Geometry, Implicit &amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification</p>
 
 <!--more-->
 
-<h2 id="texture-mapping">Texture Mapping</h2>
+<h2 id="geometry">Geometry</h2>
 
 <ul>
-  <li><strong>Texture mapping</strong> is to apply different colors at different places</li>
-  <li><strong>Texture</strong> defines property and color for each vertex</li>
-</ul>
-
-<h3 id="surface">Surface</h3>
-
-<ul>
-  <li>Surfaces are 2D though lives in 3D world space</li>
-  <li>Every 3D surface point also has a place where it goes in the 2D image (<strong>texture</strong>)</li>
-  <li>In other words, each vertex of primitives in 3D world corresponds to the vertex of the primitive in 2D texture.</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/06/sVCEp4.jpg" alt="cg-6-1" /></p>
-
-<h3 id="texture">Texture</h3>
-
-<ul>
-  <li>
-    <p>Texture is applied to Surface</p>
-  </li>
-  <li>
-    <p>We didn’t care about how mapping relationship of triangles produces between model and texture. The mapping and definition of primitives (triangles) are known.</p>
-  </li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/06/sVCZc9.jpg" alt="cg-6-2" /></p>
-
-<ul>
-  <li>Generally, texture comes in two ways:
+  <li>Implicit Geometry
     <ul>
-      <li>Art designer design and produce the texture</li>
-      <li>Parameterization of triangular meshes</li>
+      <li>algebraic surface</li>
+      <li>level sets</li>
+      <li>distance functions</li>
+      <li>…</li>
     </ul>
   </li>
-  <li><strong>Parameterization</strong> is the process of finding parametric equations of a curve, a surface, a manifold or a variety, defined by an implicit equation.</li>
-</ul>
-
-<h3 id="texture-coordinates">Texture Coordinates</h3>
-
-<ul>
-  <li>Each triangle vertex is assigned a texture coordinate $(u,v)$.</li>
-  <li>Define mapping between points on triangle’s surface (object coordinate space) to points in texture coordinate space.</li>
-  <li>Each vertex corresponds to one texture mapping. Again, this mapping is known and we don’t care how this mapping come from.</li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: No matter the texture is square or not, $u$ and $v$ are in range of $(0,1)$.</p>
-
-<p><img src="https://s3.ax1x.com/2021/01/06/sVeE90.jpg" alt="cg-6-3" /></p>
-
-<h3 id="texture-tile">Texture Tile</h3>
-
-<ul>
-  <li>Textures can be applied multiple times</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/06/sVZlSf.jpg" alt="cg-6-4" /></p>
-
-<ul>
-  <li>Well-designed texture is tileable when multiple textures blend together profesionally and seamlessly together, borders of texture is not easily conspicuous.</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/06/sVi2kV.png" alt="cg-6-5" /></p>
-
-<h2 id="interpolation">Interpolation</h2>
-
-<h3 id="interpolation-across-triangles-barycentric-coordinates">Interpolation Across Triangles: Barycentric Coordinates</h3>
-
-<ul>
-  <li>Why to interpolate
+  <li>Explicit Geometry
     <ul>
-      <li>Specify values at vertices</li>
-      <li>Obtain smoothly varying values across triangles</li>
+      <li>point cloud</li>
+      <li>polygon mesh</li>
+      <li>subdivision, NURBS</li>
+      <li>…</li>
     </ul>
   </li>
-  <li>What to interpolate
+  <li>Each choice best suited to a different task/type of geometry</li>
+</ul>
+
+<h3 id="implicit-representations-of-geometry">Implicit Representations of Geometry</h3>
+
+<ul>
+  <li>Based on classifying points: Points satisfy some specified relationship, without given coordinate
     <ul>
-      <li>Texture coordinates, colors, normal vectors. etc.</li>
-    </ul>
-  </li>
-  <li>How to interpolate
-    <ul>
-      <li>Barycentric coordinate</li>
+      <li>E.g. sphere: all points in 3D, where $x^2+y^2+z^2=1$</li>
+      <li>More generally, $f(x, y, z) = 0$</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="barycentric-coordinate">Barycentric Coordinate</h3>
-
+<p>Take $f(x, y, z)=\left(2-\sqrt{x^{2}+y^{2}}\right)^{2}+z^{2}-1$ as an example:</p>
 <ul>
-  <li>Any point $(x,y)$ in the plane can be represented as a linear combination of triangular vertices.</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
-
-<ul>
-  <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$</li>
-</ul>
-
-\[\begin{aligned}(x, &amp;y)= \alpha A+\beta B+\gamma C \\ &amp; \alpha+\beta+\gamma=1 \end{aligned}\]
-
-<ul>
-  <li>
-    <p>Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$</p>
-  </li>
-  <li>Point $(x,y)$ is inside the triangle if and only if all three $(\alpha, \beta, \gamma)$ are non-negative.</li>
-  <li>
-    <p>e.g. $A$ is when $(\alpha, \beta, \gamma) = (1, 0, 0)$</p>
-  </li>
-  <li>Geometric viewpoint: proportional areas
+  <li>Implicit Surface sampling can be hard
     <ul>
-      <li>It is available to get $(\alpha, \beta, \gamma)$ by given a spcified point $(x,y)$.</li>
+      <li>What points lie on $f(x, y, z) = 0$</li>
     </ul>
   </li>
 </ul>
 
-\[\begin{aligned} \alpha &amp;=\frac{A_{A}}{A_{A}+A_{B}+A_{C}} \\ \beta &amp;=\frac{A_{B}}{A_{A}+A_{B}+A_{C}} \\ \gamma &amp;=\frac{A_{C}}{A_{A}+A_{B}+A_{C}} \end{aligned}\]
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNoff.jpg" alt="cg-7-1" width="600px" /></p>
 
+<p>Take $f(x, y, z)=x^{2}+y^{2}+z^{2}-1$ as an example:</p>
 <ul>
-  <li>
-    <p><strong>Barycentric coordinate</strong> of centroid: $(\alpha, \beta, \gamma) = (\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$, then $(x, y)=\frac{1}{3} A+\frac{1}{3} B+\frac{1}{3} C$</p>
-  </li>
-  <li>
-    <p>Linear interpolate values at vertices</p>
+  <li>Implicit Surface inside/outside test is easy
     <ul>
-      <li>$V_A, V_B, V_C$ can be positions, texture coordinates, color, normal, depth, material attributes…</li>
+      <li>Is $(3/4, 1/2, 1/4)$ inside the sphere?</li>
+      <li>Just plug it in $f(x, y, z) = -1/8 &lt; 0$, so Inside</li>
     </ul>
   </li>
 </ul>
 
-\[V=\alpha V_{A}+\beta V_{B}+\gamma V_{C}\]
-
-<p class="warning"><strong>Note</strong>: barycentric coordinates are not invariant under projection! Thus interpolate every time after projections.</p>
-
-<h3 id="texture-applying">Texture Applying</h3>
+<h4 id="implicit-geometry">Implicit Geometry</h4>
 
 <ul>
-  <li>Simple texture mapping: diffuse color</li>
+  <li>Implicit Algebraic Surfaces</li>
+  <li>Constructive solid geometry</li>
+  <li>Level set methods</li>
+  <li>Fractals</li>
 </ul>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">each</span> <span class="n">rasterized</span> <span class="n">screen</span> <span class="nf">sample</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>           <span class="c1">// Usually a pixel's center</span>
-    <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">evaluate</span> <span class="n">texture</span> <span class="n">coordinate</span> <span class="n">at</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="c1">// Using barycentric coordinates</span>
-    <span class="n">texcolor</span> <span class="o">=</span> <span class="n">texture</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>                <span class="c1">// get texture (u,v)</span>
-    <span class="n">set</span> <span class="n">sample</span><span class="err">'</span><span class="n">s</span> <span class="n">color</span> <span class="n">to</span> <span class="n">texcolor</span><span class="p">;</span>                 <span class="c1">// Usually the diffuse albedo Kd of Blinn-Phong reflectance model</span>
-
-</code></pre></div></div>
-
-<h2 id="texture-filtering">Texture Filtering</h2>
+<h4 id="algebraic-surfaces">Algebraic Surfaces</h4>
 
 <ul>
-  <li>To determine the texture color for a texture mapped pixel, using the colors near by <strong>texels</strong>.</li>
-  <li><strong>Texel</strong> (纹素): a pixel on a texture</li>
-  <li>Two main categories of texture filtering, depending on the situation texture filtering
+  <li>Surface is zero set of a polynomial in x, y, z</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNhTI.jpg" alt="cg-7-3" /></p>
+
+<ul>
+  <li>But how about using polynomial to represent a more complext object as a cow?</li>
+</ul>
+
+<h4 id="constructive-solid-geometry">Constructive Solid Geometry</h4>
+
+<ul>
+  <li><strong>Constructive Solid Geometry</strong> (<strong>CSG</strong>): Combine implicit geometry via Boolean operations</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNf0A.jpg" alt="cg-7-4" width="700px" /></p>
+
+<ul>
+  <li>Use CSG and operation to define complex geometry</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNWmd.png" alt="cg-7-5" width="400px" /></p>
+
+<h4 id="distance-functions">Distance Functions</h4>
+
+<ul>
+  <li>
+    <p><strong>Signed Distance Functions</strong> (<strong>SDF</strong>): determines the distance of a given point $x$ from the boundary of $\omega$. The function has positive values at points $x$ outside $\omega$, it decreases in value as $x$ approches the boundary of $\omega$ where the signed distance function is zero.</p>
+  </li>
+  <li>
+    <p>Instead of Booleans, gradually blend surfaces together using Distance functions:</p>
     <ul>
-      <li><strong>Magnification filtering</strong>: a type of reconstruction filter where sparse data is interpolated to fill gaps</li>
-      <li><strong>Minification filtering</strong>: a type of anti-aliasing (AA), where texture samples exist at a higher frequency than required for the sample frequency needed for texture fill</li>
+      <li>Give minimum distance (could be signed distance) from anywhere to object</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="texture-magnification">Texture Magnification</h3>
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNItP.jpg" alt="cg-7-6" /></p>
 
 <ul>
-  <li>Insufficient texture resolution: texture is too small comparing to the object, then the texture has to be enlarged than its actual resolution.</li>
-</ul>
-
-<p class="success"><strong>Info</strong>: For each point on the object or scene, mapping it to the corresponding point on the low resolution texture will get non-integer coordinates of texture. Rounding off is the common process to obtain non-floating coordinate texel. As a result, multiple pixels of the object or scene will corresponds to the same texel of the texture, which means the generated figure is obscure of low quality. Thus interpolation handle it.</p>
-
-<p><img src="https://s3.ax1x.com/2021/01/07/sZN7cD.jpg" alt="cg-6-7" /></p>
-
-<h4 id="bilinear-interpolation">Bilinear Interpolation</h4>
-
-<ul>
-  <li>Linear interpolation (1D)</li>
-</ul>
-
-\[\operatorname{lerp}\left(x, v_{0}, v_{1}\right)=v_{0}+x\left(v_{1}-v_{0}\right)\]
-
-<ul>
-  <li>Two horizontal interpolations</li>
-</ul>
-
-\[u_{0}=\operatorname{lerp}\left(s, u_{00}, u_{10}\right) \\
-u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
-
-<ul>
-  <li>Final vertical interpolation</li>
-</ul>
-
-\[f(x, y)=\operatorname{lerp}\left(t, u_{0}, u_{1}\right)\]
-
-<p><img src="https://s3.ax1x.com/2021/01/07/sZNOHA.jpg" alt="cg-6-8" width="350px" /></p>
-
-<ul>
-  <li>Red point: want to sample texture value $f(x,y)$</li>
-  <li>
-    <p>Black points: indicate texture sample locations (the center of texel)</p>
-  </li>
-  <li>
-    <p>For the nearest method of texture applying, take the red point as an example, any mapping point in the square which the red point and $u_{11}$ locates at will take $u_{11}$ as a texel. When the object or scene is very large comparing to the texture, multiple pixels will map to the same texel as $u_{11}$. That is the reason why jaggies and artifacts are consipicuous in the above nearest figure.</p>
-  </li>
-  <li>
-    <p>For the bilinear interpolation, it takes 4 nearest sample locations with textrue values as labeled, blending the property and information of 4 texels, so the result is more smooth and realistic.</p>
-  </li>
-  <li>Bilinear interpolation usually gives pretty good results at reasonable costs.</li>
-</ul>
-
-<h4 id="bicubic-interpolation">Bicubic Interpolation</h4>
-
-<ul>
-  <li>Bicubic interpolation is to use 4 x 4 point to do interpolation, which has better performance but higher costs. (Look into the canthus of the above figure, bilinear create jaggies but bicubic is more realistic)</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/07/sZNjAI.png" alt="cg-6-9" width="650px" /></p>
-
-<h3 id="texture-minification">Texture Minification</h3>
-
-<ul>
-  <li>Superadundant texture resolution: Texture is too large comparing to the screen space required, so it has to be shrunken relative to its natural resolution.
+  <li>An Example: Blending (linear interp.) a moving boundary
     <ul>
-      <li>Intuitively, when the texture is large, every information is available. But it is incorrect.</li>
+      <li>The above row describes the normal blending of A and B region, which results A overlaps B</li>
+      <li>The below row describes the blending using SDF, similar to superposition of the electric field of two same point charges, which results the zero plane right in the middle of A and B</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sehxtP.jpg" alt="cg-6-10" /></p>
-
-<ul>
-  <li>Screen Pixel’s “Footprint” in Texture
-    <ul>
-      <li>As the pixel in the screen space get growingly further, the number of corresponding texels in texture gets more and more.</li>
-      <li>Take the above image as an example, the pixels close to the horizon represent a large region of texture. The information lost happens when the square which the blue point is inside is selected as texel</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/07/sehvkt.jpg" alt="cg-6-11" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNH1S.jpg" alt="cg-7-7" width="550px" /></p>
 
 <ul>
   <li>
-    <p>Supersampling to antialiasing: yes, high quality, but costly.</p>
+    <p>Blending any two distance functions: every point in the space can be represented as distance function, blending of two objects in the space is to sum up two distance functions. The boundary forms when the distance function is 0</p>
   </li>
-  <li>The reason of aliasing when perform minification
-    <ul>
-      <li>When highly minified, many texels in pixel footprint</li>
-      <li>Signal frequency too large in a pixel</li>
-      <li>Need even higher sampling frequency</li>
-    </ul>
+  <li>
+    <p>More details about <a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg">distance function</a>, <a href="https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm">SDF code about various primitives</a> and <a href="https://www.iquilezles.org/www/index.htm">useful tutorial</a></p>
   </li>
-  <li>Solution: Not do sampling but get the average value within a range, <strong>Range Query</strong>.</li>
 </ul>
 
-<p class="success"><strong>Info</strong>: Some data structure like K-d tree, segment tree, binary indexed tree etc. are good ways to solve range query problem.</p>
-
-<h4 id="mipmap">Mipmap</h4>
+<h4 id="level-set-methods">Level Set Methods</h4>
 
 <ul>
-  <li>Precompute and store the averages of the texture over various areas of different size and position.</li>
-  <li>Allowing <strong>fast</strong>, <strong>approximate</strong>, <strong>square</strong> range queries.
+  <li>For Distance Function method, closed-form equations (解析式) are sometimes hard to describe complex shapes.</li>
+  <li><strong>Level Set Methods</strong> performs numerical computations involving curves and surfaces on a fixed Cardesian grid without having to <strong>parameterize</strong> objects.
     <ul>
-      <li>“Mip” comes from the Latin, meaning a multitude in a small space.</li>
-      <li>A sequence of textures that contains the same image but at lower and lower resolution. 
- <img src="https://s3.ax1x.com/2021/01/07/sehXTI.jpg" alt="cg-6-12" /></li>
-      <li>
-        <p>There are total of $log(n)$ images<br />
- <img src="https://s3.ax1x.com/2021/01/07/sehO0A.jpg" alt="cg-6-13" width="400px" /></p>
+      <li>Level Set Methods is to store a grid of values approximating function.</li>
+      <li>The central idea is same to SDF: find the boundary where the value is 0.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJN7p8.jpg" alt="cg-7-8" /></p>
+
+<ul>
+  <li>Surface is found where interpolated values equal zero</li>
+  <li>
+    <p>Provides much more explicit control over shape (like a texture)</p>
+  </li>
+  <li>Level set encodes distance to air-liquid boundary to simulate physical scene of water dropping, constant tissue density to image medical data like CT, MRI etc.</li>
+</ul>
+
+<h4 id="fractal">Fractal</h4>
+
+<ul>
+  <li>Self-similarity, detail at all scales</li>
+  <li>Hard to control shape</li>
+  <li>Sometimes cause the drastic aliasing due to the high frequency of variation</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNb6g.jpg" alt="cg-7-9" /></p>
+
+<h4 id="pros--cons">Pros &amp; Cons</h4>
+
+<ul>
+  <li>Pros
+    <ul>
+      <li>compact description (a function), benefit for storing</li>
+      <li>queries easy (inside object, distance to surface)</li>
+      <li>good for ray-to-surface intersection</li>
+      <li>easy to handle changes in topology (e.g. fluid)</li>
+    </ul>
+  </li>
+  <li>Cons
+    <ul>
+      <li>difficult to model complex shapes</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="explicit-representations-of-geometry">Explicit Representations of Geometry</h3>
+
+<ul>
+  <li>All points are given directly or via parameter mapping</li>
+</ul>
+
+\[f: \mathbb{R}^{2} \rightarrow \mathbb{R}^{3} ;(u, v) \mapsto(x, y, z)\]
+
+<ul>
+  <li>Given any $(u,v)$ coordinate, $(x, y, z)$ can be mapped</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJN5kt.jpg" alt="cg-7-2" width="600px" /></p>
+
+<p>Take $f(u, v)=((2+\cos u) \cos v,(2+\cos u) \sin v, \sin u)$ as an example</p>
+<ul>
+  <li>Explicit Surface sampling is easy
+    <ul>
+      <li>What points lie on this surface: Just plug in $(u,v)$ values</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJNoff.jpg" alt="cg-7-1" width="600px" /></p>
+
+<ul>
+  <li>Take $f(u, v)=(\cos u \sin v, \sin u \sin v, \cos v)$ as an example
+    <ul>
+      <li>Is $(3/4, 1/2, 1/4)$ inside the sphere?</li>
+    </ul>
+  </li>
+  <li>No Best Representation: depends on tasks</li>
+</ul>
+
+<h4 id="explicit-geometry">Explicit Geometry</h4>
+
+<ul>
+  <li>triangle meshes</li>
+  <li>Bezier surfaces</li>
+  <li>subdivision surfaces</li>
+  <li>NURBS</li>
+  <li>point clouds</li>
+</ul>
+
+<h4 id="polygon-mesh">Polygon Mesh</h4>
+
+<ul>
+  <li>Store vertices &amp; polygons (often triangles or quads)</li>
+  <li>Easier to do processing / simulation, adaptive sampling</li>
+  <li>More complicated data structures</li>
+  <li>Perhaps most common representation in graphics</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIepT.jpg" alt="cg-7-1" width="550px" /></p>
+
+<ul>
+  <li>The Wavefront Object File (.obj) Format
+    <ul>
+      <li>a text file that specifies vertices, normals, texture coordinates and their connectivities</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="point-cloud">Point Cloud</h4>
+
+<ul>
+  <li>Easiest representation: list of points $(x, y, z)$</li>
+  <li>Easily represent any kind of geometry</li>
+  <li>Useful for large datasets (&gt;&gt; 1 point/pixel)</li>
+  <li>Often converted into polygon mesh</li>
+  <li>Difficult to draw in undersampled (采样不足的) regions</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIm1U.gif" alt="cg-7-10" /></p>
+
+<h2 id="curves">Curves</h2>
+
+<h3 id="bézier-curve">Bézier Curve</h3>
+
+<ul>
+  <li>Defining Cubic Bézier Curve With Tangent</li>
+  <li>Start point and the end point is $b_0$ and $b_2$</li>
+  <li>Tangent of start and end is the tangent at $b_0$ and $b_2$</li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: Bézier Curve is a representation of explicit geometry since it is way of <strong>parameter mapping</strong></p>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIVhV.jpg" alt="cg-7-12" width="75%" /></p>
+
+<h4 id="de-casteljau-algorithm">de Casteljau Algorithm</h4>
+
+<ul>
+  <li>Evaluate Bézier Curve
+    <ul>
+      <li>Consider three points (quadratic Bezier)</li>
+      <li>Insert a point using linear interpolation</li>
+      <li>Insert on both edges</li>
+      <li>Repeat recursively until only one intermediate point exists</li>
+      <li>Run the same algorithm for every $t$ in $[0, 1]$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIMnJ.gif" alt="cg-7-13" width="450px" /></p>
+
+<h4 id="algebraic-formula">Algebraic Formula</h4>
+
+<ul>
+  <li>de Casteljau Algorithm gives a pyramid of coefficients</li>
+</ul>
+
+\[\begin{aligned} \mathbf{b}_{0}^{1}(t) &amp;=(1-t) \mathbf{b}_{0}+t \mathbf{b}_{1} \\ \mathbf{b}_{1}^{1}(t) &amp;=(1-t) \mathbf{b}_{1}+t \mathbf{b}_{2} \\ \mathbf{b}_{0}^{2}(t) &amp;=(1-t) \mathbf{b}_{0}^{1}+t \mathbf{b}_{1}^{1} \\ \mathbf{b}_{0}^{2}(t) &amp;=(1-t)^{2} \mathbf{b}_{0}+2 t(1-t) \mathbf{b}_{1}+t^{2} \mathbf{b}_{2} \end{aligned}\]
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIEt0.jpg" alt="cg-7-14" width="85%" /></p>
+
+<ul>
+  <li>General Algebraic Formula</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIncF.jpg" alt="cg-7-15" /></p>
+
+<ul>
+  <li>Bernstein polynomials</li>
+</ul>
+
+\[B_{i}^{n}(t)=\left(\begin{array}{l}n \\ i\end{array}\right) t^{i}(1-t)^{n-i}\]
+
+<ul>
+  <li>For each $t$ moment, the sum of Bernstein Polynomials is 1. Drawing a vertical line at any $t$ moment, the sum of the y-coordinate of the intersection with the curve is 1.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/12/sJIuX4.jpg" alt="cg-7-16" width="350px" /></p>
+
+<ul>
+  <li>assume $n=3$ in $R^3$:</li>
+</ul>
+
+\[\mathbf{b}^{n}(t)=\mathbf{b}_{0}(1-t)^{3}+\mathbf{b}_{1} 3 t(1-t)^{2}+\mathbf{b}_{2} 3 t^{2}(1-t)+\mathbf{b}_{3} t^{3}\]
+
+<ul>
+  <li>The tangent of the curve in cubic case: the slope for Bézier Curve is the derivative with respect to $t$</li>
+</ul>
+
+\[\frac{d \mathbf{b}(t)}{d t}=\mathbf{b}^{\prime}(t)=3(1-t)^{2}\left(\mathbf{b}_{1}-\mathbf{b}_{0}\right)+6(1-t) t\left(\mathbf{b}_{2}-\mathbf{b}_{1}\right)+3 t^{2}\left(\mathbf{b}_{3}-\mathbf{b}_{2}\right)\]
+
+<h4 id="properties-of-bézier-curve">Properties of Bézier Curve</h4>
+
+<ul>
+  <li>Interpolate endpoints: Start from $B_0$, end at $B_n$</li>
+  <li>Tangent to end segment: In cubic case $\mathbf{b}^{\prime}(0)=3\left(\mathbf{b}_{1}-\mathbf{b}_{0}\right)$, $\mathbf{b}^{\prime}(1)=3\left(\mathbf{b}_{3}-\mathbf{b}_{2}\right)$</li>
+  <li>Transform curve by transforming control points
+    <ul>
+      <li>Since the Bézier Curve is the result of linear combinations</li>
+      <li>But it doesn’t work for <strong>projection transformation</strong></li>
+    </ul>
+  </li>
+  <li>Convex hull (凸包) property
+    <ul>
+      <li>Curve is within convex hull of control points</li>
+      <li>Convex hull is a concept in computational geometry. Briefly, it can be thought of as a rubber band that fits around all the points in 2D space</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="piecewise-bézier-curve">Piecewise Bézier Curve</h4>
+
+<ul>
+  <li>Higher-order (high-degree 高阶) Bézier Curve is hard to control: Instead, Piecewise (逐段的) Bézier Curve is put forward
+    <ul>
+      <li>Chain many low-order Bézier Curves</li>
+      <li>Piecewise cubic Bézier Curve is the most common technique and widely used in Apps (Illustrator, SVG, etc.)</li>
+    </ul>
+  </li>
+  <li>For Cubic Curve, each four pair of point defining a piece of Bézier Curve
+    <ul>
+      <li>The curve is continuous when each piece of curve is connected</li>
+      <li>The curve is smooth when the connection of each curve is smooth
+        <ul>
+          <li><strong>Smooth</strong>: the derivative (slope) of the previous ending point of the curve is the same as the subsequent curve. <code class="language-plaintext highlighter-rouge">Same</code> means both <strong>direction</strong> and <strong>the amount of value</strong>.</li>
+        </ul>
       </li>
-      <li>The total storage overhead of a mipmap is the summation of series: $\frac{4}{3}$ to the original image.</li>
     </ul>
   </li>
 </ul>
 
-<p class="success"><strong>Info</strong>: We call this kind of structure, with images that represent the same content at a series of lower and lower sampling rates, <code class="language-plaintext highlighter-rouge">image pyramid</code> in computer vision field.</p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGH7q.jpg" alt="cg-7-17" width="450px" /></p>
 
 <ul>
-  <li>Computing Mipmap at level $D$: estimate texture footprint using texture coordinates of <strong>neighboring</strong> screen samples</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/08/su7yKx.jpg" alt="cg-6-14" /></p>
-
-<ul>
-  <li>
-    <p>The distance between the pixel and neighbouring in screen space is 1</p>
-  </li>
-  <li>
-    <p>Denote the pixel $(x,y)$ in screen space and texel $(u,v)$ in texture space</p>
-  </li>
-  <li>
-    <p>Denote transformation $\psi$ the mapping from image sapce to texture space as a linear mapping, the transformation equation, thus $u = \psi_{x}(x, y), v = \psi_{y}(x, y)$.</p>
-  </li>
-  <li>
-    <p><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix"><em>Jacobian matrix</em></a> $J$ is the best linear approximation of $\psi$ in a neighbourhood of $(u,v)$ where $\psi$ is differentiable.</p>
-  </li>
-</ul>
-
-\[\lim_{\Delta p \to 0}\psi(\mathbf{p}+\Delta \mathbf{p})=\psi(\mathbf{p} )+ \mathbf{J}\Delta \mathbf{p}\]
-
-\[\mathbf{J}=\frac{\partial (u, v)}{\partial (x, y)}=\left[\begin{array}{ll}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\]
-
-<p><img src="https://s3.ax1x.com/2021/01/08/sKmMo8.gif" alt="cg-6-15" /></p>
-
-<ul>
-  <li>
-    <p>Recall that in linear transformation \(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]=\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]\),\(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\) is transformation matrix, the two columns of it \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) and \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) are two basis vector of the new space if the original basis is  \(\left[\begin{array}{l}1 \\ 0\end{array}\right]\) and \(\left[\begin{array}{l}0 \\ 1\end{array}\right]\). Thus, we could take Jacobian matrix as transformation matrix mapping the pixel $(x, y)$ in screen space to the texture space $(u, v)$.</p>
-  </li>
-  <li>
-    <p>In screen space, suppose $(u, v)_{10}$ and $(u, v)_{01}$ as $(1, 0)$ and $(0, 1)$ relatively, the corresponding texel coordinate is computed by multiplying the transformation Jacobian matrix $J$:</p>
-  </li>
-</ul>
-
-\[\left(\begin{array}{l}u^{\prime}_{10} \\ v^{\prime}_{10}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}1 \\ 0\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial x} \\ \frac{\partial v}{\partial x}\end{array}\right)\]
-
-\[\left(\begin{array}{l}u^{\prime}_{01} \\ v^{\prime}_{01}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}0 \\ 1\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial y}\end{array}\right)\]
-
-<p class="info"><strong>Tip</strong>: Each column of Jacobian matrix is the new basis vector of the transformed space. <a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/jacobian-prerequisite-knowledge">More details</a></p>
-
-<p><img src="https://s3.ax1x.com/2021/01/08/sK3AKg.jpg" alt="cg-6-17" /></p>
-
-<ul>
-  <li>Choose the level $D$ so that the size covered by the texels at that level is roughly the same as the overall size of the pixel footprint.</li>
-</ul>
-
-\[D=\log _{2} L\]
-
-\[\quad L=\max \left(\sqrt{\left(\frac{d u}{d x}\right)^{2}+\left(\frac{d v}{d x}\right)^{2}}, \sqrt{\left(\frac{d u}{d y}\right)^{2}+\left(\frac{d v}{d y}\right)^{2}}\right)\]
-
-<p><img src="https://s3.ax1x.com/2021/01/08/su7UVU.jpg" alt="cg-6-16" /></p>
-
-<ul>
-  <li>$D$ rounded to nearest integer level
+  <li>Continuity
     <ul>
-      <li>near (in red) corresponds to low level of texture</li>
-      <li>far (in blue) corresponds to high level of texture</li>
+      <li>$C^0$ continuity: $a_n = b_0$</li>
+      <li>$C^1$ continuity: $a_n = b_0 = \frac{1}{2}(a_{n-1}+b_1)$</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKJYZQ.jpg" alt="cg-6-18" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGqA0.jpg" alt="cg-7-18" width="550px" /></p>
 
 <ul>
-  <li>
-    <p>But Bilinear filtering only, where $D$ is clamped to nearest level, not support floating $D$ and the level $D$ is not continuous.</p>
-  </li>
-  <li>
-    <p><strong>Trilinear Interpolation</strong>: perform two Bilinear interpolation in neighbouring levels and interpolate the interpolated result again.</p>
-  </li>
+  <li><a href="http://math.hws.edu/eck/cs424/notes2013/canvas/bezier.html">Animation of Bézier Curve</a></li>
 </ul>
 
-\[u_{d}= BilinearInterpolate(p_{d})\\
-u_{d+1}= BilinearInterpolate(p_{d+1})\\
-f(x, y) = lerp(r, u_{d}, u_{d+1})\]
-
-<p><img src="https://s3.ax1x.com/2021/01/08/sKs5lQ.jpg" alt="cg-6-19" width="650px" /></p>
-
-<h4 id="isotrpic-limitation">Isotrpic Limitation</h4>
+<h3 id="spline">Spline</h3>
 
 <ul>
-  <li>Mipmap limitation
+  <li><strong>Spline</strong> (样条): a continuous curve constructed so as to pass through a given set of points and have a certain number of continuous derivatives
     <ul>
-      <li>the pixel footprint might be quite different in shape from the area represented by the texel, not always approximately square</li>
-      <li>Mipmap is unable to handle the pixel footprint with an elongated shape</li>
+      <li>In short, a curve under control directly</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKs4Sg.jpg" alt="cg-6-20" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYG7Bn.jpg" alt="cg-7-19" width="450px" /></p>
+
+<h3 id="b-splines">B-splines</h3>
 
 <ul>
-  <li>Tilinear (<strong>isotropic</strong>) sampling will cause overblur problem most commonly when the points are on the floor that are far away viewed at very steep angles, which results in the pixel footprint covering much larger square areas.</li>
-  <li>As a result, most footprints far from the viewer are averaged over the large area of the texture, which causes <strong>overblur</strong>.</li>
+  <li><strong>B-spline</strong>: Short for basis splines</li>
+  <li>Require more information than Bézier Curve curbes</li>
+  <li>Satisfy all important properties that Bézier Curve have (i.e. superset)</li>
+  <li><strong># TODO</strong>: refer to <a href="https://www.bilibili.com/video/
+av66548502?from=search&amp;seid=65256805876131485">Shi-Min Hu’s course</a></li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKsffS.jpg" alt="cg-6-21" /></p>
-
-<h4 id="anisotropic-filtering">Anisotropic filtering</h4>
+<h3 id="nurbs">NURBS</h3>
 
 <ul>
-  <li><strong>Anisotropic filtering</strong>(Ripmap, or abbreviated <strong>AF</strong>): use multiple lookups to approximate an elongated footprint better
-    <ul>
-      <li>select the mipmap level based on the shortest axis of the footprint rather than the largest</li>
-      <li>average together several lookups spaced along the long axis</li>
-    </ul>
-  </li>
-  <li>Look up axis-aligned rectangular zones and preserve detail at extreme viewing angles.</li>
-  <li>Comparing to isotropic filtering which consume on third of extra space, anisotropic filtering takes three times of extra space consumption.
-    <ul>
-      <li>Bilinear / trilinear filtering is insotropic and thus will overblur to avoid aliasing</li>
-      <li>Anisotropic texture filtering provides higher image quality at higher computation and memory bandwidth cost</li>
-    </ul>
-  </li>
+  <li><strong># TODO</strong>: refer to <a href="https://www.bilibili.com/video/
+av66548502?from=search&amp;seid=65256805876131485">Shi-Min Hu’s course</a></li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKsIyj.png" alt="cg-6-22" /></p>
+<h2 id="surface">Surface</h2>
 
-<p class="success"><strong>Info</strong>: N x Anisotropic filtering in video games means the original figure will be copied of reduced size up to N times along horizontal and vertial axis. No matter the N increases to 4x, 8x, 16x or more, the ceiling of the space consumption is 4 times of the original texture. Generally, as long as the graphics memory is enough, the larger anisotropy will has no influence on the computing performance.</p>
+<h3 id="bézier-surface">Bézier Surface</h3>
 
 <ul>
-  <li>Limitation so far: diagonal footprints still a problem</li>
-  <li><strong>EWA filtering</strong> (Elliptically Weighted Average Filtering) to enhance further
-    <ul>
-      <li>Use multiple lookups</li>
-      <li>Weighted average</li>
-      <li>Mipmap hierarchy still helps</li>
-      <li>Can handle irregular footprints</li>
-      <li>Trade time for better performance</li>
-    </ul>
-  </li>
+  <li>Extend Bézier curves to surfaces under control of 2D control points</li>
 </ul>
 
-<h3 id="short-summary">Short summary</h3>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGv3F.gif" alt="cg-7-20" /></p>
 
 <ul>
-  <li>Texture mapping is a sampling operation and is prone to aliasing.</li>
-  <li>Solution: prefilter texture map to eliminate high frequencies in texture signal.</li>
-  <li>Mip-map: precompute and store multiple resampled versions of the texture image, each of which has different amounts of low-pass filtering.</li>
-  <li>During rendering: dynamically select how much low-pass filtering is required based on distance between nighbouring screen samples in texture space.
+  <li>For Bicubic Bézier surface patch, evaluate surface position for parameters $(u, v)$
     <ul>
-      <li>Goal is to retain as much high-frequency content (detail) in the texture as possible, while avoiding aliasing.</li>
+      <li>$(u, v)$ is parameters to describe two-dimensional $t$, which proves again that Bézier (parameter mapping) is explicit geometry representation</li>
+      <li>Input: 4x4 control points</li>
+      <li>Output: 2D surface parameterized by $(u, v)$ in $[0,1]^2$</li>
     </ul>
   </li>
 </ul>
 
-<h2 id="applications-of-texture">Applications of Texture</h2>
-
-<h3 id="general-texturing">General Texturing</h3>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGTns.jpg" alt="cg-7-21" width="550px" /></p>
 
 <ul>
-  <li>Generalize texturing into many usages</li>
-  <li>In modern GPUs, texture = memory + range query (filtering)
+  <li>Bicubic operation: similar to ‘Bicubic interpolation’</li>
+  <li>Separable 1D de Casteljau Algorithm
     <ul>
-      <li>General method to bring data to fragment calculations</li>
-    </ul>
-  </li>
-  <li>Many applications
-    <ul>
-      <li>Environment lighting</li>
-      <li>Store microgeometry</li>
-      <li>Procedural textures</li>
-      <li>Solid modeling</li>
-      <li>Volumne rendering</li>
-      <li>etc.</li>
-    </ul>
-  </li>
-  <li>Environment Map: render with the light from the envrionment as texture
-    <ul>
-      <li>We suppose the light is static and comes from an infinite distance. We only care about the direction of the light without any depth information.</li>
+      <li>Goal: evaluate surface position corresponding to $(u, v)$</li>
+      <li>(u, v)-separable application of de Casteljau algorithm
+        <ul>
+          <li>Use de Casteljau to evaluate point $u$ on each of the 4 Bézier curves in $u$. This gives 4 control points for the ‘moving’ Bézier curve</li>
+          <li>Use 1D de Casteljau to evaluate point $v$ on the ‘moving’ curve
+<img src="https://s3.ax1x.com/2021/01/12/sYGLNV.jpg" alt="cg-7-22" width="600px" /></li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iK78.jpg" alt="cg-6-23" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGOhT.jpg" alt="cg-7-23" /></p>
 
-<p class="success"><strong>Info</strong>: Classic model in CG: Utah teapot, Stanford bunny, Stanford dragon, Cornell Box</p>
+<p class="info"><strong>TIP</strong>: piecewise (片段) in 2D curve vs patch (片) in 3D surface</p>
 
 <ul>
-  <li><strong>Spherical Map</strong>: Sphere is used to store environment light (map). Unfolding the sphere is texture to render realistic lighting<br />
- <img src="https://s3.ax1x.com/2021/01/10/s1iu0f.jpg" alt="cg-6-24" />
-    <ul>
-      <li>Sphere texture is prone to <strong>distortion</strong> at top and bottom parts<br />
- <img src="https://s3.ax1x.com/2021/01/10/s1innP.jpg" alt="cg-6-25" /></li>
-    </ul>
-  </li>
-  <li><strong>Cubic Map</strong>: A vector map to cube point along the direction. The cube is textured with 6 square texture maps<br />
-<img src="https://s3.ax1x.com/2021/01/10/s1iZ6I.jpg" alt="cg-6-26" />
-    <ul>
-      <li>less distortion</li>
-      <li>only need direction to face mapping computation</li>
-    </ul>
-  </li>
+  <li><strong>#TODO</strong>: Continuity</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1ieXt.jpg" alt="cg-6-27" /></p>
-
-<h3 id="bump--normal-mapping">Bump / Normal mapping</h3>
+<h2 id="mesh-operations">Mesh Operations</h2>
 
 <ul>
-  <li>Previously, textures only represent colors (influence $k_d$ coefficient)</li>
-  <li>In fact, textures may store height / normal or other properties</li>
-  <li>Fake the detailed geometry, accordingly change the normal and <strong>affect shading</strong>
+  <li>Mesh (网格) Operations: Geometry Processing
     <ul>
-      <li>Change how an illuminated surface reacts to light, without modifying the size or shape of the surface</li>
+      <li>Mesh subdivion (细分): increase resolution (upsampling)</li>
+      <li>Mesh simplification: decrease resolution (downsampling) while preserving shape/appearance</li>
+      <li>Mesh regularization: modify sample distribution to improve quality</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iltg.png" alt="cg-6-28" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/12/sYGj9U.jpg" alt="cg-7-24" /></p>
+
+<h3 id="subdivision">Subdivision</h3>
+
+<h4 id="loop-subdivision">Loop Subdivision</h4>
 
 <ul>
-  <li>Add surface detail without adding more triangles
+  <li>Common subdivison rule for triangle meshes
     <ul>
-      <li>Preturb surface normal per pixel (for shading computations only)</li>
-      <li>“Height shift” per texel defined by a texture</li>
+      <li>First create more triangles (vertices)</li>
+      <li>Second, tune their positions</li>
     </ul>
   </li>
 </ul>
 
-<h4 id="normal-in-flatland-case">Normal in flatland case</h4>
+<p><img src="https://s3.ax1x.com/2021/01/15/swSW36.jpg" alt="cg-7-25" width="600px" /></p>
 
 <ul>
-  <li><strong>Flatland</strong> (2D): texture in 1D and space in 2D</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iQAS.jpg" alt="cg-6-29" /></p>
-
-<ul>
-  <li>Suppose original surface normal $\vec p = (0,1)$ directs upward</li>
-  <li>Approximate derivative at $p$ is $dp = c * [h(p+1) - h(p)]$
+  <li>Split each triangle into four</li>
+  <li>Assign new vertex positions according to weights
     <ul>
-      <li>$c$ is a constant coefficient to scale the influence of bump texture</li>
-    </ul>
-  </li>
-  <li>Perturbed normal is then $\vec{n_p} = (-dp, 1).normalized()$
-    <ul>
-      <li>$(1, dp)$ rotate 90 degrees counterclockwise using rotate matrix and normalize</li>
+      <li>New / old vertices updated differently</li>
     </ul>
   </li>
 </ul>
 
-<h4 id="normal-in-3d-case">Normal in 3D case</h4>
+<p><img src="https://s3.ax1x.com/2021/01/15/swSg41.jpg" alt="cg-7-26" width="700px" /></p>
 
 <ul>
-  <li>texture in 2D and space in 3D</li>
-  <li>Suppose original surface normal $\vec p = (0, 0, 1)$</li>
-  <li>
-    <p>Approximate derivatives at $p$ are
-\(dp/du = c_1 * [h(u+1) - h(u)] \\ dp/dv = c_2 * [h(v+1) - h(v)]\)</p>
-  </li>
-  <li>Perturbed normal is $\vec{n_p} = (-dp/du, -dp/dv, 1).normalized()$
+  <li>For new vertices: $ v = 3/8 * (A+B) + 1/8 * (C+D)$</li>
+  <li>For old vertices:  \(\begin{aligned}v=(1-\beta) * original\_position + \beta * \sum^{n} neighbour\_position, \end{aligned} \\ where:\quad \beta=\left\{\begin{array}{l}\frac{3}{8 \mathrm{n}},\quad when\quad n&gt;3 \\ \frac{3}{16},\quad when\quad \mathrm{n}=3\end{array}\right.\)</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: $n$ is vertex degree. In graph theory, the degree of a vertex is the number of edges that are incident to the vertex.</p>
+
+<p><img src="https://s3.ax1x.com/2021/01/15/swSR9x.jpg" alt="cg-7-27" width="700px" /></p>
+
+<p class="warning"><strong>Note</strong>: Loop is family name of the founder Charles Loop of Loop Subdivision, so it has nothing to do with looping.</p>
+
+<h4 id="catmul-clark-subdivision">Catmul-Clark Subdivision</h4>
+
+<ul>
+  <li>Catmul-Clark subdivision is more general than Loop Subdivision since Catmul-Clark Subdivision can handle mesh with not only triangles but quadrangles.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/15/swSHUA.jpg" alt="cg-7-28" width="400px" /></p>
+
+<ul>
+  <li>Each subdivision step:
     <ul>
-      <li>// not the cross product result of $(dp/du, 0, 1) \times (dp/dv, 0, 1)$ ?</li>
+      <li>Keep all original vertex $d$</li>
+      <li>Add vertex in each face $V_i$</li>
+      <li>Add midpoint on each edge $E_i$</li>
+      <li>Connect all new vertices</li>
     </ul>
   </li>
 </ul>
 
-<p class="warning"><strong>Note</strong>: These are all in <strong>local coordinate</strong>. Thus, the perturbed normal need to be transformed to <strong>world coordinate</strong>.</p>
+\[\mathbf{V}_{i}=\frac{1}{n} \times \sum_{j=1}^{n} \mathbf{d}_{j}\]
 
-<h3 id="displacement-mapping">Displacement mapping</h3>
+\[\mathbf{E}_{i}=\frac{1}{4}\left(\mathbf{d}_{1}+\mathbf{d}_{2 i}+\mathbf{V}_{i}+\mathbf{V}_{i+1}\right)\]
+
+\[\mathbf{d}_{i}^{\prime}=\frac{(n-3)}{n} \mathbf{d}_{i}+\frac{2}{n} \mathbf{R}+\frac{1}{n} \mathbf{S}\]
+
+\[\mathbf{R}=\frac{1}{m} \sum_{i=1}^{m} \mathbf{E}_{i}, \mathbf{S}=\frac{1}{m} \sum_{i=1}^{m} \mathbf{V}_{i}\]
 
 <ul>
-  <li>Actually moves the vertices (instead of fake changing the normal only)
+  <li>After each subdivision
     <ul>
-      <li>Actual geometric position of vertices over the textured are displaced</li>
-    </ul>
-  </li>
-  <li>Uses the same texture as in bumping mapping</li>
-  <li>Different with Bump / Normal mapping, Displacement mapping permits particular <strong>silhouettes</strong>, <strong>self-occlusion</strong>, <strong>self-shadowing</strong></li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/11/s3yRFs.jpg" alt="cg-6-30" width="600px" /></p>
-
-<ul>
-  <li>Require primitives in object elaborated and small enough so that the triangles in object catch up with the high frequency in displacement mapping.
-    <ul>
-      <li>Displacement mapping only changes the vertex properties, thus if the primitive is large and displacement mapping is not able to change the properties inside of the triangle, displacementm mapping will cause poor result.</li>
-      <li>In order to render texture with delicated details, the sampling rate must be high enough.</li>
-      <li>Subdivision (细分) is needed to introduce more triangles to increase sampling rate.</li>
-    </ul>
-  </li>
-  <li>Costly computation owing to the large amount of additional geometry</li>
-</ul>
-
-<p class="success"><strong>Info</strong>: In DirectX on Windows system, <strong>dynamic tessellation</strong> (动态曲面细分) is self-adaptive techniques to tessellate object geometry in displacement mapping stage, which dynamically splits the primitives of object into smaller part of triangle to match the frequency requirements of displacement mapping.</p>
-
-<h3 id="noise-function-texture">Noise function Texture</h3>
-
-<ul>
-  <li>3D procedural noise and solid modeling produce texture.</li>
-  <li>Defining the noise function in 3D space, each point of the texture spreading over this space can be calculated by analysis formula of the noise and corresponding operations (binaryzation, linear operation).</li>
-  <li><code class="language-plaintext highlighter-rouge">Perlin noise</code> is a good example of noise function to generate marble crack, mountain fluctuation etc.</li>
-</ul>
-
-<p><img src="https://s3.ax1x.com/2021/01/11/s3ygoj.jpg" alt="cg-6-31" width="650px" /></p>
-
-<h3 id="precomputed-shading">Precomputed Shading</h3>
-
-<ul>
-  <li>Texture provide precomputed shading
-    <ul>
-      <li>Precomputed ambnient occlusion and shadow provided by the texture to save time of calculating shadow and occlusion later</li>
+      <li>No extraordinatry (奇异点) vertices (degree != 4) left</li>
+      <li>No non-quad face left</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/11/s3ycwQ.jpg" alt="cg-6-32" width="700px" /></p>
+<p><img src="https://s3.ax1x.com/2021/01/15/swS7Ed.jpg" alt="cg-7-29" width="750px" /></p>
 
-<h3 id="3d-texture-and-volumn-rendering">3D Texture and Volumn Rendering</h3>
+<h3 id="mesh-simplification">Mesh Simplification</h3>
 
 <ul>
-  <li>Texture can be generalized to 3D space, storing the information and properties (far more than colors) which is to be used and processed in Shader program.</li>
+  <li><strong>Goal</strong>: reduce number of mesh elements while maintaining the overall shape</li>
 </ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/15/swSfgK.jpg" alt="cg-7-30" width="750px" /></p>
+
+<ul>
+  <li><strong>Difficulty</strong>: For image simplification (downsampling), take Mipmap as an example, which can be performed by reducing the image resolution for several times, image pyramid (mip hierarchy) is used to represent different level of vision field. While for the geometry, it is difficult to use the similar pattern to divide the hierarchy of geometry, like how to make the number of geometric mesh change smoothly from far to near.</li>
+</ul>
+
+<h4 id="edge-collapsing">Edge Collapsing</h4>
+
+<ul>
+  <li>Suppose we simplify a mesh using edge collapsing</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/15/swShjO.jpg" alt="cg-7-31" width="550px" /></p>
+
+<ul>
+  <li>Geometric error will be introduced by simplification .</li>
+  <li>Comparing to average and median simplification, error of quadric is minimum.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/15/swS5uD.jpg" alt="cg-7-32" width="700px" /></p>
+
+<ul>
+  <li>Quadric Error Metrics (二次误差度量)
+    <ul>
+      <li>Not a good idea to perform local averaging or median of vertices</li>
+      <li><strong>Quadric error</strong>: new vertex should minimize its <strong>sum of square distance</strong> (<strong>L2 distance</strong>) to previously related triangle planes</li>
+      <li>Idea: choose point that minimizes quadric error</li>
+    </ul>
+  </li>
+  <li>Suppose squared distance of point $p$ to plane $q$</li>
+</ul>
+
+\[p=(x, y, z, 1)^{T}, q=(a, b, c, d)^{T}\]
+
+\[d i s t(q, p)^{2}=\left(q^{T} p\right)^{2}=p^{T}\left(q q^{T}\right) p=: p^{T} Q_{q} p\]
+
+\[, where\quad Q_{q}=\left[\begin{array}{cccc}a^{2} &amp; a b &amp; a c &amp; a d \\ a b &amp; b^{2} &amp; b c &amp; b d \\ a c &amp; b c &amp; c^{2} &amp; c d \\ a d &amp; b d &amp; c d &amp; d^{2}\end{array}\right]\]
+
+<ul>
+  <li>Sum distances to planes $q_i$ of vertex’ neighbouring triangles</li>
+</ul>
+
+\[\sum_{i} \operatorname{dist}\left(q_{i}, p\right)^{2}=\sum_{i} p^{T} Q_{q_{i}} p=p^{T}\left(\sum_{i} Q_{q_{i}}\right) p=: p^{T} Q_{p} p\]
+
+<ul>
+  <li>Point $p^{\star}$ that minimizes the error satisfies
+    <ul>
+      <li>Which turn into the optimization problem</li>
+    </ul>
+  </li>
+</ul>
+
+\[\left[\begin{array}{cccc}
+q_{11} &amp; q_{12} &amp; q_{13} &amp; q_{14} \\
+q_{21} &amp; q_{22} &amp; q_{23} &amp; q_{24} \\
+q_{31} &amp; q_{32} &amp; q_{33} &amp; q_{34} \\
+0 &amp; 0 &amp; 0 &amp; 1 \end{array}\right] \boldsymbol{p}^{*}=\left[\begin{array}{c} 0 \\ 0 \\ 0 \\ 1 \end{array}\right]\]
+
+<ul>
+  <li><strong>Simplification via Quadric Error</strong>: assign score with quadric error metric (<em>Garland &amp; Heckbert 1997</em>)
+    <ul>
+      <li>Approximate distance to surface as sum of distances to planes containing triangles</li>
+      <li>Assign score with quadric error metric for <strong>each edge</strong> of the total geometric figure</li>
+      <li>Sort the score of <strong>each edge</strong></li>
+      <li>Select the smallest score with <strong>least</strong> quadric error metric and perform edge collapsing</li>
+      <li>Update the corresponding changed edges with new quadric error</li>
+      <li>Iteratively execute until the simplification reaches condition</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: For each step, the edge corresponding to the least quadric error is selected to be collasped. Clearly, this is a way of reaching local optimum for each step to achieve global optimum, namely greedy strategy. However strictly speaking, this approch does not prove that the global optimal solution can be reached, but this insignificant error is allowed by default in CG.</p>
 
 <h2 id="reference">Reference</h2>
 
 <ul>
   <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-  <li><a href="https://www3.cs.stonybrook.edu/~gu/lectures/2020/">计算共形几何, 顾险峰，丘成桐</a></li>
-  <li><a href="https://en.wikipedia.org/wiki/Texture_filtering">Texture filtering</a></li>
-  <li><a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian matrix and determinant</a></li>
-  <li><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix">Jacobian matrix, Khan Academy</a></li>
-  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.htm">雅可比行列式</a></li>
-  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.html">多变量微积分———变量替换</a></li>
-  <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
+  <li><a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg">ray marching and distance function</a></li>
+  <li><a href="https://www.bilibili.com/read/cv7933990?from=search">光线步进和距离函数</a></li>
+  <li><a href="[SPH算法](https://blog.csdn.net/liuyunduo/article/details/84098884)">SPH算法</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Smoothed-particle_hydrodynamics">Smoothed-particle hydrodynamics</a></li>
+  <li><a href="http://acko.net/blog/making-mathbox/">Visualization of Bézier Surface</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-09-07T00:00:00+08:00">Sep 08, 2020</time>
+        <time itemprop="dateModified" datetime="2020-11-19T00:00:00+08:00">Nov 19, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -980,7 +1005,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'blog-2020-09-07-cg-6'
+				id: 'blog-2020-11-19-cg-7'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -1736,10 +1761,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'blog-2020-09-07-cg-6';
-      var title = "The Notes of Computer Graphics Ⅵ";
+      var key =   'blog-2020-11-19-cg-7';
+      var title = "The Notes of Computer Graphics Ⅶ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='blog-2020-09-07-cg-6']").text(view);
+        $("[data-page-key='blog-2020-11-19-cg-7']").text(view);
       });
     });
   </script>
