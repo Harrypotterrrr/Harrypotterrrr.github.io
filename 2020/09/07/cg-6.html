@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2 active"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2 active"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -310,7 +310,7 @@
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Sep 08, 2020</span>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 22, 2020</span>
             </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00+08:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
@@ -417,15 +417,21 @@
 <p><img src="https://s3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
 
 <ul>
-  <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$</li>
+  <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$
+    <ul>
+      <li>Proved by using <a href="https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F">point-scored formula</a></li>
+    </ul>
+  </li>
 </ul>
 
-\[\begin{aligned}(x, &amp;y)= \alpha A+\beta B+\gamma C \\ &amp; \alpha+\beta+\gamma=1 \end{aligned}\]
+\[(x, y)= \alpha A+\beta B+\gamma C\]
+
+\[\alpha+\beta+\gamma=1\]
+
+\[0 \le \alpha,\ \beta,\ \gamma \le 1\]
 
 <ul>
-  <li>
-    <p>Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$</p>
-  </li>
+  <li>Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$</li>
   <li>Point $(x,y)$ is inside the triangle if and only if all three $(\alpha, \beta, \gamma)$ are non-negative.</li>
   <li>
     <p>e.g. $A$ is when $(\alpha, \beta, \gamma) = (1, 0, 0)$</p>
@@ -917,6 +923,8 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
 <ul>
   <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
   <li><a href="https://www3.cs.stonybrook.edu/~gu/lectures/2020/">计算共形几何, 顾险峰，丘成桐</a></li>
+  <li><a href="https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F">定比分点公式</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/65495373">三角形重心坐标</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Texture_filtering">Texture filtering</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian matrix and determinant</a></li>
   <li><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix">Jacobian matrix, Khan Academy</a></li>
@@ -925,7 +933,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-09-07T00:00:00+08:00">Sep 08, 2020</time>
+        <time itemprop="dateModified" datetime="2020-09-07T00:00:00+08:00">Nov 22, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -937,7 +945,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/11/19/cg-7">Geometry</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></div></div></div>
 
 </div>
 
@@ -1652,9 +1660,12 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
   });
 })();
 </script><script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};MathJax.Hub.Config(_config);
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        extensions: ["color.js"],
+    };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>(function() {

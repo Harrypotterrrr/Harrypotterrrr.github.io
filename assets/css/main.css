@@ -1429,9 +1429,9 @@ ul.toc .toc-h6 a, ul.toc .toc-h6 a:link, ul.toc .toc-h6 a:visited { color: #888;
 
 ul.toc .toc-h6 a.disabled, ul.toc .toc-h6 a:disabled { color: rgba(136, 136, 136, 0.2) !important; }
 
-ul.toc--ellipsis { height: 40em; overflow: hidden; }
+ul.toc--ellipsis { height: 80vh; overflow: hidden; }
 
-ul.toc--ellipsis > li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+ul.toc--ellipsis > li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 90%; }
 
 .toc--ellipsis::-webkit-scrollbar-track { display: none; }
 

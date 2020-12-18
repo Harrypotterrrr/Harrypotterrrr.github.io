@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2 active"><a href="/2020/11/19/cg-7">Geometry</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2 active"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -310,7 +310,7 @@
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-11-19-cg-7">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 19, 2020</span>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-11-19-cg-7">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Dec 01, 2020</span>
             </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-11-19T00:00:00+08:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
@@ -902,7 +902,9 @@ av66548502?from=search&amp;seid=65256805876131485">Shi-Min Hu’s course</a></li
 
 \[d i s t(q, p)^{2}=\left(q^{T} p\right)^{2}=p^{T}\left(q q^{T}\right) p=: p^{T} Q_{q} p\]
 
-\[, where\quad Q_{q}=\left[\begin{array}{cccc}a^{2} &amp; a b &amp; a c &amp; a d \\ a b &amp; b^{2} &amp; b c &amp; b d \\ a c &amp; b c &amp; c^{2} &amp; c d \\ a d &amp; b d &amp; c d &amp; d^{2}\end{array}\right]\]
+\[where\quad Q_{q}=\left[\begin{array}{cccc}a^{2} &amp; a b &amp; a c &amp; a d \\ a b &amp; b^{2} &amp; b c &amp; b d \\ a c &amp; b c &amp; c^{2} &amp; c d \\ a d &amp; b d &amp; c d &amp; d^{2}\end{array}\right]\]
+
+<p class="warning"><strong>Note</strong>: $q$ is a regularized parameter of plane, where $a^2+b^2+c^2 = 1$.</p>
 
 <ul>
   <li>Sum distances to planes $q_i$ of vertex’ neighbouring triangles</li>
@@ -950,7 +952,7 @@ q_{31} &amp; q_{32} &amp; q_{33} &amp; q_{34} \\
   <li><a href="http://acko.net/blog/making-mathbox/">Visualization of Bézier Surface</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-11-19T00:00:00+08:00">Nov 19, 2020</time>
+        <time itemprop="dateModified" datetime="2020-11-19T00:00:00+08:00">Dec 01, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -962,7 +964,7 @@ q_{31} &amp; q_{32} &amp; q_{33} &amp; q_{34} \\
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/11/19/cg-7">Geometry</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></div></div></div>
 
 </div>
 
@@ -1677,9 +1679,12 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
   });
 })();
 </script><script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};MathJax.Hub.Config(_config);
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        extensions: ["color.js"],
+    };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>(function() {

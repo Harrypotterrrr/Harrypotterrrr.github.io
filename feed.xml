@@ -1,5 +1,1479 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2021-01-15T15:48:38+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
-</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">The Notes of Computer Graphics Ⅶ</title><link href="https://harrypotterrrr.github.io//2020/11/19/cg-7.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅶ" /><published>2020-11-19T00:00:00+08:00</published><updated>2020-11-19T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/11/19/cg-7</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/11/19/cg-7.html">&lt;p&gt;Geometry, Implicit &amp;amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2021-02-09T18:57:21+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
+</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">The Notes of Computer Graphics Ⅸ</title><link href="https://harrypotterrrr.github.io//2020/12/03/cg-9.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅸ" /><published>2020-12-03T00:00:00+08:00</published><updated>2020-12-03T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/12/03/cg-9</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/03/cg-9.html">&lt;p&gt;Advanced Ray Tracing, Radiometry, BRDF, Path Tracing&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;radiometry&quot;&gt;Radiometry&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Motivation: Blinn-Phong is experienced model and light intensity corresponding to the amount of shading is not explained well, the output is not realistic but plastic. Whitted-style ray tracing sometimes doesn’t give correct result, especially involving how much light energy is refracted and reflected, and how much the rest is absorbed by the material, etc.
+    &lt;ul&gt;
+      &lt;li&gt;All the answers can be found in radiometry!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Measurement system and units for illumination&lt;/li&gt;
+  &lt;li&gt;Accurately measure the spatial properties of light (not temperal dimension, we still suppose light travel in straight line with out wave property)
+    &lt;ul&gt;
+      &lt;li&gt;New terms: Radiant flux, intensity, irradiance, radiance (辐射通量, 光强, 照度, 亮度)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Perform lighting calculations in a physically correct manner&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;radiant-energy-and-flux&quot;&gt;Radiant Energy and Flux&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Radiant energy&lt;/strong&gt;: the energy of electromagnetic radiation. It is measured in units of joules, and denoted by the symbol:&lt;/li&gt;
+&lt;/ul&gt;
+
+\[Q[J=Joule]\]
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Radiant flux&lt;/strong&gt; (&lt;strong&gt;radiant power&lt;/strong&gt;, &lt;strong&gt;luminous flux&lt;/strong&gt;): the energy emitted, reflected, transmitted or received, &lt;strong&gt;per unit time&lt;/strong&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Flux&lt;/strong&gt;: photons flowing through a sensor in unit time&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Phi \equiv \frac{\mathrm{d} Q}{\mathrm{~d} t}\]
+
+\[[\mathrm{~W}=\mathrm{Watt}][\mathrm{lm}=\operatorname{lumen}]^{\star}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sgJQAI.png&quot; alt=&quot;cg-9-1&quot; style=&quot;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;radiant-intensity&quot;&gt;Radiant Intensity&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Radiant Intensity&lt;/strong&gt;: The radiant (luminous) intensity is the power per unit solid angle emitted by a point light source.&lt;/li&gt;
+&lt;/ul&gt;
+
+\[I(\omega) \equiv \frac{\mathrm{d} \Phi}{\mathrm{d} \omega}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{sr}}\right]\left[\frac{\mathrm{lm}}{\mathrm{sr}}=\mathrm{cd}=\mathrm{candela}\right]\]
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;strong&gt;candela&lt;/strong&gt; is one of the seven SI base units&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8uxe.jpg&quot; alt=&quot;cg-9-2&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;angles-and-solid-angles&quot;&gt;Angles and Solid Angles&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Angle&lt;/strong&gt;: ratio of subtended arc length on circle to radius
+    &lt;ul&gt;
+      &lt;li&gt;$\theta = l / r$&lt;/li&gt;
+      &lt;li&gt;Circle has $2\pi$ radians&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Solid angle&lt;/strong&gt;: ratio of subtended area on sphere to radius squared
+    &lt;ul&gt;
+      &lt;li&gt;$\omega = A / r^2$&lt;/li&gt;
+      &lt;li&gt;Sphere has $4\pi$ steradians&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8V56.jpg&quot; alt=&quot;cg-9-3&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Differential Solid Angles
+    &lt;ul&gt;
+      &lt;li&gt;Direction vector $\omega$ to denote direction vector of unit length&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\mathrm{d} A =(r \mathrm{~d} \theta)(r \sin \theta \mathrm{d} \phi) =r^{2} \sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
+
+\[\mathrm{d} \omega =\frac{\mathrm{d} A}{r^{2}}=\sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Sphere: $S^{2}$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Omega =\int_{S^{2}} \mathrm{~d} \omega =\int_{0}^{2 \pi} \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \mathrm{d} \phi =4 \pi\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8ePK.jpg&quot; alt=&quot;cg-9-4&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Isotropic Point Source&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Phi = \int_{S^2}Idw = 4\pi I\]
+
+\[I=\frac{\Phi}{4\pi}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sgqUs0.jpg&quot; alt=&quot;cg-9-5&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Modern LED Light
+    &lt;ul&gt;
+      &lt;li&gt;Output: 815 lumens (11W LED replacement paifor 60W incandescent)&lt;/li&gt;
+      &lt;li&gt;Radiant intensity (assume isotropic) = 815 lumens / 4π sr = 65 candelas&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;irradiance&quot;&gt;Irradiance&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Irradiance&lt;/strong&gt;: the power per (perpendicular / projected) unit area incident on a surface point.&lt;/li&gt;
+&lt;/ul&gt;
+
+\[E(\mathbf{x}) \equiv \frac{\mathrm{d} \Phi(\mathbf{x})}{\mathrm{d} A}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{m}^{2}}\right]\left[\frac{\mathrm{lm}}{\mathrm{m}^{2}}=\operatorname{lux}\right]\]
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;strong&gt;lux&lt;/strong&gt; is SI derived unit of illuminance, measuring luminous flux per unit area.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8uxe.jpg&quot; alt=&quot;cg-9-2&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Irradiance&lt;/strong&gt; at surface is proportional to &lt;strong&gt;cosine&lt;/strong&gt; of angle between light direction and surface normal
+    &lt;ul&gt;
+      &lt;li&gt;Recall &lt;a href=&quot;/2020/09/02/cg-5#diffuse-reflection&quot;&gt;Lambert’s Cosine Law&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2AFXT.jpg&quot; alt=&quot;cg-9-6&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Analogous &lt;strong&gt;Irradiance&lt;/strong&gt; to &lt;strong&gt;Electric field intensity&lt;/strong&gt;, &lt;strong&gt;Radiant flux&lt;/strong&gt; to &lt;strong&gt;Magnetic Flux&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The reason why we feel cold and hot in different seasons
+    &lt;ul&gt;
+      &lt;li&gt;Earth’s axis of rotation: ~23.5° off axis&lt;/li&gt;
+      &lt;li&gt;Give rise to the different Solar elevation angle&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2AP10.jpg&quot; alt=&quot;cg-9-7&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/2020/09/02/cg-5#light-falloff&quot;&gt;Correction&lt;/a&gt; of Irradiance Falloff
+    &lt;ul&gt;
+      &lt;li&gt;Assume light is emitting power $\Phi$ in a uniform angular distribution&lt;/li&gt;
+      &lt;li&gt;Compare irradiance at surface of two spheres&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2AicV.jpg&quot; alt=&quot;cg-9-8&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;radiance&quot;&gt;Radiance&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Radiance&lt;/strong&gt; (&lt;strong&gt;luminance&lt;/strong&gt;): the power emitted, reflected, transmitted or received by a surface, &lt;strong&gt;per unit solid angle&lt;/strong&gt;, &lt;strong&gt;per projected unit area&lt;/strong&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;Radiance is the fundamental field quantity that describes the distribution of light in an environment&lt;/li&gt;
+      &lt;li&gt;Radiance is the quantity associated with a ray&lt;/li&gt;
+      &lt;li&gt;Rendering is all about computing radiance&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2ACpq.jpg&quot; alt=&quot;cg-9-9&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+\[L(\mathrm{p}, \omega) \equiv \frac{\mathrm{d}^{2} \Phi(\mathrm{p}, \omega)}{\mathrm{d} \omega \mathrm{d} A \cos \theta}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{sr} \mathrm{m}^{2}}\right]\left[\frac{\mathrm{cd}}{\mathrm{m}^{2}}=\frac{\mathrm{lm}}{\mathrm{sr} \mathrm{m}^{2}}=\mathrm{nit}\right]\]
+
+&lt;ul&gt;
+  &lt;li&gt;$\cos\theta$ accounts for projected surface area&lt;/li&gt;
+  &lt;li&gt;The &lt;strong&gt;nit&lt;/strong&gt;, the candela per square metre, is the derived SI unit of luminance.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8uxe.jpg&quot; alt=&quot;cg-9-2&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Recall
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Irradiance&lt;/strong&gt;: power per projected unit area&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Intensity&lt;/strong&gt;: power per solid angle&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Radiance&lt;/strong&gt;: power per solid angle, per projected unit area&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Thus
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Radiance&lt;/strong&gt;: Irradiance per solid angle&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Radiance&lt;/strong&gt;: Intensity per projected unit area&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;incident-radiance&quot;&gt;Incident Radiance&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Incident Radiance&lt;/strong&gt;: the irradiance per unit solid angle arriving at the surface
+    &lt;ul&gt;
+      &lt;li&gt;It is the light arriving at the surface along a given ray (point on surface and incident direction).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2Aphn.jpg&quot; alt=&quot;cg-9-10&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+\[L(\mathrm{p}, \omega)=\frac{\mathrm{d} E(\mathrm{p})}{\mathrm{d} \omega \cos \theta}\]
+
+&lt;h4 id=&quot;exiting-radiance&quot;&gt;Exiting Radiance&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Exiting Radiance&lt;/strong&gt;: the intensity per unit projected area leaving the surface
+    &lt;ul&gt;
+      &lt;li&gt;For an area light, it is the light emitted along a given ray (point on surface and exit direction).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2ACpq.jpg&quot; alt=&quot;cg-9-9&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+\[L(\mathrm{p}, \omega)=\frac{\mathrm{d} I(\mathrm{p}, \omega)}{\mathrm{d} A \cos \theta}\]
+
+&lt;h4 id=&quot;irradiance-vs-radiance&quot;&gt;Irradiance vs. Radiance&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Irradiance: total power received by area $dA$&lt;/li&gt;
+  &lt;li&gt;Radiance: power received by area $dA$ from direction $d\omega$&lt;/li&gt;
+&lt;/ul&gt;
+
+\[d E(\mathrm{p}, \omega) =L_{i}(\mathrm{p}, \omega) \cos \theta \mathrm{d} \omega\]
+
+\[E(\mathrm{p}) =\int_{H^{2}} L_{i}(\mathrm{p}, \omega) \cos \theta \mathrm{d} \omega\]
+
+&lt;ul&gt;
+  &lt;li&gt;Unit Hemisphere $H^2$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/s2AAnU.jpg&quot; alt=&quot;cg-9-11&quot; style=&quot;width:55%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;bidirectional-reflectance-distribution-function&quot;&gt;Bidirectional Reflectance Distribution Function&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Radiance from direction $\omega_i$ turns into the power $E$ that $dA$ receives&lt;/li&gt;
+  &lt;li&gt;The npower $E$ will become the radiance to any other direction $\omega_o$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/29/yihyJx.jpg&quot; alt=&quot;cg-9-12&quot; style=&quot;width:55%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Differential irradiance incoming: $d E\left(\omega_{i}\right)=L\left(\omega_{i}\right) \cos \theta_{i} d \omega_{i}$&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Differential radiance exiting (due to $dE(\omega_i)$): $dL_r(\omega_r)$&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;BRDF can be understanded in the way of energy distribution after the point on the surface absorbs the energy from directions all around and then reflects.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;For the specular reflection, BRDF specifies the reflected energy is mostly on the reflection direction&lt;/li&gt;
+      &lt;li&gt;For the diffuse reflection, BRDF specifies the reflected energy will distributed amoung all directions around.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;brdf&quot;&gt;BRDF&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Bidirectional Reflectance Distribution Function&lt;/strong&gt; (BRDF): represents how much light is reflected into each outgoing direction $\omega_r$ from each incoming direction&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/29/yihsF1.jpg&quot; alt=&quot;cg-9-13&quot; style=&quot;width:65%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+\[f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right)=\frac{\mathrm{d} L_{r}\left(\omega_{r}\right)}{\mathrm{d} E_{i}\left(\omega_{i}\right)}=\frac{\mathrm{d} L_{r}\left(\omega_{r}\right)}{L_{i}\left(\omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}}\left[\frac{1}{\mathrm{sr}}\right]\]
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;: The BRDF, the ratio of exitant radiance to incident irradiance, is to characterize the directional properties of how a surface reflects light, which is independent of the strength of the light.
+    &lt;ul&gt;
+      &lt;li&gt;In fact, we use &lt;em&gt;cosine irradiance collector&lt;/em&gt; to measure incident irradiance, &lt;em&gt;conical baffler&lt;/em&gt; to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. &lt;a href=&quot;https://www.zhihu.com/question/28476602/answer/41003204&quot;&gt;More info&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;In a word, BRDF describes how the light interacts with the object. Accordingly, BRDF describes the property of the texture.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The quantity is between zero and one for reasons of energy conservation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;reflection-equation&quot;&gt;Reflection Equation&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Consider BRDF only takes one direction of incident light, thus integral light (energy) from all directions of hemisphere will get the entire light source directing to the reflection point.
+    &lt;ul&gt;
+      &lt;li&gt;Understand in discrete way: traverse solid angles on the hemisphere, each incident solid angle will make contribution to the radiance of one specified direction. Sum these up will get the entire contribution, that is received energy.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_{r}\left(\mathrm{p}, \omega_{r}\right)=\int_{H^{2}} f_{r}\left(\mathrm{p}, \omega_{i} \rightarrow \omega_{r}\right) L_{i}\left(\mathrm{p}, \omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/29/yihDoR.jpg&quot; alt=&quot;cg-9-14&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Challenege&lt;/strong&gt;: recursion
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Reflected radiance&lt;/strong&gt; $L_{r}\left(\mathrm{p}, \omega_{r}\right)$ on the left hand depends on &lt;strong&gt;incoming radiance&lt;/strong&gt; $L_{i}\left(\mathrm{p}, \omega_{i}\right)$ on the right hand.&lt;/li&gt;
+      &lt;li&gt;But &lt;strong&gt;incoming radiance&lt;/strong&gt; depends on reflected radiance at another point in the scene.
+        &lt;ul&gt;
+          &lt;li&gt;Incoming radiance is not limited to the light source, but reflected light etc.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;rendering-equation&quot;&gt;Rendering Equation&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Rewrite the reflection equation by adding an &lt;strong&gt;Emission term&lt;/strong&gt; $L_{e}\left(p, \omega_{o}\right)$ to make it general:&lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+&lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: we assume that all directions are pointing &lt;strong&gt;outwards&lt;/strong&gt;, and field of integration is hemisphere, which is the reason for $\cos\theta$ replacing $max(\cos\theta, 0)$.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Volume rendering equation is a more general form of rendering equation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The solution of renderings equation will be narrated in the &lt;a href=&quot;#path-tracing&quot;&gt;following part&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Understanding of the rendering equation&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;for the single light source&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)}= \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\left(\omega_{i}, n\right)}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;for the multiple light sources&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \sum \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\left(\omega_{i}, n\right)}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;for the planar light sources&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \int_\omega \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\cos \theta_i d\omega_i}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;for the surfaces with reflected light (interreflection)&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image) \\ \quad \color{red}{Unkown}}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission \\ \color{blue}{Known}}{L_{e}\left(x, \omega_{r}\right)} + \int_\omega \underset{\\ \quad \\ Reflected\ light \\ from\ others \\ \quad \color{red}{Unkown}}{L_{r}\left(x^\prime, -\omega_i\right)} \underset{\\ \quad \\ BRDF \\ \color{blue}{Known}}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle \\ \color{blue}{Known}}{\cos \theta_i d\omega_i}\]
+
+    &lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: $-\omega$ is because the light direction is pointing opposite of the incident direction with regards to $x^\prime$.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;which is the canonical form of &lt;a href=&quot;#fredholm-integral-equation&quot;&gt;Fredholm Integral Equation&lt;/a&gt; of second kind&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\underset{\\ \quad \\ Radiance \\ \color{red}{Unkown}}{\color{red}{I(u)}} = \underset{\\ \quad \\ Emission}{e(u)} + \int \underset{\\ \quad \\ Radiance\\ from\ others \\ \color{red}{Unkown}}{\color{red}{I(v)}} \underset{\\ \quad \\ \quad Kernel\ of\ equation \\ \quad Light\ Transport\ Operator}{\boxed{K(u, v)dv}}\]
+
+    &lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Use substitution rule for integrals from the current object to the object of reflected light source will achieve $d\omega_i$ to $dv$, which will be detailed in &lt;a href=&quot;#solution-of-rendering-equation&quot;&gt;solution part&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;which can be discretized to a simple matrix equation or system of simultaneous linear equations, where $L,\ E$ are vectors, $K$ is the light transport matrix (&lt;strong&gt;reflection operator&lt;/strong&gt;)&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\color{red}{L} = E + K\color{red}{L}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;rearrange terms and use taylor expassion&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\begin{aligned}\color{red}{L}&amp;amp;=E+K\color{red}{L} \\ I\color{red}{L}-K\color{red}{L} &amp;amp;= E \\ (I-K)\color{red}{L} &amp;amp;= E \\ \color{red}{L} &amp;amp;= (I-K)^{-1}E \\ \color{red}{L} &amp;amp;= (I + K + K^2 + K^3 + ...)E \\ \color{red}{L} &amp;amp;= E + KE + K^2E + K^3E + ...\end{aligned}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;final form of ray tracing is&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[L = \color{orange}{E + KE} + K^2E + K^3E + ...\]
+
+    &lt;ul&gt;
+      &lt;li&gt;understanding of the expression
+        &lt;ul&gt;
+          &lt;li&gt;$K$ : Reflection operator&lt;/li&gt;
+          &lt;li&gt;$E$ : Emission directly from light sources&lt;/li&gt;
+          &lt;li&gt;$KE$ : Direct illumination on surfaces&lt;/li&gt;
+          &lt;li&gt;$K^2E$ : Indirect illumination (One bounce indirect, mirros, refraction)&lt;/li&gt;
+          &lt;li&gt;$K^3E$ : Two bounce indirect illumination&lt;/li&gt;
+          &lt;li&gt;$\color{orange}{E + KE}$: &lt;strong&gt;Direct illumination&lt;/strong&gt; is all the shading in &lt;em&gt;rasterization&lt;/em&gt; can do&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Global illumination&lt;/strong&gt;: the union of all direct and indirect light&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/06/yJ4T4e.jpg&quot; alt=&quot;cg-9-15&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The more bounce of illumination, the more realistic. When the bounce of illumination goes to infinity, the image finally becomes factual as in the real world.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/08/yUcPRs.gif&quot; alt=&quot;cg-9-16&quot; style=&quot;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;mathematics-foundation&quot;&gt;Mathematics Foundation&lt;/h2&gt;
+
+&lt;h3 id=&quot;fredholm-integral-equation&quot;&gt;Fredholm Integral Equation&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Equation of the first kind&lt;/p&gt;
+
+\[g(t)=\int_{a}^{b} K(t, s) f(s) \mathrm{d} s\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Given the continuous kernel function $K$ and the function $g$, to find the function $f$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Equation of the second kind&lt;/p&gt;
+
+\[\varphi(t)=f(t)+\lambda \int_{a}^{b} K(t, s) \varphi(s) \mathrm{d} s\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Given the kernel $K(t,s)$, and the function $f(t)$, the problem is typically to find the function $\varphi(t)$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;linear-operator&quot;&gt;Linear Operator&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Operator&lt;/strong&gt;: generally a mapping or function acting on elements of a space to produce elements of another space.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Linear Operator&lt;/strong&gt; (kernel): $f$ is a linear&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;operator if it has two properties&lt;/p&gt;
+
+\[f(x + y) = f(x) + f(y)\]
+
+\[f(cx) = cf(x)\]
+  &lt;/li&gt;
+  &lt;li&gt;Thus, $f(ax+by) = af(x)+bf(y)$
+    &lt;ul&gt;
+      &lt;li&gt;If $M$ is a linear operator, $ab$ is constant, $fg$ is function&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[M \bullet (af + bg) = a(M \bullet f) + b(M\bullet g)\]
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The most common examples of linear operators $K$ of differentiation and integration&lt;/p&gt;
+
+\[(K \bullet f)(u)=\frac{\partial f}{\partial u}(u)\]
+
+\[(K \bullet f)(u)=\int k(u, v) f(v) d v\]
+  &lt;/li&gt;
+  &lt;li&gt;Proof of Fredholm Integral Equation as linear operator
+    &lt;ul&gt;
+      &lt;li&gt;Want to show&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[(K \bullet f)(u)=\int k(u, v) f(v) d v\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Then need to verify the two properties of linear operator&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\begin{aligned} &amp;amp;M\bullet(af) = a(M\bullet f) \\ &amp;amp; M\bullet(f+g) = (M\bullet f) + (M \bullet g) \end{aligned}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Addition&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\begin{aligned} (K \bullet (f+g))(u) &amp;amp;= \int k(i, v)(f+g)(v)dv \\ &amp;amp;= \int k(i, v)(f(v) + g(v))dv \\ &amp;amp;= \int k(i, v)f(v)dv + \int k(i, v)g(v)dv \\ &amp;amp;= (K \bullet f) (u) + (K \bullet g) (v) \end{aligned}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Multiplication&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\begin{aligned} (K \bullet af)(u) &amp;amp;= \int k(i, v)(af)(v)dv \\ &amp;amp;= \int ak(i, v)f(v)dv \\ &amp;amp;= a \int k(i, v)f(v)dv \\ &amp;amp;= a(K \bullet f) (u) \end{aligned}\]
+  &lt;/li&gt;
+  &lt;li&gt;More info refer to &lt;a href=&quot;https://en.wikipedia.org/wiki/Functional_analysis&quot;&gt;functional analysis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;monte-carlo-intergration&quot;&gt;Monte Carlo Intergration&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It is too difficult to solve an integral analytically.
+    &lt;ul&gt;
+      &lt;li&gt;Thus estimate the integral of a function by averaging random samples of the function’s value.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Different with &lt;a href=&quot;https://en.wikipedia.org/wiki/Riemann_integral&quot;&gt;Riemann integral&lt;/a&gt; which solve an integral analytically, &lt;a href=&quot;https://en.wikipedia.org/wiki/Monte_Carlo_integration&quot;&gt;Monte Carlo&lt;/a&gt; estimates the value of integration&lt;/li&gt;
+  &lt;li&gt;Define the Monte Carlo estimnator for the definite integral of given function $f(x)$
+    &lt;ul&gt;
+      &lt;li&gt;Definite integral&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\int_{a}^{b} f(x) d x\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Random variable, where $p(x)$ is &lt;em&gt;probability density function&lt;/em&gt; (&lt;em&gt;pdf&lt;/em&gt;)&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[X_{i} \sim p(x)\]
+
+    &lt;ul&gt;
+      &lt;li&gt;MonteCarlo estimator&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[F_{N}=\frac{1}{N} \sum_{i=1}^{N} \frac{f\left(X_{i}\right)}{p\left(X_{i}\right)}\]
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monte Carlo Integration&lt;/p&gt;
+
+\[\int f(x) dx = \frac{1}{N} \sum_{i=1}^{N} \frac{f\left(X_{i}\right)}{p\left(X_{i}\right)}\]
+
+    &lt;ul&gt;
+      &lt;li&gt;The more samples, the less variance&lt;/li&gt;
+      &lt;li&gt;Sample on x, integrate on x&lt;/li&gt;
+      &lt;li&gt;Don’t care about the domain of integration, but use numerical method sampling to estimate the value of integration&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When the random variable distributes between $a$ and $b$ uniformly&lt;/li&gt;
+&lt;/ul&gt;
+
+\[X_{i} \sim p(x) = \frac{1}{b-a}\]
+
+&lt;ul&gt;
+  &lt;li&gt;Then the Basic Monte Carlo estimator will be&lt;/li&gt;
+&lt;/ul&gt;
+
+\[F_{N}=\frac{b-a}{N} \sum_{i=1}^{N} f\left(X_{i}\right)\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/08/yUcSIg.png&quot; alt=&quot;cg-9-17&quot; style=&quot;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If we want to keep the sampling number but increase the estimation accurarcy, we should sample from a distribution of interest than the uniform distribution, that is &lt;a href=&quot;https://en.wikipedia.org/wiki/Importance_sampling&quot;&gt;Importance Sampling&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;path-tracing&quot;&gt;Path Tracing&lt;/h2&gt;
+
+&lt;h3 id=&quot;whitted-style-problem&quot;&gt;Whitted-style problem&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Whitted-style ray tracing
+    &lt;ul&gt;
+      &lt;li&gt;Always perform specular reflections or refractions&lt;/li&gt;
+      &lt;li&gt;Stop bouncing at diffuse surfaces&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;But these simplifications are not reasonable&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Whitted-style ray tracing can not deal with the glossy materials where the ray reflects not the same as the way on mirror material&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/08/yUcCGj.jpg&quot; alt=&quot;cg-9-18&quot; /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Whitted-style ray tracing has no reflection between diffuse material&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/08/yUc9iQ.jpg&quot; alt=&quot;cg-9-19&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: In the left image of the above figure, the region that are not reached by direct illumination are shadowed in black, whereas the diffuse ambient actually illuminates the region. In the right image, the left side of rectangular is shaded in red, and right side of cubic is shaded in green, This phenomenon in which objects or surfaces are colored by reflection of colored light from nearby surfaces is called &lt;strong&gt;color bleeding&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-of-rendering-equation&quot;&gt;Solution of rendering equation&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The rendering equation to be solved&lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+&lt;ul&gt;
+  &lt;li&gt;It involves two problems
+    &lt;ul&gt;
+      &lt;li&gt;Solve an integral over the hemisphere&lt;/li&gt;
+      &lt;li&gt;Deal with recursion of $L_{i}\left(p, \omega_{i}\right)$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;a-sample-monte-carlo-solution&quot;&gt;A Sample Monte Carlo Solution&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Suppose we want to render one pixel (point) in the following scene for &lt;strong&gt;direct illumination&lt;/strong&gt; only
+    &lt;ul&gt;
+      &lt;li&gt;No indirect reflection light is considered at this time&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_{o}\left(p, \omega_{o}\right)=\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKcwT.jpg&quot; alt=&quot;cg-9-20&quot; style=&quot;width:50%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Use Monte Carlo method to solve this integration numerically&lt;/p&gt;
+
+\[\int_{a}^{b} f(x) \mathrm{d} x \approx \frac{1}{N} \sum_{k=1}^{N} \frac{f\left(X_{k}\right)}{p\left(X_{k}\right)} \quad X_{k} \sim p(x)\]
+
+    &lt;ul&gt;
+      &lt;li&gt;$f(x)$: $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)$&lt;/li&gt;
+      &lt;li&gt;$pdf$ (assume uniformly sampling the hemisphere): $pdf\left(\omega_{i}\right)=1 / 2 \pi$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Shading algorithm for direct illumination&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\begin{aligned} L_{o}\left(p, \omega_{o}\right) &amp;amp;=\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i} \\ &amp;amp; \approx \frac{1}{N} \sum_{i=1}^{N} \frac{L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)}{pdf\left(\omega_{i}\right)} \end{aligned}\]
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Trace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;introducing-global-illumination&quot;&gt;Introducing Global Illumination&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One more step forward: what if a ray hits an object
+    &lt;ul&gt;
+      &lt;li&gt;Point $Q$ also reflects light to $P$, and the amount of radiance is the amount of radiance of direct illumination at point $Q$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydlMYF.jpg&quot; alt=&quot;cg-9-21&quot; style=&quot;width:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Trace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# Add the following branch
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;# minus wi is due to the reversed direction of the light towards object p
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lo&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;problem-1-number-explosion&quot;&gt;Problem 1: Number Explosion&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Explosion of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;num_rays&lt;/code&gt; as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;num_bounce&lt;/code&gt; goes up&lt;/li&gt;
+&lt;/ul&gt;
+
+\[num\_ray = N^{num\_bounce}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKDln.jpg&quot; alt=&quot;cg-9-22&quot; style=&quot;width:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;num_ray&lt;/code&gt; will not explode if an only if $\color{red}{N = 1}$&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Path Tracing&lt;/strong&gt;: only &lt;strong&gt;1 ray&lt;/strong&gt; is traced at each shading point&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#  modify N to One
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;One&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Trace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;info&lt;/strong&gt;: &lt;a href=&quot;https://en.wikipedia.org/wiki/Distributed_ray_tracing&quot;&gt;Distributed Ray Tracing&lt;/a&gt;: $ N != 1$&lt;/p&gt;
+
+&lt;h4 id=&quot;ray-generation&quot;&gt;Ray Generation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If the ray is only sampled once, the shaded point will be noisy!&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;BUT&lt;/strong&gt; it doesn’t matter, because just trace more &lt;strong&gt;paths&lt;/strong&gt; thorugh each pixel and average their radiance.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;The goal&lt;/strong&gt; is to render pixels of the image, instead of each points of objects in the scene.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKBSs.jpg&quot; alt=&quot;cg-9-23&quot; style=&quot;width:70%;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ray_generation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Uniformly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;positions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;within&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pixel_radiance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;shoot&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cam_pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera_to_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scene&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pixel_radiance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;camera_to_sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel_radiance&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;problem-2-infinite-recursion&quot;&gt;Problem 2: Infinite Recursion&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Dilemma: the light does not stop bouncing indeed in the real world&lt;/li&gt;
+  &lt;li&gt;Further, cut &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;num_bounce&lt;/code&gt; is to cut &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;energy&lt;/code&gt; and reduce authenticity&lt;/li&gt;
+  &lt;li&gt;Solution: Russian Roulette (RR)
+    &lt;ul&gt;
+      &lt;li&gt;With probability $ 0 \lt P \lt 1$, condition 1&lt;/li&gt;
+      &lt;li&gt;With probablity $1 - P$, otherwise&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Previously, we always shoot a ray at a shading point and get the shading result $L_o$&lt;/li&gt;
+  &lt;li&gt;Suppose we manually set a probability $P$
+    &lt;ul&gt;
+      &lt;li&gt;With probability $P$, shoot a ray and return the shading result &lt;strong&gt;divided by&lt;/strong&gt; $P$: $L_o / P$&lt;/li&gt;
+      &lt;li&gt;With probablity $1-P$, don’t shoot a ray and you’ll get $0$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In this way, you can still expect to get $L_o$&lt;/li&gt;
+&lt;/ul&gt;
+
+\[Expect = P * (L_o / P) + (1-P)* 0 = L_o\]
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Add the following branch
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Manually&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specify&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;probability&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ksi&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distribution&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ksi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;One&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Trace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Expected value of bounce number, given probability $p$&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\begin{aligned}\sum_{n=1}^{+\infty} p^{n} &amp;amp;=\lim _{n \rightarrow+\infty} \frac{p(1-p^{n})}{1-p} \\ &amp;amp;=\frac{p}{1-p}\ (0 \lt p \lt 1) \end{aligned}\]
+
+\[\begin{aligned} E &amp;amp;=\sum_{n=1}^{+\infty} n p(1-p)^{n-1} \\ &amp;amp;=p \sum_{n=1}^{+\infty} n(1-p)^{n-1} \\ &amp;amp;=-p\left(\sum_{n=1}^{+\infty} (1-p)^{n}\right)^{\prime} \\ &amp;amp;=-p\left(\frac{1-p}{p}\right)^{\prime} \\ &amp;amp;=-p \frac{-p-(1-p)}{p^{2}} \\ &amp;amp;=\frac{1}{p} \\ \end{aligned}\]
+
+&lt;h3 id=&quot;sampling-the-light&quot;&gt;Sampling the Light&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Path tracing is correct but not efficient actually&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydQ0rq.jpg&quot; alt=&quot;cg-9-24&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The reason of being inefficient is the sampled 1 ray &lt;strong&gt;may not&lt;/strong&gt; hit the light, so that a lot of rays are wasted if we uniformly sample the hemisphere at the shading point&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydK6mV.jpg&quot; alt=&quot;cg-9-25&quot; style=&quot;width:80%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sampling on the shading point will lead to waste of rays which fail to hit the light source
+    &lt;ul&gt;
+      &lt;li&gt;Monte Carlo methods allows any sampling methods&lt;/li&gt;
+      &lt;li&gt;Hence, change the sampling point to the light&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Assume uniformly sampling on the light&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\int pdf \color{red}{dA} = 1\]
+
+\[Hence,\ pdf = \frac{1}{A}\]
+
+&lt;ul&gt;
+  &lt;li&gt;The rendering equation integrates on &lt;strong&gt;the solid angle&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Recall Monte Carlo Integration: Sample on $x$, and integrate on $x$&lt;/li&gt;
+      &lt;li&gt;Integral variable substitution&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_o = \int L_r f_BRDF \cos\theta \color{red}{d\omega}\]
+
+&lt;ul&gt;
+  &lt;li&gt;Make the rendering equation converting converting from an integral of $d\omega$ to $dA$.&lt;/li&gt;
+  &lt;li&gt;The relationship between $d\omega$ and $dA$
+    &lt;ul&gt;
+      &lt;li&gt;The projected area towards $x^\primex$ at point $x^\prime$ is $d A \cos \theta^{\prime}$&lt;/li&gt;
+      &lt;li&gt;Recall that $dS = R^2d\theta$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[d \omega=\frac{d A \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKsO0.jpg&quot; alt=&quot;cg-9-26&quot; style=&quot;width:50%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;final-form-of-path-tracing&quot;&gt;Final Form of Path Tracing&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Rewrite the rendering equation as final form with an integral on $dA$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \ &amp;amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}} \mathrm{~d} A \end{aligned}$&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Now integration is on the light, so for Monte Carlo integration:
+    &lt;ul&gt;
+      &lt;li&gt;$f(x)$: $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$&lt;/li&gt;
+      &lt;li&gt;$pdf$: $1 / A$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Previously, we assume the light is accidentally shot by uniform hemisphere sampling&lt;/li&gt;
+  &lt;li&gt;Now we consider the radiance coming from two parts:
+    &lt;ul&gt;
+      &lt;li&gt;Light source (direct, no need to have RR), if the ray is &lt;strong&gt;not blocked&lt;/strong&gt; in the middle&lt;/li&gt;
+      &lt;li&gt;Other reflectors (indirect, need to have RR)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKRkF.jpg&quot; alt=&quot;cg-9-27&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Contribution from the light source
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Uniformly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' (pdf_light = 1 / A)
+    L_dir = 0.0
+    Shoot a ray from p to x'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blocked&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;middle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;L_dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Li&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosθ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosθ&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' / |x'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|^&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf_light&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Contribution from other reflections
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;## Test RR
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Manually&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specify&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;probability&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Randomly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ksi&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distribution&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ksi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_dir&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## Ray Travce
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;L_indir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Uniformly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hemisphere&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;toward&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pdf_hemi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Trace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;emitting&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;L_indir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shade&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cosθ&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdf_hemi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_RR&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_indir&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Path tracing is almost 100% correct, a.k.a &lt;strong&gt;Photo-realistic&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/09/ydKgTU.jpg&quot; alt=&quot;cg-9-28&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;summary--future-work&quot;&gt;Summary &amp;amp; Future work&lt;/h2&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray tracing: Previous vs. Modern Concepts
+    &lt;ul&gt;
+      &lt;li&gt;Previous: Ray tracing == Whitted-style ray tracing&lt;/li&gt;
+      &lt;li&gt;Modern
+        &lt;ul&gt;
+          &lt;li&gt;The general solution of light transport, including:&lt;/li&gt;
+          &lt;li&gt;(Unidirectional or Bidirectional) Path tracing&lt;/li&gt;
+          &lt;li&gt;Photon mapping&lt;/li&gt;
+          &lt;li&gt;Metropolis light transport&lt;/li&gt;
+          &lt;li&gt;VCM / UPBP …&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;future-work&quot;&gt;Future work&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Uniformly sampling the hemisphere
+    &lt;ul&gt;
+      &lt;li&gt;How? and in general, how to sample any function? (sampling theory)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Monte Carlo integration allows arbitrary $pdf$
+    &lt;ul&gt;
+      &lt;li&gt;Instead of uniform sampling, what’s the best choice of sampling with regards to different shapes of function? (importance sampling)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Do random numbers matter?
+    &lt;ul&gt;
+      &lt;li&gt;Yes! (low discrepancy sequences)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;I can sample the hemisphere and the light
+    &lt;ul&gt;
+      &lt;li&gt;Can I combine them? Yes! (multiple importance sampling)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The radiance of a pixel is the averange of radiance on all paths passing through it
+    &lt;ul&gt;
+      &lt;li&gt;Why? If different weighted sampling at the center of pixel or the edge is needed? (pixel reconstruction filter)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Is the radiance of a pixel the color of a pixel?
+    &lt;ul&gt;
+      &lt;li&gt;No. (gamma correction, curves concerning high dynamic range (HDR) image , color space, photography)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/21376124&quot;&gt;基于物理着色：BRDF&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/leonwei/article/details/44539217&quot;&gt;物理渲染(PBR)-基于物理的光照模型&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.zhihu.com/question/28476602/answer/41003204&quot;&gt;BRDF单位为sr^-1的原因&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.qiujiawei.com/monte-carlo/&quot;&gt;蒙特·卡罗积分&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/146144853&quot;&gt;蒙特卡洛积分概述&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.twistedwg.com/2018/05/29/MC-integral.html&quot;&gt;蒙特卡洛（Monte Carlo）法求定积分&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/56443239&quot;&gt;Rendering Equation求解&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Advanced Ray Tracing, Radiometry, BRDF, Path Tracing</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅷ</title><link href="https://harrypotterrrr.github.io//2020/11/25/cg-8.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅷ" /><published>2020-11-25T00:00:00+08:00</published><updated>2020-11-25T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/11/25/cg-8</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/11/25/cg-8.html">&lt;p&gt;Whitted Style Ray Tracing, Ray-Surface Intersection, Acceleration of Ray Tracing, Ray-Intersection with AABB, KD-Tree, BVH&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;ray-tracing&quot;&gt;Ray Tracing&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Rasterization can not handle &lt;strong&gt;global effect&lt;/strong&gt; well
+    &lt;ul&gt;
+      &lt;li&gt;Soft shadows&lt;/li&gt;
+      &lt;li&gt;Glossy reflection, transparent / subtransparent object&lt;/li&gt;
+      &lt;li&gt;Indirect illumination when light bounces more than once&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ray tracing is accurate, but is very slow
+    &lt;ul&gt;
+      &lt;li&gt;Rasterization: real time, Ray tracing: offline&lt;/li&gt;
+      &lt;li&gt;Time estimation: ~10K CPU core hours to render one frame in video production&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;light-rays&quot;&gt;Light Rays&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Three ideas about light rays:
+    &lt;ul&gt;
+      &lt;li&gt;Light travels in straight lines, though this is wrong because light is a wave which has volatility.&lt;/li&gt;
+      &lt;li&gt;Light rays do not collide with each other if they cross, though this is still not wrong.&lt;/li&gt;
+      &lt;li&gt;Light rays travel from the light sources to the eye, and the reciprocity of the light means the physics is invariant under path reversal.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ray-casting&quot;&gt;Ray Casting&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Pinhole Camera Model&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Generate an image by casting one ray per pixel&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/17/sr6ECR.jpg&quot; alt=&quot;cg-8-1&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Check for shadows by sending a ray to the light&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/17/sr6FUJ.jpg&quot; alt=&quot;cg-8-2&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Whitted-Style Ray Tracing&lt;/strong&gt;: &lt;strong&gt;Recursive&lt;/strong&gt; Ray Tracing&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/17/sr6k59.gif&quot; alt=&quot;cg-8-3&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Key idea&lt;/strong&gt;: ray tracing is to simulate the ray casting&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ray-surface-intersection&quot;&gt;Ray-Surface Intersection&lt;/h3&gt;
+
+&lt;h4 id=&quot;ray-equation&quot;&gt;Ray Equation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray is defined by its origin and a direction vector&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/17/sr6iE4.jpg&quot; alt=&quot;cg-8-4&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray equation $\boldsymbol{r}(t) = \boldsymbol{o} + t\boldsymbol{d}$ where, $0 \leq t &amp;lt; \infty$
+    &lt;ul&gt;
+      &lt;li&gt;$o$: origin point&lt;/li&gt;
+      &lt;li&gt;$d$: &lt;strong&gt;normalized&lt;/strong&gt; direction of the ray&lt;/li&gt;
+      &lt;li&gt;$r(t)$: point along the ray&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;intersect-with-sphere&quot;&gt;Intersect with Sphere&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray: $\boldsymbol{r}(t) = \boldsymbol{o} + t\boldsymbol{d}, 0 \leq t &amp;lt; \infty$&lt;/li&gt;
+  &lt;li&gt;Sphere: $ \boldsymbol{p}:\ (\boldsymbol{p}-\boldsymbol{c})^2-R^2 = 0$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/17/sr6CbF.jpg&quot; alt=&quot;cg-8-5&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The intersection $p$ must satisfy both ray equation and sphere equation&lt;/li&gt;
+  &lt;li&gt;Intersection: $ (\boldsymbol{o}+ t\boldsymbol{d}-\boldsymbol{c})^2-R^2 = 0$&lt;/li&gt;
+&lt;/ul&gt;
+
+\[a t^{2}+b t+c=0,\ where\]
+
+\[\left\{\begin{aligned} a=&amp;amp;\mathrm{d} \cdot \mathrm{d} \\
+b=&amp;amp;2(\mathbf{o}-\mathbf{c}) \cdot \mathrm{d} \\
+c=&amp;amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\right.\]
+
+\[t=\frac{-b \pm \sqrt{b^{2}-4 a c}}{2 a}\]
+
+&lt;ul&gt;
+  &lt;li&gt;Ray intersects with sphere if only if $\varDelta \ge 0$ &lt;strong&gt;and&lt;/strong&gt; $t \ge 0$, otherwise no intersection.&lt;/li&gt;
+  &lt;li&gt;Given the solved $t$, intersection is $\boldsymbol{o} + t\boldsymbol{d}$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;intersect-with-implicit-surface&quot;&gt;Intersect With Implicit Surface&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray: $\boldsymbol{r}(t) = \boldsymbol{o} + t\boldsymbol{d}$, where $0 \leq t &amp;lt; \infty$&lt;/li&gt;
+  &lt;li&gt;General implicit surface: $\boldsymbol{p}: f(\boldsymbol{p}) = 0$&lt;/li&gt;
+  &lt;li&gt;Substitute ray equation: $f(\boldsymbol{o}+t\boldsymbol{d}) = 0$&lt;/li&gt;
+  &lt;li&gt;Solve for real, positive roots of $t$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: we usually don’t care about how to solve the equation, because numerical optimization will always help us to find an approximate solution of the problem corresponding to the given equation of implicit surface.&lt;/p&gt;
+
+&lt;h4 id=&quot;plane-equation&quot;&gt;Plane Equation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Plane is defined by normal vector and a point on plane&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/s6F3Y6.jpg&quot; alt=&quot;cg-8-6&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Plane Equation: $\boldsymbol{p}: (\boldsymbol{p}-\boldsymbol{p^\prime}) \cdot \boldsymbol{N}=0$
+    &lt;ul&gt;
+      &lt;li&gt;$p$: all points on plane&lt;/li&gt;
+      &lt;li&gt;$p^\prime$: one point on plane&lt;/li&gt;
+      &lt;li&gt;$N$: normal vector&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Expland the plane equation will get Plane Equation in Cartesian coordinates: $ax + by + cz + d = 0$&lt;/li&gt;
+  &lt;li&gt;Solve for intersection
+    &lt;ul&gt;
+      &lt;li&gt;Set $\boldsymbol{p} = \boldsymbol{r}(t)$ and solve for $t$&lt;/li&gt;
+      &lt;li&gt;Check if $0 \leq t&amp;lt;\infty$ intersection inside the plane, otherwise not.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\left(\mathbf{p}-\mathbf{p}^{\prime}\right) \cdot \mathbf{N}=\left(\mathbf{o}+t \mathbf{d}-\mathbf{p}^{\prime}\right) \cdot \mathbf{N}=0\]
+
+\[t=\frac{\left(\mathbf{p}^{\prime}-\mathbf{o}\right) \cdot \mathbf{N}}{\mathbf{d} \cdot \mathbf{N}} \quad\]
+
+&lt;ul&gt;
+  &lt;li&gt;After get the $t$ and intersection with the plane, check if the intersection is inside triangle
+    &lt;ul&gt;
+      &lt;li&gt;Use three &lt;a href=&quot;/2020/08/11/cg-2#cross-product&quot;&gt;cross product&lt;/a&gt; and check if the results are all in the same direction&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;intersect-with-triangle-mesh&quot;&gt;Intersect with Triangle Mesh&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Usage: visiblity, shadows, lighting …&lt;/li&gt;
+  &lt;li&gt;Geometry: inside / outside test&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Point in Polygon test is: given a point $p$ and a polygon $Q$, draw a line from the query point $p$ to other point far away in the plane, which should be outside $Q$, then count the number of intersection of this ray with $Q$. If odd number of intersections, the point $p$ is inside polygon $Q$, otherwise outside.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/s6F8fK.jpg&quot; alt=&quot;cg-8-7&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Idea: just intersect ray with each triangle&lt;/li&gt;
+  &lt;li&gt;Simple, but very slow since for each resolution pixel of the screen will cast a ray and do intersection test with each triangle in mesh&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Only care 0, 1 intersection, ignore multiple edge cases&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Triangle is in a plane
+    &lt;ul&gt;
+      &lt;li&gt;Ray-plane intersection&lt;/li&gt;
+      &lt;li&gt;Test if hit point is inside triangle&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Möller Trumbore Algorithm&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Given barycentric coordinate of triangle, a faster and direct approach to calculate intersection&lt;/li&gt;
+      &lt;li&gt;Use &lt;a href=&quot;https://en.wikipedia.org/wiki/Cramer's_rule&quot;&gt;Cramer’s rule&lt;/a&gt; to solve for system of linear equations&lt;/li&gt;
+      &lt;li&gt;The proof can be found &lt;a href=&quot;https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/moller-trumbore-ray-triangle-intersection&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\overrightarrow{\mathbf{o}}+t \overrightarrow{\mathbf{d}}=\left(1-b_{1}-b_{2}\right) \overrightarrow{\mathbf{P}}_{0}+b_{1} \overrightarrow{\mathbf{P}}_{1}+b_{2} \overrightarrow{\mathbf{P}}_{2}\]
+
+\[\left[\begin{array}{l}t \\ b_{1} \\ b_{2}\end{array}\right]=\frac{1}{\overrightarrow{\mathbf{S}}_{1} \cdot \overrightarrow{\mathbf{E}}_{1}}\left[\begin{array}{c}\overrightarrow{\mathbf{S}}_{2} \cdot \overrightarrow{\mathbf{E}}_{2} \\ \overrightarrow{\mathbf{S}}_{1} \cdot \overrightarrow{\mathbf{S}} \\ \overrightarrow{\mathbf{S}}_{2} \cdot \overrightarrow{\mathbf{d}}\end{array}\right]\]
+
+\[where\ \left\{\begin{aligned}
+\overrightarrow{\mathbf{E}}_{1}=\overrightarrow{\mathbf{P}}_{1}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{E}}_{2}=\overrightarrow{\mathbf{P}}_{2}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{S}}=\overrightarrow{\mathbf{o}}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{S}}_{1}=\overrightarrow{\mathbf{d}} \times \overrightarrow{\mathbf{E}}_{2} \\
+\overrightarrow{\mathbf{S}}_{2}=\overrightarrow{\mathbf{S}} \times \overrightarrow{\mathbf{E}}_{1}
+\end{aligned}\right.\]
+
+&lt;ul&gt;
+  &lt;li&gt;After get $t$, $b_1$,\ $b_2$
+    &lt;ul&gt;
+      &lt;li&gt;Check if $t \ge 0$ then the intersection is in the plane, otherwise not&lt;/li&gt;
+      &lt;li&gt;Check if $0 \le b_1,\ b_2,\ 1-b_1-b_2 \le 1$ then the intersection is &lt;a href=&quot;/2020/09/07/cg-6#barycentric-coordinate&quot;&gt;inside triangle&lt;/a&gt;, otherwise not&lt;/li&gt;
+      &lt;li&gt;If &lt;strong&gt;both&lt;/strong&gt; conditions are satisfied, the ray does intersect with the triangle&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;acceleration&quot;&gt;Acceleration&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Simple ray-scene intersection
+    &lt;ul&gt;
+      &lt;li&gt;Exhaustively test ray-intersection with every triangle&lt;/li&gt;
+      &lt;li&gt;Find the closest hit&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Problem
+    &lt;ul&gt;
+      &lt;li&gt;Naive algorithm = num_pixels x num_triangles x num_bounces&lt;/li&gt;
+      &lt;li&gt;Very slow&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;bounding-volumes&quot;&gt;Bounding Volumes&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Quick way to avoid intersections: bound complex object with a simple volume
+    &lt;ul&gt;
+      &lt;li&gt;Object is fully contained in the volume&lt;/li&gt;
+      &lt;li&gt;If it doesn’t hit the volume, it doesn’t hit the object&lt;/li&gt;
+      &lt;li&gt;Thus, test bounding volume first, then test object if it hits&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/s6F1Fx.jpg&quot; alt=&quot;cg-8-8&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ray-intersection-with-box&quot;&gt;Ray-Intersection With Box&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Box is the intersection of 3 pairs of slabs&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Axis-Aligned Bounding Box&lt;/strong&gt; (&lt;strong&gt;AABB&lt;/strong&gt;): the smallest enclosing box with any side along either x, y, z axis.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/s6FQT1.jpg&quot; alt=&quot;cg-8-9&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;‘Axis-Aligned’ is to reduce computational time
+    &lt;ul&gt;
+      &lt;li&gt;For the general plane, 3 subtractions, 6 multiplies, 1 division required&lt;br /&gt;
+\(t=\frac{\left(\mathbf{p}^{\prime}-\mathbf{o}\right) \cdot \mathbf{N}}{\mathbf{d} \cdot \mathbf{N}} \quad\)&lt;/li&gt;
+      &lt;li&gt;For slabs perpendicular to x-axis, only 1 subtraction, 1 division required&lt;br /&gt;
+\(t=\frac{\mathbf{p}^\prime_x - \mathbf{o}_x}{\mathbf{d}_x}\)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEUqe.jpg&quot; alt=&quot;cg-8-12&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;intersect-with-2d-aabb&quot;&gt;Intersect with 2D AABB&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2D example of computing intersections with slabs and take &lt;strong&gt;intersection&lt;/strong&gt; of $t_{min}/ t_{max}$ intervals&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEdVH.jpg&quot; alt=&quot;cg-8-10&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;intersect-with-3d-aabb&quot;&gt;Intersect with 3D AABB&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A box in 3D = three pairs of infinitely large slabs&lt;/li&gt;
+  &lt;li&gt;Key ideas
+    &lt;ul&gt;
+      &lt;li&gt;The ray enters the box &lt;strong&gt;only when&lt;/strong&gt; it enters all pairs of slabs&lt;/li&gt;
+      &lt;li&gt;The ray exits the box &lt;strong&gt;as long as&lt;/strong&gt; it exits any pair of slabs&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;For each pair, calculate the $t_{min}$ and $t_{max}$. &lt;strong&gt;Negative&lt;/strong&gt; is fine and will be discussed later&lt;/li&gt;
+  &lt;li&gt;For the 3D box, $t_{enter} = max \{ t_{min} \}$, $t_{exit} = min \{ t_{max} \} $&lt;/li&gt;
+  &lt;li&gt;If $t_{enter} \lt t_{exit}$, we know the ray stays a while in the box, thus ray must intersect with bounding box. But this is &lt;strong&gt;NOT&lt;/strong&gt; absolutely correct!
+    &lt;ul&gt;
+      &lt;li&gt;e.g. the following ray won’t intersect with the bounding box&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/s6FJSO.jpg&quot; alt=&quot;cg-8-11&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Problem: what about the $t$ is negative?&lt;/li&gt;
+  &lt;li&gt;Ray is not a line, but a ray
+    &lt;ul&gt;
+      &lt;li&gt;Should check whether $t$ is negative for physical correctness&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;What if $t_{exit} \lt 0$
+    &lt;ul&gt;
+      &lt;li&gt;The box is behind the ray: no intersection&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;What if $t_{exit} \ge 0$ and $t_{enter} \lt 0$
+    &lt;ul&gt;
+      &lt;li&gt;The ray’s origin is inside the box: have intersection&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In summary, ray and AABB intersect if and only if
+    &lt;ul&gt;
+      &lt;li&gt;$t_{enter} \lt t_{exit} 0\ \&amp;amp;\&amp;amp;\ t_{exit} \ge 0$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;uniform-spatial-partitions&quot;&gt;Uniform Spatial Partitions&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Preprocess to build acceleration grid
+    &lt;ul&gt;
+      &lt;li&gt;Find bounding box&lt;/li&gt;
+      &lt;li&gt;Create grid&lt;/li&gt;
+      &lt;li&gt;Store each object in overlapping cells (test if the object’s surface intersects with cells)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEtKO.jpg&quot; alt=&quot;cg-8-13&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ray Scene Intersection
+    &lt;ul&gt;
+      &lt;li&gt;Step through grid in ray traversal order&lt;/li&gt;
+      &lt;li&gt;For each grid cell
+        &lt;ul&gt;
+          &lt;li&gt;Test intersection with all objects stored at that cell&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scENrD.jpg&quot; alt=&quot;cg-8-14&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Grid resolution should not be too small nor too large
+    &lt;ul&gt;
+      &lt;li&gt;One cell: no speedup&lt;/li&gt;
+      &lt;li&gt;Many cells: infficiency due to extraneous grid traversal&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Heuristic experience
+    &lt;ul&gt;
+      &lt;li&gt;num_cells = Const * num_objs&lt;/li&gt;
+      &lt;li&gt;Const ≈ 27 in 3D&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEJxK.jpg&quot; alt=&quot;cg-8-15&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Uniform Grids’ Problem
+    &lt;ul&gt;
+      &lt;li&gt;Work well on large collections of objects that are distributed evenly in size and space&lt;/li&gt;
+      &lt;li&gt;But fail on the scene where large ratio of space is empty with no objects or the objects are not evenly distributed, i.e. “Teapot in a stadium” problem&lt;/li&gt;
+      &lt;li&gt;Spatial Partition to solve this problem!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scE0IA.jpg&quot; alt=&quot;cg-8-16&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;spatial-partitions&quot;&gt;Spatial Partitions&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Partition the 3D space using plane
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Oct-Tree&lt;/strong&gt;: Recursively partition the space into 8 subspace until specified condition, e.g. the new splitted cells are empty with no objects&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;KD-Tree&lt;/strong&gt; (short for k-dimensional tree): Alternatively use xy-plane, yz-plane, xz-plane to divide objects into different space&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;BSP-Tree&lt;/strong&gt; (short for binary space partitioning tree): More general case of KD-Tree. Recursively subdividing a space into two subspace&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEyxf.jpg&quot; alt=&quot;cg-8-17&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Data Structure for KD-Tree
+    &lt;ul&gt;
+      &lt;li&gt;Internal Nodes store
+        &lt;ul&gt;
+          &lt;li&gt;split axis: x-, y-, or z-axis&lt;/li&gt;
+          &lt;li&gt;split position: coordinate of split plane along axis&lt;/li&gt;
+          &lt;li&gt;children: pointers to child nodes&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;No objects&lt;/strong&gt; are stored in internal nodes&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Leaf nodes store
+        &lt;ul&gt;
+          &lt;li&gt;list of objects&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEwad.gif&quot; alt=&quot;cg-8-18&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Traversing a KD-Tree&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scZipq.gif&quot; alt=&quot;cg-8-19&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Problem existed in KD-Tree method
+    &lt;ul&gt;
+      &lt;li&gt;Computing the overlap between triangle and AABB to build KD-Tree is difficult, though intersection algorithm exist, detailed &lt;a href=&quot;https://fileadmin.cs.lth.se/cs/Personal/Tomas_Akenine-Moller/code/&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;One objects can be included in multiple cells&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;object-partitions&quot;&gt;Object Partitions&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Bounding Volume Hierarchy&lt;/strong&gt; (BVH): tree structure on a set of geometric objects, which are wrapped in bounding volumes
+    &lt;ul&gt;
+      &lt;li&gt;Find bounding box&lt;/li&gt;
+      &lt;li&gt;Recursively split set of objects in two subsets&lt;/li&gt;
+      &lt;li&gt;Recompute the bounding box of the subsets&lt;/li&gt;
+      &lt;li&gt;Stop when necessary&lt;/li&gt;
+      &lt;li&gt;Store objects in each leaf node&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEsRP.gif&quot; alt=&quot;cg-8-20&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The problem existed in KD-Tree are solved
+    &lt;ul&gt;
+      &lt;li&gt;No need to compute the overlap because overlap doesn’t influence, but precompute the bounding box which may overlap one another&lt;/li&gt;
+      &lt;li&gt;One object only exist in one node&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;BVH is the preprocess to accelerate unnecessary computation before ray tracing and shading, but for each time the objects move or displace to somewhere else, BVH will be built once again &lt;strong&gt;for each frame&lt;/strong&gt;. Thus, Real-time ray tracing is great difficult.
+    &lt;ul&gt;
+      &lt;li&gt;Thus it is hard for real-time ray tracing to deal with shape deformation and position transformation, since it is great time-costly to build accelerating structure&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Strategy to subdivide a node to build BVH
+    &lt;ul&gt;
+      &lt;li&gt;Choose a dimension to split: Always choose the longest axis in node, especially when objects in elongated bounding box&lt;/li&gt;
+      &lt;li&gt;Choose split position: Split node at location of &lt;strong&gt;median&lt;/strong&gt; object, which is beneficial to build a more &lt;strong&gt;balanced&lt;/strong&gt; tree with more evenly depth of two side.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Termination criteria: stop when node contains few elements (e.g. heuristically 5)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Choosing split position of median object can be implement by sorting the barycentric of each triangle and select the median one, which take $O(nlog(n))$ time. While &lt;a href=&quot;https://en.wikipedia.org/wiki/Selection_algorithm&quot;&gt;quick selection algorithm&lt;/a&gt; for finding the kth smallest value can optimize the consuming complexity to $O(n)$.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Data Structure for KD-Tree
+    &lt;ul&gt;
+      &lt;li&gt;Internal nodes store
+        &lt;ul&gt;
+          &lt;li&gt;Bounding box&lt;/li&gt;
+          &lt;li&gt;Children: pointers to child nodes&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Leaf nodes store
+        &lt;ul&gt;
+          &lt;li&gt;Bounding box&lt;/li&gt;
+          &lt;li&gt;List of objects&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Traversing BVH&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Intersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BVH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;misses&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;leaf&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intersection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;closest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;intersection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;hit1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Intersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;hit2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Intersect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;closer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hit2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ATTENTION: closer hit point is returned!&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scErGt.jpg&quot; alt=&quot;cg-8-21&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;spatial-vs-object-partitions&quot;&gt;Spatial vs Object Partitions&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Spatial partition (e.g. KD-Tree)
+    &lt;ul&gt;
+      &lt;li&gt;Partition space into non-overlapping regions&lt;/li&gt;
+      &lt;li&gt;Object can be contained in multiple regions&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Object partition (e.g. BVH)
+    &lt;ul&gt;
+      &lt;li&gt;Partition set of objects into disjoint subsets&lt;/li&gt;
+      &lt;li&gt;Bounding boxes for each set may overlap in space&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/18/scEcM8.jpg&quot; alt=&quot;cg-8-22&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://fileadmin.cs.lth.se/cs/Personal/Tomas_Akenine-Moller/code/&quot;&gt;Triangle-Box Overlap Test, Tomas Akenine-Möller&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Selection_algorithm&quot;&gt;Selection problem&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Whitted Style Ray Tracing, Ray-Surface Intersection, Acceleration of Ray Tracing, Ray-Intersection with AABB, KD-Tree, BVH</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅶ</title><link href="https://harrypotterrrr.github.io//2020/11/19/cg-7.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅶ" /><published>2020-11-19T00:00:00+08:00</published><updated>2020-11-19T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/11/19/cg-7</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/11/19/cg-7.html">&lt;p&gt;Geometry, Implicit &amp;amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -586,7 +2060,9 @@ av66548502?from=search&amp;amp;seid=65256805876131485&quot;&gt;Shi-Min Hu’s co
 
 \[d i s t(q, p)^{2}=\left(q^{T} p\right)^{2}=p^{T}\left(q q^{T}\right) p=: p^{T} Q_{q} p\]
 
-\[, where\quad Q_{q}=\left[\begin{array}{cccc}a^{2} &amp;amp; a b &amp;amp; a c &amp;amp; a d \\ a b &amp;amp; b^{2} &amp;amp; b c &amp;amp; b d \\ a c &amp;amp; b c &amp;amp; c^{2} &amp;amp; c d \\ a d &amp;amp; b d &amp;amp; c d &amp;amp; d^{2}\end{array}\right]\]
+\[where\quad Q_{q}=\left[\begin{array}{cccc}a^{2} &amp;amp; a b &amp;amp; a c &amp;amp; a d \\ a b &amp;amp; b^{2} &amp;amp; b c &amp;amp; b d \\ a c &amp;amp; b c &amp;amp; c^{2} &amp;amp; c d \\ a d &amp;amp; b d &amp;amp; c d &amp;amp; d^{2}\end{array}\right]\]
+
+&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: $q$ is a regularized parameter of plane, where $a^2+b^2+c^2 = 1$.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Sum distances to planes $q_i$ of vertex’ neighbouring triangles&lt;/li&gt;
@@ -734,15 +2210,21 @@ q_{31} &amp;amp; q_{32} &amp;amp; q_{33} &amp;amp; q_{34} \\
 &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/07/sZUVNq.jpg&quot; alt=&quot;cg-6-6&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;A coordinate system for triangles $(\alpha, \beta, \gamma)$&lt;/li&gt;
+  &lt;li&gt;A coordinate system for triangles $(\alpha, \beta, \gamma)$
+    &lt;ul&gt;
+      &lt;li&gt;Proved by using &lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F&quot;&gt;point-scored formula&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-\[\begin{aligned}(x, &amp;amp;y)= \alpha A+\beta B+\gamma C \\ &amp;amp; \alpha+\beta+\gamma=1 \end{aligned}\]
+\[(x, y)= \alpha A+\beta B+\gamma C\]
+
+\[\alpha+\beta+\gamma=1\]
+
+\[0 \le \alpha,\ \beta,\ \gamma \le 1\]
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$&lt;/li&gt;
   &lt;li&gt;Point $(x,y)$ is inside the triangle if and only if all three $(\alpha, \beta, \gamma)$ are non-negative.&lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;e.g. $A$ is when $(\alpha, \beta, \gamma) = (1, 0, 0)$&lt;/p&gt;
@@ -1234,13 +2716,15 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www3.cs.stonybrook.edu/~gu/lectures/2020/&quot;&gt;计算共形几何, 顾险峰，丘成桐&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F&quot;&gt;定比分点公式&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/65495373&quot;&gt;三角形重心坐标&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Texture_filtering&quot;&gt;Texture filtering&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant&quot;&gt;Jacobian matrix and determinant&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix&quot;&gt;Jacobian matrix, Khan Academy&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/bigmonkey/p/8665498.htm&quot;&gt;雅可比行列式&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/bigmonkey/p/8665498.html&quot;&gt;多变量微积分———变量替换&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm&quot;&gt;Enhanced EWA filtering&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Texture, Texture Mapping, Interpolation, Texture Filtering</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅴ</title><link href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅴ" /><published>2020-09-02T00:00:00+08:00</published><updated>2020-09-02T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/09/02/cg-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/02/cg-5.html">&lt;p&gt;Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Texture, Texture Mapping, Interpolation, Texture Filtering</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅴ</title><link href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅴ" /><published>2020-09-02T00:00:00+08:00</published><updated>2020-09-02T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/09/02/cg-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/02/cg-5.html">&lt;p&gt;Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1333,7 +2817,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
 &lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: Above proof is not strict, but intuitive. More strict prove is as follows:
 We assume there is no energy loss, so the luminous energy $Q$ from the light source per unit time is the same. According to $\Phi = dQ / dt$, we can get the luminous flux $\Phi$ per time unit is the same. From the definition of luminance: $L_{v} = d^2\Phi / d\Omega dA cos\theta$, the total of luminance $4\pi r^2 L_{v} = d\Phi / d\Omega cos\theta$ should be the same. Thus luminance $L_{v}$ is inversely proportional to the square of  the distance $r$.&lt;/p&gt;
 
-&lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: The relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ is not clear in CG.&lt;/p&gt;
+&lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: More detail and the relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ will be discussed in &lt;a href=&quot;/2020/11/25/cg-8.html#radiometry&quot;&gt;Radiometry part&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;diffuse-term&quot;&gt;Diffuse Term&lt;/h3&gt;
 
@@ -1487,6 +2971,102 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/05/sAUqYT.jpg&quot; alt=&quot;cg-5-19&quot; width=&quot;750px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;shadow-mapping&quot;&gt;Shadow Mapping&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Draw shadows using rasterization&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Shadow gives people the feeling of objects in contact with each other&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;An Image-space Algorithm
+    &lt;ul&gt;
+      &lt;li&gt;no knowledge of scene’s geometry required during shadow computation&lt;/li&gt;
+      &lt;li&gt;must deal with aliasing artifaces&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Key idea: the points NOT in shadow must be seen both by the light and by the camera&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: Suppose the point light is the only source of light, which means the shadow of the object is 0 or 1, that is so-called &lt;strong&gt;hard shadow&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Step 1&lt;/strong&gt;: Assume the camera is at the point light source, perform depth test to record the depth information on the buffer.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Step 2&lt;/strong&gt;: From the view of the real camera, project all point in the view back to the point source light. If the the distance from the point to the light matches the depth, the point is visible, otherwise the point is blocked by other objects.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBaJCF.jpg&quot; alt=&quot;cg-5-25&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;visualizing-shadow-mapping&quot;&gt;Visualizing Shadow Mapping&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A complex scene with shadows and without shadows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBa68e.jpg&quot; alt=&quot;cg-5-26&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The depth buffer from the light’s point of view&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBa3NT.jpg&quot; alt=&quot;cg-5-27&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The shadow from the camera’s point of view
+    &lt;ul&gt;
+      &lt;li&gt;Green is where the distance from the light to shading point approximates to depth on buffer&lt;/li&gt;
+      &lt;li&gt;Non-green is where shadows should be&lt;/li&gt;
+      &lt;li&gt;Quality of shadow mapping is pretty bad due to the error caused by equality comparison of floating value&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBa1EV.jpg&quot; alt=&quot;cg-5-28&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;problems-with-shadow-mapping&quot;&gt;Problems with Shadow Mapping&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Only hard shadows in point light source can be mapped
+    &lt;ul&gt;
+      &lt;li&gt;If the light source is not limited to one and no more point-like, the shadow will be not hard.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Quality greatly depends on shadow map resolution, which is general problem with image-based rasterization techniques&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: In many games settings, the &lt;strong&gt;shadow quality&lt;/strong&gt; refers to the resolution of shadow map. The higher shadow quality sets, the better and more realistic the shadow will be mapped, and the higher it will cost.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Errors involves equality comparison of floating point
+    &lt;ul&gt;
+      &lt;li&gt;Sometimes use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bias&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eps&lt;/code&gt; to approximate the equality between distance and depth in buffer&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;hard-vs-soft-shadow&quot;&gt;Hard vs. Soft Shadow&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Soft shadow is caused by the &lt;strong&gt;size&lt;/strong&gt; of light source.
+    &lt;ul&gt;
+      &lt;li&gt;The light is not able to reach anywhere in &lt;strong&gt;Umbra region&lt;/strong&gt;.&lt;/li&gt;
+      &lt;li&gt;Part of light is blocked but still some light can illuminate &lt;strong&gt;Penumbra&lt;/strong&gt; region.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBaQH0.jpg&quot; alt=&quot;cg-5-29&quot; width=&quot;65%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Soft shadow is the transition from the umbra to penumbra to the illuminated region.
+    &lt;ul&gt;
+      &lt;li&gt;The shadow corresponding to the edge of the object is gradually vague and soft due to the light illumination.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Soft shadow is more realistic and natural because light source is not always point-like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/16/sBaY34.jpg&quot; alt=&quot;cg-5-30&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;graphics-pipeline&quot;&gt;Graphics Pipeline&lt;/h2&gt;
 
@@ -1645,7 +3225,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.zhihu.com/question/53080536/answer/133398317&quot;&gt;光能、光通量、光强、亮度&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅳ</title><link href="https://harrypotterrrr.github.io//2020/08/19/cg-4.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅳ" /><published>2020-08-19T00:00:00+08:00</published><updated>2020-08-19T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/08/19/cg-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/19/cg-4.html">&lt;p&gt;Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅳ</title><link href="https://harrypotterrrr.github.io//2020/08/19/cg-4.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅳ" /><published>2020-08-19T00:00:00+08:00</published><updated>2020-08-19T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/08/19/cg-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/19/cg-4.html">&lt;p&gt;Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1674,7 +3254,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 
 &lt;ul&gt;
   &lt;li&gt;short for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;picture element&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;For now: A pixel is a little square with uniform color. [Not strictly]&lt;/li&gt;
+  &lt;li&gt;For now: A pixel is a little square with uniform color. &lt;a href=&quot;#Raster-displays&quot;&gt;Actually not&lt;/a&gt; in actual electronic display.&lt;/li&gt;
   &lt;li&gt;Color is a mixture of (red, green, blue)&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1718,6 +3298,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 &lt;ul&gt;
   &lt;li&gt;CRT (Cathode Ray Tube)&lt;/li&gt;
   &lt;li&gt;Television: Raster Display CRT&lt;/li&gt;
+  &lt;li&gt;In fact, pixel, the component geometry in an image sensor or display, has three primary color: red, blue and green, which can be ordered in different patterns&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: On the memory of PC or Graphic Processing Unit (GPU), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Frame Buffer&lt;/code&gt; is the memory for a raster display.&lt;/p&gt;
@@ -1792,7 +3373,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Use three &lt;a href=&quot;2020-08-11-cg-2.md#cross-product&quot;&gt;cross product&lt;/a&gt; to check if the Point is inside the triangle or not.&lt;/li&gt;
+  &lt;li&gt;Use three &lt;a href=&quot;/2020/08/11/cg-2#cross-product&quot;&gt;cross product&lt;/a&gt; to check if the Point is inside the triangle or not.&lt;/li&gt;
   &lt;li&gt;Disregard edge cases when the sample point is exactly on the edge of the triangle.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2479,7 +4060,7 @@ Thus, &lt;strong&gt;point + point = midpoint of two points&lt;/strong&gt;&lt;/p&
 
 \[M_{\text {ortho}}=\left[\begin{array}{cccc}\frac{2}{r-l} &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; \frac{2}{t-b} &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; \frac{2}{n-f} &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1\end{array}\right]\left[\begin{array}{cccc}1 &amp;amp; 0 &amp;amp; 0 &amp;amp; -\frac{r+l}{2} \\ 0 &amp;amp; 1 &amp;amp; 0 &amp;amp; -\frac{t+b}{2} \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; -\frac{n+f}{2} \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1\end{array}\right]\]
 
-&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: Objects may be stretched out of the original scale, so the next &lt;a href=&quot;2020-08-19-cg-4.md#canonical-cube-to-screen&quot;&gt;viewport transform&lt;/a&gt; will deal with this and draw it back to the original scale.&lt;/p&gt;
+&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: Objects may be stretched out of the original scale, so the next &lt;a href=&quot;/2020/08/19/cg-4#canonical-cube-to-screen&quot;&gt;viewport transform&lt;/a&gt; will deal with this and draw it back to the original scale.&lt;/p&gt;
 
 &lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: Looking along $-Z$ makes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; &amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;f&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;near&lt;/code&gt; &amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;far&lt;/code&gt;) and this is the reason why OpenGL uses left hand coords.&lt;/p&gt;
 
@@ -2666,7 +4247,15 @@ Thus, &lt;strong&gt;point + point = midpoint of two points&lt;/strong&gt;&lt;/p&
 
 &lt;p&gt;For unit vectors:&lt;/p&gt;
 
-\[\cos \theta=\hat{a} \cdot \hat{b}\]
+&lt;p&gt;$\cos \theta=\hat{a} \cdot \hat{b}$&lt;/p&gt;
+
+&lt;p&gt;Some properties:&lt;/p&gt;
+
+&lt;p&gt;$\vec{a} \cdot \vec{b}=\vec{b} \cdot \vec{a}$&lt;/p&gt;
+
+&lt;p&gt;$\vec{a} \cdot(\vec{b}+\vec{c})=\vec{a} \cdot \vec{b}+\vec{a} \cdot \vec{c}$&lt;/p&gt;
+
+&lt;p&gt;$(k \vec{a}) \cdot \vec{b}=\vec{a} \cdot(k \vec{b})=k(\vec{a} \cdot \vec{b})$&lt;/p&gt;
 
 &lt;p&gt;For component-wise multiplication of vectors in Cartesian coordinates:&lt;/p&gt;
 
@@ -3056,241 +4645,4 @@ $\vec{w}=\vec{u} \times \vec{v} \quad$&lt;/p&gt;
 
 &lt;p&gt;筹码较深的时候，中小对子的价值会上升，因为构成暗三比较隐蔽，我们说隐含赔率比较好
 筹码越深，位置作用越大
-建议浅筹码量入池&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="poker" /><category term="notes" /><summary type="html">Chapter 2: Before the Flop</summary></entry><entry><title type="html">The Notes of Phil Gordon’s Little Green Book Ⅰ</title><link href="https://harrypotterrrr.github.io//2020/07/28/green-book-1.html" rel="alternate" type="text/html" title="The Notes of Phil Gordon’s Little Green Book Ⅰ" /><published>2020-07-28T00:00:00+08:00</published><updated>2020-07-28T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/07/28/green-book-1</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/07/28/green-book-1.html">&lt;p&gt;Chapter 1: The Truth of the Poker Hold’em&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;the-truth-of-the-poker-holdem&quot;&gt;The Truth of the Poker Hold’em&lt;/h2&gt;
-
-&lt;h3 id=&quot;the-fundamental-theorem&quot;&gt;The fundamental theorem&lt;/h3&gt;
-
-&lt;p&gt;Groundbreaking book, The Theory of Poker writes: Every time you play a hand differently from the way you would have played it if you could see all your opponenets’ cards, they gain.
-It would be always a right decision to bet or raise when you have the best hand, check and fold when you have the worst hand, and call when you have the right pot odds or implied odds to see another card.&lt;/p&gt;
-
-&lt;h3 id=&quot;common-mistakes&quot;&gt;Common Mistakes&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A player overvalues top pair: The average winning hand in Hold’em is two pair. If others take tremendous risks with top pair, you will overbet the pot to put them in a dilemma, or go out of my way to play small pocket pairs against them since I am likely to get paid off in a huge way if you flop a set. !!!(Implied odds)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;value-of-aggression&quot;&gt;Value of aggression&lt;/h3&gt;
-
-&lt;p&gt;The player I fear most at the table are the players who consistently bet and raise. Checkers and callers are usually not threats.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Check or call will win only if the best hand is acquired at the showdown.&lt;/li&gt;
-  &lt;li&gt;Bet or raise will win either opponents may fold or the best is acquired at the showdown.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;position&quot;&gt;Position&lt;/h3&gt;
-
-&lt;p&gt;If you are in position, you can take advantage of the difficulty of flopping a good hand. Unpaired hole cards (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A-K&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;K-Q&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6-4&lt;/code&gt;, etc.) will only flop a pair or better about 35% of the time.&lt;/p&gt;
-
-&lt;h3 id=&quot;blinds-have-a-negative-expectation&quot;&gt;Blinds have a negative expectation&lt;/h3&gt;
-
-&lt;p&gt;The blinds have a negative expectation primarily because they are the first to act on every round of betting after the flop. The hands the most success playing from out of position are small and medium pocket pairs. Flopping a set is a great way to win a big pot &lt;strong&gt;from any position&lt;/strong&gt;. !!!(Implied odds)&lt;/p&gt;
-
-&lt;h3 id=&quot;have-a-reason-to-bet&quot;&gt;Have a reason to bet&lt;/h3&gt;
-
-&lt;p&gt;The reason commiting chips into the pot before the flop:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;To steal the blinds. !!!(steal teh blind)&lt;/li&gt;
-  &lt;li&gt;To set up a delayed steal, call from position and after my opponent misses the flop, then intend to take the pot.&lt;/li&gt;
-  &lt;li&gt;To isolate a player. !!!(re-raise to Isolate)&lt;/li&gt;
-  &lt;li&gt;You think you have the best hand.&lt;/li&gt;
-  &lt;li&gt;If you make a hand, opponents will pay you off in a big way. !!!(Pot odds and Implied Odds)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The reason to bet after the flop:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;There is a reasonable chance opponents will fold.&lt;/li&gt;
-  &lt;li&gt;You think opponents have a draw, and you want to either make them pay for the privilege of drawing or make them fold a hand that can catch up.&lt;/li&gt;
-  &lt;li&gt;You think you have the best hand.&lt;/li&gt;
-  &lt;li&gt;Betting is the only chance to win the pot.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;changing-gears&quot;&gt;Changing gears&lt;/h3&gt;
-
-&lt;p&gt;It is always right to keep opponenets guessing as to what mode you are in by changing from one gear to the next.&lt;/p&gt;
-
-&lt;h3 id=&quot;big-hand-big-pot-small-hand-small-pot&quot;&gt;Big hand big pot, small hand small pot&lt;/h3&gt;
-
-&lt;p&gt;When an opponent is looing to build a big pot by making a large raise, it is more sensible to throw away most of smaller hands so that you have a better chance of sticking around long enough to get into a big pot with a big hand.&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="poker" /><category term="notes" /><summary type="html">Chapter 1: The Truth of the Poker Hold’em</summary></entry><entry><title type="html">Port forward</title><link href="https://harrypotterrrr.github.io//2020/04/01/Port-forward.html" rel="alternate" type="text/html" title="Port forward" /><published>2020-04-01T00:00:00+08:00</published><updated>2020-04-01T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/04/01/Port-forward</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/04/01/Port-forward.html">&lt;p&gt;Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the outside server with public IP.
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;preparation&quot;&gt;Preparation&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;One internal server without public IP, has an account named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;. This server has resources you want to access remotely.&lt;/li&gt;
-  &lt;li&gt;One global server with public IP &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xx.xx.xx.xx&lt;/code&gt;, has an account named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. This server is used to forward ports.&lt;/li&gt;
-  &lt;li&gt;Personal PC, named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;. This one is the only PC around you, enabling you to fetch data from remote nodes.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;target&quot;&gt;Target&lt;/h2&gt;
-
-&lt;p&gt;Manipulate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt; to access remote resources from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;procedure&quot;&gt;Procedure&lt;/h2&gt;
-
-&lt;h3 id=&quot;forward-the-app-port-to-the-public-server&quot;&gt;Forward the app port to the public server&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; Remote port forwarding to enable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; to listen applications residing in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;. Run the command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-NfR&lt;/span&gt; &amp;lt;remote_port&amp;gt;:localhost:&amp;lt;inner_port&amp;gt; publicServer@xx.xx.xx.xx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;remote_port&amp;gt;&lt;/code&gt; is the port specified as the listening port on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inner_port&lt;/code&gt; is the port of the running application on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;, e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inner_port&lt;/code&gt; sets to 22 as ssh service is to be forwarded.&lt;/p&gt;
-
-&lt;p&gt;If the error &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh : Permission denied (publickey,gssapi-with-mic)&lt;/code&gt; appears, please check &lt;a href=&quot;#faq&quot;&gt;FAQ&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;It is also helpful to check whether the ports are being listened at backend both on two server:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat &lt;span class=&quot;nt&quot;&gt;-nultp&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &amp;lt;port&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Test on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; to check if port forwarding works. Run command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;remote_port&amp;gt; innerServer@localhost
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Note that the innerServer is the account name of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Then there are &lt;strong&gt;two ways&lt;/strong&gt; to fetch data to your local PC.&lt;/p&gt;
-
-&lt;h3 id=&quot;forward-the-listening-port-to-the-local-server&quot;&gt;Forward the listening port to the local server&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; Local port forwarding let a connection from a local computer to another server. Run the command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-NfL&lt;/span&gt; &amp;lt;local_port&amp;gt;:localhost:&amp;lt;remote_port&amp;gt; publicServer@xx.xx.xx.xx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; is the same to the previous setting in remote forwarding step, and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;local_port&lt;/code&gt; is an available port on your personal PC.&lt;/p&gt;
-
-&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Info:&lt;/strong&gt; If the SSH connection and the port forwarding both go in the same direction, then it is said to be a local forwarding, otherwise remote forwarding.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt; Test connection on your personal PC. Execute the command following or use the third-party app like MobaXTerm to log in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;local_port&amp;gt; innerServer@xx.xx.xx.xx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;While it would be convenient to fetch remotely in this way, every time local forwarding the port from the local PC to the public server is not handy. Then comes another way.&lt;/p&gt;
-
-&lt;h3 id=&quot;access-resources-directly-through-visiting-the-remote-server&quot;&gt;Access resources directly through visiting the remote server&lt;/h3&gt;
-
-&lt;p&gt;Without step 3 and 4, you directly access the listening port of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. Try the following command on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &amp;lt;remote_port&amp;gt; innerServer@xx.xx.xx.xx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If time out comes out or the connection failed, it is time to check the firewall checking of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;. The following steps are helpful to the public server deployed on google cloud.&lt;/p&gt;
-
-&lt;h2 id=&quot;firewall-setting&quot;&gt;Firewall setting&lt;/h2&gt;
-
-&lt;p&gt;Google cloud has a series of extremely strict regulations and mechanism to prevent from DDOS and other sorts of malevolent attacks. Thus the available port on the google engine is limited and have to be appended whenever it needed. Google issues a useful firewall documentation to manage ports. Check this &lt;a href=&quot;https://cloud.google.com/sdk/gcloud/reference/compute/firewall-rules/create&quot;&gt;link&lt;/a&gt; for more info.&lt;/p&gt;
-
-&lt;p&gt;Shortly, you could firstly try to find out where Firewall Rules option is available by going to look at &lt;strong&gt;VPC Networking&lt;/strong&gt; title of the google cloud console. Then in the &lt;strong&gt;firewall&lt;/strong&gt; tab, all port rules are listed.&lt;/p&gt;
-
-&lt;p&gt;It is a good way to append personal rules by click &lt;strong&gt;CREATE FIREWALL RULE&lt;/strong&gt;, but it is more recommended to use commands on Google Engine:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; First authorize gcloud to access the Cloud Platform with personal credentials:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gcloud auth login
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;filling in the verification code through the link command line provides.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Append the port through the following command:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gcloud compute firewall-rules create &amp;lt;rule_name&amp;gt; &lt;span class=&quot;nt&quot;&gt;--allow&lt;/span&gt; tcp:&amp;lt;remote_port&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rule_name&lt;/code&gt; should satisfy the naming rule, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; is the same to the above specified remote port.&lt;/p&gt;
-
-&lt;p&gt;Then you could return to the &lt;strong&gt;VPC Networking&lt;/strong&gt; website to check if the rule is appended. Now it is time to test if you could access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; directly from you &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personalPC&lt;/code&gt; through this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_port&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;advanced&quot;&gt;Advanced&lt;/h2&gt;
-
-&lt;p&gt;The connection frequently invalid and too tricky to deal with the disconnection?
-Here is a more convenient way to automatically check the tunnel you built between two server.&lt;/p&gt;
-
-&lt;h3 id=&quot;waive-password-to-log-in&quot;&gt;Waive password to log in&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; Build public&amp;amp;private ssh key on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt;, execute:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;known_hosts&lt;/code&gt; three files are generated in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; Add ssh key to the public server to authorize identity, then no more password needed next time when log in. Here are two ways to reach this:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;copy the content of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;innerServer&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.ssh/authorized_keys&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;resort to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh-copy-id&lt;/code&gt; command: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh-copy-id &amp;lt;publicServer&amp;gt;@xx.xx.xx.xx&lt;/code&gt;, which will automatically copy the public key to the authorized list.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;auto-reconnect-the-broken-ssh&quot;&gt;Auto reconnect the broken ssh&lt;/h3&gt;
-
-&lt;p&gt;Specify a new port &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;listen_port&amp;gt;&lt;/code&gt; to listen the state of the ssh connection and replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; instructions:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;autossh &lt;span class=&quot;nt&quot;&gt;-M&lt;/span&gt; &amp;lt;listen_port&amp;gt; &lt;span class=&quot;nt&quot;&gt;-NfR&lt;/span&gt; &amp;lt;remote_port&amp;gt;:localhost:&amp;lt;inner_port&amp;gt; publicServer@xx.xx.xx.xx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;warning:&lt;/strong&gt; The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; flag of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; is different with the one in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt;, which means &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh&lt;/code&gt; will run in the background without a chance to input password. Thus, it is preferable to append &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id_rsa.pub&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InnerServer&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authorized_keys&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;publicServer&lt;/code&gt; before using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;autossh -f&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;more-extention&quot;&gt;More extention&lt;/h3&gt;
-
-&lt;p&gt;Fill the above instructions in the startup setting in terms of the system version so as to launch the autossh service whenever the system starts up:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SysV：/etc/inid.d/autossh
-Upstart: /etc/init/autossh.conf
-systemd: /usr/lib/systemd/system/autossh.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;startup-script-example&quot;&gt;Startup script example&lt;/h3&gt;
-
-&lt;p&gt;Here is an example of a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx.service&lt;/code&gt; file as Ubuntu startup script under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/systemd/systme/&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Unit]
-Description=Port forward
-After=network.target syslog.target
-Wants=network.target default.target
-
-[Service]
-Type=forking
-User=lz
-Group=lz
-ExecStart=/bin/bash /home/lz/potter/scripts/portf.sh
-ExecReload=/bin/pkill autossh &amp;amp;&amp;amp; /home/lz/potter/scripts/portf.sh
-ExecStop=/bin/pkill autossh
-
-[Install]
-WantedBy=default.target
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;portf.sh&lt;/code&gt; script is to describe which port to forward under specified path:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;autossh -M 9230 -NfR 9220:localhost:22 root@106.13.58.57
-autossh -M 8895 -NfR 8894:localhost:8894 root@106.13.58.57
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;then refresh the system daemon and start your service:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl daemon-reload
-systemctl start xxx.service
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;faq&quot;&gt;FAQ&lt;/h2&gt;
-
-&lt;h3 id=&quot;ssh-permission-denied&quot;&gt;SSH Permission Denied&lt;/h3&gt;
-
-&lt;p&gt;It is common problem happens on the newly deployed server.
-Solved it by amending in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/ssh/sshd_config&lt;/code&gt;:
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PasswordAuthentication yes&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GatewayPorts yes&lt;/code&gt; and also &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PermitRootLogin yes&lt;/code&gt; if you use root identity to log in, then re-started the service using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;service sshd restart&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/irockcode/p/6629526.html&quot;&gt;SSH反向连接及Autossh&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/bgao86/article/details/80233913&quot;&gt;使用 ssh 端口转发实现登陆内网主机&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot&quot;&gt;port forward sketches&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/keerya/p/7612715.html&quot;&gt;端口转发详解及实例&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="cookbook" /><summary type="html">Given a internal server without public IP, this cookbook aims to instruct how to use port forward techniques to access resources of it with the help of the outside server with public IP.</summary></entry></feed>
+建议浅筹码量入池&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="poker" /><category term="notes" /><summary type="html">Chapter 2: Before the Flop</summary></entry></feed>

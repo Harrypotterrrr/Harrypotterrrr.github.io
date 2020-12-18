@@ -12,7 +12,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅴ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline">
+<meta name="description" content="Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline">
 <link rel="canonical" href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2 active"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2 active"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -310,12 +310,12 @@
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-02-cg-5">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Sep 07, 2020</span>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-02-cg-5">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 23, 2020</span>
             </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-02T00:00:00+08:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Shading, Blinn-Phong Shading Model, Shading Frequency, Graphics Pipeline</p>
+<div class="article__content" itemprop="articleBody"><p>Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline</p>
 
 <!--more-->
 
@@ -408,7 +408,7 @@
 <p class="warning"><strong>Note</strong>: Above proof is not strict, but intuitive. More strict prove is as follows:
 We assume there is no energy loss, so the luminous energy $Q$ from the light source per unit time is the same. According to $\Phi = dQ / dt$, we can get the luminous flux $\Phi$ per time unit is the same. From the definition of luminance: $L_{v} = d^2\Phi / d\Omega dA cos\theta$, the total of luminance $4\pi r^2 L_{v} = d\Phi / d\Omega cos\theta$ should be the same. Thus luminance $L_{v}$ is inversely proportional to the square of  the distance $r$.</p>
 
-<p class="error"><strong>Caveat</strong>: The relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ is not clear in CG.</p>
+<p class="error"><strong>Caveat</strong>: More detail and the relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ will be discussed in <a href="/2020/11/25/cg-8.html#radiometry">Radiometry part</a>.</p>
 
 <h3 id="diffuse-term">Diffuse Term</h3>
 
@@ -562,6 +562,102 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 </ul>
 
 <p><img src="https://s3.ax1x.com/2021/01/05/sAUqYT.jpg" alt="cg-5-19" width="750px" /></p>
+
+<h2 id="shadow-mapping">Shadow Mapping</h2>
+
+<ul>
+  <li>Draw shadows using rasterization</li>
+  <li>
+    <p>Shadow gives people the feeling of objects in contact with each other</p>
+  </li>
+  <li>An Image-space Algorithm
+    <ul>
+      <li>no knowledge of scene’s geometry required during shadow computation</li>
+      <li>must deal with aliasing artifaces</li>
+    </ul>
+  </li>
+  <li>Key idea: the points NOT in shadow must be seen both by the light and by the camera</li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: Suppose the point light is the only source of light, which means the shadow of the object is 0 or 1, that is so-called <strong>hard shadow</strong>.</p>
+
+<ul>
+  <li><strong>Step 1</strong>: Assume the camera is at the point light source, perform depth test to record the depth information on the buffer.</li>
+  <li><strong>Step 2</strong>: From the view of the real camera, project all point in the view back to the point source light. If the the distance from the point to the light matches the depth, the point is visible, otherwise the point is blocked by other objects.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBaJCF.jpg" alt="cg-5-25" width="80%" /></p>
+
+<h3 id="visualizing-shadow-mapping">Visualizing Shadow Mapping</h3>
+
+<ul>
+  <li>A complex scene with shadows and without shadows</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBa68e.jpg" alt="cg-5-26" width="80%" /></p>
+
+<ul>
+  <li>The depth buffer from the light’s point of view</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBa3NT.jpg" alt="cg-5-27" width="80%" /></p>
+
+<ul>
+  <li>The shadow from the camera’s point of view
+    <ul>
+      <li>Green is where the distance from the light to shading point approximates to depth on buffer</li>
+      <li>Non-green is where shadows should be</li>
+      <li>Quality of shadow mapping is pretty bad due to the error caused by equality comparison of floating value</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBa1EV.jpg" alt="cg-5-28" width="80%" /></p>
+
+<h3 id="problems-with-shadow-mapping">Problems with Shadow Mapping</h3>
+
+<ul>
+  <li>Only hard shadows in point light source can be mapped
+    <ul>
+      <li>If the light source is not limited to one and no more point-like, the shadow will be not hard.</li>
+    </ul>
+  </li>
+  <li>Quality greatly depends on shadow map resolution, which is general problem with image-based rasterization techniques</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: In many games settings, the <strong>shadow quality</strong> refers to the resolution of shadow map. The higher shadow quality sets, the better and more realistic the shadow will be mapped, and the higher it will cost.</p>
+
+<ul>
+  <li>Errors involves equality comparison of floating point
+    <ul>
+      <li>Sometimes use <code class="language-plaintext highlighter-rouge">bias</code> or <code class="language-plaintext highlighter-rouge">eps</code> to approximate the equality between distance and depth in buffer</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="hard-vs-soft-shadow">Hard vs. Soft Shadow</h3>
+
+<ul>
+  <li>Soft shadow is caused by the <strong>size</strong> of light source.
+    <ul>
+      <li>The light is not able to reach anywhere in <strong>Umbra region</strong>.</li>
+      <li>Part of light is blocked but still some light can illuminate <strong>Penumbra</strong> region.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBaQH0.jpg" alt="cg-5-29" width="65%" /></p>
+
+<ul>
+  <li>Soft shadow is the transition from the umbra to penumbra to the illuminated region.
+    <ul>
+      <li>The shadow corresponding to the edge of the object is gradually vague and soft due to the light illumination.</li>
+    </ul>
+  </li>
+  <li>Soft shadow is more realistic and natural because light source is not always point-like.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/01/16/sBaY34.jpg" alt="cg-5-30" width="80%" /></p>
 
 <h2 id="graphics-pipeline">Graphics Pipeline</h2>
 
@@ -722,7 +818,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><a href="https://www.zhihu.com/question/53080536/answer/133398317">光能、光通量、光强、亮度</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-09-02T00:00:00+08:00">Sep 07, 2020</time>
+        <time itemprop="dateModified" datetime="2020-09-02T00:00:00+08:00">Nov 23, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -734,7 +830,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/11/19/cg-7">Geometry</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></div></div></div>
 
 </div>
 
@@ -1449,9 +1545,12 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
   });
 })();
 </script><script type="text/x-mathjax-config">
-	var _config = { tex2jax: {
-		inlineMath: [['$','$'], ['\\(','\\)']]
-	}};MathJax.Hub.Config(_config);
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        extensions: ["color.js"],
+    };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script>(function() {
