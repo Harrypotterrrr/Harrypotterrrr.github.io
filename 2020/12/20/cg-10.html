@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Experimental High School Attached To Beijing Normal University - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅹ - Haolin Jia's Homepage</title>
 
-<meta name="description" content="I studied at The Experimental High School Attached To Beijing Normal University as a high school student. My director is Mr.Yuan Jin nan. I missed my classma...">
-<link rel="canonical" href="https://harrypotterrrr.github.io//experience/high_school"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Material, Microfacet Theory, Isotropic Material, Anisotropic Material">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -264,9 +264,20 @@
 </head>
   <body>
     <div class="root" data-is-touch="false">
-      <div class="layout--page js-page-root"><div class="page__main js-page-main page__main--immersive page__viewport cell cell--auto">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
 
-      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header header--dark"><div class="main">
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2 active"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
         <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="24px" height="24px" viewBox="0 0 24 24">
@@ -281,27 +292,547 @@
         <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
-</div><div class="page__content"><div class="article__header--overlay"><div class="hero hero--dark overlay" style="background-image:linear-gradient(135deg, rgba(34, 139, 87 , .4), rgba(139, 34, 139, .4)),url(https://s1.ax1x.com/2020/08/26/d2waVS.jpg);background-color:#203028;"><div class="hero__content"><div class ="main"><div class="article__info clearfix"><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="experience-high-school">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span></span>
-            </li></ul></div><div class="article__header"><header><h1>The Experimental High School Attached To Beijing Normal University</h1></header></div><p class="overlay__excerpt">I studied at The Experimental High School Attached To Beijing Normal University as a high school student. My director is Mr.Yuan Jin nan. I missed my classmates a lot though we have little chance t...</p></div></div>
-              </div>
-            </div><div class ="main"><div class="grid grid--reverse">
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
-              <div class="col-aside d-print-none js-col-aside"></div>
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><meta itemprop="headline" content="The Experimental High School Attached To Beijing Normal University"><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2021-05-28T19:42:31+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅹ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-12-20-cg-10.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅹ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-12-20-cg-10">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Dec 21, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-12-20T00:00:00+08:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>I studied at The Experimental High School Attached To Beijing Normal University as a high school student. My director is Mr.Yuan Jin nan. I missed my classmates a lot though we have little chance to gather and recollect the elapsed happiness and memory.</p>
+<div class="article__content" itemprop="articleBody"><p>Material, Microfacet Theory, Isotropic Material, Anisotropic Material</p>
 
 <!--more-->
-</div><div class="d-print-none"><footer class="article__footer"><meta itemprop="dateModified" content="2021-05-28T19:42:31+08:00"><!-- start custom article footer snippet -->
+
+<h2 id="material">Material</h2>
+
+<ul>
+  <li>Recall that BRDF is used to calculate how much of the light ray will be reflected in a particular outgoing direction by the surface, which specify reflection ability and properties of the surface
+    <ul>
+      <li>Material == BRDF</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0TtQP.jpg" alt="cg-10-1" /></p>
+
+<h3 id="diffuse--lambertian-material">Diffuse / Lambertian Material</h3>
+
+<ul>
+  <li>Assume a senario with a reflected point
+    <ul>
+      <li>Light coming in distributed uniformly in the hemisphere</li>
+      <li>The point absorbs nothing energy and reflects all the energy out</li>
+      <li>Light is equally reflected in each output direction</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned} 
+L_{o}\left(\omega_{o}\right) &amp;=\int_{H^{2}} f_{r} L_{i}\left(\omega_{i}\right) \cos \theta_{i} d \omega_{i} \\ 
+&amp;=f_{r} L_{i} \int_{H^{2}} \cos \theta_{i} d \omega_{i} \\ 
+&amp;=f_{r} L_{i} \int_{H^{2}} \cos \theta \sin \theta d \theta d \varphi \\ 
+&amp;=f_{r} L_{i} \int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta d \theta \int_{0}^{2 \pi} d \theta \\ 
+&amp;=f_{r} L_{i} \cdot \frac{1}{4} \cos 2 \theta \bigg|_{\frac{\pi}{2}} ^{0} \cdot \varphi \bigg|_{0} ^{2 \pi} \\ 
+&amp;=\pi f_{r} L_{i} 
+\end{aligned}\]
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0T8JA.jpg" alt="cg-10-2" style="width:40%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li>On account of energy conservation, the energy absorbed and the enrgy emitted from the point is the same
+    <ul>
+      <li>incident radiance equals to exitant radiance</li>
+    </ul>
+
+\[\left\{\begin{array}{l} L_o = L_i \\ L_{o}\left(\omega_{o}\right) = \pi f_{r} L_{i}\end{array}\right.\]
+
+\[f_r = \frac{1}{\pi}\]
+  </li>
+  <li>Denote reflection ratio $\rho$ (<strong>albedo</strong>) $0 \lt \rho \lt 1$
+    <ul>
+      <li>Three dimensional vector to specify different ability of reflection regrading three colors</li>
+    </ul>
+  </li>
+</ul>
+
+\[f_r = \frac{\rho}{\pi} \in (0, \frac{1}{\pi})\]
+
+<h3 id="material-category">Material Category</h3>
+
+<h4 id="diffuse-material">Diffuse Material</h4>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0T3id.jpg" alt="cg-10-3" /></p>
+
+<h4 id="glossy-material">Glossy Material</h4>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0TJzt.jpg" alt="cg-10-4" /></p>
+
+<h4 id="ideal-reflective--refractive-material">Ideal Reflective / Refractive Material</h4>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0TGRI.jpg" alt="cg-10-5" /></p>
+
+<h3 id="specular-reflection">Specular Reflection</h3>
+<ul>
+  <li>Calculate <a href="/2020/12/03/cg-9#Angles-and-Solid-Angles">zenith angle and azimuth angle</a></li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0TNsf.jpg" alt="cg-10-6" style="width:70%;margin:auto;display:block;" /></p>
+
+\[\omega_{o}+\omega_{i}=2 \cos \theta \overrightarrow{\mathrm{n}}=2\left(\omega_{i} \cdot \overrightarrow{\mathrm{n}}\right) \overrightarrow{\mathrm{n}}\]
+
+\[\omega_{o}=-\omega_{i}+2\left(\omega_{i} \cdot \overrightarrow{\mathrm{n}}\right) \overrightarrow{\mathrm{n}}\]
+
+<p class="info"><strong>Tip</strong>: The difference between Blinn-Phong model and Phong model is the half vector, which is computed by adding incident vector and the vector of viewing direction. With dot product, Computing reflected is less efficient than half vector.</p>
+
+<p class="success"><strong>Info</strong>: BRDF distributes as <a href="https://en.wikipedia.org/wiki/Dirac_delta_function">Dirac δ function(distribution)</a>. The total area under BRDF curve is the <strong>albedo</strong> specifying what fraction of incident light is reflected in total, which is as opposed to being abosorbed or transmitted. For the perfect reflector, the area under the curbe sums to 1, because it reflects all of the incident light but in one direction. In this case, the δ function, with the area of 1, is an infinite thin and infinite tall spike at $x = 0$, which is ideal reflective material.</p>
+
+<p class="warning"><strong>Note</strong>: Obviously, a real material can not be perfect specular reflector. First, the area under the curve is less than 1 due to some of the light absorbed. More importantly, the reflection peak can not be infinite thin so that the reflection will be blurred ever so slightly. This implicates that the peak will not be infinitely high. The wider the peak, the less hight it has to be to maintain the area of 1.</p>
+
+<h3 id="specular-refraction">Specular Refraction</h3>
+
+<ul>
+  <li>In addition to reflecting off surface, light may be transmitted through surface.</li>
+  <li>Light refracts when it enters a new medium.</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/11/y0TUL8.jpg" alt="cg-10-7" /></p>
+
+<ul>
+  <li>Though the scattering of the light is due to the discrepancy of the wave length of light, we still consider it in geometric way as different refractive index in CG.</li>
+  <li>The phenomenon of <a href="https://en.wikipedia.org/wiki/Caustic_(optics)">caustics</a> as the right image shows is caused by light rays refracting off the uneven and curved surface of the sea and converging on the seafloor. It is tricky to deal with such thing in practical CG implementation.</li>
+</ul>
+
+<h4 id="snells-law">Snell’s Law</h4>
+
+<ul>
+  <li><strong>Snell’s Law</strong>: Transmitted angle depends on
+    <ul>
+      <li>index of refraction (IOR) for incident ray</li>
+      <li>index of refraction (IOR) for exiting ray</li>
+    </ul>
+  </li>
+  <li>calculate azimuth angle in the same as reflection</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/yrab7T.jpg" alt="cg-10-8" style="width:60%;margin:auto;display:block;" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Medium</th>
+      <th style="text-align: center">$\eta ^*$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Vaccum</td>
+      <td style="text-align: center">1.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Air (sea level)</td>
+      <td style="text-align: center">1.00029</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Water(20°C)</td>
+      <td style="text-align: center">1.333</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Glass</td>
+      <td style="text-align: center">1.5-1.6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Diamond</td>
+      <td style="text-align: center">2.42</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p>index of refraction is wavelength dependent</p>
+  </li>
+  <li>
+    <p>Total internal reflection</p>
+  </li>
+</ul>
+
+\[\begin{aligned} \eta_{i} \sin \theta_{i} &amp;=\eta_{t} \sin \theta_{t} \\ \cos \theta_{t} &amp;=\sqrt{1-\sin ^{2} \theta_{t}} \\ &amp;=\sqrt{1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2} \sin ^{2} \theta_{i}} \\ &amp;=\sqrt{1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2}\left(1-\cos ^{2} \theta_{i}\right)}\end{aligned}\]
+
+\[1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2}\left(1-\cos ^{2} \theta_{i}\right)&lt;0\]
+
+<ul>
+  <li>When light is moving from a more optically dense medium (e.g. water) to a less optically dense medium (e.g. air), which means $\eta_i / \eta_t \gt 1$</li>
+  <li>
+    <p>Light incident on boundary from large enough angle <strong>may</strong> not exit medium</p>
+  </li>
+  <li><strong>Snell’s Window / Circle</strong>: underwater viewer sees everthing above the surface through a cone of light.
+    <ul>
+      <li>The area outside Snell’s window will be dark or show a reflection of underwater objects by total internal reflection</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/yraONF.jpg" alt="cg-10-9" /></p>
+
+<p class="info"><strong>Tip</strong>: The sphere is symmetric object, which means that the light ray refracted into the sphere will <strong>always</strong> be refracted out.</p>
+
+<p class="success"><strong>info</strong>: <strong>BTDF</strong> (bidirectional transmittance distribution function) is similar to <strong>BRDF</strong> (bidirectional reflectance distribution function) but for the opposite side of the surface, especially used to evaluate how outgoing refractive light distributes at incident point. Further, <strong>BSDF</strong> (bidirectional scattering distribution function) is the generalization of <strong>BRDF</strong> and <strong>BTDF</strong>. Moreover, <strong>BSSRDF</strong> (bidirectional scattering-surface reflectance distribution function) describes the relationship between outgoing radiance and the incident flux, including the phenonmona like <a href="https://en.wikipedia.org/wiki/Subsurface_scattering">subsurface scattering</a>.</p>
+
+<h4 id="fresnel-reflection-term">Fresnel Reflection Term</h4>
+
+<ul>
+  <li>
+    <p><strong>Fresnel Reflection</strong>: predict the reflectance of smooth surfaces, and depends solely on the refractive index and the angle of incidence.</p>
+  </li>
+  <li>
+    <p>The inverted reflection in water gradually evanish with the increasing incident angle between the normal of horizontal plane and incident light.</p>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/yraXh4.jpg" alt="cg-10-10" /></p>
+
+<ul>
+  <li>Fresnel Term of Dielectric material ($\eta = 1.5$, <strong>i.e.</strong> most glasses and plastics)
+    <ul>
+      <li>Reflectance increases greatly as the grazing angle increases</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/yraHBV.jpg" alt="cg-10-12" /></p>
+
+<ul>
+  <li>Fresnel Term of Conductor (<strong>i.e.</strong> metals)
+    <ul>
+      <li>The effect of Fresnel reflectance is subtle</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/yraLAU.jpg" alt="cg-10-11" /></p>
+
+<p class="info"><strong>Tip</strong>: Index of refraction of the conductor is actually the complex number, which contains two number $n,\ k$.</p>
+
+<ul>
+  <li>This is the reason why people use polished metal (mercury) as mirror instead of polished glass.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Polarization is defined relative to the plane of incidence, i.e. the plane that contains the incoming and reflected rays as well as the normal to the sample surface. Perpendicular (<strong>s-</strong>)polarization is the polarization where the electric field is perpendicular to the plane of incidence. Parallel (<strong>p-</strong>)polarization is the polarization where the electric field is parallel to the plane of incidence.</p>
+
+<h4 id="fresnel-equation">Fresnel Equation</h4>
+
+<ul>
+  <li>Consider the light as a wave</li>
+  <li>Accurate and need to consider polarization</li>
+</ul>
+
+\[R_{\mathrm{s}}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \cos \theta_{\mathrm{t}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \cos \theta_{\mathrm{t}}}\right|^{2}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}\right|^{2}\]
+
+\[R_{\mathrm{p}}=\left|\frac{n_{1} \cos \theta_{\mathrm{t}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \cos \theta_{\mathrm{t}}+n_{2} \cos \theta_{\mathrm{i}}}\right|^{2}=\left|\frac{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}+n_{2} \cos \theta_{\mathrm{i}}}\right|\]
+
+<ul>
+  <li>Effective reflectivity (<strong>unpolarized</strong>) is just the average of two reflectivities</li>
+</ul>
+
+\[R_{\mathrm{eff}} =\frac{1}{2}\left(R_{\mathrm{s}}+R_{\mathrm{p}}\right)\]
+
+<h4 id="schlicks-approximation">Schlick’s approximation</h4>
+
+<ul>
+  <li>$\theta$ : angle between the incident light and the normal</li>
+  <li>$n_1,\ n_2$ : indices of refraction of two media at the intrerface</li>
+  <li>$R_0$ : reflection coefficient for light incoming parallel to the normal (the value of Fresnel term when $\theta = 0$)</li>
+</ul>
+
+\[R(\theta) =R_{0}+\left(1-R_{0}\right)(1-\cos \theta)^{5}\]
+
+\[R_{0} =\left(\frac{n_{1}-n_{2}}{n_{1}+n_{2}}\right)^{2}\]
+
+<h2 id="microfacet-material">Microfacet Material</h2>
+
+<h3 id="microfacet-theory">Microfacet Theory</h3>
+
+<ul>
+  <li><strong>Microfacet theory</strong>: Rough surfaces can be modeled as a collection of small microfacets
+    <ul>
+      <li>Macroscale: flat &amp; rough material, describe underlying smooth surface</li>
+      <li>Microscale: bumpy &amp; specular property, describe high variation of microfacet surfaces</li>
+    </ul>
+  </li>
+  <li>Individual elements of surface at like <strong>mirror</strong>
+    <ul>
+      <li>Known as Microfacets</li>
+      <li>Each microfacet has its own normal</li>
+    </ul>
+  </li>
+  <li>Intuitively, surface is regarded as <strong>material</strong> see from a distance, <strong>geometry</strong> see from closeup
+    <ul>
+      <li>As the camera zooms out away from the surface, geometry will gradually fades into material.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysEcs1.jpg" alt="cg-10-13" /></p>
+
+<h3 id="microfacet-brdf">Microfacet BRDF</h3>
+
+<ul>
+  <li>
+    <p>Microfacet BRDF: <strong>distribution</strong> of microfacets’ normals</p>
+
+    <ul>
+      <li>Concentrated &lt;==&gt; smooth &lt;==&gt; glossy</li>
+    </ul>
+
+    <p><img src="https://s3.ax1x.com/2021/02/13/ysAq5F.jpg" alt="cg-10-14" style="width:80%;" /></p>
+
+    <ul>
+      <li>Spread &lt;==&gt; rough  &lt;==&gt; diffuse</li>
+    </ul>
+
+    <p><img src="https://s3.ax1x.com/2021/02/13/ysAbUU.jpg" alt="cg-10-15" style="width:80%;" /></p>
+  </li>
+</ul>
+
+\[f_{microfacet} (i, o) = \frac{F(i, h)G(i,o,h)D(h)}{4(n,i)(n,o)}\]
+
+<ul>
+  <li>$f_{microfacet}$ : microfacet BRDF</li>
+  <li>$F(i, h)$ : Fresnel reflectance term, the amount of energy reflected in terms of incident angle</li>
+  <li>$G(i,o,h)$ : geometry term of shadowing masking between microfacet</li>
+  <li>$D(h)$ : normal distribution term describing how microfacet normals is distributed around the given direction $h$</li>
+  <li>$i$ : incident light direction</li>
+  <li>$o$ : view direction</li>
+  <li>$n$ : surface normal</li>
+  <li>$h$ : half vector between $i$ and $o$</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAoD0.jpg" alt="cg-10-16" style="width:80%;" /></p>
+
+<ul>
+  <li>More details discussed in paper <a href="https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html">Microfacet Models for Refraction through Rough Surfaces</a></li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Three Important Geometric Effects to Consider with Microfacet Reflection Models. <strong>(a)</strong> Masking: the microfacet of interest isn’t visible to the viewer due to occlusion by another microfacet. <strong>(b)</strong> Shadowing: analogously, light doesn’t reach the microfacet. <strong>(c)</strong> Interreflection: light bounces among the microfacets before reaching the viewer. Shadow-masking effect is obvious when the angle between incident light or viewing direction and normal is aounrd 90°, which we called <strong>grazing angle</strong> (掠射角).<br />
+<img src="https://s3.ax1x.com/2021/02/13/ysEPUO.jpg" alt="cg-10-17" /></p>
+
+<ul>
+  <li>Microfacet model is widely used in <strong>PBR</strong> (Physically Based Rendering)</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAHET.jpg" alt="cg-10-18" /></p>
+
+<h3 id="isotropic--anisotropic-material">Isotropic / Anisotropic Material</h3>
+
+<ul>
+  <li>One way to classifying material: directionality of underlying surface</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysATbV.jpg" alt="cg-10-19" style="width:70%;" /></p>
+
+<ul>
+  <li><strong>Isotropic Material</strong>: have identical properties in all direction.
+    <ul>
+      <li>Rotate around normal without changing reflections.</li>
+      <li>BRDF only depends on <strong>relative</strong> location (azimuth angle) of the incident and exitent light ray</li>
+      <li>e.g. Most materials</li>
+    </ul>
+  </li>
+</ul>
+
+\[f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right) = f_{r}\left(\theta_{i}, \phi_{i} - \phi ; \theta_{r}, \phi_{r} - \phi \right) = f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r} - \phi_{i} \right)\]
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAOC4.jpg" alt="cg-10-20" style="width:60%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li><strong>Anisotropic Material</strong>: change properties with direction.
+    <ul>
+      <li>Rotate on zaimuth angle $\Phi$ and change BRDF</li>
+      <li>e.g. Brushed metal</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAX8J.jpg" alt="cg-10-21" /></p>
+
+<ul>
+  <li>Some other anisotropic material
+    <ul>
+      <li>Nylon: istropic along colum and row but not in the diagonal direction</li>
+      <li>Velvet: self-defined microfacet material</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysENq0.gif" alt="cg-10-22" /></p>
+
+<h2 id="properties-of-brdf">Properties of BRDF</h2>
+
+<ul>
+  <li>Non-negativity: BRDF represents the distribution of energy</li>
+</ul>
+
+\[f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right) \geq 0\]
+
+<ul>
+  <li>Linearity: In Blinn-Phong model, shading is the sum of ambient, diffuse, specular terms, while BRDF takes three parts as a whole.
+    <ul>
+      <li>More generally, in many cases, material often require multiple ray tracing with different BRDF to achieve reflective properties.</li>
+      <li>The total radiance of a point on a surface can be simply expressed as the sum of the radiance of multiple BRDFS.</li>
+    </ul>
+  </li>
+</ul>
+
+\[L_{r}\left(\mathrm{p}, \omega_{r}\right)= \sum_{BRDF} \int_{H^{2}} f_{r}\left(\mathrm{p}, \omega_{i} \rightarrow \omega_{r}\right) L_{i}\left(\mathrm{p}, \omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}\]
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAj29.jpg" alt="cg-10-23" style="width:70%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li>Reciprocity principle (可逆性): similar to the reciprocity of light ray</li>
+</ul>
+
+\[f_{r}\left(\omega_{r} \rightarrow \omega_{i}\right)=f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right)\]
+
+<ul>
+  <li>Energy conservation: otherwise, the energy will not converge but explode in path tracing.</li>
+</ul>
+
+\[\forall \omega_{r} \int_{H^{2}} f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right) \cos \theta_{i} \mathrm{~d} \omega_{i} \leq 1\]
+
+<ul>
+  <li>Isotropic or anisotropic
+    <ul>
+      <li>If isotropic:</li>
+    </ul>
+
+\[f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right)=f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)\]
+
+    <ul>
+      <li>Then, from reciprocity:</li>
+    </ul>
+
+\[f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)=f_{r}\left(\theta_{r}, \theta_{i}, \phi_{i}-\phi_{r}\right)=f_{r}\left(\theta_{i}, \theta_{r},\left|\phi_{r}-\phi_{i}\right|\right)\]
+  </li>
+</ul>
+
+<h2 id="measuring-brdf">Measuring BRDF</h2>
+
+<h3 id="motivation-of-measuring-brdf">Motivation of Measuring BRDF</h3>
+<ul>
+  <li>Avoid need to develop / derive models:the error of the theory model is sometimes very large</li>
+  <li>Accurately render with real-world materials: automatically includes all of the scattering effects present and useful for product design, special effects, …</li>
+</ul>
+
+<h3 id="general-approach">General Approach</h3>
+
+<ul>
+  <li>Image-based BRDF measurement: goniorreflectometer</li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysESDx.jpg" alt="cg-10-24" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">outgoing</span> <span class="n">direction</span> <span class="n">w_o</span><span class="p">:</span>
+    <span class="n">move</span> <span class="n">light</span> <span class="n">to</span> <span class="n">illuminate</span> <span class="n">surface</span> <span class="k">with</span> <span class="n">a</span> <span class="n">thin</span> <span class="n">beam</span> <span class="k">from</span> <span class="n">w_o</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">incoming</span> <span class="n">direction</span> <span class="n">w_i</span><span class="p">:</span>
+        <span class="n">move</span> <span class="n">sensor</span> <span class="n">to</span> <span class="n">be</span> <span class="n">at</span> <span class="n">direction</span> <span class="n">w_i</span> <span class="k">from</span> <span class="n">surface</span>
+        <span class="n">measure</span> <span class="n">incident</span> <span class="n">radiance</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Improving efficiency
+    <ul>
+      <li>Isotropic surfaces reduce dimensionality from 4D to 3D
+        <ul>
+          <li><strong>4D to 3D</strong>: $f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right) \implies f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)$</li>
+          <li><strong>Curse of dimensionality</strong>: with an increase dimension, the size of data surges</li>
+        </ul>
+      </li>
+      <li>Reciprocity reduces number of measurements by half</li>
+      <li>Clever optical systems …</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="challenges-in-measuring-brdf">Challenges in Measuring BRDF</h3>
+
+<ul>
+  <li>Accurate measurements at grazing angles
+    <ul>
+      <li>Important due to Fresnel effects</li>
+    </ul>
+  </li>
+  <li>Measuring with dense enough sampling to capture high frequency specularities</li>
+  <li>Retro-reflection</li>
+  <li>Spatially-varying reflectance, …</li>
+</ul>
+
+<h3 id="representing-measured-brdf">Representing Measured BRDF</h3>
+
+<ul>
+  <li>Desirable qualities
+    <ul>
+      <li>Compact representation</li>
+      <li>Accurate representation of measured data</li>
+      <li>Efficient evaluation for arbitrary pairs of diretions</li>
+      <li>Good distributions available for importance sampling</li>
+    </ul>
+  </li>
+  <li>Tabular Representation
+    <ul>
+      <li>Store regularly-spaced samples in $ ( \theta_i, \theta_o, \big| \phi_i - \phi_o \big| ) $
+        <ul>
+          <li>Better: reparameterize angles to better match specularities</li>
+        </ul>
+      </li>
+      <li>Generally need to resample measured values to table</li>
+      <li>Very high storage requirements</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s3.ax1x.com/2021/02/13/ysAzK1.jpg" alt="cg-10-25" style="width:60%;" /></p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://computergraphics.stackexchange.com/questions/4767">BRDF of specular reflection is infinite</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Fresnel_equations">Fresnel equations</a></li>
+  <li><a href="https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html">Microfacet Models for Refraction through Rough Surfaces</a></li>
+  <li><a href="http://www.pbr-book.org/3ed-2018/Reflection_Models/Microfacet_Models.html">Microfacet Models</a></li>
+  <li><a href="http://simonstechblog.blogspot.com/2011/12/microfacet-brdf.html">Microfacet BRDF</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/62904454">深入BRDF和PBR</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-12-20T00:00:00+08:00">Dec 21, 2020</time>
+    </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
-</footer>
-<div class="article__section-navigator clearfix"><div class="next"><span>NEXT</span><a href="/experience/tongji">Tongji University</a></div></div></div>
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
 
 </div>
 
@@ -330,7 +861,25 @@
   });
 })();
 </script>
-</div></article><!-- start custom main bottom snippet -->
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.css');
+		window.Lazyload.js('https://cdn.bootcss.com/gitalk/1.2.2/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: 'e0f286445f2236869beb',
+				clientSecret: 'e40b9a7441954a0e2c51b57c4181c48154fcd1d6',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2020-12-20-cg-10'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
 
 <!-- end custom main bottom snippet -->
 </div>
@@ -388,7 +937,7 @@
   </div>
 </footer>
 </div></div>
-    </div><script>(function() {
+    </div></div></div><script>(function() {
   var SOURCES = window.TEXT_VARIABLES.sources;
   window.Lazyload.js(SOURCES.jquery, function() {
     var $body = $('body'), $window = $(window);
@@ -906,6 +1455,107 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
 
 })();*/
 </script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        extensions: ["color.js"],
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -984,10 +1634,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'experience-high-school';
-      var title = "The Experimental High School Attached To Beijing Normal University";
+      var key =   'blog-2020-12-20-cg-10';
+      var title = "The Notes of Computer Graphics Ⅹ";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='experience-high-school']").text(view);
+        $("[data-page-key='blog-2020-12-20-cg-10']").text(view);
       });
     });
   </script>

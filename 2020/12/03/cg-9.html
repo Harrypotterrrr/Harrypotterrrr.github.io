@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2 active"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2 active"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -310,7 +310,7 @@
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-12-03-cg-9">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Dec 18, 2020</span>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-12-03-cg-9">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Dec 19, 2020</span>
             </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-12-03T00:00:00+08:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
@@ -397,6 +397,8 @@
   <li>Differential Solid Angles
     <ul>
       <li>Direction vector $\omega$ to denote direction vector of unit length</li>
+      <li>$\theta$ : elevation, zenith angle (仰角)</li>
+      <li>$\phi$ : azimuth, azimuth angle (方位角)</li>
     </ul>
 
 \[\mathrm{d} A =(r \mathrm{~d} \theta)(r \sin \theta \mathrm{d} \phi) =r^{2} \sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
@@ -409,7 +411,7 @@
   </li>
 </ul>
 
-\[\Omega =\int_{S^{2}} \mathrm{~d} \omega =\int_{0}^{2 \pi} \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \mathrm{d} \phi =4 \pi\]
+\[\Omega =\int_{S^{2}} \mathrm{~d} \omega = \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \int_{0}^{2 \pi} \mathrm{d} \phi  =4 \pi\]
 
 <p><img src="https://s3.ax1x.com/2021/01/19/sg8ePK.jpg" alt="cg-9-4" width="80%" /></p>
 
@@ -606,7 +608,7 @@
 <ul>
   <li><strong>Conclusion</strong>: The BRDF, the ratio of exitant radiance to incident irradiance, is to characterize the directional properties of how a surface reflects light, which is independent of the strength of the light.
     <ul>
-      <li>In fact, we use <em>cosine irradiance collector</em> to measure incident irradiance, <em>conical baffler</em> to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. <a href="https://www.zhihu.com/question/28476602/answer/41003204">More info</a></li>
+      <li>In fact, we use <em>cosine irradiance collector</em> to measure incident irradiance, <em>conical baffler</em> to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. <a href="https://www.zhihu.com/question/28476602/answer/41003204">More info</a>, and <a href="/2020/12/20/cg-10.html#Measuring-BRDF">later notes</a></li>
       <li>In a word, BRDF describes how the light interacts with the object. Accordingly, BRDF describes the property of the texture.</li>
     </ul>
   </li>
@@ -1143,13 +1145,13 @@
   <li>Rewrite the rendering equation as final form with an integral on $dA$</li>
 </ul>
 
-<p>$\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \ &amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}} \mathrm{~d} A \end{aligned}$</p>
+\[\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \\ &amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}} \mathrm{~d} A \end{aligned}\]
 
 <ul>
   <li>Now integration is on the light, so for Monte Carlo integration:
     <ul>
-      <li>$f(x)$: $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$</li>
-      <li>$pdf$: $1 / A$</li>
+      <li>$f(x)$ : $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$</li>
+      <li>$pdf$ : $1 / A$</li>
     </ul>
   </li>
   <li>Previously, we assume the light is accidentally shot by uniform hemisphere sampling</li>
@@ -1255,13 +1257,14 @@
   <li><a href="https://zhuanlan.zhihu.com/p/21376124">基于物理着色：BRDF</a></li>
   <li><a href="https://blog.csdn.net/leonwei/article/details/44539217">物理渲染(PBR)-基于物理的光照模型</a></li>
   <li><a href="https://www.zhihu.com/question/28476602/answer/41003204">BRDF单位为sr^-1的原因</a></li>
+  <li><a href="https://web.cs.wpi.edu/~emmanuel/courses/cs563/write_ups/chuckm/chuckm_BRDFs_overview.html">Bi-Directional Reflectance Distribution Functions</a></li>
   <li><a href="https://www.qiujiawei.com/monte-carlo/">蒙特·卡罗积分</a></li>
   <li><a href="https://zhuanlan.zhihu.com/p/146144853">蒙特卡洛积分概述</a></li>
   <li><a href="http://www.twistedwg.com/2018/05/29/MC-integral.html">蒙特卡洛（Monte Carlo）法求定积分</a></li>
   <li><a href="https://zhuanlan.zhihu.com/p/56443239">Rendering Equation求解</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-12-03T00:00:00+08:00">Dec 18, 2020</time>
+        <time itemprop="dateModified" datetime="2020-12-03T00:00:00+08:00">Dec 19, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -1273,7 +1276,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
 
 </div>
 

@@ -2630,6 +2630,47 @@ a > .item__header.disabled, a > .item__header:disabled, a.item__header.disabled,
 
 .extensions--audio { display: block; max-width: 100% !important; }
 
+.shine { position: absolute; width: 200px; left: 50%; bottom: 0%; height: 60px; margin-left: -100px; text-align: center; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%); -webkit-mask-size: 200%; animation: shine 4s infinite, hover 2s alternate infinite ease-in-out; color: #ebebeb; }
+
+.shine:after { content: ''; position: relative; display: block; width: 10px; height: 10px; border: 2px solid #fff; border-top: none; border-left: none; left: 50%; margin-left: -5px; transform: translateY(30%) rotate(45deg); animation: hoverSmall 2s 1s alternate infinite ease-in-out; }
+
+@-webkit-keyframes shine { from { -webkit-mask-position: 150%; }
+  to { -webkit-mask-position: -50%; } }
+
+@-webkit-keyframes hover { from { transform: translateY(-50%); }
+  to { transform: translateY(-75%); } }
+
+@-webkit-keyframes hoverSmall { from { transform: translateY(30%) rotate(45deg); }
+  to { transform: translateY(-10%) rotate(45deg); } }
+
+.chevron-container { position: absolute; bottom: 3%; left: 50%; }
+
+.chevron { position: absolute; width: 28px; height: 8px; opacity: 0; transform: scale3d(0.5, 0.5, 0.5); animation: move 3s ease-out infinite; }
+
+.chevron:first-child { animation: move 3s ease-out 1s infinite; }
+
+.chevron:nth-child(2) { animation: move 3s ease-out 2s infinite; }
+
+.chevron:before, .chevron:after { content: ' '; position: absolute; top: 0; height: 100%; width: 51%; background: #fff; }
+
+.chevron:before { left: 0; transform: skew(0deg, 30deg); }
+
+.chevron:after { right: 0; width: 50%; transform: skew(0deg, -30deg); }
+
+@keyframes move { 25% { opacity: 1; }
+  33% { opacity: 1;
+    transform: translateY(30px); }
+  67% { opacity: 1;
+    transform: translateY(40px); }
+  100% { opacity: 0;
+    transform: translateY(55px) scale3d(0.5, 0.5, 0.5); } }
+
+.chevron-text a { display: block; margin-top: 75px; margin-left: -70%; font-family: 'Architects Daughter', cursive, Arial, sans-serif; font-size: 15px; text-align: center; color: #fff; text-transform: uppercase; white-space: nowrap; opacity: .25; animation: pulse 2s linear alternate infinite; }
+
+.chevron-text a:hover { color: white !important; text-decoration: none !important; }
+
+@keyframes pulse { to { opacity: 1; } }
+
 .article__content p.success { padding: 0.5rem 1rem; background-color: rgba(82, 196, 26, 0.1); border: 1px solid #52c41a; border-radius: 0.4rem; }
 
 .article__content p.info { padding: 0.5rem 1rem; background-color: rgba(24, 144, 255, 0.1); border: 1px solid #1890ff; border-radius: 0.4rem; }
@@ -2798,13 +2839,13 @@ body, html, .root, .layout--page { height: 100%; }
 
 .layout--homepage .hero__content { margin-bottom: 0; }
 
-.layout--homepage .hero__content p { font-family: 'Architects Daughter', cursive; text-align: center; }
+.layout--homepage .hero__content .mb-5 p { font-family: 'Architects Daughter', cursive; text-align: center; font-size: 1.3rem; }
 
 .layout--homepage .hero__cover { max-width: 950px; }
 
 .layout--homepage .hero__cover--full-width { max-width: none; }
 
-.layout--homepage .hero__title { font-size: 1.8em; margin-top: auto; font-family: 'Merienda', cursive; }
+.layout--homepage .hero__title { font-size: 1.5em; margin-top: auto; font-family: 'Merienda', cursive; }
 
 .layout--homepage .hero__title strong { position: relative; }
 
@@ -2820,23 +2861,27 @@ body, html, .root, .layout--page { height: 100%; }
 
 .layout--homepage .article-list .item__content .item__head { margin-bottom: 0.3rem; }
 
-.layout--homepage .article-list .item__content .item__head .item__title { font-size: 2.0rem; font-family: 'Baloo Tamma 2', cursive; color: #3377CC; }
+.layout--homepage .article-list .item__content .item__head .item__title { margin: 0.1rem; font-size: 1.5rem; font-family: 'Baloo Tamma 2', cursive; color: #3377CC; }
 
 .layout--homepage .article-list .item__content .item__head .item__title:hover { text-decoration: underline; color: #2255AA; }
 
-.layout--homepage .article-list .item__content .item__head .item__subtitle { color: #5e9516; font-size: 1.3rem; font-family: 'PT Sans', sans-serif; }
+.layout--homepage .article-list .item__content .item__head .item__subtitle { color: #5e9516; font-size: 1.1rem; font-family: 'PT Sans', sans-serif; }
 
-.layout--homepage .article-list .item__content .item__head .item__location { color: #494949; font-size: 1.3rem; font-family: 'Satisfy', cursive; }
+.layout--homepage .article-list .item__content .item__head .item__location { color: #3f3f3f; font-size: 1.1rem; font-family: 'Satisfy', cursive; }
 
-.layout--homepage .article-list .item__content .item__description .article__content { text-align: justify; font-size: 1.1rem; }
+.layout--homepage .article-list .item__content .item__description .article__content { text-align: justify; font-size: 1.0rem; color: #636a74; }
 
-.layout--homepage .layout--experience { width: 60%; max-width: 60%; margin-top: 3em; margin-left: auto; margin-right: auto; }
+.layout--homepage .layout--experience { max-width: 50%; margin-top: 3em; margin-left: auto; margin-right: auto; }
 
-.layout--homepage .image--experience { margin-right: 3rem; border-radius: 12%; width: 18em; height: 14em; }
+.layout--homepage .image--experience { margin-right: 3rem; border-radius: 12%; width: 15em; height: 11em; }
+
+.article__header--overlay { position: relative; }
 
 .article__header--overlay .home_article__header { font-family: 'Permanent Marker', cursive; font-size: 4.5rem; letter-spacing: 0.1em; }
 
 .article__header--overlay .home_overlay__excerpt { font-family: 'Architects Daughter', cursive; text-align: center; }
+
+.article__header--overlay .hero__content { margin: 0rem auto 3rem; }
 
 .layout--404 .sign { display: table; margin: 1.5rem auto; margin-top: 3rem; }
 
@@ -2845,6 +2890,8 @@ body, html, .root, .layout--page { height: 100%; }
 .layout--404 .sign p { font-size: 1.8rem; }
 
 /* start custom scss snippet */
+html { scroll-behavior: smooth; }
+
 /* end custom scss snippet */
 
 /*# sourceMappingURL=main.css.map */

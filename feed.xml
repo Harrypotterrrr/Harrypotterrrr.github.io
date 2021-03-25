@@ -1,5 +1,508 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2021-02-09T18:57:21+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
-</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">The Notes of Computer Graphics Ⅸ</title><link href="https://harrypotterrrr.github.io//2020/12/03/cg-9.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅸ" /><published>2020-12-03T00:00:00+08:00</published><updated>2020-12-03T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/12/03/cg-9</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/03/cg-9.html">&lt;p&gt;Advanced Ray Tracing, Radiometry, BRDF, Path Tracing&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2021-05-28T19:42:31+08:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
+</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">The Notes of Computer Graphics Ⅹ</title><link href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅹ" /><published>2020-12-20T00:00:00+08:00</published><updated>2020-12-20T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/12/20/cg-10</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/20/cg-10.html">&lt;p&gt;Material, Microfacet Theory, Isotropic Material, Anisotropic Material&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;material&quot;&gt;Material&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Recall that BRDF is used to calculate how much of the light ray will be reflected in a particular outgoing direction by the surface, which specify reflection ability and properties of the surface
+    &lt;ul&gt;
+      &lt;li&gt;Material == BRDF&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0TtQP.jpg&quot; alt=&quot;cg-10-1&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;diffuse--lambertian-material&quot;&gt;Diffuse / Lambertian Material&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Assume a senario with a reflected point
+    &lt;ul&gt;
+      &lt;li&gt;Light coming in distributed uniformly in the hemisphere&lt;/li&gt;
+      &lt;li&gt;The point absorbs nothing energy and reflects all the energy out&lt;/li&gt;
+      &lt;li&gt;Light is equally reflected in each output direction&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\begin{aligned} 
+L_{o}\left(\omega_{o}\right) &amp;amp;=\int_{H^{2}} f_{r} L_{i}\left(\omega_{i}\right) \cos \theta_{i} d \omega_{i} \\ 
+&amp;amp;=f_{r} L_{i} \int_{H^{2}} \cos \theta_{i} d \omega_{i} \\ 
+&amp;amp;=f_{r} L_{i} \int_{H^{2}} \cos \theta \sin \theta d \theta d \varphi \\ 
+&amp;amp;=f_{r} L_{i} \int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta d \theta \int_{0}^{2 \pi} d \theta \\ 
+&amp;amp;=f_{r} L_{i} \cdot \frac{1}{4} \cos 2 \theta \bigg|_{\frac{\pi}{2}} ^{0} \cdot \varphi \bigg|_{0} ^{2 \pi} \\ 
+&amp;amp;=\pi f_{r} L_{i} 
+\end{aligned}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0T8JA.jpg&quot; alt=&quot;cg-10-2&quot; style=&quot;width:40%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;On account of energy conservation, the energy absorbed and the enrgy emitted from the point is the same
+    &lt;ul&gt;
+      &lt;li&gt;incident radiance equals to exitant radiance&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[\left\{\begin{array}{l} L_o = L_i \\ L_{o}\left(\omega_{o}\right) = \pi f_{r} L_{i}\end{array}\right.\]
+
+\[f_r = \frac{1}{\pi}\]
+  &lt;/li&gt;
+  &lt;li&gt;Denote reflection ratio $\rho$ (&lt;strong&gt;albedo&lt;/strong&gt;) $0 \lt \rho \lt 1$
+    &lt;ul&gt;
+      &lt;li&gt;Three dimensional vector to specify different ability of reflection regrading three colors&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[f_r = \frac{\rho}{\pi} \in (0, \frac{1}{\pi})\]
+
+&lt;h3 id=&quot;material-category&quot;&gt;Material Category&lt;/h3&gt;
+
+&lt;h4 id=&quot;diffuse-material&quot;&gt;Diffuse Material&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0T3id.jpg&quot; alt=&quot;cg-10-3&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;glossy-material&quot;&gt;Glossy Material&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0TJzt.jpg&quot; alt=&quot;cg-10-4&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;ideal-reflective--refractive-material&quot;&gt;Ideal Reflective / Refractive Material&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0TGRI.jpg&quot; alt=&quot;cg-10-5&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;specular-reflection&quot;&gt;Specular Reflection&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Calculate &lt;a href=&quot;/2020/12/03/cg-9#Angles-and-Solid-Angles&quot;&gt;zenith angle and azimuth angle&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0TNsf.jpg&quot; alt=&quot;cg-10-6&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+\[\omega_{o}+\omega_{i}=2 \cos \theta \overrightarrow{\mathrm{n}}=2\left(\omega_{i} \cdot \overrightarrow{\mathrm{n}}\right) \overrightarrow{\mathrm{n}}\]
+
+\[\omega_{o}=-\omega_{i}+2\left(\omega_{i} \cdot \overrightarrow{\mathrm{n}}\right) \overrightarrow{\mathrm{n}}\]
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: The difference between Blinn-Phong model and Phong model is the half vector, which is computed by adding incident vector and the vector of viewing direction. With dot product, Computing reflected is less efficient than half vector.&lt;/p&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: BRDF distributes as &lt;a href=&quot;https://en.wikipedia.org/wiki/Dirac_delta_function&quot;&gt;Dirac δ function(distribution)&lt;/a&gt;. The total area under BRDF curve is the &lt;strong&gt;albedo&lt;/strong&gt; specifying what fraction of incident light is reflected in total, which is as opposed to being abosorbed or transmitted. For the perfect reflector, the area under the curbe sums to 1, because it reflects all of the incident light but in one direction. In this case, the δ function, with the area of 1, is an infinite thin and infinite tall spike at $x = 0$, which is ideal reflective material.&lt;/p&gt;
+
+&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;: Obviously, a real material can not be perfect specular reflector. First, the area under the curve is less than 1 due to some of the light absorbed. More importantly, the reflection peak can not be infinite thin so that the reflection will be blurred ever so slightly. This implicates that the peak will not be infinitely high. The wider the peak, the less hight it has to be to maintain the area of 1.&lt;/p&gt;
+
+&lt;h3 id=&quot;specular-refraction&quot;&gt;Specular Refraction&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In addition to reflecting off surface, light may be transmitted through surface.&lt;/li&gt;
+  &lt;li&gt;Light refracts when it enters a new medium.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/11/y0TUL8.jpg&quot; alt=&quot;cg-10-7&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Though the scattering of the light is due to the discrepancy of the wave length of light, we still consider it in geometric way as different refractive index in CG.&lt;/li&gt;
+  &lt;li&gt;The phenomenon of &lt;a href=&quot;https://en.wikipedia.org/wiki/Caustic_(optics)&quot;&gt;caustics&lt;/a&gt; as the right image shows is caused by light rays refracting off the uneven and curved surface of the sea and converging on the seafloor. It is tricky to deal with such thing in practical CG implementation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;snells-law&quot;&gt;Snell’s Law&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Snell’s Law&lt;/strong&gt;: Transmitted angle depends on
+    &lt;ul&gt;
+      &lt;li&gt;index of refraction (IOR) for incident ray&lt;/li&gt;
+      &lt;li&gt;index of refraction (IOR) for exiting ray&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;calculate azimuth angle in the same as reflection&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/yrab7T.jpg&quot; alt=&quot;cg-10-8&quot; style=&quot;width:60%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Medium&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;$\eta ^*$&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Vaccum&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Air (sea level)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.00029&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Water(20°C)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Glass&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.5-1.6&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Diamond&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2.42&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;index of refraction is wavelength dependent&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Total internal reflection&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[\begin{aligned} \eta_{i} \sin \theta_{i} &amp;amp;=\eta_{t} \sin \theta_{t} \\ \cos \theta_{t} &amp;amp;=\sqrt{1-\sin ^{2} \theta_{t}} \\ &amp;amp;=\sqrt{1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2} \sin ^{2} \theta_{i}} \\ &amp;amp;=\sqrt{1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2}\left(1-\cos ^{2} \theta_{i}\right)}\end{aligned}\]
+
+\[1-\left(\frac{\eta_{i}}{\eta_{t}}\right)^{2}\left(1-\cos ^{2} \theta_{i}\right)&amp;lt;0\]
+
+&lt;ul&gt;
+  &lt;li&gt;When light is moving from a more optically dense medium (e.g. water) to a less optically dense medium (e.g. air), which means $\eta_i / \eta_t \gt 1$&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Light incident on boundary from large enough angle &lt;strong&gt;may&lt;/strong&gt; not exit medium&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Snell’s Window / Circle&lt;/strong&gt;: underwater viewer sees everthing above the surface through a cone of light.
+    &lt;ul&gt;
+      &lt;li&gt;The area outside Snell’s window will be dark or show a reflection of underwater objects by total internal reflection&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/yraONF.jpg&quot; alt=&quot;cg-10-9&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: The sphere is symmetric object, which means that the light ray refracted into the sphere will &lt;strong&gt;always&lt;/strong&gt; be refracted out.&lt;/p&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;info&lt;/strong&gt;: &lt;strong&gt;BTDF&lt;/strong&gt; (bidirectional transmittance distribution function) is similar to &lt;strong&gt;BRDF&lt;/strong&gt; (bidirectional reflectance distribution function) but for the opposite side of the surface, especially used to evaluate how outgoing refractive light distributes at incident point. Further, &lt;strong&gt;BSDF&lt;/strong&gt; (bidirectional scattering distribution function) is the generalization of &lt;strong&gt;BRDF&lt;/strong&gt; and &lt;strong&gt;BTDF&lt;/strong&gt;. Moreover, &lt;strong&gt;BSSRDF&lt;/strong&gt; (bidirectional scattering-surface reflectance distribution function) describes the relationship between outgoing radiance and the incident flux, including the phenonmona like &lt;a href=&quot;https://en.wikipedia.org/wiki/Subsurface_scattering&quot;&gt;subsurface scattering&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;fresnel-reflection-term&quot;&gt;Fresnel Reflection Term&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Fresnel Reflection&lt;/strong&gt;: predict the reflectance of smooth surfaces, and depends solely on the refractive index and the angle of incidence.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The inverted reflection in water gradually evanish with the increasing incident angle between the normal of horizontal plane and incident light.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/yraXh4.jpg&quot; alt=&quot;cg-10-10&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fresnel Term of Dielectric material ($\eta = 1.5$, &lt;strong&gt;i.e.&lt;/strong&gt; most glasses and plastics)
+    &lt;ul&gt;
+      &lt;li&gt;Reflectance increases greatly as the grazing angle increases&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/yraHBV.jpg&quot; alt=&quot;cg-10-12&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fresnel Term of Conductor (&lt;strong&gt;i.e.&lt;/strong&gt; metals)
+    &lt;ul&gt;
+      &lt;li&gt;The effect of Fresnel reflectance is subtle&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/yraLAU.jpg&quot; alt=&quot;cg-10-11&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Index of refraction of the conductor is actually the complex number, which contains two number $n,\ k$.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is the reason why people use polished metal (mercury) as mirror instead of polished glass.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: Polarization is defined relative to the plane of incidence, i.e. the plane that contains the incoming and reflected rays as well as the normal to the sample surface. Perpendicular (&lt;strong&gt;s-&lt;/strong&gt;)polarization is the polarization where the electric field is perpendicular to the plane of incidence. Parallel (&lt;strong&gt;p-&lt;/strong&gt;)polarization is the polarization where the electric field is parallel to the plane of incidence.&lt;/p&gt;
+
+&lt;h4 id=&quot;fresnel-equation&quot;&gt;Fresnel Equation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Consider the light as a wave&lt;/li&gt;
+  &lt;li&gt;Accurate and need to consider polarization&lt;/li&gt;
+&lt;/ul&gt;
+
+\[R_{\mathrm{s}}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \cos \theta_{\mathrm{t}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \cos \theta_{\mathrm{t}}}\right|^{2}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}\right|^{2}\]
+
+\[R_{\mathrm{p}}=\left|\frac{n_{1} \cos \theta_{\mathrm{t}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \cos \theta_{\mathrm{t}}+n_{2} \cos \theta_{\mathrm{i}}}\right|^{2}=\left|\frac{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}+n_{2} \cos \theta_{\mathrm{i}}}\right|\]
+
+&lt;ul&gt;
+  &lt;li&gt;Effective reflectivity (&lt;strong&gt;unpolarized&lt;/strong&gt;) is just the average of two reflectivities&lt;/li&gt;
+&lt;/ul&gt;
+
+\[R_{\mathrm{eff}} =\frac{1}{2}\left(R_{\mathrm{s}}+R_{\mathrm{p}}\right)\]
+
+&lt;h4 id=&quot;schlicks-approximation&quot;&gt;Schlick’s approximation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\theta$ : angle between the incident light and the normal&lt;/li&gt;
+  &lt;li&gt;$n_1,\ n_2$ : indices of refraction of two media at the intrerface&lt;/li&gt;
+  &lt;li&gt;$R_0$ : reflection coefficient for light incoming parallel to the normal (the value of Fresnel term when $\theta = 0$)&lt;/li&gt;
+&lt;/ul&gt;
+
+\[R(\theta) =R_{0}+\left(1-R_{0}\right)(1-\cos \theta)^{5}\]
+
+\[R_{0} =\left(\frac{n_{1}-n_{2}}{n_{1}+n_{2}}\right)^{2}\]
+
+&lt;h2 id=&quot;microfacet-material&quot;&gt;Microfacet Material&lt;/h2&gt;
+
+&lt;h3 id=&quot;microfacet-theory&quot;&gt;Microfacet Theory&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Microfacet theory&lt;/strong&gt;: Rough surfaces can be modeled as a collection of small microfacets
+    &lt;ul&gt;
+      &lt;li&gt;Macroscale: flat &amp;amp; rough material, describe underlying smooth surface&lt;/li&gt;
+      &lt;li&gt;Microscale: bumpy &amp;amp; specular property, describe high variation of microfacet surfaces&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Individual elements of surface at like &lt;strong&gt;mirror&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Known as Microfacets&lt;/li&gt;
+      &lt;li&gt;Each microfacet has its own normal&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Intuitively, surface is regarded as &lt;strong&gt;material&lt;/strong&gt; see from a distance, &lt;strong&gt;geometry&lt;/strong&gt; see from closeup
+    &lt;ul&gt;
+      &lt;li&gt;As the camera zooms out away from the surface, geometry will gradually fades into material.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysEcs1.jpg&quot; alt=&quot;cg-10-13&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;microfacet-brdf&quot;&gt;Microfacet BRDF&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Microfacet BRDF: &lt;strong&gt;distribution&lt;/strong&gt; of microfacets’ normals&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Concentrated &amp;lt;==&amp;gt; smooth &amp;lt;==&amp;gt; glossy&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAq5F.jpg&quot; alt=&quot;cg-10-14&quot; style=&quot;width:80%;&quot; /&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Spread &amp;lt;==&amp;gt; rough  &amp;lt;==&amp;gt; diffuse&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAbUU.jpg&quot; alt=&quot;cg-10-15&quot; style=&quot;width:80%;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[f_{microfacet} (i, o) = \frac{F(i, h)G(i,o,h)D(h)}{4(n,i)(n,o)}\]
+
+&lt;ul&gt;
+  &lt;li&gt;$f_{microfacet}$ : microfacet BRDF&lt;/li&gt;
+  &lt;li&gt;$F(i, h)$ : Fresnel reflectance term, the amount of energy reflected in terms of incident angle&lt;/li&gt;
+  &lt;li&gt;$G(i,o,h)$ : geometry term of shadowing masking between microfacet&lt;/li&gt;
+  &lt;li&gt;$D(h)$ : normal distribution term describing how microfacet normals is distributed around the given direction $h$&lt;/li&gt;
+  &lt;li&gt;$i$ : incident light direction&lt;/li&gt;
+  &lt;li&gt;$o$ : view direction&lt;/li&gt;
+  &lt;li&gt;$n$ : surface normal&lt;/li&gt;
+  &lt;li&gt;$h$ : half vector between $i$ and $o$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAoD0.jpg&quot; alt=&quot;cg-10-16&quot; style=&quot;width:80%;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;More details discussed in paper &lt;a href=&quot;https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html&quot;&gt;Microfacet Models for Refraction through Rough Surfaces&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;success&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: Three Important Geometric Effects to Consider with Microfacet Reflection Models. &lt;strong&gt;(a)&lt;/strong&gt; Masking: the microfacet of interest isn’t visible to the viewer due to occlusion by another microfacet. &lt;strong&gt;(b)&lt;/strong&gt; Shadowing: analogously, light doesn’t reach the microfacet. &lt;strong&gt;(c)&lt;/strong&gt; Interreflection: light bounces among the microfacets before reaching the viewer. Shadow-masking effect is obvious when the angle between incident light or viewing direction and normal is aounrd 90°, which we called &lt;strong&gt;grazing angle&lt;/strong&gt; (掠射角).&lt;br /&gt;
+&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysEPUO.jpg&quot; alt=&quot;cg-10-17&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Microfacet model is widely used in &lt;strong&gt;PBR&lt;/strong&gt; (Physically Based Rendering)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAHET.jpg&quot; alt=&quot;cg-10-18&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;isotropic--anisotropic-material&quot;&gt;Isotropic / Anisotropic Material&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One way to classifying material: directionality of underlying surface&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysATbV.jpg&quot; alt=&quot;cg-10-19&quot; style=&quot;width:70%;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Isotropic Material&lt;/strong&gt;: have identical properties in all direction.
+    &lt;ul&gt;
+      &lt;li&gt;Rotate around normal without changing reflections.&lt;/li&gt;
+      &lt;li&gt;BRDF only depends on &lt;strong&gt;relative&lt;/strong&gt; location (azimuth angle) of the incident and exitent light ray&lt;/li&gt;
+      &lt;li&gt;e.g. Most materials&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right) = f_{r}\left(\theta_{i}, \phi_{i} - \phi ; \theta_{r}, \phi_{r} - \phi \right) = f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r} - \phi_{i} \right)\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAOC4.jpg&quot; alt=&quot;cg-10-20&quot; style=&quot;width:60%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Anisotropic Material&lt;/strong&gt;: change properties with direction.
+    &lt;ul&gt;
+      &lt;li&gt;Rotate on zaimuth angle $\Phi$ and change BRDF&lt;/li&gt;
+      &lt;li&gt;e.g. Brushed metal&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAX8J.jpg&quot; alt=&quot;cg-10-21&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Some other anisotropic material
+    &lt;ul&gt;
+      &lt;li&gt;Nylon: istropic along colum and row but not in the diagonal direction&lt;/li&gt;
+      &lt;li&gt;Velvet: self-defined microfacet material&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysENq0.gif&quot; alt=&quot;cg-10-22&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;properties-of-brdf&quot;&gt;Properties of BRDF&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Non-negativity: BRDF represents the distribution of energy&lt;/li&gt;
+&lt;/ul&gt;
+
+\[f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right) \geq 0\]
+
+&lt;ul&gt;
+  &lt;li&gt;Linearity: In Blinn-Phong model, shading is the sum of ambient, diffuse, specular terms, while BRDF takes three parts as a whole.
+    &lt;ul&gt;
+      &lt;li&gt;More generally, in many cases, material often require multiple ray tracing with different BRDF to achieve reflective properties.&lt;/li&gt;
+      &lt;li&gt;The total radiance of a point on a surface can be simply expressed as the sum of the radiance of multiple BRDFS.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+\[L_{r}\left(\mathrm{p}, \omega_{r}\right)= \sum_{BRDF} \int_{H^{2}} f_{r}\left(\mathrm{p}, \omega_{i} \rightarrow \omega_{r}\right) L_{i}\left(\mathrm{p}, \omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}\]
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAj29.jpg&quot; alt=&quot;cg-10-23&quot; style=&quot;width:70%;margin:auto;display:block;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reciprocity principle (可逆性): similar to the reciprocity of light ray&lt;/li&gt;
+&lt;/ul&gt;
+
+\[f_{r}\left(\omega_{r} \rightarrow \omega_{i}\right)=f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right)\]
+
+&lt;ul&gt;
+  &lt;li&gt;Energy conservation: otherwise, the energy will not converge but explode in path tracing.&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\forall \omega_{r} \int_{H^{2}} f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right) \cos \theta_{i} \mathrm{~d} \omega_{i} \leq 1\]
+
+&lt;ul&gt;
+  &lt;li&gt;Isotropic or anisotropic
+    &lt;ul&gt;
+      &lt;li&gt;If isotropic:&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right)=f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)\]
+
+    &lt;ul&gt;
+      &lt;li&gt;Then, from reciprocity:&lt;/li&gt;
+    &lt;/ul&gt;
+
+\[f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)=f_{r}\left(\theta_{r}, \theta_{i}, \phi_{i}-\phi_{r}\right)=f_{r}\left(\theta_{i}, \theta_{r},\left|\phi_{r}-\phi_{i}\right|\right)\]
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;measuring-brdf&quot;&gt;Measuring BRDF&lt;/h2&gt;
+
+&lt;h3 id=&quot;motivation-of-measuring-brdf&quot;&gt;Motivation of Measuring BRDF&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Avoid need to develop / derive models:the error of the theory model is sometimes very large&lt;/li&gt;
+  &lt;li&gt;Accurately render with real-world materials: automatically includes all of the scattering effects present and useful for product design, special effects, …&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;general-approach&quot;&gt;General Approach&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Image-based BRDF measurement: goniorreflectometer&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysESDx.jpg&quot; alt=&quot;cg-10-24&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outgoing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w_o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;move&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;illuminate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;surface&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beam&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w_o&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;incoming&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;move&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;be&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w_i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;surface&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;measure&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;incident&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radiance&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Improving efficiency
+    &lt;ul&gt;
+      &lt;li&gt;Isotropic surfaces reduce dimensionality from 4D to 3D
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;4D to 3D&lt;/strong&gt;: $f_{r}\left(\theta_{i}, \phi_{i} ; \theta_{r}, \phi_{r}\right) \implies f_{r}\left(\theta_{i}, \theta_{r}, \phi_{r}-\phi_{i}\right)$&lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;Curse of dimensionality&lt;/strong&gt;: with an increase dimension, the size of data surges&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Reciprocity reduces number of measurements by half&lt;/li&gt;
+      &lt;li&gt;Clever optical systems …&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;challenges-in-measuring-brdf&quot;&gt;Challenges in Measuring BRDF&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Accurate measurements at grazing angles
+    &lt;ul&gt;
+      &lt;li&gt;Important due to Fresnel effects&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Measuring with dense enough sampling to capture high frequency specularities&lt;/li&gt;
+  &lt;li&gt;Retro-reflection&lt;/li&gt;
+  &lt;li&gt;Spatially-varying reflectance, …&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;representing-measured-brdf&quot;&gt;Representing Measured BRDF&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Desirable qualities
+    &lt;ul&gt;
+      &lt;li&gt;Compact representation&lt;/li&gt;
+      &lt;li&gt;Accurate representation of measured data&lt;/li&gt;
+      &lt;li&gt;Efficient evaluation for arbitrary pairs of diretions&lt;/li&gt;
+      &lt;li&gt;Good distributions available for importance sampling&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Tabular Representation
+    &lt;ul&gt;
+      &lt;li&gt;Store regularly-spaced samples in $ ( \theta_i, \theta_o, \big| \phi_i - \phi_o \big| ) $
+        &lt;ul&gt;
+          &lt;li&gt;Better: reparameterize angles to better match specularities&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Generally need to resample measured values to table&lt;/li&gt;
+      &lt;li&gt;Very high storage requirements&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/02/13/ysAzK1.jpg&quot; alt=&quot;cg-10-25&quot; style=&quot;width:60%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://computergraphics.stackexchange.com/questions/4767&quot;&gt;BRDF of specular reflection is infinite&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Fresnel_equations&quot;&gt;Fresnel equations&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html&quot;&gt;Microfacet Models for Refraction through Rough Surfaces&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.pbr-book.org/3ed-2018/Reflection_Models/Microfacet_Models.html&quot;&gt;Microfacet Models&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://simonstechblog.blogspot.com/2011/12/microfacet-brdf.html&quot;&gt;Microfacet BRDF&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/62904454&quot;&gt;深入BRDF和PBR&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">Material, Microfacet Theory, Isotropic Material, Anisotropic Material</summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅸ</title><link href="https://harrypotterrrr.github.io//2020/12/03/cg-9.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅸ" /><published>2020-12-03T00:00:00+08:00</published><updated>2020-12-03T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/12/03/cg-9</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/03/cg-9.html">&lt;p&gt;Advanced Ray Tracing, Radiometry, BRDF, Path Tracing&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -81,6 +584,8 @@
   &lt;li&gt;Differential Solid Angles
     &lt;ul&gt;
       &lt;li&gt;Direction vector $\omega$ to denote direction vector of unit length&lt;/li&gt;
+      &lt;li&gt;$\theta$ : elevation, zenith angle (仰角)&lt;/li&gt;
+      &lt;li&gt;$\phi$ : azimuth, azimuth angle (方位角)&lt;/li&gt;
     &lt;/ul&gt;
 
 \[\mathrm{d} A =(r \mathrm{~d} \theta)(r \sin \theta \mathrm{d} \phi) =r^{2} \sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
@@ -93,7 +598,7 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-\[\Omega =\int_{S^{2}} \mathrm{~d} \omega =\int_{0}^{2 \pi} \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \mathrm{d} \phi =4 \pi\]
+\[\Omega =\int_{S^{2}} \mathrm{~d} \omega = \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \int_{0}^{2 \pi} \mathrm{d} \phi  =4 \pi\]
 
 &lt;p&gt;&lt;img src=&quot;https://s3.ax1x.com/2021/01/19/sg8ePK.jpg&quot; alt=&quot;cg-9-4&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
@@ -290,7 +795,7 @@
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;: The BRDF, the ratio of exitant radiance to incident irradiance, is to characterize the directional properties of how a surface reflects light, which is independent of the strength of the light.
     &lt;ul&gt;
-      &lt;li&gt;In fact, we use &lt;em&gt;cosine irradiance collector&lt;/em&gt; to measure incident irradiance, &lt;em&gt;conical baffler&lt;/em&gt; to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. &lt;a href=&quot;https://www.zhihu.com/question/28476602/answer/41003204&quot;&gt;More info&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;In fact, we use &lt;em&gt;cosine irradiance collector&lt;/em&gt; to measure incident irradiance, &lt;em&gt;conical baffler&lt;/em&gt; to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. &lt;a href=&quot;https://www.zhihu.com/question/28476602/answer/41003204&quot;&gt;More info&lt;/a&gt;, and &lt;a href=&quot;/2020/12/20/cg-10.html#Measuring-BRDF&quot;&gt;later notes&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;In a word, BRDF describes how the light interacts with the object. Accordingly, BRDF describes the property of the texture.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
@@ -827,13 +1332,13 @@
   &lt;li&gt;Rewrite the rendering equation as final form with an integral on $dA$&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;$\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \ &amp;amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}} \mathrm{~d} A \end{aligned}$&lt;/p&gt;
+\[\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \\ &amp;amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}} \mathrm{~d} A \end{aligned}\]
 
 &lt;ul&gt;
   &lt;li&gt;Now integration is on the light, so for Monte Carlo integration:
     &lt;ul&gt;
-      &lt;li&gt;$f(x)$: $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$&lt;/li&gt;
-      &lt;li&gt;$pdf$: $1 / A$&lt;/li&gt;
+      &lt;li&gt;$f(x)$ : $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$&lt;/li&gt;
+      &lt;li&gt;$pdf$ : $1 / A$&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Previously, we assume the light is accidentally shot by uniform hemisphere sampling&lt;/li&gt;
@@ -939,6 +1444,7 @@
   &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/21376124&quot;&gt;基于物理着色：BRDF&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/leonwei/article/details/44539217&quot;&gt;物理渲染(PBR)-基于物理的光照模型&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.zhihu.com/question/28476602/answer/41003204&quot;&gt;BRDF单位为sr^-1的原因&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://web.cs.wpi.edu/~emmanuel/courses/cs563/write_ups/chuckm/chuckm_BRDFs_overview.html&quot;&gt;Bi-Directional Reflectance Distribution Functions&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.qiujiawei.com/monte-carlo/&quot;&gt;蒙特·卡罗积分&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/146144853&quot;&gt;蒙特卡洛积分概述&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.twistedwg.com/2018/05/29/MC-integral.html&quot;&gt;蒙特卡洛（Monte Carlo）法求定积分&lt;/a&gt;&lt;/li&gt;
@@ -4465,184 +4971,4 @@ $\vec{w}=\vec{u} \times \vec{v} \quad$&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;GAMES101, Lingqi Yan&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">An Overview to Computer Graphics</summary></entry><entry><title type="html">The Notes of Phil Gordon’s Little Green Book Ⅱ</title><link href="https://harrypotterrrr.github.io//2020/07/29/green-book-2.html" rel="alternate" type="text/html" title="The Notes of Phil Gordon’s Little Green Book Ⅱ" /><published>2020-07-29T00:00:00+08:00</published><updated>2020-07-29T00:00:00+08:00</updated><id>https://harrypotterrrr.github.io//2020/07/29/green-book-2</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/07/29/green-book-2.html">&lt;p&gt;Chapter 2: Before the Flop&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;before-the-flop&quot;&gt;Before the Flop&lt;/h2&gt;
-
-&lt;p&gt;Use the starting hand tables under the following specific circumstances:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The first person to voluntarily put money into the pot and to come in for a raise for about three times the big blind.&lt;/li&gt;
-  &lt;li&gt;Don’t know much about opponents.&lt;/li&gt;
-  &lt;li&gt;All players at the table have an average-size stack&lt;/li&gt;
-  &lt;li&gt;The blinds are relatively small in realtion to the size of the stacks.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;study-then-look&quot;&gt;Study, then look&lt;/h3&gt;
-
-&lt;p&gt;Never look at cards before it is your turn, because your judgement will be influenced by the hands.&lt;/p&gt;
-
-&lt;h3 id=&quot;when-first-in-the-pot-raise&quot;&gt;When first in the pot, raise&lt;/h3&gt;
-
-&lt;p&gt;I rarely limp (just call the big blind) when I am the first player to voluntarily put chips into the pot before flop. Almost &lt;strong&gt;always raise&lt;/strong&gt; if you decide to play your hands as the first person in. Here are five reasons:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;To limit the competition: A raise will result in fewer player seeing the flop. The fewer player in, the easier to analyze player’s hands and thus the better chance of winning with hands.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: Pocket aces against a random hand wins 85.5% of the time, while wins 55.8% of the time against four hands.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;To take control of the betting: I am informing the other players that I have a high expectation of winning the pot by raising before the flop. Any postflop bets will &lt;strong&gt;back up&lt;/strong&gt; my initial portrayal of strength and become the table captain for this hand.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;To better define my opponenets’ hands: Let’s say if I limp in before the flop, then the players behind me and the big blind just checks, they could literally have any two cards:&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Check with a strong hand like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;K-Q&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;small hand like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7-2&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;pocket pairs&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;  But if I raise before flop and get others called, we can at least, with some confidence, eliminate the worst third or half of opponenets’ potential hands.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;To make it more difficult for my opponents to determine the strength of my hand: If I raise with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6-5&lt;/code&gt; suited and with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A-A&lt;/code&gt;, it will effectively conceal the strength of my hand.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;To win the blinds: Opening raise will give a chance to win or steal the blinds without having to see the flop.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Attention&lt;/strong&gt;: Stealing the blinds is critical to the success in poker.&lt;/p&gt;
-
-&lt;h3 id=&quot;limping&quot;&gt;Limping&lt;/h3&gt;
-
-&lt;p&gt;Though always limping is not a good habit, you should keep changing your gear playing cards. There are several situations where limping &lt;em&gt;might&lt;/em&gt; be preferable to raising beffore the flop:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Have a very strong hand and suspect the player behind you may raise if you limp:
-    &lt;ul&gt;
-      &lt;li&gt;Opponents with short stacks looking for a chance to all in.&lt;/li&gt;
-      &lt;li&gt;Maniacs who are raising every time.&lt;/li&gt;
-      &lt;li&gt;The players in the blinds are weak after the flop&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: Limp in from middle or late position against a player in the blind who consistently overbets the pot after the flop. Give up a small amount of preflop expectation for some excellent implied odds after the flop.(!!!Pot Odds and Implied Odds)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Limping will help to deceive opponents: By occasionally limping in with a good hand, you may be able to train opponents to allow you to limp in with marginal hands. The player burned by this strategy will be less likely to re-raise the next time you limp in.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;raise-the-right-amount&quot;&gt;Raise the right amount&lt;/h3&gt;
-
-&lt;p&gt;The table of the raise amount regarding the position and the reasons:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Position&lt;/th&gt;
-      &lt;th&gt;Raise Amount&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Early&lt;/td&gt;
-      &lt;td&gt;2.5x-3.0x&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Middle&lt;/td&gt;
-      &lt;td&gt;3.0x-3.5x&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Late&lt;/td&gt;
-      &lt;td&gt;3.5x-4.0x&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Small blind&lt;/td&gt;
-      &lt;td&gt;3.0x&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Commit fewer chips when out of the position.&lt;/li&gt;
-  &lt;li&gt;Smaller raise with a powerhouse hand from early position encourages opponents to play against you.&lt;/li&gt;
-  &lt;li&gt;Bigger raises from late position put pressure on the remaining players to fold and make it harder for the blinds to re-raise.&lt;/li&gt;
-  &lt;li&gt;When playing in position, there is always more money in the pot.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;warning&quot;&gt;&lt;strong&gt;Attention&lt;/strong&gt;: Dont vary the size of raise amount with the strength of your hand, because opponents could define your hand by the size of your bet from different multipliers of the raise.&lt;/p&gt;
-
-&lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt;: Raising before the flop is to &lt;strong&gt;limit the opponents limping in the pot&lt;/strong&gt;. If you find a raise of three times the big blind is ineffective and opponents are still calling your preflop raise, you could &lt;strong&gt;tighten up the starting hand&lt;/strong&gt; requirements and &lt;strong&gt;raise&lt;/strong&gt; the multiplier.&lt;/p&gt;
-
-&lt;h3 id=&quot;calling-limpers&quot;&gt;Calling limpers&lt;/h3&gt;
-
-&lt;p&gt;While it is not a good habit to limp into a pot as the first player, it is common to call limpers in position.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;A player limps in from middle or late position rarely have a premium cards, so suited connectors(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8-7&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7-6&lt;/code&gt;, etc.) and suited gappers(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8-6&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7-5&lt;/code&gt;, etc.) will be not dominated. Besides, the strength of opponents’ hands is not strong enough to turn into the big pot, we will benefit more from a small hand. (!!! Big Hand Big Pot, Small Hand Small Pot)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;It is more wasy to get value from exploiting the superior position. You can stands up against three or four opponents with suited aces, suited connectors, or small/medium pocket pairs.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;in-position-smooth-call-a-raiser&quot;&gt;In position, smooth-call a raiser&lt;/h3&gt;
-
-&lt;p&gt;When a component raises and everyone folds to me in late position, it is profitable to call with a wide range of hands. This strategy is especially effective to the opponents who  misses the flop and check to you, or bet when they hit the pot. If they are more likely to miss the flop, you could make a bet and take the pot.&lt;/p&gt;
-
-&lt;h3 id=&quot;playing-from-the-small-blind&quot;&gt;Playing from the small blind&lt;/h3&gt;
-
-&lt;p&gt;If there are no antes in play and the only money in the pot is the small blind and the big blind, I useually stick to a &lt;strong&gt;conservative&lt;/strong&gt; plan: 60~65% of the hands:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Any ace&lt;/li&gt;
-  &lt;li&gt;Any pocket pair&lt;/li&gt;
-  &lt;li&gt;All suited kings, most unsuited kings&lt;/li&gt;
-  &lt;li&gt;Queens down to about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q-6&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Jacks down to about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;J-5&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Most low suited connectors&lt;/li&gt;
-  &lt;li&gt;Most low suited one-gap connectors(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;6-4&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7-5&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;Some trashier hands&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;info&quot;&gt;&lt;strong&gt;Info&lt;/strong&gt;: With &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;J-5&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q-6&lt;/code&gt;, the five card gap is the largest gap that allows a two-way straight draw: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;J-5&lt;/code&gt; meets the flop  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;9-8-7&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q-6&lt;/code&gt; meets the flop &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T-9-8&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;raising-from-the-big-blind&quot;&gt;Raising from the big blind&lt;/h3&gt;
-
-&lt;p&gt;On the rare occasions when everyone folds to the small blind who just completes the bet, you should consider raising with any two cards.&lt;/p&gt;
-
-&lt;h3 id=&quot;raise-the-limpers&quot;&gt;Raise the limpers&lt;/h3&gt;
-
-&lt;p&gt;When an early position player limps in, the next player calls, then it is time to summon up the courage to raise and punish the players with weak hands. It doesn’t take a good hand to win the pot, but situational awareness, tight image and the courage to fire the bullet.&lt;/p&gt;
-
-&lt;p&gt;It is a good idea to raise the size of the pot. If someone happens to call the raise, then you will have a good idea what kind of hand they are on.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-chip-sandwich-play&quot;&gt;The chip-sandwich play&lt;/h3&gt;
-
-&lt;p&gt;Chip-sandwich play: When an early-position opponent, preferably a loose opponent, raises and gets called by one or more players, you could raise when you are &lt;strong&gt;in the blind position&lt;/strong&gt; with a big hand, because:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The pot is large now.&lt;/li&gt;
-  &lt;li&gt;Callers have a little chance of having a hand that merit a call or a big re-raise (beacause if they did, they would have raised)&lt;/li&gt;
-  &lt;li&gt;If the raise get the initial raiser to fold, the &lt;em&gt;sandwiched&lt;/em&gt; callers would be likely to fold as well.&lt;/li&gt;
-  &lt;li&gt;If you make this play from the button and one of the blinds happens to wake up with a great hand, you will get re-raised and lose a lot of money.&lt;/li&gt;
-  &lt;li&gt;While if you are in the blinds, especially when you are down to about fifteen big blinds, raising all-in will &lt;strong&gt;negate all positional disadvantage&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;steal-from-the-cutoff&quot;&gt;Steal from the cutoff&lt;/h3&gt;
-
-&lt;h2 id=&quot;others&quot;&gt;Others&lt;/h2&gt;
-
-&lt;p&gt;筹码较深的时候，中小对子的价值会上升，因为构成暗三比较隐蔽，我们说隐含赔率比较好
-筹码越深，位置作用越大
-建议浅筹码量入池&lt;/p&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="poker" /><category term="notes" /><summary type="html">Chapter 2: Before the Flop</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html">An Overview to Computer Graphics</summary></entry></feed>
