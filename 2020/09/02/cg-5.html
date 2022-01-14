@@ -311,7 +311,7 @@
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-02-cg-5">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 23, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-02T00:00:00+08:00">
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-02T00:00:00-05:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
@@ -331,7 +331,7 @@
   <li>Rasterization</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwP9U.jpg" alt="cg-5-1" width="600px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwP9U.jpg" alt="cg-5-1" width="600px" /></p>
 
 <ul>
   <li>The color applied to each pixel has not been determined yet.</li>
@@ -349,7 +349,7 @@
 
 <p class="info"><strong>Tip</strong>: We often assume ambient lighting is a constant.</p>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skw9hT.jpg" alt="cg-5-2" width="600px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skw9hT.jpg" alt="cg-5-2" width="600px" /></p>
 
 <h3 id="shading-point">Shading point</h3>
 
@@ -367,7 +367,7 @@
 
 <p class="error"><strong>Caveat</strong>: Above are all <strong>unit</strong> vectors.</p>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwFc4.jpg" alt="cg-5-3" width="400px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwFc4.jpg" alt="cg-5-3" width="400px" /></p>
 
 <ul>
   <li>
@@ -378,7 +378,7 @@
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwi3F.jpg" alt="cg-5-4" width="400px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwi3F.jpg" alt="cg-5-4" width="400px" /></p>
 
 <h2 id="blinn-phong-model">Blinn-Phong Model</h2>
 
@@ -389,13 +389,13 @@
   <li>Surface color is the same for all viewing directions</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwkjJ.jpg" alt="cg-5-5" width="400px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwkjJ.jpg" alt="cg-5-5" width="400px" /></p>
 
 <ul>
   <li>Lambert’s cosine law: determine how much light is received</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwZH1.jpg" alt="cg-5-6" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwZH1.jpg" alt="cg-5-6" /></p>
 
 <h3 id="light-falloff">Light Falloff</h3>
 
@@ -403,7 +403,7 @@
   <li>Assume that ideally there is no loss of energy, for each moment of energy transmission, each spherical shell carries the same amount of luminous energy. For each unit space $dS$ on the spherical shell, we assume the energy is the same, so the for each spherical shell, the total amount of energy is $\oint IdS = 4\pi r^2 I$. Thus $I$ is inversely proportional to the square of the distance $r$.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwEu9.jpg" alt="cg-5-7" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwEu9.jpg" alt="cg-5-7" /></p>
 
 <p class="warning"><strong>Note</strong>: Above proof is not strict, but intuitive. More strict prove is as follows:
 We assume there is no energy loss, so the luminous energy $Q$ from the light source per unit time is the same. According to $\Phi = dQ / dt$, we can get the luminous flux $\Phi$ per time unit is the same. From the definition of luminance: $L_{v} = d^2\Phi / d\Omega dA cos\theta$, the total of luminance $4\pi r^2 L_{v} = d\Phi / d\Omega cos\theta$ should be the same. Thus luminance $L_{v}$ is inversely proportional to the square of  the distance $r$.</p>
@@ -421,7 +421,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skwVBR.jpg" alt="cg-5-8" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skwVBR.jpg" alt="cg-5-8" /></p>
 
 <ul>
   <li>$\max (0, \mathbf{n} \cdot \mathbf{l})$ is to ensure the shading value is always positive even if the light comes from the back of the object</li>
@@ -433,7 +433,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><strong>Diffuse coefficient</strong>: often defined as 3 or 4 dimensional vector to store the percentage of energy the shading point reflects (not absorb in). Indirectly contain the material information of the object.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/skDi38.jpg" alt="cg-5-9" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/skDi38.jpg" alt="cg-5-9" /></p>
 
 <h3 id="specular-term">Specular Term</h3>
 
@@ -445,13 +445,13 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAURfS.jpg" alt="cg-5-10" width="450px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAURfS.jpg" alt="cg-5-10" width="450px" /></p>
 
 <ul>
   <li>$v$ close to mirror direction $\Leftrightarrow$ half vector close to normal</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUhlQ.jpg" alt="cg-5-11" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUhlQ.jpg" alt="cg-5-11" /></p>
 
 <ul>
   <li>
@@ -465,9 +465,9 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUfSg.jpg" alt="cg-5-12" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUfSg.jpg" alt="cg-5-12" /></p>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAU2Y8.jpg" alt="cg-5-13" width="780px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAU2Y8.jpg" alt="cg-5-13" width="780px" /></p>
 
 <p><strong>Tip</strong>: Compared to diffuse reflection, we ignore the <code class="language-plaintext highlighter-rouge">energy received term</code> for simplicity. Note that Blinn-Phong model is just an empirical model.</p>
 
@@ -484,11 +484,11 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><strong>Ambient coefficient</strong>: similar to <strong>specular coefficient</strong> and <strong>diffuse coefficient</strong>, but this is always a constant.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUgFf.jpg" alt="cg-5-14" width="750px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUgFf.jpg" alt="cg-5-14" width="750px" /></p>
 
 <h3 id="blinn-phong-model-1">Blinn-Phong Model</h3>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAU5Os.jpg" alt="cg-5-15" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAU5Os.jpg" alt="cg-5-15" /></p>
 
 \[\begin{aligned} L &amp;=L_{a}+L_{d}+L_{s} \\ &amp;=k_{a} I_{a}+k_{d}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{l})+k_{s}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{h})^{p} \end{aligned}\]
 
@@ -508,7 +508,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>Not good for smooth surfaces</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUomn.jpg" alt="cg-5-16" width="500px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUomn.jpg" alt="cg-5-16" width="500px" /></p>
 
 <h3 id="gouraud-shading">Gouraud shading</h3>
 
@@ -517,13 +517,13 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>Each vertex has a normal vector</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAU7T0.jpg" alt="cg-5-17" width="500px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAU7T0.jpg" alt="cg-5-17" width="500px" /></p>
 
 <ul>
   <li>It is easy to obtain vertex normal from the underlying known geometry. e.g. sphere</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAaOEt.jpg" alt="cg-5-20" width="700px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAaOEt.jpg" alt="cg-5-20" width="700px" /></p>
 
 <ul>
   <li>Otherwise vertex normal can be inferred from surrounding triangle:
@@ -543,7 +543,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><code class="language-plaintext highlighter-rouge">normal vector</code> of each pixels is interpolated by vertex vector</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUTwq.jpg" alt="cg-5-18" width="500px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUTwq.jpg" alt="cg-5-18" width="500px" /></p>
 
 <p class="info"><strong>Tip</strong>: <code class="language-plaintext highlighter-rouge">Phong shading</code> is distinct from <code class="language-plaintext highlighter-rouge">Blinn-Phong reflectance model</code></p>
 
@@ -551,7 +551,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>pixel vector is computed by Barycentric interpolation of vertex normal</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUXpF.jpg" alt="cg-5-22" width="650px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUXpF.jpg" alt="cg-5-22" width="650px" /></p>
 
 <p class="error"><strong>Caveat</strong>: remember to normalize each normal vector after each step of interpolation.</p>
 
@@ -561,7 +561,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>As the model becomes more complex and has more vertices, the difference between three shading models become smaller</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/05/sAUqYT.jpg" alt="cg-5-19" width="750px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/05/sAUqYT.jpg" alt="cg-5-19" width="750px" /></p>
 
 <h2 id="shadow-mapping">Shadow Mapping</h2>
 
@@ -586,7 +586,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><strong>Step 2</strong>: From the view of the real camera, project all point in the view back to the point source light. If the the distance from the point to the light matches the depth, the point is visible, otherwise the point is blocked by other objects.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBaJCF.jpg" alt="cg-5-25" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBaJCF.jpg" alt="cg-5-25" width="80%" /></p>
 
 <h3 id="visualizing-shadow-mapping">Visualizing Shadow Mapping</h3>
 
@@ -594,13 +594,13 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>A complex scene with shadows and without shadows</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBa68e.jpg" alt="cg-5-26" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBa68e.jpg" alt="cg-5-26" width="80%" /></p>
 
 <ul>
   <li>The depth buffer from the light’s point of view</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBa3NT.jpg" alt="cg-5-27" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBa3NT.jpg" alt="cg-5-27" width="80%" /></p>
 
 <ul>
   <li>The shadow from the camera’s point of view
@@ -612,7 +612,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBa1EV.jpg" alt="cg-5-28" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBa1EV.jpg" alt="cg-5-28" width="80%" /></p>
 
 <h3 id="problems-with-shadow-mapping">Problems with Shadow Mapping</h3>
 
@@ -646,7 +646,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBaQH0.jpg" alt="cg-5-29" width="65%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBaQH0.jpg" alt="cg-5-29" width="65%" /></p>
 
 <ul>
   <li>Soft shadow is the transition from the umbra to penumbra to the illuminated region.
@@ -657,13 +657,13 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li>Soft shadow is more realistic and natural because light source is not always point-like.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/16/sBaY34.jpg" alt="cg-5-30" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/16/sBaY34.jpg" alt="cg-5-30" width="80%" /></p>
 
 <h2 id="graphics-pipeline">Graphics Pipeline</h2>
 
 <h3 id="real-time-rendering-pipeline">Real-time Rendering pipeline</h3>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sEh9XR.jpg" alt="cg-5-22" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sEh9XR.jpg" alt="cg-5-22" /></p>
 
 <ul>
   <li>
@@ -677,7 +677,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sEhPn1.png" alt="cg-5-23" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sEhPn1.png" alt="cg-5-23" /></p>
 
 <p class="warning"><strong>Note</strong>: Fragment (片元) is widely used in OpenGL and other modern API, which commonly means Pixel. Fragment shading (processing) = Pixel shading (processing).</p>
 
@@ -742,7 +742,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVF90I.jpg" alt="cg-5-24" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVF90I.jpg" alt="cg-5-24" /></p>
 
 <ul>
   <li>FLOPS (floating point operatins per second): measure of computer performance:</li>
@@ -818,7 +818,7 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
   <li><a href="https://www.zhihu.com/question/53080536/answer/133398317">光能、光通量、光强、亮度</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-09-02T00:00:00+08:00">Nov 23, 2020</time>
+        <time itemprop="dateModified" datetime="2020-09-02T00:00:00-05:00">Nov 23, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -1549,7 +1549,6 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         tex2jax: {
             inlineMath: [['$','$'], ['\\(','\\)']]
         },
-        extensions: ["color.js"],
     };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>

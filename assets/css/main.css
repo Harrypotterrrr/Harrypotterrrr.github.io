@@ -2948,7 +2948,9 @@ body, html, .root, .layout--page { height: 100%; }
 
 .layout--homepage .article-list .item__content .item__head .item__title:hover { text-decoration: underline; color: #2255AA; }
 
-.layout--homepage .article-list .item__content .item__head .item__subtitle { color: #5e9516; font-size: 1.1rem; font-family: 'PT Sans', sans-serif; }
+.layout--homepage .article-list .item__content .item__head .item__subtitle { color: #5e9516; font-size: 1.1rem; font-family: 'PT Sans', sans-serif; display: inline-block; padding-right: 0.7rem; }
+
+.layout--homepage .article-list .item__content .item__head .item__timeline { color: #4b7612; font-size: 1.1rem; font-family: 'PT Sans', sans-serif; font-style: italic; display: inline-block; }
 
 .layout--homepage .article-list .item__content .item__head .item__location { color: #3f3f3f; font-size: 1.1rem; font-family: 'Satisfy', cursive; }
 

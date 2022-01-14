@@ -311,7 +311,7 @@
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-11-25-cg-8">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 28, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-11-25T00:00:00+08:00">
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-11-25T00:00:00-05:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
@@ -360,19 +360,19 @@
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/17/sr6ECR.jpg" alt="cg-8-1" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/17/sr6ECR.jpg" alt="cg-8-1" /></p>
 
 <ul>
   <li>Check for shadows by sending a ray to the light</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/17/sr6FUJ.jpg" alt="cg-8-2" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/17/sr6FUJ.jpg" alt="cg-8-2" /></p>
 
 <ul>
   <li><strong>Whitted-Style Ray Tracing</strong>: <strong>Recursive</strong> Ray Tracing</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/17/sr6k59.gif" alt="cg-8-3" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/17/sr6k59.gif" alt="cg-8-3" /></p>
 
 <ul>
   <li><strong>Key idea</strong>: ray tracing is to simulate the ray casting</li>
@@ -386,7 +386,7 @@
   <li>Ray is defined by its origin and a direction vector</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/17/sr6iE4.jpg" alt="cg-8-4" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/17/sr6iE4.jpg" alt="cg-8-4" /></p>
 
 <ul>
   <li>Ray equation $\boldsymbol{r}(t) = \boldsymbol{o} + t\boldsymbol{d}$ where, $0 \leq t &lt; \infty$
@@ -405,7 +405,7 @@
   <li>Sphere: $ \boldsymbol{p}:\ (\boldsymbol{p}-\boldsymbol{c})^2-R^2 = 0$</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/17/sr6CbF.jpg" alt="cg-8-5" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/17/sr6CbF.jpg" alt="cg-8-5" /></p>
 
 <ul>
   <li>The intersection $p$ must satisfy both ray equation and sphere equation</li>
@@ -442,7 +442,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   <li>Plane is defined by normal vector and a point on plane</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/s6F3Y6.jpg" alt="cg-8-6" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/s6F3Y6.jpg" alt="cg-8-6" /></p>
 
 <ul>
   <li>Plane Equation: $\boldsymbol{p}: (\boldsymbol{p}-\boldsymbol{p^\prime}) \cdot \boldsymbol{N}=0$
@@ -482,7 +482,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
 
 <p class="info"><strong>Tip</strong>: Point in Polygon test is: given a point $p$ and a polygon $Q$, draw a line from the query point $p$ to other point far away in the plane, which should be outside $Q$, then count the number of intersection of this ray with $Q$. If odd number of intersections, the point $p$ is inside polygon $Q$, otherwise outside.</p>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/s6F8fK.jpg" alt="cg-8-7" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/s6F8fK.jpg" alt="cg-8-7" /></p>
 
 <ul>
   <li>Idea: just intersect ray with each triangle</li>
@@ -556,7 +556,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/s6F1Fx.jpg" alt="cg-8-8" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/s6F1Fx.jpg" alt="cg-8-8" /></p>
 
 <h3 id="ray-intersection-with-box">Ray-Intersection With Box</h3>
 
@@ -569,7 +569,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/s6FQT1.jpg" alt="cg-8-9" width="40%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/s6FQT1.jpg" alt="cg-8-9" width="40%" /></p>
 
 <ul>
   <li>‘Axis-Aligned’ is to reduce computational time
@@ -582,7 +582,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEUqe.jpg" alt="cg-8-12" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEUqe.jpg" alt="cg-8-12" /></p>
 
 <h4 id="intersect-with-2d-aabb">Intersect with 2D AABB</h4>
 
@@ -590,7 +590,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   <li>2D example of computing intersections with slabs and take <strong>intersection</strong> of $t_{min}/ t_{max}$ intervals</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEdVH.jpg" alt="cg-8-10" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEdVH.jpg" alt="cg-8-10" /></p>
 
 <h4 id="intersect-with-3d-aabb">Intersect with 3D AABB</h4>
 
@@ -611,7 +611,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/s6FJSO.jpg" alt="cg-8-11" width="60%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/s6FJSO.jpg" alt="cg-8-11" width="60%" /></p>
 
 <ul>
   <li>Problem: what about the $t$ is negative?</li>
@@ -649,7 +649,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEtKO.jpg" alt="cg-8-13" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEtKO.jpg" alt="cg-8-13" /></p>
 
 <ul>
   <li>Ray Scene Intersection
@@ -664,7 +664,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scENrD.jpg" alt="cg-8-14" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scENrD.jpg" alt="cg-8-14" /></p>
 
 <ul>
   <li>Grid resolution should not be too small nor too large
@@ -681,7 +681,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEJxK.jpg" alt="cg-8-15" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEJxK.jpg" alt="cg-8-15" /></p>
 
 <ul>
   <li>Uniform Grids’ Problem
@@ -693,7 +693,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scE0IA.jpg" alt="cg-8-16" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scE0IA.jpg" alt="cg-8-16" /></p>
 
 <h3 id="spatial-partitions">Spatial Partitions</h3>
 
@@ -707,7 +707,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEyxf.jpg" alt="cg-8-17" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEyxf.jpg" alt="cg-8-17" /></p>
 
 <ul>
   <li>Data Structure for KD-Tree
@@ -729,13 +729,13 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEwad.gif" alt="cg-8-18" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEwad.gif" alt="cg-8-18" /></p>
 
 <ul>
   <li>Traversing a KD-Tree</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scZipq.gif" alt="cg-8-19" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scZipq.gif" alt="cg-8-19" /></p>
 
 <ul>
   <li>Problem existed in KD-Tree method
@@ -760,7 +760,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEsRP.gif" alt="cg-8-20" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEsRP.gif" alt="cg-8-20" /></p>
 
 <ul>
   <li>The problem existed in KD-Tree are solved
@@ -818,7 +818,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scErGt.jpg" alt="cg-8-21" width="60%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scErGt.jpg" alt="cg-8-21" width="60%" /></p>
 
 <h3 id="spatial-vs-object-partitions">Spatial vs Object Partitions</h3>
 
@@ -837,7 +837,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/18/scEcM8.jpg" alt="cg-8-22" width="80%" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/18/scEcM8.jpg" alt="cg-8-22" width="80%" /></p>
 
 <h2 id="reference">Reference</h2>
 
@@ -848,7 +848,7 @@ c=&amp;(\mathbf{o}-\mathbf{c}) \cdot(\mathbf{o}-\mathbf{c})-R^{2}\end{aligned}\r
 </ul>
 
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-11-25T00:00:00+08:00">Nov 28, 2020</time>
+        <time itemprop="dateModified" datetime="2020-11-25T00:00:00-05:00">Nov 28, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -1579,7 +1579,6 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         tex2jax: {
             inlineMath: [['$','$'], ['\\(','\\)']]
         },
-        extensions: ["color.js"],
     };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>

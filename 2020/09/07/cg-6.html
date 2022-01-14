@@ -311,7 +311,7 @@
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 22, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00+08:00">
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00-05:00">
     <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
@@ -334,7 +334,7 @@
   <li>In other words, each vertex of primitives in 3D world corresponds to the vertex of the primitive in 2D texture.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVCEp4.jpg" alt="cg-6-1" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVCEp4.jpg" alt="cg-6-1" /></p>
 
 <h3 id="texture">Texture</h3>
 
@@ -347,7 +347,7 @@
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVCZc9.jpg" alt="cg-6-2" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVCZc9.jpg" alt="cg-6-2" /></p>
 
 <ul>
   <li>Generally, texture comes in two ways:
@@ -369,7 +369,7 @@
 
 <p class="info"><strong>Tip</strong>: No matter the texture is square or not, $u$ and $v$ are in range of $(0,1)$.</p>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVeE90.jpg" alt="cg-6-3" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVeE90.jpg" alt="cg-6-3" /></p>
 
 <h3 id="texture-tile">Texture Tile</h3>
 
@@ -377,13 +377,13 @@
   <li>Textures can be applied multiple times</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVZlSf.jpg" alt="cg-6-4" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVZlSf.jpg" alt="cg-6-4" /></p>
 
 <ul>
   <li>Well-designed texture is tileable when multiple textures blend together profesionally and seamlessly together, borders of texture is not easily conspicuous.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/06/sVi2kV.png" alt="cg-6-5" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/06/sVi2kV.png" alt="cg-6-5" /></p>
 
 <h2 id="interpolation">Interpolation</h2>
 
@@ -414,7 +414,7 @@
   <li>Any point $(x,y)$ in the plane can be represented as a linear combination of triangular vertices.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
 
 <ul>
   <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$
@@ -495,7 +495,7 @@
 
 <p class="success"><strong>Info</strong>: For each point on the object or scene, mapping it to the corresponding point on the low resolution texture will get non-integer coordinates of texture. Rounding off is the common process to obtain non-floating coordinate texel. As a result, multiple pixels of the object or scene will corresponds to the same texel of the texture, which means the generated figure is obscure of low quality. Thus interpolation handle it.</p>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sZN7cD.jpg" alt="cg-6-7" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sZN7cD.jpg" alt="cg-6-7" /></p>
 
 <h4 id="bilinear-interpolation">Bilinear Interpolation</h4>
 
@@ -518,7 +518,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
 
 \[f(x, y)=\operatorname{lerp}\left(t, u_{0}, u_{1}\right)\]
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sZNOHA.jpg" alt="cg-6-8" width="350px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sZNOHA.jpg" alt="cg-6-8" width="350px" /></p>
 
 <ul>
   <li>Red point: want to sample texture value $f(x,y)$</li>
@@ -540,7 +540,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
   <li>Bicubic interpolation is to use 4 x 4 point to do interpolation, which has better performance but higher costs. (Look into the canthus of the above figure, bilinear create jaggies but bicubic is more realistic)</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sZNjAI.png" alt="cg-6-9" width="650px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sZNjAI.png" alt="cg-6-9" width="650px" /></p>
 
 <h3 id="texture-minification">Texture Minification</h3>
 
@@ -552,7 +552,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sehxtP.jpg" alt="cg-6-10" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sehxtP.jpg" alt="cg-6-10" /></p>
 
 <ul>
   <li>Screen Pixel’s “Footprint” in Texture
@@ -563,7 +563,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/07/sehvkt.jpg" alt="cg-6-11" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/07/sehvkt.jpg" alt="cg-6-11" /></p>
 
 <ul>
   <li>
@@ -589,10 +589,10 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
     <ul>
       <li>“Mip” comes from the Latin, meaning a multitude in a small space.</li>
       <li>A sequence of textures that contains the same image but at lower and lower resolution. 
- <img src="https://s3.ax1x.com/2021/01/07/sehXTI.jpg" alt="cg-6-12" /></li>
+ <img src="https://z3.ax1x.com/2021/01/07/sehXTI.jpg" alt="cg-6-12" /></li>
       <li>
         <p>There are total of $log(n)$ images<br />
- <img src="https://s3.ax1x.com/2021/01/07/sehO0A.jpg" alt="cg-6-13" width="400px" /></p>
+ <img src="https://z3.ax1x.com/2021/01/07/sehO0A.jpg" alt="cg-6-13" width="400px" /></p>
       </li>
       <li>The total storage overhead of a mipmap is the summation of series: $\frac{4}{3}$ to the original image.</li>
     </ul>
@@ -605,7 +605,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
   <li>Computing Mipmap at level $D$: estimate texture footprint using texture coordinates of <strong>neighboring</strong> screen samples</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/su7yKx.jpg" alt="cg-6-14" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/su7yKx.jpg" alt="cg-6-14" /></p>
 
 <ul>
   <li>
@@ -626,7 +626,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
 
 \[\mathbf{J}=\frac{\partial (u, v)}{\partial (x, y)}=\left[\begin{array}{ll}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\]
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKmMo8.gif" alt="cg-6-15" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKmMo8.gif" alt="cg-6-15" /></p>
 
 <ul>
   <li>
@@ -643,7 +643,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
 
 <p class="info"><strong>Tip</strong>: Each column of Jacobian matrix is the new basis vector of the transformed space. <a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/jacobian-prerequisite-knowledge">More details</a></p>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sK3AKg.jpg" alt="cg-6-17" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sK3AKg.jpg" alt="cg-6-17" /></p>
 
 <ul>
   <li>Choose the level $D$ so that the size covered by the texels at that level is roughly the same as the overall size of the pixel footprint.</li>
@@ -653,7 +653,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
 
 \[\quad L=\max \left(\sqrt{\left(\frac{d u}{d x}\right)^{2}+\left(\frac{d v}{d x}\right)^{2}}, \sqrt{\left(\frac{d u}{d y}\right)^{2}+\left(\frac{d v}{d y}\right)^{2}}\right)\]
 
-<p><img src="https://s3.ax1x.com/2021/01/08/su7UVU.jpg" alt="cg-6-16" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/su7UVU.jpg" alt="cg-6-16" /></p>
 
 <ul>
   <li>$D$ rounded to nearest integer level
@@ -664,7 +664,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKJYZQ.jpg" alt="cg-6-18" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKJYZQ.jpg" alt="cg-6-18" /></p>
 
 <ul>
   <li>
@@ -679,7 +679,7 @@ u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
 u_{d+1}= BilinearInterpolate(p_{d+1})\\
 f(x, y) = lerp(r, u_{d}, u_{d+1})\]
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKs5lQ.jpg" alt="cg-6-19" width="650px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKs5lQ.jpg" alt="cg-6-19" width="650px" /></p>
 
 <h4 id="isotrpic-limitation">Isotrpic Limitation</h4>
 
@@ -692,14 +692,14 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKs4Sg.jpg" alt="cg-6-20" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKs4Sg.jpg" alt="cg-6-20" /></p>
 
 <ul>
   <li>Tilinear (<strong>isotropic</strong>) sampling will cause overblur problem most commonly when the points are on the floor that are far away viewed at very steep angles, which results in the pixel footprint covering much larger square areas.</li>
   <li>As a result, most footprints far from the viewer are averaged over the large area of the texture, which causes <strong>overblur</strong>.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKsffS.jpg" alt="cg-6-21" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKsffS.jpg" alt="cg-6-21" /></p>
 
 <h4 id="anisotropic-filtering">Anisotropic filtering</h4>
 
@@ -719,7 +719,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/08/sKsIyj.png" alt="cg-6-22" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/08/sKsIyj.png" alt="cg-6-22" /></p>
 
 <p class="success"><strong>Info</strong>: N x Anisotropic filtering in video games means the original figure will be copied of reduced size up to N times along horizontal and vertial axis. No matter the N increases to 4x, 8x, 16x or more, the ceiling of the space consumption is 4 times of the original texture. Generally, as long as the graphics memory is enough, the larger anisotropy will has no influence on the computing performance.</p>
 
@@ -777,20 +777,20 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iK78.jpg" alt="cg-6-23" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iK78.jpg" alt="cg-6-23" /></p>
 
 <p class="success"><strong>Info</strong>: Classic model in CG: Utah teapot, Stanford bunny, Stanford dragon, Cornell Box</p>
 
 <ul>
   <li><strong>Spherical Map</strong>: Sphere is used to store environment light (map). Unfolding the sphere is texture to render realistic lighting<br />
- <img src="https://s3.ax1x.com/2021/01/10/s1iu0f.jpg" alt="cg-6-24" />
+ <img src="https://z3.ax1x.com/2021/01/10/s1iu0f.jpg" alt="cg-6-24" />
     <ul>
       <li>Sphere texture is prone to <strong>distortion</strong> at top and bottom parts<br />
- <img src="https://s3.ax1x.com/2021/01/10/s1innP.jpg" alt="cg-6-25" /></li>
+ <img src="https://z3.ax1x.com/2021/01/10/s1innP.jpg" alt="cg-6-25" /></li>
     </ul>
   </li>
   <li><strong>Cubic Map</strong>: A vector map to cube point along the direction. The cube is textured with 6 square texture maps<br />
-<img src="https://s3.ax1x.com/2021/01/10/s1iZ6I.jpg" alt="cg-6-26" />
+<img src="https://z3.ax1x.com/2021/01/10/s1iZ6I.jpg" alt="cg-6-26" />
     <ul>
       <li>less distortion</li>
       <li>only need direction to face mapping computation</li>
@@ -798,7 +798,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1ieXt.jpg" alt="cg-6-27" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/10/s1ieXt.jpg" alt="cg-6-27" /></p>
 
 <h3 id="bump--normal-mapping">Bump / Normal mapping</h3>
 
@@ -812,7 +812,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iltg.png" alt="cg-6-28" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iltg.png" alt="cg-6-28" /></p>
 
 <ul>
   <li>Add surface detail without adding more triangles
@@ -829,7 +829,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><strong>Flatland</strong> (2D): texture in 1D and space in 2D</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/10/s1iQAS.jpg" alt="cg-6-29" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iQAS.jpg" alt="cg-6-29" /></p>
 
 <ul>
   <li>Suppose original surface normal $\vec p = (0,1)$ directs upward</li>
@@ -875,7 +875,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li>Different with Bump / Normal mapping, Displacement mapping permits particular <strong>silhouettes</strong>, <strong>self-occlusion</strong>, <strong>self-shadowing</strong></li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/11/s3yRFs.jpg" alt="cg-6-30" width="600px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/11/s3yRFs.jpg" alt="cg-6-30" width="600px" /></p>
 
 <ul>
   <li>Require primitives in object elaborated and small enough so that the triangles in object catch up with the high frequency in displacement mapping.
@@ -898,7 +898,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><code class="language-plaintext highlighter-rouge">Perlin noise</code> is a good example of noise function to generate marble crack, mountain fluctuation etc.</li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/11/s3ygoj.jpg" alt="cg-6-31" width="650px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/11/s3ygoj.jpg" alt="cg-6-31" width="650px" /></p>
 
 <h3 id="precomputed-shading">Precomputed Shading</h3>
 
@@ -910,7 +910,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   </li>
 </ul>
 
-<p><img src="https://s3.ax1x.com/2021/01/11/s3ycwQ.jpg" alt="cg-6-32" width="700px" /></p>
+<p><img src="https://z3.ax1x.com/2021/01/11/s3ycwQ.jpg" alt="cg-6-32" width="700px" /></p>
 
 <h3 id="3d-texture-and-volumn-rendering">3D Texture and Volumn Rendering</h3>
 
@@ -933,7 +933,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-09-07T00:00:00+08:00">Nov 22, 2020</time>
+        <time itemprop="dateModified" datetime="2020-09-07T00:00:00-05:00">Nov 22, 2020</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -1664,7 +1664,6 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         tex2jax: {
             inlineMath: [['$','$'], ['\\(','\\)']]
         },
-        extensions: ["color.js"],
     };MathJax.Hub.Config(_config);
 </script>
 <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
