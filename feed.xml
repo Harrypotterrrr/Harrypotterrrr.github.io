@@ -1,5 +1,1676 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2022-04-10T00:32:30-05:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
-</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">The Notes of Computer Graphics Ⅹ</title><link href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅹ" /><published>2020-12-20T00:00:00-05:00</published><updated>2020-12-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/12/20/cg-10</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/20/cg-10.html"><![CDATA[<p>Material, Microfacet Theory, Isotropic Material, Anisotropic Material</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2022-05-14T01:21:04-04:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
+</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">Feature Extraction and Disentanglement</title><link href="https://harrypotterrrr.github.io//2022/02/21/gan-4.html" rel="alternate" type="text/html" title="Feature Extraction and Disentanglement" /><published>2022-02-21T00:00:00-05:00</published><updated>2022-02-21T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/21/gan-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/21/gan-4.html"><![CDATA[<p>Feature Extraction and Disentanglement</p>
+
+<!--more-->
+
+<h2 id="feature-disentangle">Feature Disentangle</h2>
+
+<ul>
+  <li>The GAN receives one vector as input and output a desirable result.
+    <ul>
+      <li>We hope to control the characteristic of the output by mopdifying each specific value in the input vector.</li>
+    </ul>
+  </li>
+  <li>For general GAN, modifying a specific dimension of the vector commonly change the feature of the result <strong>unconsciously</strong>
+    <ul>
+      <li>Because the actual distribution of each feature are intricate and <strong>entangled</strong> in the latent space.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="infogan">InfoGAN</h3>
+
+<ul>
+  <li>Split input <code class="language-plaintext highlighter-rouge">z</code> to two parts, <code class="language-plaintext highlighter-rouge">c</code> encodes the different feature in each dimension and <code class="language-plaintext highlighter-rouge">z'</code> as input noise.</li>
+  <li>Classifier recover the predict <code class="language-plaintext highlighter-rouge">c</code> from the output <code class="language-plaintext highlighter-rouge">x</code> from the Generator, which supervises the generate to output <code class="language-plaintext highlighter-rouge">x</code> with the feature of <code class="language-plaintext highlighter-rouge">c</code>.</li>
+  <li>Discriminator still output a scalar to represent the result good or not, but shares the parameter with Classifier except for the last output layer.
+    <ul>
+      <li>Without Discriminator, the output from Generator will only focus on <code class="language-plaintext highlighter-rouge">c</code> which benefit for the Classifier to predict, but generate bad results.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/03/OFJjEV.png" alt="gan-4-1" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<h3 id="vae-gan">VAE-GAN</h3>
+
+<ul>
+  <li>Based on VAE (variational auto-encoder), VAE-GAN combines VAE and GAN
+    <ul>
+      <li>VAE only generates obscure results.</li>
+      <li>Discriminator</li>
+    </ul>
+  </li>
+  <li>Encoder is to encode the input image from the dataset to a normal distribution code <code class="language-plaintext highlighter-rouge">z</code>, regularized by imposing a prior distribution over the latent distribution $p(z)</li>
+  <li>Generator is to generate images and cheat the distriminator
+    <ul>
+      <li>Output the reconstruction image from the output <code class="language-plaintext highlighter-rouge">z</code> of Encoder: minimize the reconstruction</li>
+      <li>Output the generated image from the noise sampled from the prior distribution: get <code class="language-plaintext highlighter-rouge">z</code> as closed to the normal distribution as possible.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Discriminator is to distinguish the real, generated or reconstructed images.</p>
+  </li>
+  <li>Algorithm of the training the VAE-GAN
+    <ul>
+      <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
+      <li>In each training iteration:
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(\tilde{z}^i)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from decoder, $\hat{x}^i = Dec(z^i)$.</li>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, decrease $\textit{KL-divergence}(P(\tilde{z}^i</td>
+                  <td>x^i) \Vert P(z))$</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, increase binary cross entropy $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
+          <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase binary cross entropy $D(x^i)$, decrease $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/03/OFJOH0.png" alt="gan-4-2" style="margin:auto;display:block;width:70%;" /></p>
+
+<p class="success"><strong>Info</strong>: Another kind of discriminator can be implemented to output three labels of the result: real, generated and reconstructed.</p>
+
+<ul>
+  <li>Algorithm of the training VAE-GAN
+    <ul>
+      <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
+      <li>In each training iteration:
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(\tilde{z}^i)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from decoder, $\hat{x}^i = Dec(z^i)$.</li>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, decrease $\textit{KL-divergence}(P(\tilde{z}^i</td>
+                  <td>x^i) \Vert P(z))$</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, increase binary cross entropy $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
+          <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase binary cross entropy $D(x^i)$, decrease $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Another kind of discriminator can be implemented to output three labels of the result: real, generated and reconstructed.</p>
+
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
+
+<h3 id="bigan">BiGAN</h3>
+
+<ul>
+  <li>Make pair of the input and output from Encoder and Decoder to feed into the discriminator, distinguishing the the input come from the encoder or the decoder</li>
+  <li>Encoder takes the image <code class="language-plaintext highlighter-rouge">x</code> from the dataset and generate code <code class="language-plaintext highlighter-rouge">z</code>, and make a pair <code class="language-plaintext highlighter-rouge">(x, z)</code> (the corresponding distribution <code class="language-plaintext highlighter-rouge">P(x, z)</code>) for discriminator.
+    <ul>
+      <li>Deceive Discriminator that the <code class="language-plaintext highlighter-rouge">P(x, z)</code> is from eecoder.</li>
+    </ul>
+  </li>
+  <li>Decoder takes the code <code class="language-plaintext highlighter-rouge">z'</code> sampled from the prior distribution and generate image <code class="language-plaintext highlighter-rouge">x'</code>, and make a pair <code class="language-plaintext highlighter-rouge">(x', z)</code> (the corresponding distribution <code class="language-plaintext highlighter-rouge">Q(x', z')</code>) for discriminator.
+    <ul>
+      <li>Deceive Discriminator that the <code class="language-plaintext highlighter-rouge">Q(x', z')</code> is from dncoder.</li>
+    </ul>
+  </li>
+  <li>Discriminator evaluate the difference between the distribution from encoder and decoder.</li>
+  <li>After the well training, the discriminator can not distinguish the distribution from encoder and decoder.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">P(x, z)</code> will be the same as <code class="language-plaintext highlighter-rouge">Q(x', z')</code>.</li>
+      <li>The embedding code <code class="language-plaintext highlighter-rouge">z</code> will be similar to the code generated from the prior distribution, and the image <code class="language-plaintext highlighter-rouge">x'</code> from decoder will be real.</li>
+      <li>The cycle consistency holds, which is similar to <a href="/2022/01/25/gan-2#cyclegan">cycleGAN</a>:
+        <ul>
+          <li>Also, <code class="language-plaintext highlighter-rouge">Enc(x) = z</code> =&gt; <code class="language-plaintext highlighter-rouge">Dec(z') = x</code> for all <code class="language-plaintext highlighter-rouge">x'</code>.</li>
+          <li>Similarly, <code class="language-plaintext highlighter-rouge">Dec(z) = x</code> =&gt; <code class="language-plaintext highlighter-rouge">Enc(x) = z</code> for all <code class="language-plaintext highlighter-rouge">z</code>.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/03/OFJvNT.png" alt="gan-4-3" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>Algorithm of the training Bi-GAN</li>
+  <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
+  <li>In each training iteration:
+    <ul>
+      <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+      <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
+      <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(z^i)$.</li>
+      <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase $D(x^i, \tilde{z}^i)$, decrease $D(\tilde{x}^i, z^i)$.</li>
+      <li>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease $D(x^i, \tilde{z}^i)$.</li>
+      <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to increase $D(\tilde{x}^i, z^i)$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="info"><strong>Note</strong>: It doesn’t matter that the <code class="language-plaintext highlighter-rouge">D</code> gives the positive score to the pair from <code class="language-plaintext highlighter-rouge">Enc</code> or another. What matters is that the score <code class="language-plaintext highlighter-rouge">D</code> gives to <code class="language-plaintext highlighter-rouge">Enc</code> or <code class="language-plaintext highlighter-rouge">Dec</code> should be <strong>opposite</strong>. The objective of <code class="language-plaintext highlighter-rouge">Enc</code> and <code class="language-plaintext highlighter-rouge">Dec</code> should also be the opposite of the objective of <code class="language-plaintext highlighter-rouge">D</code> so that <code class="language-plaintext highlighter-rouge">D</code> could not discriminate between the generated pair after the advesarial training.</p>
+
+<ul>
+  <li>Based on the <strong>self-supervised</strong> way ofBiGAN, <a href="/2022/01/25/gan-2#cyclegan">cycleGAN</a> introduces the cycle consistency loss.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
+
+<h3 id="triple-gan">Triple GAN</h3>
+
+<ul>
+  <li>Semi-supervised learning way of training GAN consists of three parts: classifier, generator, discriminator.</li>
+  <li><strong>Generator</strong> receives the sampling noise $Z_g$ and conditional distribution $Y_g$ from the prior distribution, and output the pair of the image with the label $(X_g, Y_g)$</li>
+  <li><strong>Classifier</strong> outputs the label of the image,and  disentangle the class and style of the input in both supervised and unsupervised way:
+    <ul>
+      <li>Take the output image-label pairs from generator, calculate the cross entropy reconstruction loss between predicted label $\tilde{Y}_g$ with $Y_g$. This process is using weak self-supervised sample to train the classifier.</li>
+      <li>Take sampling pair $(X_l, Y_L)$ from the dataset and supervised learning with the cross entropy reconstruction loss between the predicted $\tilde{Y}_l$ and $Y$.</li>
+      <li>Classify sampling image $X_c$ as the predicted label $Y_c$. The predicted pair is sent to the discriminator.</li>
+    </ul>
+  </li>
+  <li><strong>Discriminator</strong> solely identifies fake image-label pairs.
+    <ul>
+      <li>Distinguish the real image-label pair sampled from the dataset directly.</li>
+      <li>Distinguish the generated image-label pair from the generator.</li>
+      <li>Distinguish the image and predicted label pair from the classifier.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/03/OFJx4U.png" alt="gan-4-4" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
+
+<h3 id="domain-adversarial-training">Domain-adversarial Training</h3>
+
+<ul>
+  <li>The network consists of three parts:
+    <ul>
+      <li><strong>Feature extractor</strong>: extract and map the input $x$ to the latent space.
+        <ul>
+          <li>To maximize label classification accuracy</li>
+          <li>To minimize domain lcassification accuracy</li>
+        </ul>
+      </li>
+      <li><strong>Label predictor</strong>: predict the class label of the feature from the extractor.
+        <ul>
+          <li>To maximize label classification accuracy</li>
+        </ul>
+      </li>
+      <li><strong>Domain classifier</strong>: classify the source domain of the feature from the extractor.
+        <ul>
+          <li>To maximize domain classification accuracy</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Gradient reversal layer is an identity function during the forward propagation, but it multiplies its input by -1 during backpropagation.
+    <ul>
+      <li>Because it leads the gradient ascent on the feature extractor with respect to the classification loss of Domain predictor, but gradient descent on the predictor itself.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/03/OFYSCF.png" alt="gan-4-5" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
+
+<h3 id="feature-disentangle-1">Feature Disentangle</h3>
+
+<ul>
+  <li>The encoding from the original encoder includes mixture information, which is <strong>entangled</strong>.</li>
+  <li>Embedding audio signal can be roughly classified as two parts
+    <ul>
+      <li>Phonetic information: audio content, structures and semantic meaning</li>
+      <li>Speaker information: audio speaker acoustic characteristics</li>
+    </ul>
+  </li>
+  <li>Utilize two encoder to <strong>disentangle</strong> the above two information in the latent space: Phonetic encoder and Speaker encoder.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/14/OyWYff.png" alt="gan-4-6" style="margin:auto;display:block;width:80%;" /></p>
+
+<ul>
+  <li>For the audio source from the same or different speakers, the speaker vector $v_s$ from Speaker Encoder $E_s$ will be constrained as close or far apart as possible.
+    <ul>
+      <li>To guide the Speaker Encoder $E_s$ <strong>only</strong> extract the <strong>acoustic characteristic</strong> to the speaker vector $v_s$.</li>
+    </ul>
+  </li>
+  <li>For inputs with different content and structures, the Phonetic Encoder $E_p$ embedding the Phonetic vector $v_p$, which is fed into Speaker Discriminator $D_s$ to distinguish if the source is from the same speaker or not.
+    <ul>
+      <li>To instruct the Phonetic Encoder $E_p$ embeds <strong>all information except for the speaker characteristic</strong>.</li>
+    </ul>
+  </li>
+  <li>Speaker Classifier $D_s$ is inspired from domain adversarial training, which outputs the score, representing how <strong>confident</strong> the discriminator $D_s$ will be that two audio source are from the identical speaker.
+    <ul>
+      <li>The higher score means more confident on the same speaker.</li>
+      <li>Phonetic encoder $E_p$ learns to <strong>confuse</strong> Speaker Classifier $D_s$.</li>
+      <li>After the well training, $D_s$ fail to distinguish whether the source is from the same speaker or not, and $E_p$ only generates embeddings with phonetic information.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/14/OyWNp8.png" alt="gan-4-7" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-7">*reference-7</a></span></p>
+
+<ul>
+  <li>Each dimension of the input vector <strong>represents some characteristics</strong>, but the explicit relationship is <strong>unknown</strong>.
+    <ul>
+      <li><strong>Disentangle</strong>: understand the meaning of each dimension so as to control the output.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="attribute-modification">Attribute Modification</h3>
+
+<ul>
+  <li>Compute the center of each sampling with the same attributes and compute the distance between different sampling centers.</li>
+</ul>
+
+\[z_{\text {long }}=\frac{1}{N_{1}} \sum_{x \in \text { long }} \operatorname{En}(x)-\frac{1}{N_{2}} \sum_{x^{\prime} \notin \text { long }} \operatorname{En}\left(x^{\prime}\right)\]
+
+<p><img src="https://s1.ax1x.com/2022/05/14/O6NOAJ.png" alt="gan-4-8" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>Transform the characteristic by <strong>compensating the distance</strong> in the latent space.</li>
+</ul>
+
+\[x \Rightarrow \operatorname{En}(x)+z_{\text {long }}=z^{\prime} \Rightarrow \operatorname{Gen}\left(z^{\prime}\right)\]
+
+<h3 id="photo-editing">Photo Editing</h3>
+
+<ul>
+  <li>Basic idea: find the optimum code $z^*$ in the latent space, closed to the original input image, at the same time fulltill the constraint.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/14/O6NXN9.png" alt="gan-4-9" style="margin:auto;display:block;width:60%;" /></p>
+
+<ul>
+  <li>Three methods to backtrace code $z^*$ from the input $x$:
+    <ol>
+      <li>Gradient descent to find the optimal target:<br />
+ $z^{*}=\arg \min _{z} L\left(G(z), x\right)$<br />
+ The difference between $G(z)$ and $x$ can be measured by:</li>
+    </ol>
+    <ul>
+      <li>Pixel-wise distance</li>
+      <li>Another extractor network to evaluate the high level distance
+        <ol>
+          <li>Well-trained auto-encoder structure to extract the latent code, transforming the input image back.</li>
+          <li>Using the result from method 2 as the initialization of method 1 and fine-tune.</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>Editing photos with input constraint:
+    <ul>
+      <li>$z_0$ is the code of the input image previously found.</li>
+      <li>$U$ is the function to judge if the final generation fulfill the constaint of the editing.</li>
+      <li>$\left|z-z_{0}\right|$ make sure the result is not too far away from the original image.</li>
+      <li>$D$ discriminator is to check the image realistic or not.
+\(z^{*}=\arg \min _{z} U(G(z))+\lambda_{1}\left\|z-z_{0}\right\|^{2}-\lambda_{2} D(G(z))\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><span class="ref"><a href="#reference-8">*reference-8</a></span>
+<span class="ref"><a href="#reference-9">*reference-9</a></span></p>
+
+<h3 id="others">Others</h3>
+
+<p><strong>TODO</strong></p>
+
+<ul>
+  <li>Many tasks as <a href="#reference-10">Image super resolution</a>, <a href="#reference-11">Image completion</a>, etc. are based on condition GAN.</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.03657">InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets</a><a name="reference-2"></a></li>
+  <li><a href="https://arxiv.org/abs/1512.09300">Autoencoding beyond pixels using a learned similarity metric</a><a name="reference-3"></a></li>
+  <li><a href="https://arxiv.org/abs/1605.09782">Adversarial Feature Learning</a><a name="reference-4"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.02291">Triple Generative Adversarial Nets</a><a name="reference-5"></a></li>
+  <li><a href="https://arxiv.org/abs/1505.07818">Domain-Adversarial Training of Neural Networks</a><a name="reference-6"></a></li>
+  <li><a href="https://arxiv.org/abs/1811.02775">Improved Audio Embeddings by Adjacency-Based Clustering with Applications in Spoken Term Detection</a><a name="reference-7"></a></li>
+  <li><a href="https://arxiv.org/abs/1609.03552">Generative Visual Manipulation on the Natural Image Manifold</a><a name="reference-8"></a></li>
+  <li><a href="https://arxiv.org/abs/1609.07093">Neural Photo Editing with Introspective Adversarial Networks</a><a name="reference-9"></a></li>
+  <li><a href="https://arxiv.org/abs/1609.04802">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</a><a name="reference-10"></a></li>
+  <li><a href="http://iizuka.cs.tsukuba.ac.jp/projects/completion/data/completion_sig2017.pdf">Globally and Locally Consistent Image Completion</a><a name="reference-11"></a></li>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Feature Extraction and Disentanglement]]></summary></entry><entry><title type="html">Advanced Thoery and Problems of GAN</title><link href="https://harrypotterrrr.github.io//2022/02/11/gan-3.html" rel="alternate" type="text/html" title="Advanced Thoery and Problems of GAN" /><published>2022-02-11T00:00:00-05:00</published><updated>2022-02-11T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/11/gan-3</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/11/gan-3.html"><![CDATA[<p>Advanced Thoery and Problems of GAN</p>
+
+<!--more-->
+
+<h2 id="general-framework-of-gan">General Framework of GAN</h2>
+
+<h3 id="f-divergence">F-divergence</h3>
+
+<ul>
+  <li>$P$ and $Q$ are two distributions. $p(x)$ and $q(x)$ are the probability of sampling $x$.</li>
+  <li>f-divergence $D_{f}(P | Q)$ evaluates the difference of $P$ and $Q$.
+    <ul>
+      <li>$f$ is convex function</li>
+      <li>when $P$ and $Q$ are the same distributions, $p(x) = q(x)$, $f(\frac{p(x)}{q(x)}) = f(1) = 0$</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+D_{f}(P \| Q) &amp;=\int_{x} q(x) f\left(\frac{p(x)}{q(x)}\right) d x \\
+&amp; \geq f\left(\int_{x} q(x) \frac{p(x)}{q(x)} d x\right) \color{red}{\text{Jessen Inequality}} \\
+&amp; = f\left(\int_{x}p(x) d x\right) \\
+&amp; = f(1) \\
+&amp; = 0
+\end{aligned}\]
+
+<p class="info"><strong>Note</strong>: Considering $f$ is the convex function, the above inequation can be established according to <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jessen inequation</a>:<br />
+$ \varphi\left(\frac{1}{b-a} \int_{a}^{b} f(x) d x\right) \leq \frac{1}{b-a} \int_{a}^{b} \varphi(f(x)) d x $</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">f</code> function can be different</li>
+</ul>
+
+\[\begin{aligned}
+&amp;\text{When } f(x)=x \log x \text{ , KL-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x) \frac{p(x)}{q(x)} \log \left(\frac{p(x)}{q(x)}\right) d x=\int_{x} p(x) \log \left(\frac{p(x)}{q(x)}\right) d x \\[1em]
+&amp;\text{When }f(x)=-\log x \text{ , reversed KL-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x)\left(-\log \left(\frac{p(x)}{q(x)}\right)\right) d x=\int_{x} q(x) \log \left(\frac{q(x)}{p(x)}\right) d x \\[1em]
+&amp;\text{When }f(x)=(x-1)^{2} \text{ , Chi Square-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x)\left(\frac{p(x)}{q(x)}-1\right)^{2} d x=\int_{x} \frac{(p(x)-q(x))^{2}}{q(x)} d x
+\end{aligned}\]
+
+<h3 id="fenchel-conjugate">Fenchel Conjugate</h3>
+
+<ul>
+  <li><strong>Fenchel Conjugate</strong> (Convex conjugate 凸共轭): the paired appearance of two functions with a strong relationship.
+    <ul>
+      <li>Duality (对偶) relationship is built on the same linear hyperplane.</li>
+    </ul>
+  </li>
+  <li>The <strong>purpose</strong> of using conjugate functions:
+    <ul>
+      <li>The advantage is that even if a function is not convex, <strong>a convexed function</strong> can be obtained by the conjugate method.</li>
+      <li>Even better, through the conjugation again, we can get a <strong>good approximation</strong> function with the original function.</li>
+      <li>The convex hull function of the original function can be obtained by conjugating <strong>twice</strong>, where many excellent properties of the new convex hull will be obtained in the optimization solution with just a little loss.</li>
+    </ul>
+  </li>
+  <li>Every convex function $f$ has a conjugate function $f^*$</li>
+</ul>
+
+\[f^{*}(t) =\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\}\]
+
+<ul>
+  <li>The variable of $f^* (t)$ is $t$, and get the maximum for every possible value of $x$.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZtRP.png" alt="gan-3-1" style="margin:auto;display:block;width:80%;" /></p>
+
+<ul>
+  <li>We can get a good approximation function with the original function
+    <ul>
+      <li>E.g. $f(x) = xlogx$ can be approximated as $f^*(t) = e^{t-1}$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZYGt.png" alt="gan-3-2" style="margin:auto;display:block;width:60%;" /></p>
+
+\[\begin{aligned}
+&amp;\text{Take } f(x) \text{ as } xlogx \text{ :}\\
+&amp;\quad f^{*}(t) =\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\} = \max _{x \in \operatorname{dom}(f)}\{x t-x \log x\}\\
+&amp;\text{Let } g(x) =x t-x \log x \text {, Given } t, \text { find } x \text { to maximize } g(x) \text{:}\\
+&amp;\quad t-\log x-1=0 \quad \\ 
+&amp;\quad x= e^{t-1} \\
+&amp;\quad f^{*}(t)= e^{t-1} \times t-e^{t-1} \times(t-1)=e^{t-1} \\
+\end{aligned}\]
+
+<h3 id="connection-with-gan">Connection with GAN</h3>
+
+<ul>
+  <li>Derivation of GAN’s derivation:
+    <ul>
+      <li>From the convex conjugate:<br />
+ \(f^{*}(t)=\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\} \longleftrightarrow f(x)=\max _{t \in \operatorname{dom}\left(f^{*}\right)}\left\{x t-f^{*}(t)\right\}\)</li>
+      <li>
+        <p>Take $x$ as $\frac{p(x)}{q(x)}$ :<br />
+ \(\begin{aligned}
+ D_{f}(P \| Q) &amp;=\int_{x} q(x) f\left(\frac{p(x)}{q(x)}\right) d x \\
+ &amp;=\int_{x} q(x)\left(\max _{t \in \operatorname{dom}\left(f^{*}\right)}\left\{\frac{p  (x)}{q(x)} t-f^{*}(t)\right\}\right) d x \\
+ &amp;\color{red}{\geq} \int_{x} q(x)\left(\frac{p(x)}{q(x)} \color{red}{D(x)}-f^{*}( \color{red}{D(x)})\right) d x \\
+ &amp;=\int_{x} p(x) D(x) d x-\int_{x} q(x) f^{*}(D(x)) d x \\
+ \end{aligned}\)</p>
+      </li>
+      <li><strong>The reason of</strong> replacing $\max$ item with $D(x)$ as above in red color:
+        <ul>
+          <li>$D(x)$ takes $x$ as input and output $t$.</li>
+          <li>The limited capcity of $D$ determines the lower bound of $\max$ item.</li>
+        </ul>
+      </li>
+      <li>
+        <p>For the divergence between $P$ and $Q$:<br />
+\(\begin{aligned}
+ D_{f}(P \| Q) &amp;\approx \max _{\mathrm{D}} \int_{x} p(x) D(x) d x-\int_{x} q(x) f^{*} (D(x)) d x \\
+ &amp;=\max _{\mathrm{D}}\left\{E_{x \sim P}[D(x)]-E_{x \sim Q}\left[f^{*}(D(x))\right] \right\} \\
+ &amp;\quad\text { Samples from P } \quad \text { Samples from Q } \\
+ \end{aligned}\)</p>
+      </li>
+      <li>Convert the conjugate to the more <strong>general</strong> form of GAN’s objective by sampling from $P_{data}$ and $P_G$:
+\(D_{f}\left(P_{\text {data}} \| P_{G}\right)=\max _{\mathrm{D}}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}\left[f^{*}(D(x))\right]\right\} \\
+ \begin{aligned}
+ G^{*} &amp;=\arg \min _{G} D_{f}\left(P_{d a t a} \| P_{G}\right) \\
+ &amp;=\arg \min _{G} \max _{D}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}\left[f^{*}(D(x))\right]\right\} \\
+ &amp;=\arg \min _{G} \max _{D} V(G, D)
+ \end{aligned}\)
+        <ul>
+          <li><strong>Therefore</strong>, according to the different <strong>definition</strong> of $V(G,D)$, we can have different <strong>divergence</strong>, which corresponds to different $f^*$ <strong>function</strong>.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZaM8.png" alt="gan-3-3" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<ul>
+  <li><strong>What benefit we can get to try different divergence</strong> (and corresponding $f^*$ function)?</li>
+</ul>
+
+<h3 id="mode-collapseand--dropping">Mode Collapseand &amp; Dropping</h3>
+
+<ul>
+  <li>Mode collapse and Mode Dropping refer to <strong>reduced variety</strong> in the samples produced by a generator.
+    <ul>
+      <li><strong>Mode Collapse</strong>: The generator synthesizes samples with <strong>intra-mode</strong> variety, but some modes are missing.
+        <ul>
+          <li>E.g. Generator outputs limited variaty of faces with many duplicates.</li>
+        </ul>
+      </li>
+      <li><strong>Mode Dropping</strong>: The generator synthesizes samples with <strong>inter-mode</strong> variety, but each mode lacks variety.
+        <ul>
+          <li>E.g. Generator outputs various faces at once, but all with the same one feature, like white skins.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZdsS.png" alt="gan-3-4" style="margin:auto;display:block;width:60%;" /></p>
+
+<ul>
+  <li>
+    <p>The problem may be caused by the bad selection of <strong>divergence</strong></p>
+  </li>
+  <li>
+    <p>As the below picture shows:</p>
+    <ul>
+      <li>The left figure shows the problem of <code class="language-plaintext highlighter-rouge">KL-divergence</code>, where the distribution of the well-trained generator falls between the peak of the true data distribution.
+        <ul>
+          <li><strong>This is also one explanation</strong> of why traditional generation, like autoencoder, output obscure result by choosing KL-divergence and minimizing it (aka. maximizing the likelihood estimation).</li>
+          <li>The distribution between the peak refers to those obscure generated images.</li>
+        </ul>
+      </li>
+      <li>The right figure shows the mode collapse and dropping problem, where the trained distribution mainly lies in one single peak.
+        <ul>
+          <li>This is one explanation of why advesarial training often encounters the limited diversity or limited features problems.</li>
+          <li>The missing distribution of generator referes to the missing features.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZNxf.png" alt="gan-3-5" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>But choosing different divergence can not solve the problem completely.
+    <ul>
+      <li>One triky workarounds is train the different generator, each with limited diversity and mode collapse or dropping problems. Gather to be the better generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="improving-gan">Improving GAN</h2>
+
+<h3 id="problem-of-js-divergence">Problem of JS-divergence</h3>
+
+<ul>
+  <li>In most cases $P_G$ and $P_{data}$ are not overlapped for the following reason:
+    <ul>
+      <li>The <strong>nature</strong> of data determines that $P_{data}$ and $P_G$ are low-dimensional manifold in high-dimensional space. Thus the overlap of two distribution can be ignored</li>
+      <li><strong>Limited sampling</strong> cause that even though the distribution of $P_{data}$ and $P_G$ have overlap, the discriminator frequently fails to measure the divergence between the distribution of sampling which is still sparse without enough overlap.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/28/LO9iXn.png" alt="gan-3-6" style="margin:auto;display:block;width:70%;" /></p>
+
+<p class="info"><strong>Info</strong>: Images are the low-dimensional manifold in high-dimensional space. If we hypothesis the space is only 3D, the images is a line or plane in this 3D space.</p>
+
+<ul>
+  <li>Considering the objective of Discriminator:
+ \(V(G,D)=-2log2 + \color{red}{2JS\left(P_{\text {data}} \| P_{\text {G}}\right)}\)
+    <ul>
+      <li>If there is nearly no overlap between two distribution, the value of JS-divergence would be <code class="language-plaintext highlighter-rouge">2log2</code> constant item, the <strong>gradient</strong> of which would be <em>zero</em>, which could cause the training stop.</li>
+      <li>And it is very common that two distribution have little overlap in high-dimensional space.</li>
+    </ul>
+  </li>
+  <li>As the following figure shows:
+    <ul>
+      <li>$P_{G_1}$ performs better than $P_{G_0}$ theoretically because it is closer to $P_{data}$, but the JS-divergence of two are all <code class="language-plaintext highlighter-rouge">log2</code> (ignore the coefficient <code class="language-plaintext highlighter-rouge">2</code> ahead).</li>
+      <li>Only two distribution are exactly the same, the <code class="language-plaintext highlighter-rouge">JS-divergence</code> will be <code class="language-plaintext highlighter-rouge">0</code>, which is the final target of generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: Strictly, according to the above equation of the objective of the discriminator, the JS-divergence is closed to <code class="language-plaintext highlighter-rouge">0</code> and the total objective is <code class="language-plaintext highlighter-rouge">log2</code> if there is barely enough overlap between distributions.</p>
+
+<ul>
+  <li>The generator is to minimize the divergence, but the same value <code class="language-plaintext highlighter-rouge">log2</code> of the objective gives no guide for the generator to judge which situation is worse. In other words, $P_{G_0}$ and $P_{G_1}$ are considered <strong>equally bad</strong>. Therefore, the generator will not update from $P_{G_0}$ to $P_{G_1}$.</li>
+  <li>On the other hand, the discriminator also consider $P_{G_0}$ and $P_{G_1}$ <strong>equally bad</strong>. Considering only when two distribution are exactly the same, <code class="language-plaintext highlighter-rouge">JS-divergence</code> is <code class="language-plaintext highlighter-rouge">0</code>, binary classifier will always achieves <code class="language-plaintext highlighter-rouge">100%</code> accuracy.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/28/LO9P6s.png" alt="gan-3-7" style="margin:auto;display:block;width:70%;" /></p>
+
+<p class="error"><strong>Most important</strong>: For the discriminator, a binary classifier, as long as the output of the classification is the false label, the loss is constant regardless of the deviation between the current $P_G$ and $P_{data}$. This property of <code class="language-plaintext highlighter-rouge">JS-divergence</code> makes it impossible to measure the distance between the non-overlapping distributions and hence the generator cannot be optimized properly.</p>
+
+<h4 id="lsgan">LSGAN</h4>
+
+<ul>
+  <li>In the binary classifier point of view, the <strong>gradient vanishing</strong> occurs when generate distribution is distinguished as fake too well after the <code class="language-plaintext highlighter-rouge">sigmoid</code> nonlinear transform.
+    <ul>
+      <li>Low-dimensional manifold in the high-dimensional space has almost no overlap, so the discriminator can clearly classified into 0 and 1, so that the gradient vanishing concentrates at both ends.</li>
+    </ul>
+  </li>
+  <li><strong>Least Square GAN</strong> (LSGAN): replace the sigmoid function with the linear, converting the <strong>binary classification</strong> problem into the <strong>regression</strong> problem.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj58K.png" alt="gan-3-8" style="margin:auto;display:block;width:70%;" /></p>
+
+<h2 id="wasserstein-gan">Wasserstein GAN</h2>
+
+<h3 id="wasserstein-distance">Wasserstein Distance</h3>
+
+<ul>
+  <li>Instead of using divergence to measure the distance between distributions, Wasserstein GAN (WGAN) use <strong>Earth Mover’s Distance</strong>.
+    <ul>
+      <li>Consider one distribution $P$ as a pile of earth and another distribution $Q$ as the target.</li>
+      <li><strong>Wasserstein Distance</strong>, also descriptively called <strong>Earth Mover’s Distance</strong> (EMD): the <strong>minimal</strong> total amount of work it takes to transform one heap into the other (initial distribution to the target).<br />
+\(W(P, Q) = d\)</li>
+      <li>The work defines as the amount of earth in a chunk times the distance it was moved.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjIgO.png" alt="gan-3-9" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>
+    <p>Assume two discrete distributions $P_r$ and $P_{\theta}$, each with $l$ possible states $x$ or $y$ respectively.</p>
+  </li>
+  <li>
+    <p>There are infinitely ways to move the earth around, but we only need to find the optimal one for EMD.</p>
+    <ul>
+      <li>Denote $\gamma(x, y)$ as the amount of earth distributed from $x$ to the domain of $y$.</li>
+      <li>The constraints $\sum_{x} \gamma(x, y)=P_{r}(y)$ and $\sum_{y} \gamma(x, y)=P_{\theta}(x)$ holds.</li>
+      <li>We require that $\gamma \in \Pi (P_{r}, P_{\theta})$, where $\Pi (P_{r}, P_{\theta})$ is the set of all distributions whose margains are $P_r$, $P_{\theta}$ respectively.</li>
+      <li>We multiply every value of $\gamma$ with the Euclidian distance between $x$ and $y$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\operatorname{EMD}\left(P_{r}, P_{\theta}\right)=\inf _{\gamma \in \Pi} \sum_{x, y}\|x-y\| \gamma(x, y)=\inf _{\gamma \in \Pi} \mathbb{E}_{(x, y) \sim \gamma}\|x-y\|=\inf _{\gamma \in \Pi}\langle\mathbf{D}, \mathbf{\Gamma}\rangle_{\mathrm{F}}\]
+
+<ul>
+  <li>$\inf$ stands for <code class="language-plaintext highlighter-rouge">infimum</code>, or the greatest lower bound (下确界), roughly meaning the minimum, the opposite of which is $\sup$ for <code class="language-plaintext highlighter-rouge">supremum</code> (上确界)</li>
+  <li>The distribution strategy is set as $\mathbf{\Gamma}=\gamma(x, y)$, and distance is $\mathbf{D}=\lVert x-y \rVert$, with $ \boldsymbol{\Gamma}, \mathbf{D} \in \mathbb{R}^{l \times l} $, then the definition of EMD will be:</li>
+  <li>${\langle , \rangle}_{F}$ is the <a href="https://en.wikipedia.org/wiki/Frobenius_inner_product">Frobenius inner product</a>, the sum of all the element-wise products.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opjf4x.png" alt="gan-3-10" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
+
+<h3 id="wgan">WGAN</h3>
+
+<ul>
+  <li>Instead of the Divergence $D_f (P_{data} \Vert P_G)$, which consider the generated distribution equally bad when there is not much overlap in space, the Wasserstein Distance $W(P_{data}, P_G)$ gives the exact distance function between $P_G$ and $P_{data}$</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj4C6.png" alt="gan-3-11" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>By solving the optimization problem and finding the best $\gamma(x, y)$, we can evaluate wasserstein distance between $P_{data}$ and $P_G$:
+    <ul>
+      <li>maximize the $D(x)$ where $x$ is from $P_{data}$</li>
+      <li>minimize the $D(x)$ where $x$ is from $P_G$</li>
+    </ul>
+  </li>
+</ul>
+
+\[V(G,D) = \max_{D \in \textit{1-Lipschitz}} \left\{ E_{x \sim P_{\text {data}}} [D(x)] - E_{x \sim P_G} [D(x)] \right\}\]
+
+<p><strong>TODO</strong>: the derivation.</p>
+
+<ul>
+  <li>$D \in \textit{1-Lipschitz}$: D has to be <strong>smooth</strong> enough, so that the generated distribution and the real distribution will not be distinguished too much.
+    <ul>
+      <li>Without this constraint, the generated score will become small to $-\inf$, while the real will be large as $+\inf$, which will make network hard to train due to the large weight and never converge.</li>
+      <li>Thus, keep discriminator smooth is one way to keep the score from $\inf$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjWU1.png" alt="gan-3-12" style="margin:auto;display:block;width:40%;" /></p>
+
+<ul>
+  <li><strong>Lipschitz Continuity</strong>: the function limited how fast it can change.
+    <ul>
+      <li>When $ K = 1$ is $\textit{1-Lipschitz}$</li>
+    </ul>
+  </li>
+</ul>
+
+\[\underset{\text{output change}}{\lVert f(x_1) - f(x_2) \rVert} \le K \underset{\text{input change}}{\lVert x_1 - x_2 \rVert}\]
+
+<ul>
+  <li><strong>Weight Clipping</strong>: a simple but efficient way to <strong>enforce</strong> a Lipschitz constraint.
+    <ul>
+      <li>Force the parameters $w$ between $c$ and $-c$</li>
+      <li>After parameters update, $ \text{if } w \gt c, w = c, \text{if } w \lt -c, w = -c$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
+
+<h3 id="wgan-gp">WGAN-GP</h3>
+
+<ul>
+  <li><strong>WGAN-GP</strong>: Wasserstin GAN with the gradient penalty.
+    <ul>
+      <li>A  differentiable function is <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> if and only if it has gradients with a norm less than or equal to 1 everywhere.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+&amp;D \in \textit{1-Lipschitz}\Longleftrightarrow  \left\|\nabla_{x} D(x)\right\| \le 1, \quad \text{for all } x\\[8px]
+&amp;\begin{aligned}
+V(G, D) 
+&amp;=\max _{D \in \textit { 1-Lipschitz }}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)]\right\} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda \int_{x} \max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right) d x\} \\
+\end{aligned}
+\end{aligned}\]
+
+<ul>
+  <li>Instead of promising all constraints of the gradient for all $x$ because enforcing the Lipschitz constraint <strong>everywhere</strong> is intractable, we only guarantee $x \in P_{penalty}$.</li>
+</ul>
+
+\[\begin{aligned}
+V(G, D) 
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\underset{\color{red}{\text{Prefer } \left\|\nabla_{x} D(x)\right\|\le 1, \text{ for all } x}}{\lambda \int_{x} \max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right) d x}\} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\underset{\color{red}{\text{Prefer } \left\|\nabla_{x} D(x)\right\|\le 1, \text{ for } x \text{ sampling from } x \sim P_{penalty}}}{\lambda E_{x \sim  P_{\text {penalty}}} [\max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right)]} \}
+\end{aligned}\]
+
+<ul>
+  <li>By randomly sampling, enforcing the $x$ only along the straight lines, as following figure shows, is sufficient and experimentally results in good performance.</li>
+  <li>Only give gradient constraint to the region between $P_{data}$ and $P_G$:
+    <ul>
+      <li>This region influences how $P_G$ moves to $P_{data}$.</li>
+      <li>$P_G$ will move towards $P_{data}$, passing through the $P_{penalty}$ region.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjovD.png" alt="gan-3-13" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>In practical, the penalty is set as <code class="language-plaintext highlighter-rouge">L2-norm</code>, which constrain the largest gradient to 1
+    <ul>
+      <li>Overly large gradients penalty works but too small gradient will also cause gradient vanishing, which will slow down the convergence.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+V(G, D) 
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda E_{x \sim  P_{\text {penalty}}} [\max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right)] \} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda E_{x \sim  P_{\text {penalty}}} [(\left\|\nabla_{x} D(x)\right\|-1 )^{2}] \}
+\end{aligned}\]
+
+<ul>
+  <li>Now discriminator will replace the last layer of the <strong>sigmoid function</strong> with wasserstain function to measure the distance between distributions, transmitting the problem from the <strong>binary classification</strong> to <strong>regression</strong>.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
+
+<h3 id="spectrum-normalization">Spectrum Normalization</h3>
+
+<ul>
+  <li><strong>Spectral Norm</strong>: keep the gradient norm smaller than <code class="language-plaintext highlighter-rouge">1</code> everywhere.</li>
+  <li>We keep Lipschitz continuity for the weight $W$ of each layer of the neural network $f(x) = Wx$.
+    <ul>
+      <li>Each matrix of $W$ divide by the <strong>sigular value</strong> of itself will guarantee <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> continuity.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>TODO</strong>: paper, https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/87220341</p>
+
+<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
+
+<h2 id="other-improvement">Other Improvement</h2>
+
+<h3 id="ebgan">EBGAN</h3>
+
+<ul>
+  <li><strong>Energy-based GAN</strong> (EBGAN): the same generator but the discriminator is with an auto-encoder framework.
+    <ul>
+      <li>EBGAN outputs the reconstruction image and get the <strong>reconstruction error</strong> to the input of the discriminator.</li>
+      <li>The error is the energy to determine the goodness of the generated result. The energy takes low values when it is the correct label and higher values for incorrect label.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj7Ke.png" alt="gan-3-14" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li><strong>Benefit</strong>: The auto-encoder discriminator can be pre-trained by real images without generator.
+    <ul>
+      <li>The discriminator can be expert at distinguish the real or fake at the beginning of the training the generator.</li>
+    </ul>
+  </li>
+  <li>
+\[\begin{aligned}
+&amp;\mathcal{L}_{D}(x, z)=D(x)+\max (m-D(G(z))) \\
+&amp;\mathcal{L}_{G}(z)=D(G(z))
+\end{aligned}\]
+  </li>
+  <li>For discriminators, to minimize $\mathcal{L}_{D}$ is to maximize $D(G(z))$, which means to raise the following curve in blue region.</li>
+  <li>For generators, it makes effort to generate results with low energy.</li>
+  <li>Without constraint, the curve will be lifted without limitation.
+    <ul>
+      <li>It is <strong>easy</strong> for the discriminator to increase the energy of fake result, lifting the curve, but <strong>hard</strong> for the generator to decrease the energy.</li>
+      <li>Set the <strong>margain</strong> to constrain the energy lifted by the discriminator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjHDH.png" alt="gan-3-15" style="margin:auto;display:block;width:50%;" /></p>
+
+<p><strong>TODO</strong> paper read https://blog.csdn.net/a312863063/article/details/88125429</p>
+
+<p><span class="ref"><a href="#reference-8">*reference-8</a></span></p>
+
+<h3 id="loss-sensitive-gan">Loss-sensitive GAN</h3>
+
+<p><strong>TODO</strong> paper read</p>
+
+<h3 id="be-gan">BE GAN</h3>
+
+<p><strong>TODO</strong> paper read https://www.cnblogs.com/king-lps/p/8552177.html</p>
+
+<h2 id="improved-algorithm">Improved Algorithm</h2>
+
+<ul>
+  <li>Comparing to the original version of <a href="/2022/01/20/gan-1#conclusion">GAN algorithm</a>:
+    <ul>
+      <li>Replace the <code class="language-plaintext highlighter-rouge">log</code> divergence with Wasserstein Distance.</li>
+      <li>Add <strong>Weight Clipping</strong> and <strong>Gradient Penalty</strong>.</li>
+    </ul>
+  </li>
+  <li>In each training iteration:
+    <ul>
+      <li><strong>Learning D</strong>: find <strong>lower bound</strong> of $\max_D V(G,D)$ and repeat <code class="language-plaintext highlighter-rouge">k</code> times for fully trained.
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right), \tilde{x}^i = G(z^i)$.</li>
+          <li>Update discriminator paramters $\theta_{d}$ to maximize.<br />
+\(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \color{red}{D\left(x^{i}\right)-}\frac{1}{m} \sum_{i=1}^{m}  \color{red}{D\left(\tilde{x}^{i}\right) } \\
+&amp;\theta_{d} \leftarrow \theta_{d}\color{red}{+}\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+        </ul>
+      </li>
+      <li><strong>Learning G</strong>: find the minimum of $\min_G V(G,D)$ <strong>only once</strong>.</li>
+      <li>Sample <strong>another</strong> <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+ &amp;\tilde{V}= \color{red}{-} \frac{1}{m} \sum_{i=1}^{m} \color{red}{D(G\left(z^{i}\right))} \\
+ &amp;\theta_{g} \leftarrow \theta_{g}\color{red}{-}\eta \nabla \tilde{V}\left(\theta_{g}\right)
+ \end{aligned}\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>TODO</strong>: update $\tilde{V}$ with gradient penalty, check code.</p>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.00709">fGAN: General Framework of GAN</a><a name="reference-2"></a></li>
+  <li><a href="https://vincentherrmann.github.io/blog/wasserstein/">Wasserstein GAN and the Kantorovich-Rubinstein Duality</a><a name="reference-3"></a></li>
+  <li><a href="https://arxiv.org/abs/1701.07875">Wasserstein GAN</a><a name="reference-4"></a></li>
+  <li><a href="https://arxiv.org/abs/1704.00028">Improved Training of Wasserstein GANs</a><a name="reference-5"></a></li>
+  <li><a href="https://arxiv.org/abs/1802.05957">Spectral Normalization for Generative Adversarial Networks</a><a name="reference-6"></a></li>
+  <li><a href="https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/87220341">Spectral Norm Explaination</a></li>
+  <li><a href="https://arxiv.org/abs/1609.03126">Energy-based Generative Adversarial Network</a><a name="reference-8"></a></li>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Advanced Thoery and Problems of GAN]]></summary></entry><entry><title type="html">Conditional Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/25/gan-2.html" rel="alternate" type="text/html" title="Conditional Generative Model" /><published>2022-01-25T00:00:00-05:00</published><updated>2022-01-25T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/25/gan-2</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/25/gan-2.html"><![CDATA[<p>Conditional Generative Model</p>
+
+<!--more-->
+
+<h2 id="supervised-conditional">Supervised Conditional</h2>
+
+<ul>
+  <li>Use paired data to train the network</li>
+</ul>
+
+<h3 id="conditional-gan">Conditional GAN</h3>
+
+<ul>
+  <li>
+    <p>Reason to add noise: Without noise, the network only learn the map from the input (e.g. text ‘train’, ‘car’, etc.) to the average of multiple positive samples (e.g. the average of the front and side train), which is very bad.</p>
+  </li>
+  <li>Generator: take a normal (Gaussian) distribution and a constraint as inputs</li>
+  <li>Discriminator: take generated output and a <strong>constraint</strong> as inputs, to check <strong>both</strong>:
+    <ul>
+      <li>if the result is realistic</li>
+      <li>if the result <strong>matches</strong> the constraint</li>
+    </ul>
+  </li>
+  <li>Algorithm:</li>
+</ul>
+
+<ol>
+  <li>Sample m examples $\{ (c^1, x^{1}), (c^2, x^{2}), \ldots, (c^m, x^{m}) \}$ from database</li>
+  <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+  <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right)$</li>
+  <li>Sample m objects $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from database</li>
+  <li>Update discriminator paramters $\theta_{d}$ to maximize<br />
+ \(\begin{aligned}
+  &amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(c^{i}, x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(c^{i}, \tilde{x}^{i}\right)\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(c^{i}, \hat{x}^{i}\right)\right) \\
+  &amp;\theta_{d} \leftarrow \theta_{d}+\eta \nabla \tilde{V}\left(\theta_{d}\right)
+  \end{aligned}\)</li>
+  <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+  <li>Sample m conditions $\{c^{1}, c^{2}, \ldots, c^{m}\}$ from a database</li>
+  <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(c^{i}, z^{i}\right)\right)\right), \theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)\)</li>
+</ol>
+
+<h4 id="discriminator">Discriminator</h4>
+
+<p>There are two commonly used prototype of structure of Discriminator:</p>
+<ol>
+  <li>Use two different network to receive object and condition. Green Network receive the object encoding and condition embedding and output final result which represent if generation is realistic and matched or not.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDAPI.png" alt="gan-2-1" style="margin:auto;display:block;" /></li>
+  <li>Two network output different scores. Blue network receives object encoding and condition to output match result.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDEGt.png" alt="gan-2-2" style="margin:auto;display:block;" /></li>
+</ol>
+
+<ul>
+  <li>The first structure may confuse between the bad generation and bad matching.</li>
+</ul>
+
+<h4 id="stack-gan">Stack GAN</h4>
+
+<p>Progressively generate large resolution image by stacking generator.</p>
+<ul>
+  <li>low resolution generator take embedding and noise to output small image</li>
+  <li>The small images from the previous generator will be taken as input, replacing the noise, to refine the detail and enlarge the resolution.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDZxf.png" alt="gan-2-3" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference">*reference-3</a></span></p>
+
+<h4 id="image-to-image">Image-to-image</h4>
+
+<ol>
+  <li><strong>Non-adversarial approach</strong>: (<strong>Traditional supervised approach using autoencoder</strong>) directly mapping from the input to image
+ <img src="https://s1.ax1x.com/2022/04/13/LuDVRP.png" alt="gan-2-4" style="margin:auto;display:block;" />
+ The result is blurry because as stated in <a href="#comparing-to-vae">Comparing to VAE</a>, it is the average of several samples.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDmM8.png" alt="gan-2-5" style="margin:auto;display:block;" /></li>
+  <li><strong>Use GAN to generate</strong>: generated image and conditions are fed into discriminator to judge realisitc or not. At the same time, <em>close constraint</em> is to guide generator to output as closed to the paired image in the training sample as possible.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDnsS.png" alt="gan-2-6" style="margin:auto;display:block;" /></li>
+</ol>
+
+<ul>
+  <li>As the above figure shows, without <em>close constraint</em> part, which is implemented in <em>L1 distance</em> to measure the difference between results and paired real images, the output will be more diversed but something <strong>unrelated</strong> to the original input will be generated.</li>
+</ul>
+
+<h3 id="patchgan">PatchGAN</h3>
+
+<p><strong>TODO</strong></p>
+
+<h3 id="speech-enhancement">Speech Enhancement</h3>
+
+<ul>
+  <li>More generally, the paired samples can be adopted to train GAN, e.g. noisy speech and clean voice pair.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDuqg.png" alt="gan-2-7" style="margin:auto;display:block;" /></p>
+
+<h3 id="video-generation">Video Generation</h3>
+
+<ul>
+  <li>Generator predict the future frame</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDMZQ.png" alt="gan-2-8" style="margin:auto;display:block;" /></p>
+
+<h2 id="unsupervised-conditional">Unsupervised Conditional</h2>
+
+<ul>
+  <li>Paired data for training is expensive or difficult to build.
+    <ul>
+      <li>Different drawing style with the same contents.</li>
+      <li>Same sentence spoke by male and female.</li>
+    </ul>
+  </li>
+  <li><strong>Unsupervised conditional generation</strong>: transform from <strong>one domain</strong> to <strong>another</strong> without paired data
+    <ul>
+      <li>Approach 1: direct transformation
+        <ul>
+          <li>change the texture or color, low level modification using shallow generator</li>
+        </ul>
+      </li>
+      <li>Approach 2: Projection to a common space
+        <ul>
+          <li>only keep semantics</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="direction-transformation">Direction Transformation</h3>
+
+<ul>
+  <li>Transform the input image from domain $X$ directly to domain $Y$.</li>
+  <li>Discriminator distinguishes if the generated image belongs to domain $Y$.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUm0H.png" alt="gan-2-9" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>This approach may lead to the generated image closed to domain $Y$ but not similar to the original image, since discriminator still believes results belong to $Y$ in this case.
+    <ul>
+      <li>This can be avoided by generator design: <strong>simpler</strong> generator makes the input and output m<strong>ore closely related</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
+
+<ul>
+  <li>One workaround: use other module to guide the network output the image with the <strong>similar semantic representation</strong>
+    <ul>
+      <li>Backbone is feature extractor, such as VGG, which is pretrained</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUA1K.png" alt="gan-2-10" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
+
+<h4 id="cyclegan">CycleGAN</h4>
+
+<ul>
+  <li>CycleGAN is another solution, based on cycle consistency loss transforming the images between two domains.</li>
+</ul>
+
+\[\begin{aligned}
+\mathcal{L}_{\mathrm{GAN}}\left(G_X, D_{Y}, X, Y\right) &amp;=\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\log D_{Y}(y)\right]+\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\log \left(1-D_{Y}(G_X(x))\right]\right. \\
+
+\mathcal{L}_{\mathrm{GAN}}\left(G_Y, D_{X}, Y, X\right) &amp;=\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\log D_{X}(x)\right]+\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\log \left(1-D_{X}(G_Y(y))\right]\right. \\
+
+\mathcal{L}_{\text {cyc }}(G_X, G_Y) &amp;=\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\|G_Y(G_X(x))-x\|_{1}\right]+\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\|G_X(G_Y(y))-y\|_{1}\right] \\
+
+\mathcal{L}\left(G_X, G_Y, D_{X}, D_{Y}\right) &amp;=\mathcal{L}_{\mathrm{GAN}}\left(G_X, D_{Y}, X, Y\right)+\mathcal{L}_{\mathrm{GAN}}\left(G_Y, D_{X}, Y, X\right) +\lambda \mathcal{L}_{\mathrm{cyc}}(G_X, G_Y) \\
+
+G_X^{*}, G_Y^{*} &amp;= \arg \min _{G_X, G_Y} \max _{D_{X}, D_{Y}} \mathcal{L}\left(G_X, G_Y, D_{X}, D_{Y}\right)
+
+\end{aligned}\]
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUE6O.png" alt="gan-2-11" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
+
+<ul>
+  <li>The problem of CycleGAN: a master of steganography (信息隐藏), which means some information is hidden through the first generator in a way that is invisible to human eyes (e.g. black spot becomes inconspicuous) but restored after the second generator.
+    <ul>
+      <li>It is easier for the generator to get a high score from the discriminator by hiding some information.</li>
+      <li>In this scene, cycle consistency is not promised because domain transformation is achieved by retaining some invisible details in the output image from the first generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUVXD.png" alt="gan-2-12" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-7">*reference-7</a></span></p>
+
+<h4 id="dual-gan">Dual GAN</h4>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="disco-gan">Disco GAN</h4>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="stargan">StarGAN</h4>
+
+<ul>
+  <li>For previous work, multiple models should be built independently for each pair of domains.</li>
+  <li>StarGAN extends the scalability of cycleGAN in handling more than two domains by using only one generator.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUene.png" alt="gan-2-13" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-9">*reference-9</a></span></p>
+
+<h3 id="projection-to-a-common-space">Projection to a common space</h3>
+
+<ul>
+  <li>Instead of mapping the image of domain $X$ directly to domain $Y$, this firstly encode the image into the latent space which will be then projected to another domain by decoder.</li>
+</ul>
+
+<h4 id="common-problem-and-workarounds">Common problem and workarounds</h4>
+
+<ul>
+  <li>
+    <p>Reconstruction error is built to guide each branch of network can reconstruct images in each domain after the encoding.</p>
+  </li>
+  <li>
+    <p>Discriminator optimize the generation quality and solve obscure images produced by autoencoder (learn by averaging)</p>
+  </li>
+  <li>
+    <p>After separately training, each row of the network has ability to reconstruct image in each domain.</p>
+    <ul>
+      <li>But images with <strong>the same attribute in different domain</strong> may not project to the same position in the latent space.</li>
+      <li>The <strong>distribution</strong> of the latent representations from different domain are different.</li>
+      <li>For example, black hair in the domain $A$ may be projected to <code class="language-plaintext highlighter-rouge">[0, 0, 1]</code> by $EN_X$, but black hair in the domain $B$ may be projected to <code class="language-plaintext highlighter-rouge">[1, 0, 0]</code> by $EN_Y$.</li>
+      <li>We can not get output with desirable features by controlling the latent space vector in inference stage.</li>
+      <li>It doesn’t make sense to train the latent space in this way!</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUKAA.png" alt="gan-2-14" style="margin:auto;display:block;" /></p>
+
+<h4 id="couple-gan--unit">Couple GAN &amp;&amp; UNIT</h4>
+
+<p><strong>TODO</strong> Couple GAN, UNIT</p>
+
+<ul>
+  <li>Couple GAN and UNIT share the parameters of last several layers of encoders and firsst several layers of decoders, which ensures that different encoders/decoders has exact same mapping function to the latent space.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUn7d.png" alt="gan-2-15" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-10">*reference-10, *reference-11</a></span></p>
+
+<h4 id="fader-networks">Fader Networks</h4>
+
+<ul>
+  <li>Comparing to sharing the parameters of the network, <strong>Domain Discriminator</strong> is built to trained adversarially to disentange the latent representation directly.
+    <ul>
+      <li>$EN_X$ and $EN_Y$ are trained to fool the domain discriminator.</li>
+      <li>Domain Discriminator distinguishes the latent code from $EN_X$ or $EN_Y$, forcing the output of $EN_X$ and $EN_Y$ have <strong>the same distribution</strong>.</li>
+    </ul>
+  </li>
+  <li>Well-trained Fader Network: $EN_X$ and $EN_Y$ map the images from different domain to the same distribution as latent representations.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUQht.png" alt="gan-2-16" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-12">*reference-12</a></span></p>
+
+<h4 id="combogan">ComboGAN</h4>
+
+<ul>
+  <li>In the same way that <a href="#cyclegan">CycleGAN</a> uses unsupervised learning and cycle consistency loss, ComboGAN adds latent vectors to control generation features</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUMtI.png" alt="gan-2-17" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-13">*reference-13</a></span></p>
+
+<p><strong>TODO</strong> ComboGAN</p>
+
+<h4 id="xgan--dtn">XGAN &amp;&amp; DTN</h4>
+
+<ul>
+  <li>Comparing to ComboGAN do cycle-consistency loss in pixel wise, XGAN and DTN guide the encoders mapping to the same latent space by the <strong>semantic-consistency loss</strong> on the latent representation itself.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQU19P.png" alt="gan-2-18" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-14">*reference-14</a></span></p>
+
+<p><strong>TODO</strong> XGAN
+<strong>TODO</strong> DTN: unsupervised</p>
+
+<p><strong>TODO</strong> Bram matrix</p>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1612.03242">StackGAN: Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Networks</a><a name="reference-2"></a></li>
+  <li><a href="https://arxiv.org/abs/1611.07004">Image-to-Image Translation with Conditional Adversarial Networks</a><a name="reference-3"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.10593">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a><a name="reference-4"></a></li>
+  <li><a href="https://arxiv.org/abs/1611.02200">Unsupervised Cross-Domain Image Generation</a><a name="reference-5"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.10593">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a><a name="reference-6"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.05192">Learning to Discover Cross-Domain Relations with Generative Adversarial Networks</a><a name="reference-7"></a></li>
+  <li><a href="https://arxiv.org/abs/1704.02510">DualGAN: Unsupervised Dual Learning for Image-to-Image Translation</a><a name="reference-8"></a></li>
+  <li><a href="https://arxiv.org/abs/1711.09020">StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation</a><a name="reference-9"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.07536">Coupled Generative Adversarial Networks</a><a name="reference-10"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.00848">Unsupervised Image-to-Image Translation Networks</a><a name="reference-11"></a></li>
+  <li><a href="https://arxiv.org/abs/1706.00409">Fader Networks: Manipulating Images by Sliding Attributes</a><a name="reference-12"></a></li>
+  <li><a href="https://arxiv.org/abs/1712.06909">ComboGAN: Unrestrained Scalability for Image Domain Translation</a><a name="reference-13"></a></li>
+  <li><a href="https://arxiv.org/abs/1711.05139">XGAN: Unsupervised Image-to-Image Translation for Many-to-Many Mappings</a><a name="reference-14"></a></li>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Conditional Generative Model]]></summary></entry><entry><title type="html">Basic Theory of Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/20/gan-1.html" rel="alternate" type="text/html" title="Basic Theory of Generative Model" /><published>2022-01-20T00:00:00-05:00</published><updated>2022-01-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/20/gan-1</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/20/gan-1.html"><![CDATA[<p>Deep Generative Model</p>
+
+<!--more-->
+
+<h2 id="basic-idea-of-gan">Basic Idea of GAN</h2>
+
+<ul>
+  <li>
+    <p>Each dimension of input vector represents some characteristic, which means that change the input of the noise, some of the characteristic of the output image will change.</p>
+  </li>
+  <li>
+    <p>The outout of discriminator is commonly a scalar. The larger value means realistic, while smaller means fake.</p>
+  </li>
+</ul>
+
+<h3 id="algorithm">Algorithm</h3>
+
+<p>Algorithm Initialize $\theta_{d}$ for $\mathrm{D}$, and $\theta_{g}$ for $\mathrm{G}$</p>
+<ul>
+  <li>In each training iteration:
+    <ol>
+      <li>Sample m examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right)$</li>
+      <li>Update discriminator paramters $\theta_{d}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}+\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right)\right) \\
+&amp;\theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)
+\end{aligned}\)</li>
+    </ol>
+  </li>
+  <li>Takeaway:
+    <ul>
+      <li>Fix generator G, update discriminator D. Discriminator learns to assign high scores to real objects and low scores to generated result. Gradient <strong>descent</strong> of the final score.</li>
+      <li>Fix discriminator D, and update generator G. Gnerator learns to fool the discriminator. Gradient <strong>ascent</strong> of the final score.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="generator">Generator</h3>
+
+<ul>
+  <li>Generator can be designed as <strong>autoencoder</strong>
+    <ul>
+      <li>Encoder part of the generator maps the original images to the latent space as the compact representation of the input object.</li>
+      <li>Decoder part of the generator reconstructs the original object from code to generated result as closely as possible.</li>
+      <li>After the training, we can <strong>discard</strong> the encoder part, replacing it with the input code as whatever we want.</li>
+      <li>Change the input vector of the input noise, the generated result will <strong>vary smoothly</strong>, but <strong>may not make sense</strong> e.g. linear interpolation of the input noise</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Le3aa4.png" alt="gan-1-1" style="margin:auto;display:block;" /></p>
+
+<p><strong>TODO</strong> VAE</p>
+
+<h3 id="comparing-to-vae">Comparing to VAE</h3>
+
+<p><strong>TODO</strong> TODO result in what?</p>
+
+<ul>
+  <li>VAE: The relation between components are not-correlated since neurons in the same layer of the network will not influence each other and they are independent</li>
+  <li>Thus VAE can not discriminate naunced between features, which cause the result more vague than GAN</li>
+  <li>To catch the correpondence among pixels, deep structure needed.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/LeoGNT.png" alt="gan-1-2" style="margin:auto;display:block;" /></p>
+
+<h2 id="discriminator">Discriminator</h2>
+
+<ul>
+  <li>Use discriminator to generate?
+    <ul>
+      <li>Inference: Generate object $\widetilde{x}$ that<br />
+ \(\widetilde{x}=\arg \max _{x \in X} D(x)\)</li>
+      <li>Enumerate all possible $x$, which is not always feasible, because the above equations can only be solved when it is linear. However linearity constrain the ability of the network.</li>
+    </ul>
+  </li>
+  <li>Algorithm:
+    <ul>
+      <li>Given a set of positive examples and negative example generated randomly</li>
+      <li>In each iteration
+        <ul>
+          <li>Learn a discriminator D that can discriminate positive and negative examples</li>
+          <li>Find relatively good examples from negative examples by $\widetilde{x}=\arg \max _{x \in X} D(x)$</li>
+          <li>Replace the negative examples with relatively good examples</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Leo8EV.png" alt="gan-1-3" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>From the above figure, we noticed that discriminator can only optimize the distribution corresponding to the generated distribution, which is one of the reason why GAN is difficult to optimize.</li>
+</ul>
+
+<p><strong>TODO</strong> structured learning</p>
+
+<h3 id="gan">GAN</h3>
+
+<ul>
+  <li>From Discriminator’s point of view
+    <ul>
+      <li>Use Generator to generate negative samples, replacing infeasible sovled <code class="language-plaintext highlighter-rouge">argmax</code> function</li>
+    </ul>
+  </li>
+  <li>From Generator’s point of view
+    <ul>
+      <li>Still generate the object <strong>without correspondence</strong> (pixel-by-pixel)</li>
+      <li>But it is led by the instruction of the discriminator with <strong>global view</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="basic-theory">Basic Theory</h2>
+
+<h3 id="generation">Generation</h3>
+
+<ul>
+  <li>The realistic images from dataset can be regarded as the <strong>low-dimensional manifold</strong> in <strong>high-dimensional space</strong>. Sampling from the dataset is the process of sampling from the manifold in the space.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Manifold, in short, generalizes the triangle, circle, squares, etc. to higher dimensions. If we take a closer look at the N-dimensional manifold (N-manifold), it looks like N-1 dimensional manifold.</p>
+
+<ul>
+  <li>
+    <p>The ensemble of images from the sampling constitute the data distribution $P_{data}(x)$, which only occupies the tiny part of the whole high-dimensional space.</p>
+  </li>
+  <li>
+    <p>The point outside of the manifold means there will be <strong>low probablity</strong> of the true sampling.</p>
+  </li>
+  <li>
+    <p>Building a generator is the process of building a mapping from one known distribution to the data distribution in high level.</p>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHt9f.png" alt="gan-1-4" style="margin:auto;display:block;width:80%;" /></p>
+
+<h3 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
+
+<ul>
+  <li>Target
+    <ul>
+      <li>Given a data distribution $P_{data}(x)$</li>
+      <li>We target at a distribution $P_{G}(x;\theta)$ parameterized by $\theta$
+        <ul>
+          <li>To find $\theta$ such that $P_{G}(x;\theta)$ closed to $P_{data}(x)$</li>
+          <li>e.g. if we assume $P_{G}(x;\theta)$ is Guassian Mixture Model, $\theta$ are means and variances of the Gaussians</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Step
+    <ul>
+      <li>Derive $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ by sampling from $P_{data}(x)$</li>
+      <li>We can compute corresponding $P_{G}(x^{i};\theta)$</li>
+      <li>Then find $\theta^{\ast}$ maximizing the likelihood</li>
+    </ul>
+
+\[L=\prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right)\]
+  </li>
+  <li><strong>Maximum Likelihood Estimation</strong> = <strong>Minimize KL Divergence</strong>
+    <ul>
+      <li><strong>KL-divergence</strong> measures the difference between two distribution $P_{\text {data}}$ and $P_{\text {G}}$<br />
+ \(\begin{aligned}
+ KL\left(P_{\text {data}} \| P_{G}\right)
+ &amp;= P_{\text {data}} \log P_{data}- P_{data} \log P_{\text {G}} \\[8px]
+ &amp;= P_{\text {data}} \log \frac{P_{data}}{P_{\text {G}}}
+ \end{aligned}\)</li>
+      <li>$x \sim data$ means $x$ is sampled from the distribution of data.</li>
+      <li>$P_{data}(x)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">data</code> at $x$ sampling point.</li>
+      <li>$P_{G}(x;\theta)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">G</code> at $x$ sampling point with parameter $\theta$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+\theta^{*} 
+&amp;=\arg \max _{\theta} \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \log \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \sum_{i=1}^{m} \log P_{G}\left(x^{i} ; \theta\right) \quad \color{red}{\{ x^{1}, x^{2}, \ldots, x^{m} \} \text{ from } P_{data}(x) } \\[15px]
+&amp; \approx \arg \max _{\theta} mE_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \quad \color{red}{\text{argmax ignore } m \text{ multiplier}} \\[14px]
+&amp; = \arg \max _{\theta} E_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x - \int_{x} P_{d a t a}(x) \log P_{\text {data}}(x) d x \\
+&amp;\color{white}{= \arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x} \color{red}{\scriptsize {\text{add an item without } \theta \text{ and not influence argmax}}}\\[-15px]
+&amp;=\arg \min_{\theta} K L\left(P_{\text {data}} \| P_{G}\right)
+\end{aligned}\]
+
+<p><strong>TODO</strong>: Expectation Maximum</p>
+
+<ul>
+  <li>What if $P_G$ is not Gaussian Mixture Model but more complex and general model?
+    <ul>
+      <li>The mean and variance of the more complex model is difficult to get, since the <strong>explicit</strong> expression of the corresponding <strong>probability density function</strong> is unknown.</li>
+      <li>Thus parameters $\theta$ are <strong>implicit</strong> and impossible to found.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="drawback-of-gmm">Drawback of GMM</h3>
+
+<ul>
+  <li>In the past, Generator is built as Guassian Mixture model (GMM) with explicit parameters $\theta$.
+    <ul>
+      <li>As mentioned <a href="#generation">before</a>, GMM <strong>fails to represent the low-dimensional manifold</strong> which images lie along in high-dimensional space.</li>
+      <li>Therefore, no matter what <code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">variance</code> of GMM looks like, it fails to resemble the target distribution.</li>
+      <li>As a result, the output of GMM is obscure and fuzzy.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHGNt.png" alt="gan-1-5" style="margin:auto;display:block;" /></p>
+
+<h3 id="generator-1">Generator</h3>
+
+<ul>
+  <li>Generator <code class="language-plaintext highlighter-rouge">G</code> is a network, which defines a probability distirbution $P_G$, mapping the input distribution to the target.
+    <ul>
+      <li>The network has an ability to approximate any functions.</li>
+      <li>The input distribution is not decisive, normal distribution, uniform distribution, etc.</li>
+      <li>Even the simplest distribution of input $z$ can be mapped to the complex one.</li>
+    </ul>
+  </li>
+</ul>
+
+\[G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\]
+
+<ul>
+  <li>The explicit formulations of $P_G$ and $P_{data}$ are still unknown, so it is impossible to do gradient descent on $G$ to minimize divergence.
+    <ul>
+      <li>But we can <strong>sample</strong> data from two distribution $P_G$ and $P_{data}$.
+        <ul>
+          <li>Sampling from $P_{data}$: randomly sample from the database.</li>
+          <li>Sampling from $P_G$: randomly sample from normal, fed into the network and get outputs.</li>
+        </ul>
+      </li>
+      <li>How to compute the divergence between samplings from two distributions? <strong>Discriminator</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: <code class="language-plaintext highlighter-rouge">Div</code> is the divergence between two distribution, e.g. KL-divergence, JS-divergence.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHN38.png" alt="gan-1-6" style="margin:auto;display:block;" /></p>
+
+<h3 id="discriminator-1">Discriminator</h3>
+
+<ul>
+  <li>
+    <p>Recall the objective function for generator <code class="language-plaintext highlighter-rouge">G</code>:<br />
+ \(G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\)</p>
+  </li>
+  <li>The objective function for discriminator <code class="language-plaintext highlighter-rouge">D</code>:<br />
+ \(D^{*}=\arg \max _D \operatorname{V}(D, G) \\
+ V(G, D)=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>This is exactly same as training a <strong>Binary Classifier</strong>
+    <ul>
+      <li>$P_{data}$ is binary class <code class="language-plaintext highlighter-rouge">1</code></li>
+      <li>$P_G$ is binary class <code class="language-plaintext highlighter-rouge">0</code></li>
+      <li><code class="language-plaintext highlighter-rouge">D</code> is a binary classifier</li>
+      <li>Binary classifier is to <em>maximize</em> <strong>Cross Entropy</strong> rather than <strong>Mean Square Error</strong>, since MSE-based objective is non-convex optimization problem</li>
+    </ul>
+  </li>
+  <li>The maximum objective is related to <strong>JS divergence</strong>.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<ul>
+  <li>Given <code class="language-plaintext highlighter-rouge">G</code>, the optimal $D^*$ maximizing:<br />
+ \(\begin{aligned}
+ D^{*}&amp;=\arg \max _D \operatorname{V}(D, G) \\[10px]
+ V(G, D) &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[10px]
+ &amp;=\int_{x} P_{d a t a}(x) \log D(x) d x+\int_{x} P_{G}(x) \log (1-D(x)) d x \\[10px]
+ &amp;=\int_{x}\left[P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x))\right] d x
+ \end{aligned}\)</li>
+  <li>Assume that <code class="language-plaintext highlighter-rouge">D(x)</code> can represent <strong>any function</strong>. <a name="d-assumption"></a>
+    <ul>
+      <li>Consider the integral as the sum of each <strong>piecewise function</strong>(分段函数) for $x_1, x_2, …$, since we have assumed <code class="language-plaintext highlighter-rouge">D(x)</code> can represent any function, and neural network indeed can be regarded as piecewise function mathematically.</li>
+      <li>When each piecewise function reaches the largest individually, the final integral must also be the largest.</li>
+    </ul>
+  </li>
+  <li>Discretize the above equation, then the objective will be:<br />
+ \(\begin{cases}
+ P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x)) \\[10px]
+ a = P_{data},\ b = P_{G}
+ \end{cases}\)
+    <ul>
+      <li>Solve for the extremum point:<br />
+\(\begin{aligned}
+\mathrm{f}(D) &amp;=\operatorname{alog}(D)+b \log (1-D) \\[8px]
+\frac{d \mathrm{f}(D)}{d D} &amp;=a \times \frac{1}{D}+b \times \frac{1}{1-D} \times  (-1) =0 \\[8px]
+a \times\left(1-D^{*}\right) &amp;=b \times D^{*} \\[5px]
+0&lt; D^{*} &amp;=\frac{a}{a+b} =\frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}&lt;1  \\[8px]
+0&lt; D^{*} &amp;&lt;1 
+\end{aligned}\)</li>
+    </ul>
+  </li>
+  <li>Substitue the optimal $D^* = \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}$:</li>
+</ul>
+
+<p>\(\begin{aligned}
+V &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[15px]
+&amp;=E_{x \sim P_{\text {data}}}\left[\log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right]+E_{x \sim P_{G}}\left[\log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right] \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{\frac{1}{2}P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{\frac{1}{2}P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + \int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + K L\left(P_{\text {data}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) + K L\left(P_{\text {G}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) \\[15px]
+&amp;=-2log2 + \color{red}{2JS\left(P_{\text {data}} \| P_{\text {G}}\right)}
+\end{aligned}\)</p>
+<ul>
+  <li>JS divergence is symmetric, while KL divergence is asymmetric.
+   \(\begin{aligned}
+   JS\left(P_{\text {data}} \| P_{G}\right)
+   &amp;= \frac{1}{2}[KL(P_{\text {data}} \| M) + KL(P_{\text {G}} \| M)] \\
+   M &amp;= \frac{1}{2}(P_{data} + P_{G})
+   \end{aligned}\)</li>
+</ul>
+
+<p><strong>TODO</strong>: inverse KL divergence</p>
+
+<h3 id="gan-1">GAN</h3>
+
+<ul>
+  <li>The objective of Generator <code class="language-plaintext highlighter-rouge">G</code> is to minimize the divergence between $P_G$ and $P_{data}$</li>
+  <li>The divergence is measured by Discriminator <code class="language-plaintext highlighter-rouge">D</code>, which maximizes the <strong>cross entropy</strong> as a <strong>binary classifie</strong>r.</li>
+  <li>The maximum objective is related to JS divergence.</li>
+</ul>
+
+\[\begin{aligned}
+ D^{*}&amp;=\operatorname{Div}\left(P_{G}, P_{\text {data}}\right)=\arg \max _D \operatorname{V}(D, G) \\
+ G^{*}&amp;=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right) \\
+&amp;=\arg \min _G \max _D \operatorname{V}(D, G) 
+\end{aligned}\]
+
+<ul>
+  <li>For each fixed generator, we can find a discriminator with the <strong>maximum</strong> $V(D, G_i)$</li>
+  <li>For each $V(D, G_i)$, we can get a <strong>minimum</strong> generator</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHJ4P.png" alt="gan-1-7" style="margin:auto;display:block;width:70%" /></p>
+
+<ul>
+  <li>In each iteration
+    <ul>
+      <li>Fix generator <code class="language-plaintext highlighter-rouge">G</code>, update discriminator $D$.</li>
+      <li>Fix discriminator <code class="language-plaintext highlighter-rouge">D</code>, update generator $G$.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="algorithm-1">Algorithm</h4>
+
+<ul>
+  <li>To find the best <code class="language-plaintext highlighter-rouge">G</code> minimizing the loss function<br />
+ \(G^{*}=\arg \min _G \max _D \operatorname{V}(D, G) = \arg\min_G L(G)\\
+ \theta_{G} \leftarrow \theta_{G}-\eta \partial L(G) / \partial \theta_{G}\)
+    <ul>
+      <li>Let the maximum value $\max_D V(G,D)$ as $L(G)$</li>
+      <li>$\theta_G$ defines <code class="language-plaintext highlighter-rouge">G</code></li>
+      <li>The gradient of the max function is the gradient of max value of each piecewise function.</li>
+    </ul>
+  </li>
+  <li>Given $G_0$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_0, D_{0}^{*} )$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_1$<br />
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{0}^{*}\right) / \partial \theta_{G}\)</li>
+  <li>Give $G_1$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_1, D_1^*)$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_2$
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{1}^{*}\right) / \partial \theta_{G}\)</li>
+</ul>
+
+<p class="error"><strong>Critical</strong>: Actually, after we get the optimal $D_i^*$ by maximizing the JS-divergence, given the fixed $G_i$, we do gradient descent optimizing $G_i$ a little bit per step to finally get $G_{i+1}$. However, in the process of the gradient descent of $G_i$ to $G_{i+1}$, the divergence function $V(G_i, D_i)$ may change a lot, which cause the maximum objective value of <code class="language-plaintext highlighter-rouge">JS-divergence</code> shift to somewhere else.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNH8AI.png" alt="gan-1-8" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>Therefore, the important thing is that we don’t update $G$ too much for every steps, and $D$ is well-trained comparing to current $G$, so that the function of $V(G_i, D_i)$ won’t change a lot and $D_i^* \approx D_{i+1}^*$.</li>
+</ul>
+
+<h4 id="in-practical">In practical</h4>
+
+<ul>
+  <li>Actually, We can not get the expectation value of $P_{data}$ or $P_G$
+    <ul>
+      <li>In other words, we can not calculate the maximum value of the below equation:<br />
+ \(V =E_{x \sim P_{\text {data }}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+    </ul>
+  </li>
+  <li>But we can do sampling from $P_{data}$ or $P_G$ to <strong>approximate</strong> the expectation.</li>
+  <li>Given $G$, to compute $\max_D V(G,D)$
+    <ul>
+      <li>Sample ${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$, sample ${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$</li>
+      <li>To maximize:<br />
+ \(\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D(x^{i})+\frac{1}{m} \sum_{i=1}^{m} \log (1-D(\tilde{x}^{i}))\)</li>
+    </ul>
+  </li>
+  <li>Thus, $D$ is a binary classifier with sigmoid output, which can be designed to be very deep.
+    <ul>
+      <li>${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$ is <code class="language-plaintext highlighter-rouge">Positive examples</code>.</li>
+      <li>${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$ is <code class="language-plaintext highlighter-rouge">Negative examples</code>.</li>
+      <li>This is equivalent to <strong>minimize Cross-entropy</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="total-algorithm">Total Algorithm</h2>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<ul>
+  <li>In each training iteration:
+    <ul>
+      <li><strong>Learning D</strong>: find <strong>lower bound</strong> of $\max_D V(G,D)$ and repeat <code class="language-plaintext highlighter-rouge">k</code> times for fully trained.
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right), \tilde{x}^i = G(z^i)$.</li>
+          <li>Update discriminator paramters $\theta_{d}$ to maximize.<br />
+\(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}\color{red}{+}\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+        </ul>
+      </li>
+      <li><strong>Learning G</strong>: find the minimum of $\min_G V(G,D)$ <strong>only once</strong>.</li>
+      <li>Sample <strong>another</strong> <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+ &amp;\tilde{V}=\underset{\text{irrelevant to } G}{\boxed{\frac{1}{m} \sum_{i=1}^{m}  \log D\left(x^{i}\right) } } +\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right) \right) \\
+ &amp;\theta_{g} \leftarrow \theta_{g}\color{red}{-}\eta \nabla \tilde{V}\left(\theta_{g}\right)
+ \end{aligned}\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note that</strong> it is impossible for $D$ to find the maximum value of $\max_D V(G,D)$, which means that the JS-divergence can never be reached, because:<br /> <strong>1</strong>. The learning ability of $D$ is limited due to the iteration times and learning rate, the $D$ can not convergence in several update steps.<br /> <strong>2</strong>. Even with the infinite training step and the convergence achieved, it is more likely for $D$ to fall in local minima.<br /> <strong>3</strong>. Even without trapped in local minima, the capcity of the generatlization of $D$ is limited, which contradict the <a href="#d-assumption">assumption</a> that $D$ can represent all functions.</p>
+
+<h3 id="in-real-implementation">In Real Implementation</h3>
+
+<ul>
+  <li>The training of $G$ would be slow because of the initial output of $D(x)$ is closed to $0$ and the corresponding gradient to $G$ is very small.
+ \(V =\underset{\text{irrelevant to } G}{\boxed{E_{x \sim P_{\text {data } }}[\log D(x)]}}+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>Two workarounds
+    <ul>
+      <li>Replace the target with the following, greatly increase the gradient of the very beginning stage, <em>Minimax GAN (MMGAN)</em> 
+\(V = E_{x \sim P_{G}}[- \log (D(x))]\)</li>
+      <li>Replace the negative label of $G$ with the positive label, <em>Non-saturating GAN (NSGAN)</em></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHBHs.png" alt="gan-1-9" style="margin:auto;display:block;width:30%;" /></p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a></li>
+  <li><a href="https://blog.csdn.net/taoqick/article/details/102621605">分类用交叉熵而不用MSE</a><a name="reference-2"></a></li>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Deep Generative Model]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅹ</title><link href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅹ" /><published>2020-12-20T00:00:00-05:00</published><updated>2020-12-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/12/20/cg-10</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/20/cg-10.html"><![CDATA[<p>Material, Microfacet Theory, Isotropic Material, Anisotropic Material</p>
 
 <!--more-->
 
@@ -2614,7 +4285,7 @@ q_{31} &amp; q_{32} &amp; q_{33} &amp; q_{34} \\
   <li><a href="[SPH算法](https://blog.csdn.net/liuyunduo/article/details/84098884)">SPH算法</a></li>
   <li><a href="https://en.wikipedia.org/wiki/Smoothed-particle_hydrodynamics">Smoothed-particle hydrodynamics</a></li>
   <li><a href="http://acko.net/blog/making-mathbox/">Visualization of Bézier Surface</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Geometry, Implicit &amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅵ</title><link href="https://harrypotterrrr.github.io//2020/09/07/cg-6.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅵ" /><published>2020-09-07T00:00:00-05:00</published><updated>2020-09-07T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/09/07/cg-6</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/07/cg-6.html"><![CDATA[<p>Texture, Texture Mapping, Interpolation, Texture Filtering</p>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Geometry, Implicit &amp; Explicit Geometry, Curve, Surface, Subdivision, Mesh Simplification]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅵ</title><link href="https://harrypotterrrr.github.io//2020/09/07/cg-6.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅵ" /><published>2020-09-07T00:00:00-04:00</published><updated>2020-09-07T00:00:00-04:00</updated><id>https://harrypotterrrr.github.io//2020/09/07/cg-6</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/07/cg-6.html"><![CDATA[<p>Texture, Texture Mapping, Interpolation, Texture Filtering</p>
 
 <!--more-->
 
@@ -3230,7 +4901,7 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.htm">雅可比行列式</a></li>
   <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.html">多变量微积分———变量替换</a></li>
   <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Texture, Texture Mapping, Interpolation, Texture Filtering]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅴ</title><link href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅴ" /><published>2020-09-02T00:00:00-05:00</published><updated>2020-09-02T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/09/02/cg-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/02/cg-5.html"><![CDATA[<p>Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline</p>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Texture, Texture Mapping, Interpolation, Texture Filtering]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅴ</title><link href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅴ" /><published>2020-09-02T00:00:00-04:00</published><updated>2020-09-02T00:00:00-04:00</updated><id>https://harrypotterrrr.github.io//2020/09/02/cg-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/02/cg-5.html"><![CDATA[<p>Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline</p>
 
 <!--more-->
 
@@ -3731,1244 +5402,4 @@ We assume there is no energy loss, so the luminous energy $Q$ from the light sou
 <ul>
   <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
   <li><a href="https://www.zhihu.com/question/53080536/answer/133398317">光能、光通量、光强、亮度</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅳ</title><link href="https://harrypotterrrr.github.io//2020/08/19/cg-4.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅳ" /><published>2020-08-19T00:00:00-05:00</published><updated>2020-08-19T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/08/19/cg-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/19/cg-4.html"><![CDATA[<p>Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer</p>
-
-<!--more-->
-
-<h2 id="after-viewing-transformation">After Viewing transformation</h2>
-
-<ul>
-  <li><strong>Viewport transformation</strong>: project the canonical cube $\left[-1, 1\right]^3$, we get from viewing transformation, to the screen.</li>
-</ul>
-
-<h3 id="screen">Screen</h3>
-
-<ul>
-  <li>An array of pixels</li>
-  <li>Size of the array: resolution (i.e. 1920 x 1080)</li>
-  <li>A typical kind of raster display</li>
-</ul>
-
-<h3 id="raster">Raster</h3>
-
-<ul>
-  <li><strong>Raster</strong> == screen in German</li>
-  <li>Rasterize – drawing onto the screen</li>
-</ul>
-
-<h3 id="pixel">Pixel</h3>
-
-<ul>
-  <li>short for <code class="language-plaintext highlighter-rouge">picture element</code></li>
-  <li>For now: A pixel is a little square with uniform color. <a href="#Raster-displays">Actually not</a> in actual electronic display.</li>
-  <li>Color is a mixture of (red, green, blue)</li>
-</ul>
-
-<p>For the real displays of LCD screen. Each pixel is not uniform color, but R,G,B pixel geometry. Even so, now we assume a colored square full-color pixel.</p>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rx0xXT.jpg" alt="cg-4-7" width="600px" /></p>
-
-<p class="success"><strong>Info</strong>: Bayer Pattern(Filter) is shown on the right, where green elements are twice as many as  red or blue to mimic the physiology of the human eye which is more sensitive to green light.</p>
-
-<h3 id="screen-space">Screen space</h3>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxwcR0.jpg" alt="cg-4-1" width="450px" /></p>
-
-<ul>
-  <li>
-    <p>Following definition is slightly different from <code class="language-plaintext highlighter-rouge">tiger book</code></p>
-
-    <ul>
-      <li>Pixels indices are in the form of $(x,y)$, where both $x$ and $y$ are integers</li>
-      <li>Pixels indices are from $(0,0)$ to $(width-1, height-1)$</li>
-      <li>Pixel $(x,y)$ is centered at $(x+0.5, y+0.5)$</li>
-      <li>The screen covers range $(0,0)$ to $(width, height)$</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="canonical-cube-to-screen">Canonical Cube to Screen</h3>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxw6Gq.jpg" alt="cg-4-2" /></p>
-
-<ul>
-  <li>irrelevant to $z$</li>
-  <li>Transform in $xy$ plane: $\left[-1, 1\right]^2$ to $\left[0, width\right]^2 \times \left[0, height\right]^2$</li>
-  <li>Viewport transform matrix</li>
-</ul>
-
-\[M_{\text {viewport}}=\left(\begin{array}{cccc}\frac{\text {width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text {width}}{2} \\ 0 &amp; \frac{\text {height}}{2} &amp; 0 &amp; \frac{\text {height}}{2} \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\]
-
-<h3 id="raster-displays">Raster Displays</h3>
-
-<ul>
-  <li>CRT (Cathode Ray Tube)</li>
-  <li>Television: Raster Display CRT</li>
-  <li>In fact, pixel, the component geometry in an image sensor or display, has three primary color: red, blue and green, which can be ordered in different patterns</li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: On the memory of PC or Graphic Processing Unit (GPU), <code class="language-plaintext highlighter-rouge">Frame Buffer</code> is the memory for a raster display.</p>
-
-<ul>
-  <li>LCD (Liquid Crystal Display)
-    <ul>
-      <li>Principle: block or transmit light by twisting polarization(极化, 偏振方向)</li>
-      <li>Base on the wave property of light</li>
-    </ul>
-  </li>
-  <li>Electrophoretic</li>
-</ul>
-
-<h2 id="rasterization">Rasterization</h2>
-
-<p><strong>Rasterization</strong>: Drawing to Raster Display</p>
-
-<h3 id="triangles--fundamental-shape">Triangles = Fundamental Shape</h3>
-
-<ul>
-  <li>Most basic polygon
-    <ul>
-      <li>break up other polygons</li>
-    </ul>
-  </li>
-  <li>Unique properties
-    <ul>
-      <li>Guaranteed to be planar</li>
-      <li>Well-defined interior (How about the polygon which has holes in it, and how about concave polygons?)</li>
-      <li>Well-defined method for interpolating values at vertices over triangle (barycentric interpolation)</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="from-triangle-to-pixels">From Triangle to pixels</h3>
-
-<ul>
-  <li>Input: position of traingle vertices projected on screen</li>
-  <li>Output: set of pixel values approximating triangle</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxUIII.jpg" alt="cg-4-3" /></p>
-
-<h3 id="sampling-a-function">Sampling a Function</h3>
-
-<ul>
-  <li>Evaluating a function at a point is sampling, we can <strong>discretize</strong> a function by sampling</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxbGnO.jpg" alt="cg-4-8" /></p>
-
-<p class="success"><strong>Info</strong>: Sampling is a core idea in graphics. i.e. We sample time(1D), area (2D), direction (2D), volumn (3D). Here, <strong>the centers</strong> of pixels are used to sample <strong>screen space</strong>.</p>
-
-<h3 id="rasterization-as-2d-sampling">Rasterization as 2D Sampling</h3>
-
-<ul>
-  <li>Sample if each pixel center is inside triangle</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxU5dA.jpg" alt="cg-4-4" width="430px" /></p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">inside</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// x, y: not necessarily integers</span>
-    <span class="k">if</span> <span class="n">Point</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="n">in</span> <span class="n">triangle</span> <span class="n">t</span><span class="o">:</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">xmax</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">ymax</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
-        <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">inside</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">);</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Use three <a href="/2020/08/11/cg-2#cross-product">cross product</a> to check if the Point is inside the triangle or not.</li>
-  <li>Disregard edge cases when the sample point is exactly on the edge of the triangle.</li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: Pixel values are integers so the center should be additional 0.5 amount.</p>
-
-<ul>
-  <li>Use Bounding Box (axis aligned) to avoid checking all pixels on the screen and reduce great time consumption.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxUfqH.jpg" alt="cg-4-5" width="450px" /></p>
-
-<ul>
-  <li>Incremental triangle traversal: traverse from the beginning of the left side of the triangle to the right.
-    <ul>
-      <li>Suitable for thin and rotated triangles, especially for those which has small area but consume the large proportion of bounding box</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rxUTit.jpg" alt="cg-4-6" width="450px" /></p>
-
-<h2 id="sampling">Sampling</h2>
-
-<h3 id="ubiquitous-sampling">Ubiquitous Sampling</h3>
-
-<ul>
-  <li>Rasterization = Sample 2D Positions</li>
-  <li>Photograph = Sample Image Sensor Plane</li>
-  <li>Video =  Sample Time</li>
-</ul>
-
-<h3 id="artifacts">Artifacts</h3>
-
-<ul>
-  <li>
-    <p><strong>Artifacts</strong>: Errors, Mistakes, Inaccuracies</p>
-  </li>
-  <li>
-    <p>Aliasing Artifacts due to sampling</p>
-    <ul>
-      <li>Jaggies: sampling in space
-<img src="https://z3.ax1x.com/2021/01/01/rxbJBD.jpg" alt="cg-4-9" width="600px" /></li>
-      <li>Moire pattern: undersampling (skip odd rows and columns) images
-<img src="https://z3.ax1x.com/2021/01/01/rxbh3q.jpg" alt="cg-4-10" width="600px" /></li>
-      <li>Wagon wheel effect: sampling in time of our eyes
-<img src="https://z3.ax1x.com/2021/01/01/rxbgEQ.gif" alt="cg-4-11" /></li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="the-reason-behind-the-aliasing-artifact">The reason behind the Aliasing Artifact</h3>
-
-<ul>
-  <li>Signals are changing too <strong>fast</strong> (high frequency) but sampled too <strong>slowly</strong></li>
-</ul>
-
-<h2 id="frequency-and-filtering">Frequency and Filtering</h2>
-
-<ul>
-  <li>
-    <p>Central Idea: Blurring (pre-filtering) before sampling</p>
-  </li>
-  <li>
-    <p>Directly sample: pixel values of jaggies in rasterized triangle are pure red or white</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/rzHG59.jpg" alt="cg-4-12" /></p>
-
-<ul>
-  <li>Pre-filter before sample: pixel values of antialiased edges have intermediate values</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/rzH8UJ.jpg" alt="cg-4-13" /></p>
-
-<p class="info"><strong>Tip</strong>: remove frequencies above <a href="#nyquist-theory">Nyquist</a>.</p>
-
-<ul>
-  <li>The order of blurring and sampling matters</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/rzH3E4.jpg" alt="cg-4-14" /></p>
-
-<p>The above figures are sampling, antialiasing (filter then sample), blurred alisaing (sample then filter)</p>
-
-<p>The reason why undersampling introduces aliasing, and prefiltering then sampling can do antialiasing instead of the inversed operation will be explained at <a href="#antialiasing">Antialiasing</a>.</p>
-
-<h3 id="fourier-transform">Fourier Transform</h3>
-
-<ul>
-  <li>
-    <p><strong>Frequency</strong>: $f$ in $sin(2\pi fx)$, where $f = \frac{1}{T}$</p>
-  </li>
-  <li>
-    <p>Represent a function as a weighted sum of sines and cosines.</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/sS9m8O.jpg" alt="cg-4-15" /></p>
-
-<ul>
-  <li>Fourier transform decomposes a signal into frequencies, from spatial domain to frequency domain</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPyISO.png" alt="cg-4-27" width="500px" /></p>
-
-<h3 id="nyquist-theory">Nyquist Theory</h3>
-
-<ul>
-  <li>Low frequency signal: sampled adequately for reasonable reconstruction</li>
-  <li>High frequency signal: insufficiently sampled and reconstruction is correct</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/sSiDZd.jpg" alt="cg-4-16" width="650px" /></p>
-
-<ul>
-  <li>Thus, higher frequencies need faster sampling</li>
-  <li>Strictly, the sampling frequency should at least be <strong>twice</strong> the signal bandwidth. This frequency is called <strong>Nyquist rate</strong></li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/sSi0qH.jpg" alt="cg-4-17" width="500px" /></p>
-
-<ul>
-  <li>Two frequencies (above blue and black) that are indistinguishable at a given sampling rate called <strong>aliases</strong>.</li>
-</ul>
-
-<h3 id="filtering">Filtering</h3>
-
-<p><strong>Filtering</strong>: Getting rid of certain frequency contents</p>
-
-<p><img src="https://z3.ax1x.com/2021/01/02/sSTicV.jpg" alt="cg-4-18" /></p>
-
-<ul>
-  <li>The right image shows the value of frequency domain which is transformed by Fourier Transform from the left image, spatial domain.</li>
-</ul>
-
-\[F(u, v)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x, y) e^{-j 2 \pi(u x+v y)} d x d y\]
-
-<ul>
-  <li>
-    <p>Above two-dimensional transform formula shows that the original image $f(x,y)$ is transformed into $F(u,v)$</p>
-  </li>
-  <li>
-    <p>In the right figure, the center represents $u =0,v=0$, that is $F(0,0)$. This means the center of the image is the low frequency region, otherwise high frequency region.</p>
-  </li>
-  <li>
-    <p>High-pass filter will get rid of all low frequency and keep edges of the image.</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/03/spKY6A.jpg" alt="cg-4-19" /></p>
-
-<ul>
-  <li>Low-pass filter will filter the high frequency and retain the smooth part of the image.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/03/spKJld.jpg" alt="cg-4-20" /></p>
-
-<p class="info"><strong>Tip</strong>: For the two-dimensional Fourier Transform, the image can be thought of as being tiled (stacked vertically and horizontally) infinitely. Thus two highlight strips in a cross shape at the center of the image is caused by the drastic change of the edges of the left figures.</p>
-
-<h3 id="convolution">Convolution</h3>
-
-<ul>
-  <li>Convolution in spatial domain is equivalent to multiplication in frequency domain, and vice versa</li>
-</ul>
-
-<p class="warning"><strong>An intuitive proof</strong>: The spatial domain signal can be decomposed into a series of sinusoidal signals with different frequencies. According to the distributive property of convolution operation, the convolution of two spatial signals can be regarded as the sum of the convolutions of pairwise sinusoidal signals. Since the result of the convolution of sinusodial signals with different frequencies is zero, only the convolution of sinusoidal signals with the same frequency is left. As a result, the output of convolution is that the frequency remains unchanged and the amplitude is to be multiplied. For frequency domain, it appears as direct multiplication.</p>
-
-<ul>
-  <li>Option 1:
-    <ul>
-      <li>Filter by convolution in the spatial domain</li>
-    </ul>
-  </li>
-  <li>Option 2:
-    <ul>
-      <li>Transform to frequency domain (Fourier transform)</li>
-      <li>Multiply by Fourier transform of convolution kernel</li>
-      <li>Transform back to spatial domain (inverse Fourier)</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sCjpr9.jpg" alt="cg-4-21" /></p>
-
-<ul>
-  <li>
-    <p>Regularization term (i.e. $\frac{1}{9}$ in the above image) is to ensure the brightness of theimage does not change after transformation.</p>
-  </li>
-  <li>
-    <p>Wider Filter Kernel = Lower Frequency</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPyhY6.jpg" alt="cg-4-22" /></p>
-
-<ul>
-  <li>Sampling = Repeating Frequency Contents</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPy4fK.jpg" alt="cg-4-23" /></p>
-
-<ul>
-  <li>(a) band-unlimited signal</li>
-  <li>(b) frequency spectrum of (a)</li>
-  <li>(c) unit-impulse function, which is used to simulate sampling</li>
-  <li>(d) frequency spectrum of (b)</li>
-  <li>(e) result of convolution of (a) and (c)</li>
-  <li>
-    <p>(f) result of multiplication of (d) and (f). More intuitive, (f) is copied for many times along the frequency axis.</p>
-  </li>
-  <li>Aliasing = Mixed Frequency Contents</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPygm9.jpg" alt="cg-4-24" /></p>
-
-<ul>
-  <li>When the sampling interval becomes small, the corresponding sampling frequency will become relatively large, which will lead to the overlapping phenomenon in final frequency spectrum. Thus, aliasing is caused by information lost.</li>
-</ul>
-
-<h2 id="antialiasing">Antialiasing</h2>
-
-<h3 id="basic-theory">Basic theory</h3>
-
-<ul>
-  <li>Option 1: Increase sampling rate
-    <ul>
-      <li>Eseentially increasing the distance between replicas in the Fourier domain</li>
-      <li>Higher resolution displays, sensors, framebuffers..</li>
-      <li>Disadvantage: costly &amp; may need very high resolution</li>
-    </ul>
-  </li>
-  <li>Option 2: Antialiasing
-    <ul>
-      <li>Making Fourier contents “narrower” before repeating</li>
-      <li>i.e. Filtering out high frequencies before sampling</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPy2wR.jpg" alt="cg-4-25" /></p>
-
-<p>Perform filtering before the sampling will discard the high frequency and reduce the overlapping phenomenon, consequently reduce the loss of information and aliasing.</p>
-
-<ul>
-  <li>Antialiasing by averaging values in pixel area
-    <ul>
-      <li><strong>Convolve</strong> by a 1-pixel box-blur (convolving = filtering = averaing)</li>
-      <li><strong>Sample</strong> at every pixel’s center</li>
-    </ul>
-  </li>
-  <li>In rasterizing one triangle, the average value inside a pixel area is equal to the area of the pixel covered by the triangle</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/sPyRT1.jpg" alt="cg-4-26" /></p>
-
-<ul>
-  <li>
-    <p>Sampling is an irreversable mapping, so the combination of convolution mapping and sampling is not commutative.</p>
-  </li>
-  <li>
-    <p>Generally, antialiasing is to filter the high frequency signal so that the sampling frequency could catch up with the signal frequency.</p>
-  </li>
-</ul>
-
-<h3 id="msaa">MSAA</h3>
-
-<ul>
-  <li>MSAA (multi-sample antialiasing) is to antialias by supersampling: Approximate the effect of the 1-pixel box filter by sampling multiple locations within a pixel and averagin their values.
-    <ul>
-      <li>One sample per pixel
-<img src="https://z3.ax1x.com/2021/01/04/sP2Ghq.jpg" alt="cg-4-28" width="650px" /></li>
-      <li>Take N x N samples in each pixel
-<img src="https://z3.ax1x.com/2021/01/04/sP2t3V.jpg" alt="cg-4-29" width="650px" /></li>
-      <li>Average the N x N samples inside each pixel
-<img src="https://z3.ax1x.com/2021/01/04/sP2Y90.jpg" alt="cg-4-30" width="650px" /></li>
-      <li>Until all pixel are averaged
-<img src="https://z3.ax1x.com/2021/01/04/sP28Nn.jpg" alt="cg-4-31" width="650px" /></li>
-      <li>Corresponding signal emitted by the display
-<img src="https://z3.ax1x.com/2021/01/04/sP23As.jpg" alt="cg-4-32" width="650px" /></li>
-    </ul>
-  </li>
-</ul>
-
-<p>Take 4 x MSAA as an example, given a screen with a resolution of 800 x 600, MSAA firstly render the image to the buffer of 1600 x 1200, and downsample it back to the original 800 x 600.</p>
-
-<ul>
-  <li>
-    <p>The cost of MSAA is time consuming, the size of render target increases to the MSAA multiple times.</p>
-  </li>
-  <li>
-    <p>The more multiplier of MSAA, the better performace of antialiasing, the more cost of time.</p>
-  </li>
-</ul>
-
-<h3 id="milestones-of-antialiasing">Milestones of Antialiasing</h3>
-
-<ul>
-  <li>
-    <p>FXAA (Fast Approximate AA): screen-space anti-aliasing algorithm. Different with MSAA which process the image before the sampling, FXAA postprocess the image after sampled and rasterized. FXAA contrast pixels to heuristically find edges and optimize jaggies in different directions. Very fast!</p>
-  </li>
-  <li>
-    <p>TAA (Temporal AA) : reuse the previous frame and accordingly reduce the effects of temporal aliasing caused by the sampling rate of a scene being too low compared to the transformation speed of objects inside of the scene.</p>
-  </li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: We often pronounce <code class="language-plaintext highlighter-rouge">[temˈporəl]</code> in industry to distinguish with ‘temporary’ meaning.</p>
-
-<ul>
-  <li>Super resolution / super sampling
-    <ul>
-      <li>low resolution to high resolution</li>
-      <li>DLSS (Deep Learning Super Sampling): to understand and predict the missing information</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="visibility-and-occlusion">Visibility and Occlusion</h2>
-
-<h3 id="painters-algorithm">Painter’s Algorithm</h3>
-
-<ul>
-  <li>
-    <p>Solve the problem of triangles rendering order</p>
-  </li>
-  <li>
-    <p>Inspired by how painters paint: Paint from back to front, <strong>overwrite</strong> in the framebuffer.</p>
-  </li>
-  <li>
-    <p>Require sorting in depth $Olog(n)$ for n triangles</p>
-  </li>
-  <li>
-    <p>unresolvable depth order exist:</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/si29sS.png" alt="cg-4-33" width="250px" /></p>
-
-<h3 id="z-buffer">Z-Buffer</h3>
-
-<ul>
-  <li>store current minimum of <code class="language-plaintext highlighter-rouge">z-value</code> for each pixel</li>
-  <li>need an additional buffer for depth values
-    <ul>
-      <li>frame buffer stores color values</li>
-      <li>depth buffer (z-buffer) stores depth</li>
-    </ul>
-  </li>
-</ul>
-
-<p><strong>Note</strong>: For simplicity we suppose <em>z is always positive</em> (smaller z is closer, larger z is further)</p>
-
-<p><img src="https://z3.ax1x.com/2021/01/04/si2pM8.jpg" alt="cg-4-34" /></p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Initialize</span> <span class="n">depth</span> <span class="n">buffer</span> <span class="n">to</span> <span class="o">+</span><span class="n">inf</span>
-<span class="c1">// During rasterization</span>
-<span class="k">for</span> <span class="n">each</span> <span class="n">triangle</span> <span class="n">T</span><span class="o">:</span>
-    <span class="k">for</span> <span class="n">each</span> <span class="n">sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="n">in</span> <span class="n">T</span><span class="o">:</span>
-        <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span><span class="o">:</span>  <span class="c1">// closest sample so far</span>
-            <span class="n">frame_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span> <span class="c1">// update color</span>
-            <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span>  <span class="c1">// update depth</span>
-        <span class="k">else</span>
-            <span class="n">pass</span> <span class="c1">// do nothing, this sample is occluded</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Complexity: $O(n)$ for traversing $n$ triangles</li>
-  <li>Different order of drawing triangles has nothing to do with the result</li>
-  <li>Most important visibility algorithm implemented in hardware for all GPUs</li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: z-buffer can not deal with transparent objects.</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-  <li><a href="https://www.zhihu.com/question/29246532">图像傅里叶变换的频率</a></li>
-  <li><a href="https://www.zhihu.com/question/22611929">二维傅里叶变换</a></li>
-  <li><a href="https://www.zhihu.com/question/20236638">FXAA、MSAA区别</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅲ</title><link href="https://harrypotterrrr.github.io//2020/08/15/cg-3.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅲ" /><published>2020-08-15T00:00:00-05:00</published><updated>2020-08-15T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/08/15/cg-3</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/15/cg-3.html"><![CDATA[<p>2D/3D Transformation, Viewing Transformation</p>
-
-<!--more-->
-
-<h2 id="linear-transformations">Linear Transformations</h2>
-
-<h3 id="scale">Scale</h3>
-
-\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}s_{x} &amp; 0 \\ 0 &amp; s_{y}\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
-
-<h3 id="reflection">Reflection</h3>
-
-\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{cc}-1 &amp; 0 \\ 0 &amp; 1\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
-
-<h3 id="shear">Shear</h3>
-
-\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}1 &amp; a \\ 0 &amp; 1\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]\]
-
-<h3 id="rotation">Rotation</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rHDd58.jpg" alt="cg-3-1" /></p>
-
-\[\mathbf{R}_{\theta}=\left[\begin{array}{cc}\cos \theta &amp; -\sin \theta \\ \sin \theta &amp; \cos \hat{\theta}\end{array}\right]\]
-
-<p class="info"><strong>Tip</strong>: For the rotation matrix $M$, which is always normalized in orthogonal form. Thus the transposed matrix $M^{T}$ is exactly inversed matrix $M^{-1}$, that is:
-$M^{T}=M^{-1}$, where $M$ is orthogonal matrix</p>
-
-<h3 id="linear-transformations-1">Linear Transformations</h3>
-
-<ul>
-  <li>Use the same dimension matrix</li>
-</ul>
-
-\[\begin{aligned}\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right] &amp;=\left[\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right] \\ \mathbf{x}^{\prime} &amp;=\mathbf{M} \mathbf{x} \end{aligned}\]
-
-<h2 id="affine-transformations">Affine Transformations</h2>
-
-<h3 id="homogeneous-coordinate">Homogeneous Coordinate</h3>
-
-<ul>
-  <li>Translation cannot be represented in matrix form</li>
-</ul>
-
-\[\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]=\left[\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]+\left[\begin{array}{l}t_{x} \\ t_{y}\end{array}\right]\]
-
-<p>Hence, translation is <strong>Not</strong> linear transform</p>
-
-<ul>
-  <li>
-    <p>But we don’t want translation to be a special case, so is there a unified way to represent all transformations?</p>
-  </li>
-  <li>
-    <p>Add a third coordinate, and use 3D matrix to represent translations:</p>
-    <ul>
-      <li>2D point $=(x, y, 1)^{\top}$</li>
-      <li>2D vector $=(x, y, 0)^{\top}$</li>
-    </ul>
-  </li>
-</ul>
-
-\[\left(\begin{array}{c}x^{\prime} \\ y^{\prime} \\ w^{\prime}\end{array}\right)=\left(\begin{array}{ccc}1 &amp; 0 &amp; t_{x} \\ 0 &amp; 1 &amp; t_{y} \\ 0 &amp; 0 &amp; 1\end{array}\right) \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)=\left(\begin{array}{c}x+t_{x} \\ y+t_{y} \\ 1\end{array}\right)\]
-
-<ul>
-  <li>Valid operation if w-coordinate of result is 1 or 0
-    <ul>
-      <li>vector + vector = vector</li>
-      <li>point - point = vector</li>
-      <li>point + vector = point</li>
-      <li>point + point = ?</li>
-    </ul>
-  </li>
-</ul>
-
-<p class="success"><strong>Info</strong>: In homogenous coordinates,<br />
-\(\left(\begin{array}{l}x \\ y \\ w\end{array}\right)\) is the 2D point \(\left(\begin{array}{c}x / w \\ y / w \\ 1\end{array}\right), w \neq 0\)<br />
-Thus, <strong>point + point = midpoint of two points</strong></p>
-
-<h3 id="affine-transformations-1">Affine Transformations</h3>
-
-<ul>
-  <li>Affine map = linear map + translation</li>
-</ul>
-
-\[\left(\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right)=\left(\begin{array}{ll}a &amp; b \\ c &amp; d\end{array}\right) \cdot\left(\begin{array}{l}x \\ y\end{array}\right)+\left(\begin{array}{l}t_{x} \\ t_{y}\end{array}\right)\]
-
-<ul>
-  <li>Using homogenous coordinates:</li>
-</ul>
-
-\[\left(\begin{array}{l}x^{\prime} \\ y^{\prime} \\ 1\end{array}\right)=\left(\begin{array}{lll}a &amp; b &amp; t_{x} \\ c &amp; d &amp; t_{y} \\ 0 &amp; 0 &amp; 1\end{array}\right) \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)\]
-
-<p class="warning"><strong>Note</strong>: This means linear transform first, and then translation.</p>
-
-<h3 id="inverse-transform">Inverse Transform</h3>
-
-<p>$\mathbf{M}^{-1}$ is the inverse of transform $\mathbf{M}$ in both a matrix and geometric sense.</p>
-
-<h2 id="composite-transform">Composite transform</h2>
-
-<h3 id="composing-transforms">Composing Transforms</h3>
-
-<ul>
-  <li>Matrix multiplication is not <strong>commutative</strong></li>
-  <li>For a sequence of affine transforms $A_{1}, A_{2}, A_{3}, \ldots$
-    <ul>
-      <li>Compose by matrix multiplication to speed up:
-  \(A_{n}\left(\ldots A_{2}\left(A_{1}(\mathbf{x})\right)\right)=\mathbf{A}_{n} \cdots \mathbf{A}_{2} \cdot \mathbf{A}_{1} \cdot\left(\begin{array}{l}x \\ y \\ 1\end{array}\right)\)</li>
-      <li>Pre-multiply n matrices to obtain a single matrix $\mathbf{A}_{n} \cdots \mathbf{A}_{2} \cdot \mathbf{A}_{1}$ representing combined transform</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="decomposing-complex-transforms">Decomposing Complex Transforms</h3>
-
-<p>How to rotate around a given point c?</p>
-<ol>
-  <li>Translate center to origin</li>
-  <li>Rotate</li>
-  <li>Translate Back</li>
-</ol>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rH7d3j.jpg" alt="cg-3-2" /></p>
-
-<h2 id="3d-transformations">3D transformations</h2>
-
-<h3 id="rotation-around-x-y-z-axis">Rotation around x, y, z-axis</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rHLZMd.jpg" alt="cg-3-3" /></p>
-
-<p>\(\mathbf{R}_{x}(\alpha)=\left(\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; \cos \alpha &amp; -\sin \alpha &amp; 0 \\ 0 &amp; \sin \alpha &amp; \cos \alpha &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)<br />
-\(\mathbf{R}_{y}(\alpha)=\left(\begin{array}{cccc}\cos \alpha &amp; 0 &amp; \sin \alpha &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ -\sin \alpha &amp; 0 &amp; \cos \alpha &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)<br />
-\(\mathbf{R}_{z}(\alpha)=\left(\begin{array}{cccc}\cos \alpha &amp; -\sin \alpha &amp; 0 &amp; 0 \\ \sin \alpha &amp; \cos \alpha &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\)</p>
-
-<p class="error"><strong>Caveat</strong>: In $\mathbf{R}_{y}$, where we use right-hand rule $z \times x$ get $y$, so the $\alpha$ is opposite.</p>
-
-<h3 id="euler-angles">Euler angles</h3>
-
-<ul>
-  <li>To represent any 3D rotation from $\mathbf{R}_{x}, \mathbf{R}_{y}, \mathbf{R}_{z}$,</li>
-</ul>
-
-<p>$\mathbf{R}_{x y z}(\alpha, \beta, \gamma)=\mathbf{R}_{x}(\alpha) \mathbf{R}_{y}(\beta) \mathbf{R}_{z}(\gamma)$</p>
-
-<ul>
-  <li>
-    <p>$(\alpha, \beta, \gamma)$ is <strong>Euler angles</strong></p>
-  </li>
-  <li>
-    <p>Often used in flight simulator:</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rb2SjU.jpg" alt="cg-3-4" width="450px" /></p>
-
-<ul>
-  <li>Eluer angles may cause <a href="https://en.wikipedia.org/wiki/Gimbal_lock">Gimbal lock</a>: The loss of one degree of <strong>freedom</strong>.
-    <ul>
-      <li>This suitation occurs when the axes of two of the three gimbals are driven into a parallel configuration as the below shows.</li>
-      <li>Use <a href="https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation">Unit quaternions</a> to solve this problem</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rbh2WR.gif" alt="cg-3-5" /></p>
-
-<h3 id="rodrigues-rotation-formula">Rodrigues’ Rotation Formula</h3>
-
-<ul>
-  <li>Rotation by angle $\alpha$ around axis $n$ (axis $n$ goes through the origin)</li>
-</ul>
-
-\[\mathbf{R}(\mathbf{n}, \alpha)=\cos (\alpha) \mathbf{I}+(1-\cos (\alpha)) \mathbf{n} \mathbf{n}^{T}+\sin (\alpha) \underbrace{\left(\begin{array}{ccc}0 &amp; -n_{z} &amp; n_{y} \\ n_{z} &amp; 0 &amp; -n_{x} \\ -n_{y} &amp; n_{x} &amp; 0\end{array}\right)}_{\mathbf{N}}\]
-
-<ul>
-  <li>
-    <p>Formula <a href="https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula#Derivation">derivation</a></p>
-  </li>
-  <li>
-    <p>If the rotation axis doesn’t go through the origin, but at $p$</p>
-    <ul>
-      <li>Translate the axis to origin. $T(-p)$</li>
-      <li>Rotate. $R(n, \alpha)$</li>
-      <li>Translate the axis back: $T(p)$</li>
-      <li>Thus: $T(p)R(n, \alpha)T(-p)$</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="viewing-transformation">Viewing transformation</h2>
-
-<ul>
-  <li>View / Camera Transformation</li>
-  <li>Projection transformation
-    <ul>
-      <li>Orthographics projection</li>
-      <li>Perspective projection</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="a-vivid-analogy">A vivid analogy</h3>
-
-<ul>
-  <li>Analogous to taking a photo:
-    <ul>
-      <li>Find a good place and arrage people (<strong>model</strong> transformation)</li>
-      <li>Find a good “angle” to put the camera (<strong>view</strong> transformation)</li>
-      <li>Cheese! (<strong>projection</strong> transformation)</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="view--camera-transformation">View / Camera Transformation</h3>
-
-<h4 id="define-the-camera">Define the camera</h4>
-
-<ul>
-  <li>Define the camera first (suppose every objects has been arranged properly)
-    <ul>
-      <li>Position $\vec{e}$</li>
-      <li>Look-at / gaze direction $\hat{g}$</li>
-      <li>up direction $\hat{t}$</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rbgzcT.jpg" alt="cg-3-6" width="380px" /></p>
-
-<ul>
-  <li>Key observation: If the camera and all objects move together, the photo will be the same. Thus we transform the camera to the fixed origin point.
-    <ul>
-      <li>Position: the origin</li>
-      <li>Look-at direction: -Z</li>
-      <li>up  direction: Y</li>
-      <li>Then transform the objects along with the fixed camera</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rbgx3V.jpg" alt="cg-3-7" width="400px" /></p>
-
-<h4 id="transform-the-camera">Transform the camera</h4>
-
-<ul>
-  <li>Transform the camera by $M_{\text {view}}$
-    <ul>
-      <li>To locate it at the origin, up at $Y$, look at $Z$
-        <ul>
-          <li>Translates $e$ to origin</li>
-          <li>Rotates $t$ to $Y$</li>
-          <li>Rotates $g$ to $-Z$</li>
-          <li>If $t$ to $Y$ and $g$ to $-Z$, then $\hat{g} \times \hat{t}$ will be to $X$</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/rqnfI0.jpg" alt="cg-3-8" /></p>
-
-<ul>
-  <li>$M_{\text {view}}=R_{\text {view}}T_{\text {view}}$
-    <ul>
-      <li>Translate $e$ to origin<br />
-\(T_{v i e w}=\left[\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; -x_{e} \\ 0 &amp; 1 &amp; 0 &amp; -y_{e} \\ 0 &amp; 0 &amp; 1 &amp; -z_{e} \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\)</li>
-      <li>Difficult to directly get $R_{view}$, so consider its inverse rotation: <br />
-\(R_{v i e w}^{-1}=\left[\begin{array}{cccc}x_{\hat{g} \times \hat{t}} &amp; x_{t} &amp; x_{-g} &amp; 0 \\ y_{\hat{g} \times \hat{t}} &amp; y_{t} &amp; y_{-g} &amp; 0 \\ z_{\hat{g} \times \hat{t}} &amp; z_{t} &amp; z_{-g} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right] \quad \Rightarrow  \quad R_{v i e w} = (R_{v i e w}^{-1})^{T} = \left[\begin{array}{cccc}x_{\hat{g} \times \hat{t}} &amp; y_{\hat{g} \times \hat{t}} &amp; z_{\hat{g} \times \hat{t}} &amp; 0 \\ x_{t} &amp; y_{t} &amp; z_{t} &amp; 0 \\ x_{-g} &amp; y_{-g} &amp; z_{-g} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\)</li>
-    </ul>
-  </li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: We can validate the result of the multiplication of $R_{v i e w}^{-1}$ and the vector $\left(\begin{array}{llll}1 &amp; 0 &amp; 0 &amp; 0\end{array}\right)$ which represents $X$ axis, the vector $\left(\begin{array}{llll}0 &amp; 1 &amp; 0 &amp; 0\end{array}\right)$ which represents $Y$ axis, and the vector $\left(\begin{array}{llll}0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)$ which represents $Z$ axis. We could find $X$ axis rotates to $\hat{g} \times \hat{t}$, $Y$ rotates to $t$ and $Z$ rotates to $-g$.</p>
-
-<p class="warning"><strong>Note</strong>: Each column of the $R_{view}$ except for the last column is the <strong>unit</strong> vector describing the camera, so the transposed matrix of it is its inversed matrix itself.</p>
-
-<h3 id="projection-transformation">Projection transformation</h3>
-
-<h4 id="projection-in-computer-graphics">Projection in Computer Graphics</h4>
-
-<ul>
-  <li>In orthogonal projection, the camera can be supposed to be placed infinite way from the viewing frustum (now the frustum becomes cuboid).</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/31/rvExG6.jpg" alt="cg-3-9" /></p>
-
-<h4 id="orthographic-projection">Orthographic Projection</h4>
-
-<ul>
-  <li>Camera located at origin, looking at -Z, up at Y</li>
-  <li>Drop Z coordinate</li>
-  <li>Translate and scale the resulting rectangle to $\left[-1, 1\right]^2$</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/31/rvEvPx.jpg" alt="cg-3-10" /></p>
-
-<ul>
-  <li>More in general: map a cuboid $\left[l, r\right] \times \left[b, t\right] \times \left[f, n\right]$ to the canonical cube $\left[-1, 1\right]^3$. (left, right, bottom, top, far, near)
-    <ul>
-      <li>Translate the center to origin first, then scale each edge to 2.</li>
-    </ul>
-  </li>
-</ul>
-
-\[M_{\text {ortho}}=\left[\begin{array}{cccc}\frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\left[\begin{array}{cccc}1 &amp; 0 &amp; 0 &amp; -\frac{r+l}{2} \\ 0 &amp; 1 &amp; 0 &amp; -\frac{t+b}{2} \\ 0 &amp; 0 &amp; 1 &amp; -\frac{n+f}{2} \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right]\]
-
-<p class="warning"><strong>Note</strong>: Objects may be stretched out of the original scale, so the next <a href="/2020/08/19/cg-4#canonical-cube-to-screen">viewport transform</a> will deal with this and draw it back to the original scale.</p>
-
-<p class="error"><strong>Caveat</strong>: Looking along $-Z$ makes <code class="language-plaintext highlighter-rouge">n</code> &gt; <code class="language-plaintext highlighter-rouge">f</code> (<code class="language-plaintext highlighter-rouge">near</code> &gt; <code class="language-plaintext highlighter-rouge">far</code>) and this is the reason why OpenGL uses left hand coords.</p>
-
-<h4 id="perspective-projection">Perspective Projection</h4>
-
-<ul>
-  <li>Most common in Computer Graphics, art, visual system</li>
-  <li>Further objects are smaller</li>
-  <li>Parallel lines not parallel, converge to single point</li>
-</ul>
-
-<p class="warning"><strong>Note</strong>: We only consider Euclidean Geometry (Not Riemannian Geometry)</p>
-
-<p>The step to do perspective projection</p>
-
-<ol>
-  <li>First squish the frustum into a cuboid $M_{\text {persp} \rightarrow \text {ortho}}$</li>
-  <li>Do orthographic projection $M_{ortho}$</li>
-</ol>
-
-<p><img src="https://z3.ax1x.com/2020/12/31/rvVBw9.jpg" alt="cg-3-11" width="640px" /></p>
-
-<ul>
-  <li>Denote vertical <strong>field-of-view (fovY)</strong> and <strong>aspect</strong> ratio (assume symmetry i.e. $l=-r\ b=-t$)</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rvvjfJ.jpg" alt="cg-3-13" width="500px" /></p>
-
-\[Aspect\ Ratio=\frac{width}{height}\]
-
-<ul>
-  <li>Convert <code class="language-plaintext highlighter-rouge">fovY</code> and aspect to <code class="language-plaintext highlighter-rouge">l, r, b, t</code></li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/01/rvxiTO.jpg" alt="cg-3-14" width="500px" /></p>
-
-\[\begin{aligned} \tan \frac{f o v Y}{2} &amp;=\frac{t}{|n|} \\ \text { aspect } &amp;=\frac{r}{t} \end{aligned}\]
-
-<ul>
-  <li>Find the relationship between transformed points $\left(x^{\prime}, y^{\prime}, z^{\prime}\right)$ and original points $\left(x, y, z)\right)$</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2020/12/31/rvVL6S.jpg" alt="cg-3-12" width="500px" /></p>
-
-\[y^{\prime}=\frac{n}{z} y\]
-
-<p>Similar to $x$:</p>
-
-\[x^{\prime}=\frac{n}{z} x\]
-
-<ul>
-  <li>Use homogenous coordinates to represent this relationship:</li>
-</ul>
-
-\[\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{c}n x / z \\ n y / z \\ \text { unknown } \\ 1\end{array}\right) \begin{array}{l} == \end{array}\left(\begin{array}{c}n x \\ n y \\ \text { still unknown } \\ z\end{array}\right)\]
-
-<p class="info"><strong>Tip</strong>: according to the points defined in homogenous coordinates. <a href="#homogeneous-coordinate">reference</a></p>
-
-<ul>
-  <li>So the operation squish should be the following form:</li>
-</ul>
-
-\[M_{\text {persp} \rightarrow \text {ortho}}^{(4 \times 4)}\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right)=\left(\begin{array}{c}n x \\ n y \\ \text { unknown } \\ z\end{array}\right)\]
-
-<ul>
-  <li>Three known parameters could get a good reference of three rows of $M_{\text {persp} \rightarrow \text {ortho}}$:</li>
-</ul>
-
-\[M_{\text {persp} \rightarrow \text {ortho}}=\left(\begin{array}{cccc}n &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; n &amp; 0 &amp; 0 \\ ? &amp; ? &amp; ? &amp; ? \\ 0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)\]
-
-<ul>
-  <li>Two important observations, which is responsible for $z^{\prime}$:</li>
-</ul>
-
-<p>1. Any point on the near plane will not change</p>
-
-\[M_{\text {persp} \rightarrow \text {ortho}}^{(4 \times 4)}\left(\begin{array}{l}x \\ y \\ z \\ 1\end{array}\right)=\left(\begin{array}{c}n x \\ n y \\ \text { unknown } \\ z\end{array}\right) \quad \begin{array}{l}\end{array}\]
-
-<p>Replace $z$ with $n$:</p>
-
-\[\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right)==\left(\begin{array}{c}n x \\ n y \\ n^{2} \\ n\end{array}\right)\]
-
-<p>Thus, the third row must be of the form $(0\ 0\ A\ B)$:</p>
-
-\[\left(\begin{array}{llll}0 &amp; 0 &amp; A &amp; B\end{array}\right)\left(\begin{array}{l}x \\ y \\ n \\ 1\end{array}\right)=n^{2}\]
-
-\[A n+B=n^{2}\]
-
-<p class="info"><strong>Tip</strong>: $n$ is only the known paramter, and has nothing to do with $z$, so $A$ and $B$ can not be determined yet.</p>
-
-<p>2. Any $z$ of points on the far plane will not change</p>
-
-\[\left(\begin{array}{l}0 \\ 0 \\ f \\ 1\end{array}\right) \Rightarrow\left(\begin{array}{l}0 \\ 0 \\ f \\ 1\end{array}\right)==\left(\begin{array}{l}0 \\ 0 \\ f^{2} \\ f\end{array}\right)\]
-
-\[A f+B=f^{2}\]
-
-<ul>
-  <li>From the two above equations we get, we could solve $A$ and $B$:</li>
-</ul>
-
-\[\left\{\begin{array}{l}A n+B=n^{2} \\ A f+B=f^{2}\end{array}\right. \Rightarrow \left\{\begin{array}{l}A=n+f \\ B=-n f\end{array}\right.\]
-
-<ul>
-  <li>Now, every entry of $M_{\text {persp} \rightarrow \text {ortho}}$ is known:</li>
-</ul>
-
-\[M_{\text {persp} \rightarrow \text {ortho}}=\left(\begin{array}{cccc}n &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; n &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; n+f &amp; -nf \\ 0 &amp; 0 &amp; 1 &amp; 0\end{array}\right)\]
-
-<ul>
-  <li>
-    <p>Finally, do orthographic projection $M_{ortho}$ to finish</p>
-  </li>
-  <li>
-    <p>In summary: $M_{\text {persp}}=M_{\text {ortho}} M_{\text {persp} \rightarrow \text {ortho}}$</p>
-  </li>
-</ul>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-  <li><a href="https://www.zhihu.com/question/47736315">如何通俗地解释欧拉角？</a></li>
-  <li><a href="https://blog.csdn.net/AndrewFan/article/details/60981437#">欧拉角与万向节死锁</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[2D/3D Transformation, Viewing Transformation]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅱ</title><link href="https://harrypotterrrr.github.io//2020/08/11/cg-2.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅱ" /><published>2020-08-11T00:00:00-05:00</published><updated>2020-08-11T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/08/11/cg-2</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/11/cg-2.html"><![CDATA[<p>A swift and brutal review of Linear Algebra</p>
-
-<!--more-->
-
-<h2 id="computer-graphics-dependencies">Computer Graphics’ Dependencies</h2>
-
-<ul>
-  <li>Basic mathematics
-    <ul>
-      <li>Linear algebra</li>
-      <li>Calculus</li>
-      <li>Statistics</li>
-    </ul>
-  </li>
-  <li>Basic physics
-    <ul>
-      <li>Optics (Advanced: if we could not suppose the light travels in straight lines but interacts with a surface material in a form of light wave?)</li>
-      <li>Mechanics</li>
-    </ul>
-  </li>
-  <li>Misc.
-    <ul>
-      <li>Signal processing (for anti-alias)</li>
-      <li>Numerical analysis (rendering is to find a solution of calculus defined by recursion, simulation is to solve FEA, Finite Element Analysis, or diffusion equation)</li>
-    </ul>
-  </li>
-  <li>A bit of aesthetics</li>
-</ul>
-
-<h2 id="vector">Vector</h2>
-
-<ul>
-  <li>Direction and length</li>
-  <li>Usually written as $\vec{a}$ or using start and end point $\overrightarrow{AB}$</li>
-  <li>No absolute starting position</li>
-</ul>
-
-<h3 id="vector-normalization">Vector Normalization</h3>
-
-<ul>
-  <li>Magnitude (length) of a vector written as $|\vec{a}|$</li>
-  <li>Unit vector
-    <ul>
-      <li>A vector with length of 1</li>
-      <li>$\hat{a}=\vec{a} /|\vec{a}|$</li>
-      <li>represent directions</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="vector-addition">Vector Addition</h3>
-
-<ul>
-  <li>Geometrically: Parallelogram law &amp; Triangle law</li>
-  <li>Algebraically: Simply add coordinates</li>
-</ul>
-
-<h3 id="dot-scalar-product">Dot (scalar) Product</h3>
-
-<p>$\vec{a} \cdot \vec{b}=|\vec{a}||\vec{b}| \cos \theta$</p>
-
-<p>For unit vectors:</p>
-
-<p>$\cos \theta=\hat{a} \cdot \hat{b}$</p>
-
-<p>Some properties:</p>
-
-<p>$\vec{a} \cdot \vec{b}=\vec{b} \cdot \vec{a}$</p>
-
-<p>$\vec{a} \cdot(\vec{b}+\vec{c})=\vec{a} \cdot \vec{b}+\vec{a} \cdot \vec{c}$</p>
-
-<p>$(k \vec{a}) \cdot \vec{b}=\vec{a} \cdot(k \vec{b})=k(\vec{a} \cdot \vec{b})$</p>
-
-<p>For component-wise multiplication of vectors in Cartesian coordinates:</p>
-
-\[\vec{a} \cdot \vec{b}=\left(\begin{matrix}x_{a} \\ y_{a} \\ z_{a}\end{matrix}\right) \cdot\left(\begin{matrix}x_{b} \\ y_{b} \\ z_{b}\end{matrix}\right)=x_{a} x_{b}+y_{a} y_{b}+z_{a} z_{b}\]
-
-<p><strong>Four common usages of dot product</strong>:</p>
-
-<ol>
-  <li>To find angle between two vectors</li>
-  <li>
-    <p>To find projection of one vector on another:</p>
-
-    <p>To Calculate $\vec{b}_{\perp}$: projection of $\vec{b}$ onto $\vec{a}$</p>
-    <ul>
-      <li>$\vec{b}_{\perp}$ must be along $\vec{a}$, thus $\vec{b}_{\perp}=k \hat{a}$</li>
-      <li>The magnitude of $k$ is $\left|\vec{b}_{\perp}\right|=|\vec{b}| \cos \theta$</li>
-    </ul>
-  </li>
-  <li>To measure how close two directions are</li>
-  <li>To decompose a vector:  $\vec{b}$, $\vec{b}_{\perp}$, $\vec{b}-\vec{b}_{\perp}$</li>
-</ol>
-
-<h3 id="cross-product">Cross Product</h3>
-
-<p>$|a \times b|=|a||b| \sin \phi$</p>
-
-<ul>
-  <li>Cross product is orthogonal to two initial vectors</li>
-  <li>Direction determined by right-hand rule</li>
-  <li>To construct coordinate systems</li>
-</ul>
-
-<p>Some properties:</p>
-
-<p>$\vec{a} \times \vec{b}=-\vec{b} \times \vec{a}$</p>
-
-<p>$\vec{a} \times \vec{a}=\overrightarrow{0}$</p>
-
-<p>$\vec{a} \times(\vec{b}+\vec{c})=\vec{a} \times \vec{b}+\vec{a} \times \vec{c}$</p>
-
-<p>$\vec{a} \times(k \vec{b})=k(\vec{a} \times \vec{b})$</p>
-
-<p>For cross product in Cartesian Formula:</p>
-
-\[\vec{a} \times \vec{b}=\left(\begin{array}{l}y_{a} z_{b}-y_{b} z_{a} \\ z_{a} x_{b}-x_{a} z_{b} \\ x_{a} y_{b}-y_{a} x_{b}\end{array}\right)\]
-
-<p>Or using matrix form:</p>
-
-\[\vec{a} \times \vec{b}=A^{*} b=\left(\begin{array}{ccc}0 &amp; -z_{a} &amp; y_{a} \\ z_{a} &amp; 0 &amp; -x_{a} \\ -y_{a} &amp; x_{a} &amp; 0\end{array}\right)\left(\begin{array}{l}x_{b} \\ y_{b} \\ z_{b}\end{array}\right)\]
-
-<p><strong>Two common usages of cross product:</strong></p>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/r7oeXV.jpg" alt="cg-2-1" /></p>
-
-<ol>
-  <li>To determine left/right: check if the cross product of two vectors points to the outside of the screen or out.</li>
-  <li>To determine inside/outside: check if the cross product of $\overrightarrow{AB} \times \overrightarrow{AP}$ and $\overrightarrow{BP} \times \overrightarrow{BP}$ and $\overrightarrow{CA} \times \overrightarrow{CP}$ all directed to the outside of the screen.</li>
-</ol>
-
-<h3 id="orthonormal-coordinate">Orthonormal Coordinate</h3>
-
-<p>We can decompose any vectors $\vec{p}$ by 3 unit vectors:</p>
-
-<p>$\vec{p}=(\vec{p} \cdot \vec{u}) \vec{u}+(\vec{p} \cdot \vec{v}) \vec{v}+(\vec{p} \cdot \vec{w}) \vec{w}$<br />
-, where<br />
-$|\vec{u}|=|\vec{v}|=|\vec{w}|=1$<br />
-$\vec{u} \cdot \vec{v}=\vec{v} \cdot \vec{w}=\vec{u} \cdot \vec{w}=0$<br />
-$\vec{w}=\vec{u} \times \vec{v} \quad$</p>
-
-<h2 id="matrix">Matrix</h2>
-
-<ul>
-  <li>2D arrays that haunt in every CS course</li>
-  <li>In Graphics, pervasively used to represent <strong>transformations</strong></li>
-</ul>
-
-<h3 id="matrix-matrix-multiplication">Matrix-Matrix Multiplication</h3>
-
-<ul>
-  <li>columns in A must = rows in B</li>
-  <li>Element (i, j) in the product is the dot product of <code class="language-plaintext highlighter-rouge">row i from A</code> and <code class="language-plaintext highlighter-rouge">column j from B</code></li>
-</ul>
-
-<p>Some properties:</p>
-
-<ul>
-  <li>Non-commutative: ($AB$ and $BA$ are different in general)</li>
-  <li>Associative and distributive:
-    <ul>
-      <li>$(AB)C = A(BC)$</li>
-      <li>$A(B+C) = AB + AC$</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="matrix-vecotr-multiplication">Matrix-Vecotr Multiplication</h3>
-
-<ul>
-  <li>Treat vector as a <strong>column matrix</strong> (Mx1)</li>
-  <li>Treat vector as the right multiplier of the matrix (as a point)</li>
-  <li>Key for transforming points</li>
-</ul>
-
-<h3 id="transpose-of-a-matrix">Transpose of a Matrix</h3>
-
-<ul>
-  <li>Switch rows and columns ($ij$ to $ji$)</li>
-  <li>$(A B)^{T}=B^{T} A^{T}$</li>
-</ul>
-
-<h3 id="identity-matrix-and-inverses">Identity Matrix and Inverses</h3>
-
-\[I_{3 \times 3}=\left(\begin{array}{lll}1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1\end{array}\right)\]
-
-<p>$A A^{-1}=A^{-1} A=I$</p>
-
-<p>$(A B)^{-1}=B^{-1} A^{-1}$</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[A swift and brutal review of Linear Algebra]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅰ</title><link href="https://harrypotterrrr.github.io//2020/08/10/cg-1.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅰ" /><published>2020-08-10T00:00:00-05:00</published><updated>2020-08-10T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/08/10/cg-1</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/08/10/cg-1.html"><![CDATA[<p>An Overview to Computer Graphics</p>
-
-<!--more-->
-
-<h2 id="computer-graphics">Computer Graphics</h2>
-
-<p>To synthesis and manipulate visual information.</p>
-
-<h3 id="application">Application</h3>
-
-<ul>
-  <li><strong>Video Games</strong>: Technically, global illumination determines the quality of the game performance: the lighter the graphics shows, the better the game is.</li>
-  <li><strong>Movies</strong>: Special effects</li>
-  <li><strong>Animations</strong>: Simulate particles in different scenes.</li>
-  <li>Design</li>
-  <li><strong>Visualization</strong>: One of the way to manipulate visual information.</li>
-  <li><strong>Virtual Reality &amp; Augmented Reality</strong></li>
-  <li><strong>Digital Illustration</strong>.</li>
-  <li><strong>Simulation</strong>: physical simulation, computation and implementation.</li>
-  <li><strong>Graphical User Interface</strong></li>
-  <li><strong>Topography</strong></li>
-</ul>
-
-<h3 id="fundamental-challenge">Fundamental Challenge</h3>
-
-<ul>
-  <li>Require understanding of all aspects of physical world</li>
-  <li>Create and interact with realistic virtual world</li>
-  <li>Computing methods, displays, technology.</li>
-</ul>
-
-<h2 id="topics">Topics</h2>
-
-<h3 id="rasterization">Rasterization</h3>
-
-<ul>
-  <li>Project <code class="language-plaintext highlighter-rouge">geometry primitives</code> (3D triangles/polygons) on to the screen.</li>
-  <li>Break projected primitives into <code class="language-plaintext highlighter-rouge">fragments</code> (pixels)</li>
-  <li>Gold standard in Video Games (Real-time Applications)</li>
-</ul>
-
-<p class="info"><strong>Real-time/offline computer graphics</strong>: more than 30 fps (frame per second)</p>
-
-<h3 id="curves-and-meshes">Curves and Meshes</h3>
-
-<p>How to represent geometry in Computer Graphics</p>
-
-<ul>
-  <li>Bezier Curve</li>
-  <li>Catmull-Clark subdivision</li>
-</ul>
-
-<h3 id="ray-tracing">Ray Tracing</h3>
-
-<ul>
-  <li>Shoot rays from the camera through each pixel</li>
-  <li>Gold standard in Animations / Movies (Offline Application)\</li>
-</ul>
-
-<h3 id="animation--simulation">Animation / Simulation</h3>
-
-<ul>
-  <li>Key frame animation</li>
-  <li>Mass-spring System</li>
-</ul>
-
-<h2 id="cg-vs-cv">CG vs CV</h2>
-
-<h3 id="difference">Difference</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/r7onmT.jpg" alt="cg-1-1" /></p>
-
-<ul>
-  <li>
-    <p>Computer Vision is to understand, recognize and predict the content of images.</p>
-  </li>
-  <li>
-    <p>Computer Graphics is to model and simulate the geometry of visual information.</p>
-  </li>
-</ul>
-
-<h2 id="geek--genius--freak">Geek = Genius + Freak</h2>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[An Overview to Computer Graphics]]></summary></entry></feed>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline]]></summary></entry></feed>

@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅰ - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Advanced Thoery and Problems of GAN - Haolin Jia's Homepage</title>
 
-<meta name="description" content="An Overview to Computer Graphics">
-<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/10/cg-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Advanced Thoery and Problems of GAN">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2022/02/11/gan-3.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2 active"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2 active"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2"><a href="/2022/02/21/gan-4">Feature Extraction</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -300,111 +300,549 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅰ</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Advanced Thoery and Problems of GAN</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-10-cg-1.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅰ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-02-11-gan-3.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Advanced Thoery and Problems of GAN"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=computer+graphics">computer graphics</a>
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=generative+model">generative model</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-10-cg-1">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 15, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-10T00:00:00-04:00">
-    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-02-11-gan-3">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Feb 11, 2022</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-02-11T00:00:00-05:00">
+    <meta itemprop="keywords" content="computer vision,generative model,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>An Overview to Computer Graphics</p>
+<div class="article__content" itemprop="articleBody"><p>Advanced Thoery and Problems of GAN</p>
 
 <!--more-->
 
-<h2 id="computer-graphics">Computer Graphics</h2>
+<h2 id="general-framework-of-gan">General Framework of GAN</h2>
 
-<p>To synthesis and manipulate visual information.</p>
-
-<h3 id="application">Application</h3>
+<h3 id="f-divergence">F-divergence</h3>
 
 <ul>
-  <li><strong>Video Games</strong>: Technically, global illumination determines the quality of the game performance: the lighter the graphics shows, the better the game is.</li>
-  <li><strong>Movies</strong>: Special effects</li>
-  <li><strong>Animations</strong>: Simulate particles in different scenes.</li>
-  <li>Design</li>
-  <li><strong>Visualization</strong>: One of the way to manipulate visual information.</li>
-  <li><strong>Virtual Reality &amp; Augmented Reality</strong></li>
-  <li><strong>Digital Illustration</strong>.</li>
-  <li><strong>Simulation</strong>: physical simulation, computation and implementation.</li>
-  <li><strong>Graphical User Interface</strong></li>
-  <li><strong>Topography</strong></li>
-</ul>
-
-<h3 id="fundamental-challenge">Fundamental Challenge</h3>
-
-<ul>
-  <li>Require understanding of all aspects of physical world</li>
-  <li>Create and interact with realistic virtual world</li>
-  <li>Computing methods, displays, technology.</li>
-</ul>
-
-<h2 id="topics">Topics</h2>
-
-<h3 id="rasterization">Rasterization</h3>
-
-<ul>
-  <li>Project <code class="language-plaintext highlighter-rouge">geometry primitives</code> (3D triangles/polygons) on to the screen.</li>
-  <li>Break projected primitives into <code class="language-plaintext highlighter-rouge">fragments</code> (pixels)</li>
-  <li>Gold standard in Video Games (Real-time Applications)</li>
-</ul>
-
-<p class="info"><strong>Real-time/offline computer graphics</strong>: more than 30 fps (frame per second)</p>
-
-<h3 id="curves-and-meshes">Curves and Meshes</h3>
-
-<p>How to represent geometry in Computer Graphics</p>
-
-<ul>
-  <li>Bezier Curve</li>
-  <li>Catmull-Clark subdivision</li>
-</ul>
-
-<h3 id="ray-tracing">Ray Tracing</h3>
-
-<ul>
-  <li>Shoot rays from the camera through each pixel</li>
-  <li>Gold standard in Animations / Movies (Offline Application)\</li>
-</ul>
-
-<h3 id="animation--simulation">Animation / Simulation</h3>
-
-<ul>
-  <li>Key frame animation</li>
-  <li>Mass-spring System</li>
-</ul>
-
-<h2 id="cg-vs-cv">CG vs CV</h2>
-
-<h3 id="difference">Difference</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/r7onmT.jpg" alt="cg-1-1" /></p>
-
-<ul>
-  <li>
-    <p>Computer Vision is to understand, recognize and predict the content of images.</p>
-  </li>
-  <li>
-    <p>Computer Graphics is to model and simulate the geometry of visual information.</p>
+  <li>$P$ and $Q$ are two distributions. $p(x)$ and $q(x)$ are the probability of sampling $x$.</li>
+  <li>f-divergence $D_{f}(P | Q)$ evaluates the difference of $P$ and $Q$.
+    <ul>
+      <li>$f$ is convex function</li>
+      <li>when $P$ and $Q$ are the same distributions, $p(x) = q(x)$, $f(\frac{p(x)}{q(x)}) = f(1) = 0$</li>
+    </ul>
   </li>
 </ul>
 
-<h2 id="geek--genius--freak">Geek = Genius + Freak</h2>
+\[\begin{aligned}
+D_{f}(P \| Q) &amp;=\int_{x} q(x) f\left(\frac{p(x)}{q(x)}\right) d x \\
+&amp; \geq f\left(\int_{x} q(x) \frac{p(x)}{q(x)} d x\right) \color{red}{\text{Jessen Inequality}} \\
+&amp; = f\left(\int_{x}p(x) d x\right) \\
+&amp; = f(1) \\
+&amp; = 0
+\end{aligned}\]
+
+<p class="info"><strong>Note</strong>: Considering $f$ is the convex function, the above inequation can be established according to <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jessen inequation</a>:<br />
+$ \varphi\left(\frac{1}{b-a} \int_{a}^{b} f(x) d x\right) \leq \frac{1}{b-a} \int_{a}^{b} \varphi(f(x)) d x $</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">f</code> function can be different</li>
+</ul>
+
+\[\begin{aligned}
+&amp;\text{When } f(x)=x \log x \text{ , KL-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x) \frac{p(x)}{q(x)} \log \left(\frac{p(x)}{q(x)}\right) d x=\int_{x} p(x) \log \left(\frac{p(x)}{q(x)}\right) d x \\[1em]
+&amp;\text{When }f(x)=-\log x \text{ , reversed KL-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x)\left(-\log \left(\frac{p(x)}{q(x)}\right)\right) d x=\int_{x} q(x) \log \left(\frac{q(x)}{p(x)}\right) d x \\[1em]
+&amp;\text{When }f(x)=(x-1)^{2} \text{ , Chi Square-divergence:}\\
+&amp;D_{f}(P \| Q)=\int_{x} q(x)\left(\frac{p(x)}{q(x)}-1\right)^{2} d x=\int_{x} \frac{(p(x)-q(x))^{2}}{q(x)} d x
+\end{aligned}\]
+
+<h3 id="fenchel-conjugate">Fenchel Conjugate</h3>
+
+<ul>
+  <li><strong>Fenchel Conjugate</strong> (Convex conjugate 凸共轭): the paired appearance of two functions with a strong relationship.
+    <ul>
+      <li>Duality (对偶) relationship is built on the same linear hyperplane.</li>
+    </ul>
+  </li>
+  <li>The <strong>purpose</strong> of using conjugate functions:
+    <ul>
+      <li>The advantage is that even if a function is not convex, <strong>a convexed function</strong> can be obtained by the conjugate method.</li>
+      <li>Even better, through the conjugation again, we can get a <strong>good approximation</strong> function with the original function.</li>
+      <li>The convex hull function of the original function can be obtained by conjugating <strong>twice</strong>, where many excellent properties of the new convex hull will be obtained in the optimization solution with just a little loss.</li>
+    </ul>
+  </li>
+  <li>Every convex function $f$ has a conjugate function $f^*$</li>
+</ul>
+
+\[f^{*}(t) =\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\}\]
+
+<ul>
+  <li>The variable of $f^* (t)$ is $t$, and get the maximum for every possible value of $x$.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZtRP.png" alt="gan-3-1" style="margin:auto;display:block;width:80%;" /></p>
+
+<ul>
+  <li>We can get a good approximation function with the original function
+    <ul>
+      <li>E.g. $f(x) = xlogx$ can be approximated as $f^*(t) = e^{t-1}$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZYGt.png" alt="gan-3-2" style="margin:auto;display:block;width:60%;" /></p>
+
+\[\begin{aligned}
+&amp;\text{Take } f(x) \text{ as } xlogx \text{ :}\\
+&amp;\quad f^{*}(t) =\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\} = \max _{x \in \operatorname{dom}(f)}\{x t-x \log x\}\\
+&amp;\text{Let } g(x) =x t-x \log x \text {, Given } t, \text { find } x \text { to maximize } g(x) \text{:}\\
+&amp;\quad t-\log x-1=0 \quad \\ 
+&amp;\quad x= e^{t-1} \\
+&amp;\quad f^{*}(t)= e^{t-1} \times t-e^{t-1} \times(t-1)=e^{t-1} \\
+\end{aligned}\]
+
+<h3 id="connection-with-gan">Connection with GAN</h3>
+
+<ul>
+  <li>Derivation of GAN’s derivation:
+    <ul>
+      <li>From the convex conjugate:<br />
+ \(f^{*}(t)=\max _{x \in \operatorname{dom}(f)}\{x t-f(x)\} \longleftrightarrow f(x)=\max _{t \in \operatorname{dom}\left(f^{*}\right)}\left\{x t-f^{*}(t)\right\}\)</li>
+      <li>
+        <p>Take $x$ as $\frac{p(x)}{q(x)}$ :<br />
+ \(\begin{aligned}
+ D_{f}(P \| Q) &amp;=\int_{x} q(x) f\left(\frac{p(x)}{q(x)}\right) d x \\
+ &amp;=\int_{x} q(x)\left(\max _{t \in \operatorname{dom}\left(f^{*}\right)}\left\{\frac{p  (x)}{q(x)} t-f^{*}(t)\right\}\right) d x \\
+ &amp;\color{red}{\geq} \int_{x} q(x)\left(\frac{p(x)}{q(x)} \color{red}{D(x)}-f^{*}( \color{red}{D(x)})\right) d x \\
+ &amp;=\int_{x} p(x) D(x) d x-\int_{x} q(x) f^{*}(D(x)) d x \\
+ \end{aligned}\)</p>
+      </li>
+      <li><strong>The reason of</strong> replacing $\max$ item with $D(x)$ as above in red color:
+        <ul>
+          <li>$D(x)$ takes $x$ as input and output $t$.</li>
+          <li>The limited capcity of $D$ determines the lower bound of $\max$ item.</li>
+        </ul>
+      </li>
+      <li>
+        <p>For the divergence between $P$ and $Q$:<br />
+\(\begin{aligned}
+ D_{f}(P \| Q) &amp;\approx \max _{\mathrm{D}} \int_{x} p(x) D(x) d x-\int_{x} q(x) f^{*} (D(x)) d x \\
+ &amp;=\max _{\mathrm{D}}\left\{E_{x \sim P}[D(x)]-E_{x \sim Q}\left[f^{*}(D(x))\right] \right\} \\
+ &amp;\quad\text { Samples from P } \quad \text { Samples from Q } \\
+ \end{aligned}\)</p>
+      </li>
+      <li>Convert the conjugate to the more <strong>general</strong> form of GAN’s objective by sampling from $P_{data}$ and $P_G$:
+\(D_{f}\left(P_{\text {data}} \| P_{G}\right)=\max _{\mathrm{D}}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}\left[f^{*}(D(x))\right]\right\} \\
+ \begin{aligned}
+ G^{*} &amp;=\arg \min _{G} D_{f}\left(P_{d a t a} \| P_{G}\right) \\
+ &amp;=\arg \min _{G} \max _{D}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}\left[f^{*}(D(x))\right]\right\} \\
+ &amp;=\arg \min _{G} \max _{D} V(G, D)
+ \end{aligned}\)
+        <ul>
+          <li><strong>Therefore</strong>, according to the different <strong>definition</strong> of $V(G,D)$, we can have different <strong>divergence</strong>, which corresponds to different $f^*$ <strong>function</strong>.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZaM8.png" alt="gan-3-3" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<ul>
+  <li><strong>What benefit we can get to try different divergence</strong> (and corresponding $f^*$ function)?</li>
+</ul>
+
+<h3 id="mode-collapseand--dropping">Mode Collapseand &amp; Dropping</h3>
+
+<ul>
+  <li>Mode collapse and Mode Dropping refer to <strong>reduced variety</strong> in the samples produced by a generator.
+    <ul>
+      <li><strong>Mode Collapse</strong>: The generator synthesizes samples with <strong>intra-mode</strong> variety, but some modes are missing.
+        <ul>
+          <li>E.g. Generator outputs limited variaty of faces with many duplicates.</li>
+        </ul>
+      </li>
+      <li><strong>Mode Dropping</strong>: The generator synthesizes samples with <strong>inter-mode</strong> variety, but each mode lacks variety.
+        <ul>
+          <li>E.g. Generator outputs various faces at once, but all with the same one feature, like white skins.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZdsS.png" alt="gan-3-4" style="margin:auto;display:block;width:60%;" /></p>
+
+<ul>
+  <li>
+    <p>The problem may be caused by the bad selection of <strong>divergence</strong></p>
+  </li>
+  <li>
+    <p>As the below picture shows:</p>
+    <ul>
+      <li>The left figure shows the problem of <code class="language-plaintext highlighter-rouge">KL-divergence</code>, where the distribution of the well-trained generator falls between the peak of the true data distribution.
+        <ul>
+          <li><strong>This is also one explanation</strong> of why traditional generation, like autoencoder, output obscure result by choosing KL-divergence and minimizing it (aka. maximizing the likelihood estimation).</li>
+          <li>The distribution between the peak refers to those obscure generated images.</li>
+        </ul>
+      </li>
+      <li>The right figure shows the mode collapse and dropping problem, where the trained distribution mainly lies in one single peak.
+        <ul>
+          <li>This is one explanation of why advesarial training often encounters the limited diversity or limited features problems.</li>
+          <li>The missing distribution of generator referes to the missing features.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/18/LdZNxf.png" alt="gan-3-5" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>But choosing different divergence can not solve the problem completely.
+    <ul>
+      <li>One triky workarounds is train the different generator, each with limited diversity and mode collapse or dropping problems. Gather to be the better generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="improving-gan">Improving GAN</h2>
+
+<h3 id="problem-of-js-divergence">Problem of JS-divergence</h3>
+
+<ul>
+  <li>In most cases $P_G$ and $P_{data}$ are not overlapped for the following reason:
+    <ul>
+      <li>The <strong>nature</strong> of data determines that $P_{data}$ and $P_G$ are low-dimensional manifold in high-dimensional space. Thus the overlap of two distribution can be ignored</li>
+      <li><strong>Limited sampling</strong> cause that even though the distribution of $P_{data}$ and $P_G$ have overlap, the discriminator frequently fails to measure the divergence between the distribution of sampling which is still sparse without enough overlap.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/28/LO9iXn.png" alt="gan-3-6" style="margin:auto;display:block;width:70%;" /></p>
+
+<p class="info"><strong>Info</strong>: Images are the low-dimensional manifold in high-dimensional space. If we hypothesis the space is only 3D, the images is a line or plane in this 3D space.</p>
+
+<ul>
+  <li>Considering the objective of Discriminator:
+ \(V(G,D)=-2log2 + \color{red}{2JS\left(P_{\text {data}} \| P_{\text {G}}\right)}\)
+    <ul>
+      <li>If there is nearly no overlap between two distribution, the value of JS-divergence would be <code class="language-plaintext highlighter-rouge">2log2</code> constant item, the <strong>gradient</strong> of which would be <em>zero</em>, which could cause the training stop.</li>
+      <li>And it is very common that two distribution have little overlap in high-dimensional space.</li>
+    </ul>
+  </li>
+  <li>As the following figure shows:
+    <ul>
+      <li>$P_{G_1}$ performs better than $P_{G_0}$ theoretically because it is closer to $P_{data}$, but the JS-divergence of two are all <code class="language-plaintext highlighter-rouge">log2</code> (ignore the coefficient <code class="language-plaintext highlighter-rouge">2</code> ahead).</li>
+      <li>Only two distribution are exactly the same, the <code class="language-plaintext highlighter-rouge">JS-divergence</code> will be <code class="language-plaintext highlighter-rouge">0</code>, which is the final target of generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: Strictly, according to the above equation of the objective of the discriminator, the JS-divergence is closed to <code class="language-plaintext highlighter-rouge">0</code> and the total objective is <code class="language-plaintext highlighter-rouge">log2</code> if there is barely enough overlap between distributions.</p>
+
+<ul>
+  <li>The generator is to minimize the divergence, but the same value <code class="language-plaintext highlighter-rouge">log2</code> of the objective gives no guide for the generator to judge which situation is worse. In other words, $P_{G_0}$ and $P_{G_1}$ are considered <strong>equally bad</strong>. Therefore, the generator will not update from $P_{G_0}$ to $P_{G_1}$.</li>
+  <li>On the other hand, the discriminator also consider $P_{G_0}$ and $P_{G_1}$ <strong>equally bad</strong>. Considering only when two distribution are exactly the same, <code class="language-plaintext highlighter-rouge">JS-divergence</code> is <code class="language-plaintext highlighter-rouge">0</code>, binary classifier will always achieves <code class="language-plaintext highlighter-rouge">100%</code> accuracy.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/28/LO9P6s.png" alt="gan-3-7" style="margin:auto;display:block;width:70%;" /></p>
+
+<p class="error"><strong>Most important</strong>: For the discriminator, a binary classifier, as long as the output of the classification is the false label, the loss is constant regardless of the deviation between the current $P_G$ and $P_{data}$. This property of <code class="language-plaintext highlighter-rouge">JS-divergence</code> makes it impossible to measure the distance between the non-overlapping distributions and hence the generator cannot be optimized properly.</p>
+
+<h4 id="lsgan">LSGAN</h4>
+
+<ul>
+  <li>In the binary classifier point of view, the <strong>gradient vanishing</strong> occurs when generate distribution is distinguished as fake too well after the <code class="language-plaintext highlighter-rouge">sigmoid</code> nonlinear transform.
+    <ul>
+      <li>Low-dimensional manifold in the high-dimensional space has almost no overlap, so the discriminator can clearly classified into 0 and 1, so that the gradient vanishing concentrates at both ends.</li>
+    </ul>
+  </li>
+  <li><strong>Least Square GAN</strong> (LSGAN): replace the sigmoid function with the linear, converting the <strong>binary classification</strong> problem into the <strong>regression</strong> problem.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj58K.png" alt="gan-3-8" style="margin:auto;display:block;width:70%;" /></p>
+
+<h2 id="wasserstein-gan">Wasserstein GAN</h2>
+
+<h3 id="wasserstein-distance">Wasserstein Distance</h3>
+
+<ul>
+  <li>Instead of using divergence to measure the distance between distributions, Wasserstein GAN (WGAN) use <strong>Earth Mover’s Distance</strong>.
+    <ul>
+      <li>Consider one distribution $P$ as a pile of earth and another distribution $Q$ as the target.</li>
+      <li><strong>Wasserstein Distance</strong>, also descriptively called <strong>Earth Mover’s Distance</strong> (EMD): the <strong>minimal</strong> total amount of work it takes to transform one heap into the other (initial distribution to the target).<br />
+\(W(P, Q) = d\)</li>
+      <li>The work defines as the amount of earth in a chunk times the distance it was moved.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjIgO.png" alt="gan-3-9" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>
+    <p>Assume two discrete distributions $P_r$ and $P_{\theta}$, each with $l$ possible states $x$ or $y$ respectively.</p>
+  </li>
+  <li>
+    <p>There are infinitely ways to move the earth around, but we only need to find the optimal one for EMD.</p>
+    <ul>
+      <li>Denote $\gamma(x, y)$ as the amount of earth distributed from $x$ to the domain of $y$.</li>
+      <li>The constraints $\sum_{x} \gamma(x, y)=P_{r}(y)$ and $\sum_{y} \gamma(x, y)=P_{\theta}(x)$ holds.</li>
+      <li>We require that $\gamma \in \Pi (P_{r}, P_{\theta})$, where $\Pi (P_{r}, P_{\theta})$ is the set of all distributions whose margains are $P_r$, $P_{\theta}$ respectively.</li>
+      <li>We multiply every value of $\gamma$ with the Euclidian distance between $x$ and $y$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\operatorname{EMD}\left(P_{r}, P_{\theta}\right)=\inf _{\gamma \in \Pi} \sum_{x, y}\|x-y\| \gamma(x, y)=\inf _{\gamma \in \Pi} \mathbb{E}_{(x, y) \sim \gamma}\|x-y\|=\inf _{\gamma \in \Pi}\langle\mathbf{D}, \mathbf{\Gamma}\rangle_{\mathrm{F}}\]
+
+<ul>
+  <li>$\inf$ stands for <code class="language-plaintext highlighter-rouge">infimum</code>, or the greatest lower bound (下确界), roughly meaning the minimum, the opposite of which is $\sup$ for <code class="language-plaintext highlighter-rouge">supremum</code> (上确界)</li>
+  <li>The distribution strategy is set as $\mathbf{\Gamma}=\gamma(x, y)$, and distance is $\mathbf{D}=\lVert x-y \rVert$, with $ \boldsymbol{\Gamma}, \mathbf{D} \in \mathbb{R}^{l \times l} $, then the definition of EMD will be:</li>
+  <li>${\langle , \rangle}_{F}$ is the <a href="https://en.wikipedia.org/wiki/Frobenius_inner_product">Frobenius inner product</a>, the sum of all the element-wise products.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opjf4x.png" alt="gan-3-10" style="margin:auto;display:block;width:70%;" /></p>
+
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
+
+<h3 id="wgan">WGAN</h3>
+
+<ul>
+  <li>Instead of the Divergence $D_f (P_{data} \Vert P_G)$, which consider the generated distribution equally bad when there is not much overlap in space, the Wasserstein Distance $W(P_{data}, P_G)$ gives the exact distance function between $P_G$ and $P_{data}$</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj4C6.png" alt="gan-3-11" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>By solving the optimization problem and finding the best $\gamma(x, y)$, we can evaluate wasserstein distance between $P_{data}$ and $P_G$:
+    <ul>
+      <li>maximize the $D(x)$ where $x$ is from $P_{data}$</li>
+      <li>minimize the $D(x)$ where $x$ is from $P_G$</li>
+    </ul>
+  </li>
+</ul>
+
+\[V(G,D) = \max_{D \in \textit{1-Lipschitz}} \left\{ E_{x \sim P_{\text {data}}} [D(x)] - E_{x \sim P_G} [D(x)] \right\}\]
+
+<p><strong>TODO</strong>: the derivation.</p>
+
+<ul>
+  <li>$D \in \textit{1-Lipschitz}$: D has to be <strong>smooth</strong> enough, so that the generated distribution and the real distribution will not be distinguished too much.
+    <ul>
+      <li>Without this constraint, the generated score will become small to $-\inf$, while the real will be large as $+\inf$, which will make network hard to train due to the large weight and never converge.</li>
+      <li>Thus, keep discriminator smooth is one way to keep the score from $\inf$.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjWU1.png" alt="gan-3-12" style="margin:auto;display:block;width:40%;" /></p>
+
+<ul>
+  <li><strong>Lipschitz Continuity</strong>: the function limited how fast it can change.
+    <ul>
+      <li>When $ K = 1$ is $\textit{1-Lipschitz}$</li>
+    </ul>
+  </li>
+</ul>
+
+\[\underset{\text{output change}}{\lVert f(x_1) - f(x_2) \rVert} \le K \underset{\text{input change}}{\lVert x_1 - x_2 \rVert}\]
+
+<ul>
+  <li><strong>Weight Clipping</strong>: a simple but efficient way to <strong>enforce</strong> a Lipschitz constraint.
+    <ul>
+      <li>Force the parameters $w$ between $c$ and $-c$</li>
+      <li>After parameters update, $ \text{if } w \gt c, w = c, \text{if } w \lt -c, w = -c$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
+
+<h3 id="wgan-gp">WGAN-GP</h3>
+
+<ul>
+  <li><strong>WGAN-GP</strong>: Wasserstin GAN with the gradient penalty.
+    <ul>
+      <li>A  differentiable function is <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> if and only if it has gradients with a norm less than or equal to 1 everywhere.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+&amp;D \in \textit{1-Lipschitz}\Longleftrightarrow  \left\|\nabla_{x} D(x)\right\| \le 1, \quad \text{for all } x\\[8px]
+&amp;\begin{aligned}
+V(G, D) 
+&amp;=\max _{D \in \textit { 1-Lipschitz }}\left\{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)]\right\} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda \int_{x} \max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right) d x\} \\
+\end{aligned}
+\end{aligned}\]
+
+<ul>
+  <li>Instead of promising all constraints of the gradient for all $x$ because enforcing the Lipschitz constraint <strong>everywhere</strong> is intractable, we only guarantee $x \in P_{penalty}$.</li>
+</ul>
+
+\[\begin{aligned}
+V(G, D) 
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\underset{\color{red}{\text{Prefer } \left\|\nabla_{x} D(x)\right\|\le 1, \text{ for all } x}}{\lambda \int_{x} \max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right) d x}\} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\underset{\color{red}{\text{Prefer } \left\|\nabla_{x} D(x)\right\|\le 1, \text{ for } x \text{ sampling from } x \sim P_{penalty}}}{\lambda E_{x \sim  P_{\text {penalty}}} [\max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right)]} \}
+\end{aligned}\]
+
+<ul>
+  <li>By randomly sampling, enforcing the $x$ only along the straight lines, as following figure shows, is sufficient and experimentally results in good performance.</li>
+  <li>Only give gradient constraint to the region between $P_{data}$ and $P_G$:
+    <ul>
+      <li>This region influences how $P_G$ moves to $P_{data}$.</li>
+      <li>$P_G$ will move towards $P_{data}$, passing through the $P_{penalty}$ region.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjovD.png" alt="gan-3-13" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>In practical, the penalty is set as <code class="language-plaintext highlighter-rouge">L2-norm</code>, which constrain the largest gradient to 1
+    <ul>
+      <li>Overly large gradients penalty works but too small gradient will also cause gradient vanishing, which will slow down the convergence.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+V(G, D) 
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda E_{x \sim  P_{\text {penalty}}} [\max _{x}\left(0,\left\|\nabla_{x} D(x)\right\|-1\right)] \} \\
+&amp; \approx \max _{D} \{E_{x \sim P_{\text {data}}}[D(x)]-E_{x \sim P_{G}}[D(x)] -\lambda E_{x \sim  P_{\text {penalty}}} [(\left\|\nabla_{x} D(x)\right\|-1 )^{2}] \}
+\end{aligned}\]
+
+<ul>
+  <li>Now discriminator will replace the last layer of the <strong>sigmoid function</strong> with wasserstain function to measure the distance between distributions, transmitting the problem from the <strong>binary classification</strong> to <strong>regression</strong>.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
+
+<h3 id="spectrum-normalization">Spectrum Normalization</h3>
+
+<ul>
+  <li><strong>Spectral Norm</strong>: keep the gradient norm smaller than <code class="language-plaintext highlighter-rouge">1</code> everywhere.</li>
+  <li>We keep Lipschitz continuity for the weight $W$ of each layer of the neural network $f(x) = Wx$.
+    <ul>
+      <li>Each matrix of $W$ divide by the <strong>sigular value</strong> of itself will guarantee <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> continuity.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>TODO</strong>: paper, https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/87220341</p>
+
+<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
+
+<h2 id="other-improvement">Other Improvement</h2>
+
+<h3 id="ebgan">EBGAN</h3>
+
+<ul>
+  <li><strong>Energy-based GAN</strong> (EBGAN): the same generator but the discriminator is with an auto-encoder framework.
+    <ul>
+      <li>EBGAN outputs the reconstruction image and get the <strong>reconstruction error</strong> to the input of the discriminator.</li>
+      <li>The error is the energy to determine the goodness of the generated result. The energy takes low values when it is the correct label and higher values for incorrect label.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/Opj7Ke.png" alt="gan-3-14" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li><strong>Benefit</strong>: The auto-encoder discriminator can be pre-trained by real images without generator.
+    <ul>
+      <li>The discriminator can be expert at distinguish the real or fake at the beginning of the training the generator.</li>
+    </ul>
+  </li>
+  <li>
+\[\begin{aligned}
+&amp;\mathcal{L}_{D}(x, z)=D(x)+\max (m-D(G(z))) \\
+&amp;\mathcal{L}_{G}(z)=D(G(z))
+\end{aligned}\]
+  </li>
+  <li>For discriminators, to minimize $\mathcal{L}_{D}$ is to maximize $D(G(z))$, which means to raise the following curve in blue region.</li>
+  <li>For generators, it makes effort to generate results with low energy.</li>
+  <li>Without constraint, the curve will be lifted without limitation.
+    <ul>
+      <li>It is <strong>easy</strong> for the discriminator to increase the energy of fake result, lifting the curve, but <strong>hard</strong> for the generator to decrease the energy.</li>
+      <li>Set the <strong>margain</strong> to constrain the energy lifted by the discriminator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/01/OpjHDH.png" alt="gan-3-15" style="margin:auto;display:block;width:50%;" /></p>
+
+<p><strong>TODO</strong> paper read https://blog.csdn.net/a312863063/article/details/88125429</p>
+
+<p><span class="ref"><a href="#reference-8">*reference-8</a></span></p>
+
+<h3 id="loss-sensitive-gan">Loss-sensitive GAN</h3>
+
+<p><strong>TODO</strong> paper read</p>
+
+<h3 id="be-gan">BE GAN</h3>
+
+<p><strong>TODO</strong> paper read https://www.cnblogs.com/king-lps/p/8552177.html</p>
+
+<h2 id="improved-algorithm">Improved Algorithm</h2>
+
+<ul>
+  <li>Comparing to the original version of <a href="/2022/01/20/gan-1#conclusion">GAN algorithm</a>:
+    <ul>
+      <li>Replace the <code class="language-plaintext highlighter-rouge">log</code> divergence with Wasserstein Distance.</li>
+      <li>Add <strong>Weight Clipping</strong> and <strong>Gradient Penalty</strong>.</li>
+    </ul>
+  </li>
+  <li>In each training iteration:
+    <ul>
+      <li><strong>Learning D</strong>: find <strong>lower bound</strong> of $\max_D V(G,D)$ and repeat <code class="language-plaintext highlighter-rouge">k</code> times for fully trained.
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right), \tilde{x}^i = G(z^i)$.</li>
+          <li>Update discriminator paramters $\theta_{d}$ to maximize.<br />
+\(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \color{red}{D\left(x^{i}\right)-}\frac{1}{m} \sum_{i=1}^{m}  \color{red}{D\left(\tilde{x}^{i}\right) } \\
+&amp;\theta_{d} \leftarrow \theta_{d}\color{red}{+}\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+        </ul>
+      </li>
+      <li><strong>Learning G</strong>: find the minimum of $\min_G V(G,D)$ <strong>only once</strong>.</li>
+      <li>Sample <strong>another</strong> <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+ &amp;\tilde{V}= \color{red}{-} \frac{1}{m} \sum_{i=1}^{m} \color{red}{D(G\left(z^{i}\right))} \\
+ &amp;\theta_{g} \leftarrow \theta_{g}\color{red}{-}\eta \nabla \tilde{V}\left(\theta_{g}\right)
+ \end{aligned}\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>TODO</strong>: update $\tilde{V}$ with gradient penalty, check code.</p>
 
 <h2 id="reference">Reference</h2>
 
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-</ul>
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.00709">fGAN: General Framework of GAN</a><a name="reference-2"></a></li>
+  <li><a href="https://vincentherrmann.github.io/blog/wasserstein/">Wasserstein GAN and the Kantorovich-Rubinstein Duality</a><a name="reference-3"></a></li>
+  <li><a href="https://arxiv.org/abs/1701.07875">Wasserstein GAN</a><a name="reference-4"></a></li>
+  <li><a href="https://arxiv.org/abs/1704.00028">Improved Training of Wasserstein GANs</a><a name="reference-5"></a></li>
+  <li><a href="https://arxiv.org/abs/1802.05957">Spectral Normalization for Generative Adversarial Networks</a><a name="reference-6"></a></li>
+  <li><a href="https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/87220341">Spectral Norm Explaination</a></li>
+  <li><a href="https://arxiv.org/abs/1609.03126">Energy-based Generative Adversarial Network</a><a name="reference-8"></a></li>
+</ol>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-08-10T00:00:00-04:00">Aug 15, 2020</time>
+        <time itemprop="dateModified" datetime="2022-02-11T00:00:00-05:00">Feb 11, 2022</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -416,7 +854,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2022/02/21/gan-4">Feature Extraction</a></div></div></div>
 
 </div>
 
@@ -459,7 +897,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'blog-2020-08-10-cg-1'
+				id: 'blog-2022-02-11-gan-3'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -1130,7 +1568,15 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
     window.pageAsideAffix = affix;
   });
 })();
-</script><script>(function() {
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1209,10 +1655,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'blog-2020-08-10-cg-1';
-      var title = "The Notes of Computer Graphics Ⅰ";
+      var key =   'blog-2022-02-11-gan-3';
+      var title = "Advanced Thoery and Problems of GAN";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='blog-2020-08-10-cg-1']").text(view);
+        $("[data-page-key='blog-2022-02-11-gan-3']").text(view);
       });
     });
   </script>

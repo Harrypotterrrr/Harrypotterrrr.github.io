@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅰ - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Conditional Generative Model - Haolin Jia's Homepage</title>
 
-<meta name="description" content="An Overview to Computer Graphics">
-<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/10/cg-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Conditional Generative Model">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2022/01/25/gan-2.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2 active"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2 active"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2"><a href="/2022/02/21/gan-4">Feature Extraction</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -300,111 +300,342 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅰ</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Conditional Generative Model</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-10-cg-1.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅰ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-01-25-gan-2.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Conditional Generative Model"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=computer+graphics">computer graphics</a>
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=generative+model">generative model</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-10-cg-1">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 15, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-10T00:00:00-04:00">
-    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-01-25-gan-2">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Jan 25, 2022</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-01-25T00:00:00-05:00">
+    <meta itemprop="keywords" content="computer vision,generative model,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>An Overview to Computer Graphics</p>
+<div class="article__content" itemprop="articleBody"><p>Conditional Generative Model</p>
 
 <!--more-->
 
-<h2 id="computer-graphics">Computer Graphics</h2>
-
-<p>To synthesis and manipulate visual information.</p>
-
-<h3 id="application">Application</h3>
+<h2 id="supervised-conditional">Supervised Conditional</h2>
 
 <ul>
-  <li><strong>Video Games</strong>: Technically, global illumination determines the quality of the game performance: the lighter the graphics shows, the better the game is.</li>
-  <li><strong>Movies</strong>: Special effects</li>
-  <li><strong>Animations</strong>: Simulate particles in different scenes.</li>
-  <li>Design</li>
-  <li><strong>Visualization</strong>: One of the way to manipulate visual information.</li>
-  <li><strong>Virtual Reality &amp; Augmented Reality</strong></li>
-  <li><strong>Digital Illustration</strong>.</li>
-  <li><strong>Simulation</strong>: physical simulation, computation and implementation.</li>
-  <li><strong>Graphical User Interface</strong></li>
-  <li><strong>Topography</strong></li>
+  <li>Use paired data to train the network</li>
 </ul>
 
-<h3 id="fundamental-challenge">Fundamental Challenge</h3>
-
-<ul>
-  <li>Require understanding of all aspects of physical world</li>
-  <li>Create and interact with realistic virtual world</li>
-  <li>Computing methods, displays, technology.</li>
-</ul>
-
-<h2 id="topics">Topics</h2>
-
-<h3 id="rasterization">Rasterization</h3>
-
-<ul>
-  <li>Project <code class="language-plaintext highlighter-rouge">geometry primitives</code> (3D triangles/polygons) on to the screen.</li>
-  <li>Break projected primitives into <code class="language-plaintext highlighter-rouge">fragments</code> (pixels)</li>
-  <li>Gold standard in Video Games (Real-time Applications)</li>
-</ul>
-
-<p class="info"><strong>Real-time/offline computer graphics</strong>: more than 30 fps (frame per second)</p>
-
-<h3 id="curves-and-meshes">Curves and Meshes</h3>
-
-<p>How to represent geometry in Computer Graphics</p>
-
-<ul>
-  <li>Bezier Curve</li>
-  <li>Catmull-Clark subdivision</li>
-</ul>
-
-<h3 id="ray-tracing">Ray Tracing</h3>
-
-<ul>
-  <li>Shoot rays from the camera through each pixel</li>
-  <li>Gold standard in Animations / Movies (Offline Application)\</li>
-</ul>
-
-<h3 id="animation--simulation">Animation / Simulation</h3>
-
-<ul>
-  <li>Key frame animation</li>
-  <li>Mass-spring System</li>
-</ul>
-
-<h2 id="cg-vs-cv">CG vs CV</h2>
-
-<h3 id="difference">Difference</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/r7onmT.jpg" alt="cg-1-1" /></p>
+<h3 id="conditional-gan">Conditional GAN</h3>
 
 <ul>
   <li>
-    <p>Computer Vision is to understand, recognize and predict the content of images.</p>
+    <p>Reason to add noise: Without noise, the network only learn the map from the input (e.g. text ‘train’, ‘car’, etc.) to the average of multiple positive samples (e.g. the average of the front and side train), which is very bad.</p>
   </li>
-  <li>
-    <p>Computer Graphics is to model and simulate the geometry of visual information.</p>
+  <li>Generator: take a normal (Gaussian) distribution and a constraint as inputs</li>
+  <li>Discriminator: take generated output and a <strong>constraint</strong> as inputs, to check <strong>both</strong>:
+    <ul>
+      <li>if the result is realistic</li>
+      <li>if the result <strong>matches</strong> the constraint</li>
+    </ul>
+  </li>
+  <li>Algorithm:</li>
+</ul>
+
+<ol>
+  <li>Sample m examples $\{ (c^1, x^{1}), (c^2, x^{2}), \ldots, (c^m, x^{m}) \}$ from database</li>
+  <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+  <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right)$</li>
+  <li>Sample m objects $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from database</li>
+  <li>Update discriminator paramters $\theta_{d}$ to maximize<br />
+ \(\begin{aligned}
+  &amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(c^{i}, x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(c^{i}, \tilde{x}^{i}\right)\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(c^{i}, \hat{x}^{i}\right)\right) \\
+  &amp;\theta_{d} \leftarrow \theta_{d}+\eta \nabla \tilde{V}\left(\theta_{d}\right)
+  \end{aligned}\)</li>
+  <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+  <li>Sample m conditions $\{c^{1}, c^{2}, \ldots, c^{m}\}$ from a database</li>
+  <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(c^{i}, z^{i}\right)\right)\right), \theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)\)</li>
+</ol>
+
+<h4 id="discriminator">Discriminator</h4>
+
+<p>There are two commonly used prototype of structure of Discriminator:</p>
+<ol>
+  <li>Use two different network to receive object and condition. Green Network receive the object encoding and condition embedding and output final result which represent if generation is realistic and matched or not.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDAPI.png" alt="gan-2-1" style="margin:auto;display:block;" /></li>
+  <li>Two network output different scores. Blue network receives object encoding and condition to output match result.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDEGt.png" alt="gan-2-2" style="margin:auto;display:block;" /></li>
+</ol>
+
+<ul>
+  <li>The first structure may confuse between the bad generation and bad matching.</li>
+</ul>
+
+<h4 id="stack-gan">Stack GAN</h4>
+
+<p>Progressively generate large resolution image by stacking generator.</p>
+<ul>
+  <li>low resolution generator take embedding and noise to output small image</li>
+  <li>The small images from the previous generator will be taken as input, replacing the noise, to refine the detail and enlarge the resolution.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDZxf.png" alt="gan-2-3" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference">*reference-3</a></span></p>
+
+<h4 id="image-to-image">Image-to-image</h4>
+
+<ol>
+  <li><strong>Non-adversarial approach</strong>: (<strong>Traditional supervised approach using autoencoder</strong>) directly mapping from the input to image
+ <img src="https://s1.ax1x.com/2022/04/13/LuDVRP.png" alt="gan-2-4" style="margin:auto;display:block;" />
+ The result is blurry because as stated in <a href="#comparing-to-vae">Comparing to VAE</a>, it is the average of several samples.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDmM8.png" alt="gan-2-5" style="margin:auto;display:block;" /></li>
+  <li><strong>Use GAN to generate</strong>: generated image and conditions are fed into discriminator to judge realisitc or not. At the same time, <em>close constraint</em> is to guide generator to output as closed to the paired image in the training sample as possible.
+ <img src="https://s1.ax1x.com/2022/04/13/LuDnsS.png" alt="gan-2-6" style="margin:auto;display:block;" /></li>
+</ol>
+
+<ul>
+  <li>As the above figure shows, without <em>close constraint</em> part, which is implemented in <em>L1 distance</em> to measure the difference between results and paired real images, the output will be more diversed but something <strong>unrelated</strong> to the original input will be generated.</li>
+</ul>
+
+<h3 id="patchgan">PatchGAN</h3>
+
+<p><strong>TODO</strong></p>
+
+<h3 id="speech-enhancement">Speech Enhancement</h3>
+
+<ul>
+  <li>More generally, the paired samples can be adopted to train GAN, e.g. noisy speech and clean voice pair.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDuqg.png" alt="gan-2-7" style="margin:auto;display:block;" /></p>
+
+<h3 id="video-generation">Video Generation</h3>
+
+<ul>
+  <li>Generator predict the future frame</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/13/LuDMZQ.png" alt="gan-2-8" style="margin:auto;display:block;" /></p>
+
+<h2 id="unsupervised-conditional">Unsupervised Conditional</h2>
+
+<ul>
+  <li>Paired data for training is expensive or difficult to build.
+    <ul>
+      <li>Different drawing style with the same contents.</li>
+      <li>Same sentence spoke by male and female.</li>
+    </ul>
+  </li>
+  <li><strong>Unsupervised conditional generation</strong>: transform from <strong>one domain</strong> to <strong>another</strong> without paired data
+    <ul>
+      <li>Approach 1: direct transformation
+        <ul>
+          <li>change the texture or color, low level modification using shallow generator</li>
+        </ul>
+      </li>
+      <li>Approach 2: Projection to a common space
+        <ul>
+          <li>only keep semantics</li>
+        </ul>
+      </li>
+    </ul>
   </li>
 </ul>
 
-<h2 id="geek--genius--freak">Geek = Genius + Freak</h2>
+<h3 id="direction-transformation">Direction Transformation</h3>
+
+<ul>
+  <li>Transform the input image from domain $X$ directly to domain $Y$.</li>
+  <li>Discriminator distinguishes if the generated image belongs to domain $Y$.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUm0H.png" alt="gan-2-9" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>This approach may lead to the generated image closed to domain $Y$ but not similar to the original image, since discriminator still believes results belong to $Y$ in this case.
+    <ul>
+      <li>This can be avoided by generator design: <strong>simpler</strong> generator makes the input and output m<strong>ore closely related</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
+
+<ul>
+  <li>One workaround: use other module to guide the network output the image with the <strong>similar semantic representation</strong>
+    <ul>
+      <li>Backbone is feature extractor, such as VGG, which is pretrained</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUA1K.png" alt="gan-2-10" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
+
+<h4 id="cyclegan">CycleGAN</h4>
+
+<ul>
+  <li>CycleGAN is another solution, based on cycle consistency loss transforming the images between two domains.</li>
+</ul>
+
+\[\begin{aligned}
+\mathcal{L}_{\mathrm{GAN}}\left(G_X, D_{Y}, X, Y\right) &amp;=\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\log D_{Y}(y)\right]+\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\log \left(1-D_{Y}(G_X(x))\right]\right. \\
+
+\mathcal{L}_{\mathrm{GAN}}\left(G_Y, D_{X}, Y, X\right) &amp;=\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\log D_{X}(x)\right]+\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\log \left(1-D_{X}(G_Y(y))\right]\right. \\
+
+\mathcal{L}_{\text {cyc }}(G_X, G_Y) &amp;=\mathbb{E}_{x \sim p_{\text {data }}(x)}\left[\|G_Y(G_X(x))-x\|_{1}\right]+\mathbb{E}_{y \sim p_{\text {data }}(y)}\left[\|G_X(G_Y(y))-y\|_{1}\right] \\
+
+\mathcal{L}\left(G_X, G_Y, D_{X}, D_{Y}\right) &amp;=\mathcal{L}_{\mathrm{GAN}}\left(G_X, D_{Y}, X, Y\right)+\mathcal{L}_{\mathrm{GAN}}\left(G_Y, D_{X}, Y, X\right) +\lambda \mathcal{L}_{\mathrm{cyc}}(G_X, G_Y) \\
+
+G_X^{*}, G_Y^{*} &amp;= \arg \min _{G_X, G_Y} \max _{D_{X}, D_{Y}} \mathcal{L}\left(G_X, G_Y, D_{X}, D_{Y}\right)
+
+\end{aligned}\]
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUE6O.png" alt="gan-2-11" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
+
+<ul>
+  <li>The problem of CycleGAN: a master of steganography (信息隐藏), which means some information is hidden through the first generator in a way that is invisible to human eyes (e.g. black spot becomes inconspicuous) but restored after the second generator.
+    <ul>
+      <li>It is easier for the generator to get a high score from the discriminator by hiding some information.</li>
+      <li>In this scene, cycle consistency is not promised because domain transformation is achieved by retaining some invisible details in the output image from the first generator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUVXD.png" alt="gan-2-12" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-7">*reference-7</a></span></p>
+
+<h4 id="dual-gan">Dual GAN</h4>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="disco-gan">Disco GAN</h4>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="stargan">StarGAN</h4>
+
+<ul>
+  <li>For previous work, multiple models should be built independently for each pair of domains.</li>
+  <li>StarGAN extends the scalability of cycleGAN in handling more than two domains by using only one generator.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUene.png" alt="gan-2-13" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-9">*reference-9</a></span></p>
+
+<h3 id="projection-to-a-common-space">Projection to a common space</h3>
+
+<ul>
+  <li>Instead of mapping the image of domain $X$ directly to domain $Y$, this firstly encode the image into the latent space which will be then projected to another domain by decoder.</li>
+</ul>
+
+<h4 id="common-problem-and-workarounds">Common problem and workarounds</h4>
+
+<ul>
+  <li>
+    <p>Reconstruction error is built to guide each branch of network can reconstruct images in each domain after the encoding.</p>
+  </li>
+  <li>
+    <p>Discriminator optimize the generation quality and solve obscure images produced by autoencoder (learn by averaging)</p>
+  </li>
+  <li>
+    <p>After separately training, each row of the network has ability to reconstruct image in each domain.</p>
+    <ul>
+      <li>But images with <strong>the same attribute in different domain</strong> may not project to the same position in the latent space.</li>
+      <li>The <strong>distribution</strong> of the latent representations from different domain are different.</li>
+      <li>For example, black hair in the domain $A$ may be projected to <code class="language-plaintext highlighter-rouge">[0, 0, 1]</code> by $EN_X$, but black hair in the domain $B$ may be projected to <code class="language-plaintext highlighter-rouge">[1, 0, 0]</code> by $EN_Y$.</li>
+      <li>We can not get output with desirable features by controlling the latent space vector in inference stage.</li>
+      <li>It doesn’t make sense to train the latent space in this way!</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUKAA.png" alt="gan-2-14" style="margin:auto;display:block;" /></p>
+
+<h4 id="couple-gan--unit">Couple GAN &amp;&amp; UNIT</h4>
+
+<p><strong>TODO</strong> Couple GAN, UNIT</p>
+
+<ul>
+  <li>Couple GAN and UNIT share the parameters of last several layers of encoders and firsst several layers of decoders, which ensures that different encoders/decoders has exact same mapping function to the latent space.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUn7d.png" alt="gan-2-15" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-10">*reference-10, *reference-11</a></span></p>
+
+<h4 id="fader-networks">Fader Networks</h4>
+
+<ul>
+  <li>Comparing to sharing the parameters of the network, <strong>Domain Discriminator</strong> is built to trained adversarially to disentange the latent representation directly.
+    <ul>
+      <li>$EN_X$ and $EN_Y$ are trained to fool the domain discriminator.</li>
+      <li>Domain Discriminator distinguishes the latent code from $EN_X$ or $EN_Y$, forcing the output of $EN_X$ and $EN_Y$ have <strong>the same distribution</strong>.</li>
+    </ul>
+  </li>
+  <li>Well-trained Fader Network: $EN_X$ and $EN_Y$ map the images from different domain to the same distribution as latent representations.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUQht.png" alt="gan-2-16" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-12">*reference-12</a></span></p>
+
+<h4 id="combogan">ComboGAN</h4>
+
+<ul>
+  <li>In the same way that <a href="#cyclegan">CycleGAN</a> uses unsupervised learning and cycle consistency loss, ComboGAN adds latent vectors to control generation features</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQUMtI.png" alt="gan-2-17" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-13">*reference-13</a></span></p>
+
+<p><strong>TODO</strong> ComboGAN</p>
+
+<h4 id="xgan--dtn">XGAN &amp;&amp; DTN</h4>
+
+<ul>
+  <li>Comparing to ComboGAN do cycle-consistency loss in pixel wise, XGAN and DTN guide the encoders mapping to the same latent space by the <strong>semantic-consistency loss</strong> on the latent representation itself.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/14/LQU19P.png" alt="gan-2-18" style="margin:auto;display:block;" /></p>
+
+<p><span class="ref"><a href="#reference-14">*reference-14</a></span></p>
+
+<p><strong>TODO</strong> XGAN
+<strong>TODO</strong> DTN: unsupervised</p>
+
+<p><strong>TODO</strong> Bram matrix</p>
 
 <h2 id="reference">Reference</h2>
 
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-</ul>
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1612.03242">StackGAN: Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Networks</a><a name="reference-2"></a></li>
+  <li><a href="https://arxiv.org/abs/1611.07004">Image-to-Image Translation with Conditional Adversarial Networks</a><a name="reference-3"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.10593">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a><a name="reference-4"></a></li>
+  <li><a href="https://arxiv.org/abs/1611.02200">Unsupervised Cross-Domain Image Generation</a><a name="reference-5"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.10593">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a><a name="reference-6"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.05192">Learning to Discover Cross-Domain Relations with Generative Adversarial Networks</a><a name="reference-7"></a></li>
+  <li><a href="https://arxiv.org/abs/1704.02510">DualGAN: Unsupervised Dual Learning for Image-to-Image Translation</a><a name="reference-8"></a></li>
+  <li><a href="https://arxiv.org/abs/1711.09020">StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation</a><a name="reference-9"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.07536">Coupled Generative Adversarial Networks</a><a name="reference-10"></a></li>
+  <li><a href="https://arxiv.org/abs/1703.00848">Unsupervised Image-to-Image Translation Networks</a><a name="reference-11"></a></li>
+  <li><a href="https://arxiv.org/abs/1706.00409">Fader Networks: Manipulating Images by Sliding Attributes</a><a name="reference-12"></a></li>
+  <li><a href="https://arxiv.org/abs/1712.06909">ComboGAN: Unrestrained Scalability for Image Domain Translation</a><a name="reference-13"></a></li>
+  <li><a href="https://arxiv.org/abs/1711.05139">XGAN: Unsupervised Image-to-Image Translation for Many-to-Many Mappings</a><a name="reference-14"></a></li>
+</ol>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-08-10T00:00:00-04:00">Aug 15, 2020</time>
+        <time itemprop="dateModified" datetime="2022-01-25T00:00:00-05:00">Jan 25, 2022</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -416,7 +647,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2022/02/21/gan-4">Feature Extraction</a></div></div></div>
 
 </div>
 
@@ -459,7 +690,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'blog-2020-08-10-cg-1'
+				id: 'blog-2022-01-25-gan-2'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -1130,7 +1361,15 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
     window.pageAsideAffix = affix;
   });
 })();
-</script><script>(function() {
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1209,10 +1448,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'blog-2020-08-10-cg-1';
-      var title = "The Notes of Computer Graphics Ⅰ";
+      var key =   'blog-2022-01-25-gan-2';
+      var title = "Conditional Generative Model";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='blog-2020-08-10-cg-1']").text(view);
+        $("[data-page-key='blog-2022-01-25-gan-2']").text(view);
       });
     });
   </script>

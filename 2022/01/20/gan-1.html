@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅰ - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Basic Theory of Generative Model - Haolin Jia's Homepage</title>
 
-<meta name="description" content="An Overview to Computer Graphics">
-<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/10/cg-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Deep Generative Model">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2022/01/20/gan-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2 active"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2 active"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2"><a href="/2022/02/21/gan-4">Feature Extraction</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -300,111 +300,504 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅰ</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Basic Theory of Generative Model</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-10-cg-1.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅰ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-01-20-gan-1.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Basic Theory of Generative Model"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
-                href="/archive.html?tag=computer+graphics">computer graphics</a>
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=generative+model">generative model</a>
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-10-cg-1">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Aug 15, 2020</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-10T00:00:00-04:00">
-    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-01-20-gan-1">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Jan 20, 2022</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-01-20T00:00:00-05:00">
+    <meta itemprop="keywords" content="computer vision,generative model,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>An Overview to Computer Graphics</p>
+<div class="article__content" itemprop="articleBody"><p>Deep Generative Model</p>
 
 <!--more-->
 
-<h2 id="computer-graphics">Computer Graphics</h2>
-
-<p>To synthesis and manipulate visual information.</p>
-
-<h3 id="application">Application</h3>
-
-<ul>
-  <li><strong>Video Games</strong>: Technically, global illumination determines the quality of the game performance: the lighter the graphics shows, the better the game is.</li>
-  <li><strong>Movies</strong>: Special effects</li>
-  <li><strong>Animations</strong>: Simulate particles in different scenes.</li>
-  <li>Design</li>
-  <li><strong>Visualization</strong>: One of the way to manipulate visual information.</li>
-  <li><strong>Virtual Reality &amp; Augmented Reality</strong></li>
-  <li><strong>Digital Illustration</strong>.</li>
-  <li><strong>Simulation</strong>: physical simulation, computation and implementation.</li>
-  <li><strong>Graphical User Interface</strong></li>
-  <li><strong>Topography</strong></li>
-</ul>
-
-<h3 id="fundamental-challenge">Fundamental Challenge</h3>
-
-<ul>
-  <li>Require understanding of all aspects of physical world</li>
-  <li>Create and interact with realistic virtual world</li>
-  <li>Computing methods, displays, technology.</li>
-</ul>
-
-<h2 id="topics">Topics</h2>
-
-<h3 id="rasterization">Rasterization</h3>
-
-<ul>
-  <li>Project <code class="language-plaintext highlighter-rouge">geometry primitives</code> (3D triangles/polygons) on to the screen.</li>
-  <li>Break projected primitives into <code class="language-plaintext highlighter-rouge">fragments</code> (pixels)</li>
-  <li>Gold standard in Video Games (Real-time Applications)</li>
-</ul>
-
-<p class="info"><strong>Real-time/offline computer graphics</strong>: more than 30 fps (frame per second)</p>
-
-<h3 id="curves-and-meshes">Curves and Meshes</h3>
-
-<p>How to represent geometry in Computer Graphics</p>
-
-<ul>
-  <li>Bezier Curve</li>
-  <li>Catmull-Clark subdivision</li>
-</ul>
-
-<h3 id="ray-tracing">Ray Tracing</h3>
-
-<ul>
-  <li>Shoot rays from the camera through each pixel</li>
-  <li>Gold standard in Animations / Movies (Offline Application)\</li>
-</ul>
-
-<h3 id="animation--simulation">Animation / Simulation</h3>
-
-<ul>
-  <li>Key frame animation</li>
-  <li>Mass-spring System</li>
-</ul>
-
-<h2 id="cg-vs-cv">CG vs CV</h2>
-
-<h3 id="difference">Difference</h3>
-
-<p><img src="https://z3.ax1x.com/2020/12/29/r7onmT.jpg" alt="cg-1-1" /></p>
+<h2 id="basic-idea-of-gan">Basic Idea of GAN</h2>
 
 <ul>
   <li>
-    <p>Computer Vision is to understand, recognize and predict the content of images.</p>
+    <p>Each dimension of input vector represents some characteristic, which means that change the input of the noise, some of the characteristic of the output image will change.</p>
   </li>
   <li>
-    <p>Computer Graphics is to model and simulate the geometry of visual information.</p>
+    <p>The outout of discriminator is commonly a scalar. The larger value means realistic, while smaller means fake.</p>
   </li>
 </ul>
 
-<h2 id="geek--genius--freak">Geek = Genius + Freak</h2>
+<h3 id="algorithm">Algorithm</h3>
+
+<p>Algorithm Initialize $\theta_{d}$ for $\mathrm{D}$, and $\theta_{g}$ for $\mathrm{G}$</p>
+<ul>
+  <li>In each training iteration:
+    <ol>
+      <li>Sample m examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right)$</li>
+      <li>Update discriminator paramters $\theta_{d}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}+\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right)\right) \\
+&amp;\theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)
+\end{aligned}\)</li>
+    </ol>
+  </li>
+  <li>Takeaway:
+    <ul>
+      <li>Fix generator G, update discriminator D. Discriminator learns to assign high scores to real objects and low scores to generated result. Gradient <strong>descent</strong> of the final score.</li>
+      <li>Fix discriminator D, and update generator G. Gnerator learns to fool the discriminator. Gradient <strong>ascent</strong> of the final score.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="generator">Generator</h3>
+
+<ul>
+  <li>Generator can be designed as <strong>autoencoder</strong>
+    <ul>
+      <li>Encoder part of the generator maps the original images to the latent space as the compact representation of the input object.</li>
+      <li>Decoder part of the generator reconstructs the original object from code to generated result as closely as possible.</li>
+      <li>After the training, we can <strong>discard</strong> the encoder part, replacing it with the input code as whatever we want.</li>
+      <li>Change the input vector of the input noise, the generated result will <strong>vary smoothly</strong>, but <strong>may not make sense</strong> e.g. linear interpolation of the input noise</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Le3aa4.png" alt="gan-1-1" style="margin:auto;display:block;" /></p>
+
+<p><strong>TODO</strong> VAE</p>
+
+<h3 id="comparing-to-vae">Comparing to VAE</h3>
+
+<p><strong>TODO</strong> TODO result in what?</p>
+
+<ul>
+  <li>VAE: The relation between components are not-correlated since neurons in the same layer of the network will not influence each other and they are independent</li>
+  <li>Thus VAE can not discriminate naunced between features, which cause the result more vague than GAN</li>
+  <li>To catch the correpondence among pixels, deep structure needed.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/LeoGNT.png" alt="gan-1-2" style="margin:auto;display:block;" /></p>
+
+<h2 id="discriminator">Discriminator</h2>
+
+<ul>
+  <li>Use discriminator to generate?
+    <ul>
+      <li>Inference: Generate object $\widetilde{x}$ that<br />
+ \(\widetilde{x}=\arg \max _{x \in X} D(x)\)</li>
+      <li>Enumerate all possible $x$, which is not always feasible, because the above equations can only be solved when it is linear. However linearity constrain the ability of the network.</li>
+    </ul>
+  </li>
+  <li>Algorithm:
+    <ul>
+      <li>Given a set of positive examples and negative example generated randomly</li>
+      <li>In each iteration
+        <ul>
+          <li>Learn a discriminator D that can discriminate positive and negative examples</li>
+          <li>Find relatively good examples from negative examples by $\widetilde{x}=\arg \max _{x \in X} D(x)$</li>
+          <li>Replace the negative examples with relatively good examples</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Leo8EV.png" alt="gan-1-3" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>From the above figure, we noticed that discriminator can only optimize the distribution corresponding to the generated distribution, which is one of the reason why GAN is difficult to optimize.</li>
+</ul>
+
+<p><strong>TODO</strong> structured learning</p>
+
+<h3 id="gan">GAN</h3>
+
+<ul>
+  <li>From Discriminator’s point of view
+    <ul>
+      <li>Use Generator to generate negative samples, replacing infeasible sovled <code class="language-plaintext highlighter-rouge">argmax</code> function</li>
+    </ul>
+  </li>
+  <li>From Generator’s point of view
+    <ul>
+      <li>Still generate the object <strong>without correspondence</strong> (pixel-by-pixel)</li>
+      <li>But it is led by the instruction of the discriminator with <strong>global view</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="basic-theory">Basic Theory</h2>
+
+<h3 id="generation">Generation</h3>
+
+<ul>
+  <li>The realistic images from dataset can be regarded as the <strong>low-dimensional manifold</strong> in <strong>high-dimensional space</strong>. Sampling from the dataset is the process of sampling from the manifold in the space.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Manifold, in short, generalizes the triangle, circle, squares, etc. to higher dimensions. If we take a closer look at the N-dimensional manifold (N-manifold), it looks like N-1 dimensional manifold.</p>
+
+<ul>
+  <li>
+    <p>The ensemble of images from the sampling constitute the data distribution $P_{data}(x)$, which only occupies the tiny part of the whole high-dimensional space.</p>
+  </li>
+  <li>
+    <p>The point outside of the manifold means there will be <strong>low probablity</strong> of the true sampling.</p>
+  </li>
+  <li>
+    <p>Building a generator is the process of building a mapping from one known distribution to the data distribution in high level.</p>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHt9f.png" alt="gan-1-4" style="margin:auto;display:block;width:80%;" /></p>
+
+<h3 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
+
+<ul>
+  <li>Target
+    <ul>
+      <li>Given a data distribution $P_{data}(x)$</li>
+      <li>We target at a distribution $P_{G}(x;\theta)$ parameterized by $\theta$
+        <ul>
+          <li>To find $\theta$ such that $P_{G}(x;\theta)$ closed to $P_{data}(x)$</li>
+          <li>e.g. if we assume $P_{G}(x;\theta)$ is Guassian Mixture Model, $\theta$ are means and variances of the Gaussians</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Step
+    <ul>
+      <li>Derive $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ by sampling from $P_{data}(x)$</li>
+      <li>We can compute corresponding $P_{G}(x^{i};\theta)$</li>
+      <li>Then find $\theta^{\ast}$ maximizing the likelihood</li>
+    </ul>
+
+\[L=\prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right)\]
+  </li>
+  <li><strong>Maximum Likelihood Estimation</strong> = <strong>Minimize KL Divergence</strong>
+    <ul>
+      <li><strong>KL-divergence</strong> measures the difference between two distribution $P_{\text {data}}$ and $P_{\text {G}}$<br />
+ \(\begin{aligned}
+ KL\left(P_{\text {data}} \| P_{G}\right)
+ &amp;= P_{\text {data}} \log P_{data}- P_{data} \log P_{\text {G}} \\[8px]
+ &amp;= P_{\text {data}} \log \frac{P_{data}}{P_{\text {G}}}
+ \end{aligned}\)</li>
+      <li>$x \sim data$ means $x$ is sampled from the distribution of data.</li>
+      <li>$P_{data}(x)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">data</code> at $x$ sampling point.</li>
+      <li>$P_{G}(x;\theta)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">G</code> at $x$ sampling point with parameter $\theta$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+\theta^{*} 
+&amp;=\arg \max _{\theta} \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \log \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \sum_{i=1}^{m} \log P_{G}\left(x^{i} ; \theta\right) \quad \color{red}{\{ x^{1}, x^{2}, \ldots, x^{m} \} \text{ from } P_{data}(x) } \\[15px]
+&amp; \approx \arg \max _{\theta} mE_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \quad \color{red}{\text{argmax ignore } m \text{ multiplier}} \\[14px]
+&amp; = \arg \max _{\theta} E_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x - \int_{x} P_{d a t a}(x) \log P_{\text {data}}(x) d x \\
+&amp;\color{white}{= \arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x} \color{red}{\scriptsize {\text{add an item without } \theta \text{ and not influence argmax}}}\\[-15px]
+&amp;=\arg \min_{\theta} K L\left(P_{\text {data}} \| P_{G}\right)
+\end{aligned}\]
+
+<p><strong>TODO</strong>: Expectation Maximum</p>
+
+<ul>
+  <li>What if $P_G$ is not Gaussian Mixture Model but more complex and general model?
+    <ul>
+      <li>The mean and variance of the more complex model is difficult to get, since the <strong>explicit</strong> expression of the corresponding <strong>probability density function</strong> is unknown.</li>
+      <li>Thus parameters $\theta$ are <strong>implicit</strong> and impossible to found.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="drawback-of-gmm">Drawback of GMM</h3>
+
+<ul>
+  <li>In the past, Generator is built as Guassian Mixture model (GMM) with explicit parameters $\theta$.
+    <ul>
+      <li>As mentioned <a href="#generation">before</a>, GMM <strong>fails to represent the low-dimensional manifold</strong> which images lie along in high-dimensional space.</li>
+      <li>Therefore, no matter what <code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">variance</code> of GMM looks like, it fails to resemble the target distribution.</li>
+      <li>As a result, the output of GMM is obscure and fuzzy.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHGNt.png" alt="gan-1-5" style="margin:auto;display:block;" /></p>
+
+<h3 id="generator-1">Generator</h3>
+
+<ul>
+  <li>Generator <code class="language-plaintext highlighter-rouge">G</code> is a network, which defines a probability distirbution $P_G$, mapping the input distribution to the target.
+    <ul>
+      <li>The network has an ability to approximate any functions.</li>
+      <li>The input distribution is not decisive, normal distribution, uniform distribution, etc.</li>
+      <li>Even the simplest distribution of input $z$ can be mapped to the complex one.</li>
+    </ul>
+  </li>
+</ul>
+
+\[G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\]
+
+<ul>
+  <li>The explicit formulations of $P_G$ and $P_{data}$ are still unknown, so it is impossible to do gradient descent on $G$ to minimize divergence.
+    <ul>
+      <li>But we can <strong>sample</strong> data from two distribution $P_G$ and $P_{data}$.
+        <ul>
+          <li>Sampling from $P_{data}$: randomly sample from the database.</li>
+          <li>Sampling from $P_G$: randomly sample from normal, fed into the network and get outputs.</li>
+        </ul>
+      </li>
+      <li>How to compute the divergence between samplings from two distributions? <strong>Discriminator</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: <code class="language-plaintext highlighter-rouge">Div</code> is the divergence between two distribution, e.g. KL-divergence, JS-divergence.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHN38.png" alt="gan-1-6" style="margin:auto;display:block;" /></p>
+
+<h3 id="discriminator-1">Discriminator</h3>
+
+<ul>
+  <li>
+    <p>Recall the objective function for generator <code class="language-plaintext highlighter-rouge">G</code>:<br />
+ \(G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\)</p>
+  </li>
+  <li>The objective function for discriminator <code class="language-plaintext highlighter-rouge">D</code>:<br />
+ \(D^{*}=\arg \max _D \operatorname{V}(D, G) \\
+ V(G, D)=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>This is exactly same as training a <strong>Binary Classifier</strong>
+    <ul>
+      <li>$P_{data}$ is binary class <code class="language-plaintext highlighter-rouge">1</code></li>
+      <li>$P_G$ is binary class <code class="language-plaintext highlighter-rouge">0</code></li>
+      <li><code class="language-plaintext highlighter-rouge">D</code> is a binary classifier</li>
+      <li>Binary classifier is to <em>maximize</em> <strong>Cross Entropy</strong> rather than <strong>Mean Square Error</strong>, since MSE-based objective is non-convex optimization problem</li>
+    </ul>
+  </li>
+  <li>The maximum objective is related to <strong>JS divergence</strong>.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<ul>
+  <li>Given <code class="language-plaintext highlighter-rouge">G</code>, the optimal $D^*$ maximizing:<br />
+ \(\begin{aligned}
+ D^{*}&amp;=\arg \max _D \operatorname{V}(D, G) \\[10px]
+ V(G, D) &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[10px]
+ &amp;=\int_{x} P_{d a t a}(x) \log D(x) d x+\int_{x} P_{G}(x) \log (1-D(x)) d x \\[10px]
+ &amp;=\int_{x}\left[P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x))\right] d x
+ \end{aligned}\)</li>
+  <li>Assume that <code class="language-plaintext highlighter-rouge">D(x)</code> can represent <strong>any function</strong>. <a name="d-assumption"></a>
+    <ul>
+      <li>Consider the integral as the sum of each <strong>piecewise function</strong>(分段函数) for $x_1, x_2, …$, since we have assumed <code class="language-plaintext highlighter-rouge">D(x)</code> can represent any function, and neural network indeed can be regarded as piecewise function mathematically.</li>
+      <li>When each piecewise function reaches the largest individually, the final integral must also be the largest.</li>
+    </ul>
+  </li>
+  <li>Discretize the above equation, then the objective will be:<br />
+ \(\begin{cases}
+ P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x)) \\[10px]
+ a = P_{data},\ b = P_{G}
+ \end{cases}\)
+    <ul>
+      <li>Solve for the extremum point:<br />
+\(\begin{aligned}
+\mathrm{f}(D) &amp;=\operatorname{alog}(D)+b \log (1-D) \\[8px]
+\frac{d \mathrm{f}(D)}{d D} &amp;=a \times \frac{1}{D}+b \times \frac{1}{1-D} \times  (-1) =0 \\[8px]
+a \times\left(1-D^{*}\right) &amp;=b \times D^{*} \\[5px]
+0&lt; D^{*} &amp;=\frac{a}{a+b} =\frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}&lt;1  \\[8px]
+0&lt; D^{*} &amp;&lt;1 
+\end{aligned}\)</li>
+    </ul>
+  </li>
+  <li>Substitue the optimal $D^* = \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}$:</li>
+</ul>
+
+<p>\(\begin{aligned}
+V &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[15px]
+&amp;=E_{x \sim P_{\text {data}}}\left[\log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right]+E_{x \sim P_{G}}\left[\log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right] \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{\frac{1}{2}P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{\frac{1}{2}P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + \int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + K L\left(P_{\text {data}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) + K L\left(P_{\text {G}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) \\[15px]
+&amp;=-2log2 + \color{red}{2JS\left(P_{\text {data}} \| P_{\text {G}}\right)}
+\end{aligned}\)</p>
+<ul>
+  <li>JS divergence is symmetric, while KL divergence is asymmetric.
+   \(\begin{aligned}
+   JS\left(P_{\text {data}} \| P_{G}\right)
+   &amp;= \frac{1}{2}[KL(P_{\text {data}} \| M) + KL(P_{\text {G}} \| M)] \\
+   M &amp;= \frac{1}{2}(P_{data} + P_{G})
+   \end{aligned}\)</li>
+</ul>
+
+<p><strong>TODO</strong>: inverse KL divergence</p>
+
+<h3 id="gan-1">GAN</h3>
+
+<ul>
+  <li>The objective of Generator <code class="language-plaintext highlighter-rouge">G</code> is to minimize the divergence between $P_G$ and $P_{data}$</li>
+  <li>The divergence is measured by Discriminator <code class="language-plaintext highlighter-rouge">D</code>, which maximizes the <strong>cross entropy</strong> as a <strong>binary classifie</strong>r.</li>
+  <li>The maximum objective is related to JS divergence.</li>
+</ul>
+
+\[\begin{aligned}
+ D^{*}&amp;=\operatorname{Div}\left(P_{G}, P_{\text {data}}\right)=\arg \max _D \operatorname{V}(D, G) \\
+ G^{*}&amp;=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right) \\
+&amp;=\arg \min _G \max _D \operatorname{V}(D, G) 
+\end{aligned}\]
+
+<ul>
+  <li>For each fixed generator, we can find a discriminator with the <strong>maximum</strong> $V(D, G_i)$</li>
+  <li>For each $V(D, G_i)$, we can get a <strong>minimum</strong> generator</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHJ4P.png" alt="gan-1-7" style="margin:auto;display:block;width:70%" /></p>
+
+<ul>
+  <li>In each iteration
+    <ul>
+      <li>Fix generator <code class="language-plaintext highlighter-rouge">G</code>, update discriminator $D$.</li>
+      <li>Fix discriminator <code class="language-plaintext highlighter-rouge">D</code>, update generator $G$.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="algorithm-1">Algorithm</h4>
+
+<ul>
+  <li>To find the best <code class="language-plaintext highlighter-rouge">G</code> minimizing the loss function<br />
+ \(G^{*}=\arg \min _G \max _D \operatorname{V}(D, G) = \arg\min_G L(G)\\
+ \theta_{G} \leftarrow \theta_{G}-\eta \partial L(G) / \partial \theta_{G}\)
+    <ul>
+      <li>Let the maximum value $\max_D V(G,D)$ as $L(G)$</li>
+      <li>$\theta_G$ defines <code class="language-plaintext highlighter-rouge">G</code></li>
+      <li>The gradient of the max function is the gradient of max value of each piecewise function.</li>
+    </ul>
+  </li>
+  <li>Given $G_0$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_0, D_{0}^{*} )$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_1$<br />
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{0}^{*}\right) / \partial \theta_{G}\)</li>
+  <li>Give $G_1$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_1, D_1^*)$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_2$
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{1}^{*}\right) / \partial \theta_{G}\)</li>
+</ul>
+
+<p class="error"><strong>Critical</strong>: Actually, after we get the optimal $D_i^*$ by maximizing the JS-divergence, given the fixed $G_i$, we do gradient descent optimizing $G_i$ a little bit per step to finally get $G_{i+1}$. However, in the process of the gradient descent of $G_i$ to $G_{i+1}$, the divergence function $V(G_i, D_i)$ may change a lot, which cause the maximum objective value of <code class="language-plaintext highlighter-rouge">JS-divergence</code> shift to somewhere else.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNH8AI.png" alt="gan-1-8" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>Therefore, the important thing is that we don’t update $G$ too much for every steps, and $D$ is well-trained comparing to current $G$, so that the function of $V(G_i, D_i)$ won’t change a lot and $D_i^* \approx D_{i+1}^*$.</li>
+</ul>
+
+<h4 id="in-practical">In practical</h4>
+
+<ul>
+  <li>Actually, We can not get the expectation value of $P_{data}$ or $P_G$
+    <ul>
+      <li>In other words, we can not calculate the maximum value of the below equation:<br />
+ \(V =E_{x \sim P_{\text {data }}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+    </ul>
+  </li>
+  <li>But we can do sampling from $P_{data}$ or $P_G$ to <strong>approximate</strong> the expectation.</li>
+  <li>Given $G$, to compute $\max_D V(G,D)$
+    <ul>
+      <li>Sample ${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$, sample ${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$</li>
+      <li>To maximize:<br />
+ \(\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D(x^{i})+\frac{1}{m} \sum_{i=1}^{m} \log (1-D(\tilde{x}^{i}))\)</li>
+    </ul>
+  </li>
+  <li>Thus, $D$ is a binary classifier with sigmoid output, which can be designed to be very deep.
+    <ul>
+      <li>${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$ is <code class="language-plaintext highlighter-rouge">Positive examples</code>.</li>
+      <li>${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$ is <code class="language-plaintext highlighter-rouge">Negative examples</code>.</li>
+      <li>This is equivalent to <strong>minimize Cross-entropy</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="total-algorithm">Total Algorithm</h2>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<ul>
+  <li>In each training iteration:
+    <ul>
+      <li><strong>Learning D</strong>: find <strong>lower bound</strong> of $\max_D V(G,D)$ and repeat <code class="language-plaintext highlighter-rouge">k</code> times for fully trained.
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right), \tilde{x}^i = G(z^i)$.</li>
+          <li>Update discriminator paramters $\theta_{d}$ to maximize.<br />
+\(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}\color{red}{+}\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+        </ul>
+      </li>
+      <li><strong>Learning G</strong>: find the minimum of $\min_G V(G,D)$ <strong>only once</strong>.</li>
+      <li>Sample <strong>another</strong> <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+ &amp;\tilde{V}=\underset{\text{irrelevant to } G}{\boxed{\frac{1}{m} \sum_{i=1}^{m}  \log D\left(x^{i}\right) } } +\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right) \right) \\
+ &amp;\theta_{g} \leftarrow \theta_{g}\color{red}{-}\eta \nabla \tilde{V}\left(\theta_{g}\right)
+ \end{aligned}\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note that</strong> it is impossible for $D$ to find the maximum value of $\max_D V(G,D)$, which means that the JS-divergence can never be reached, because:<br /> <strong>1</strong>. The learning ability of $D$ is limited due to the iteration times and learning rate, the $D$ can not convergence in several update steps.<br /> <strong>2</strong>. Even with the infinite training step and the convergence achieved, it is more likely for $D$ to fall in local minima.<br /> <strong>3</strong>. Even without trapped in local minima, the capcity of the generatlization of $D$ is limited, which contradict the <a href="#d-assumption">assumption</a> that $D$ can represent all functions.</p>
+
+<h3 id="in-real-implementation">In Real Implementation</h3>
+
+<ul>
+  <li>The training of $G$ would be slow because of the initial output of $D(x)$ is closed to $0$ and the corresponding gradient to $G$ is very small.
+ \(V =\underset{\text{irrelevant to } G}{\boxed{E_{x \sim P_{\text {data } }}[\log D(x)]}}+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>Two workarounds
+    <ul>
+      <li>Replace the target with the following, greatly increase the gradient of the very beginning stage, <em>Minimax GAN (MMGAN)</em> 
+\(V = E_{x \sim P_{G}}[- \log (D(x))]\)</li>
+      <li>Replace the negative label of $G$ with the positive label, <em>Non-saturating GAN (NSGAN)</em></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHBHs.png" alt="gan-1-9" style="margin:auto;display:block;width:30%;" /></p>
 
 <h2 id="reference">Reference</h2>
 
 <ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a></li>
+  <li><a href="https://blog.csdn.net/taoqick/article/details/102621605">分类用交叉熵而不用MSE</a><a name="reference-2"></a></li>
 </ul>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2020-08-10T00:00:00-04:00">Aug 15, 2020</time>
+        <time itemprop="dateModified" datetime="2022-01-20T00:00:00-05:00">Jan 20, 2022</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -416,7 +809,7 @@
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2022/02/21/gan-4">Feature Extraction</a></div></div></div>
 
 </div>
 
@@ -459,7 +852,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'blog-2020-08-10-cg-1'
+				id: 'blog-2022-01-20-gan-1'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -1130,7 +1523,15 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
     window.pageAsideAffix = affix;
   });
 })();
-</script><script>(function() {
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
   function errorHandler(error, callback) {
     if (error) {
       callback && callback(error);
@@ -1209,10 +1610,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'blog-2020-08-10-cg-1';
-      var title = "The Notes of Computer Graphics Ⅰ";
+      var key =   'blog-2022-01-20-gan-1';
+      var title = "Basic Theory of Generative Model";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='blog-2020-08-10-cg-1']").text(view);
+        $("[data-page-key='blog-2022-01-20-gan-1']").text(view);
       });
     });
   </script>
