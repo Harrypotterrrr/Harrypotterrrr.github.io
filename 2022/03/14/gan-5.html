@@ -10,10 +10,10 @@
 		
 	</script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Feature Extraction and Disentanglement - Haolin Jia's Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Sequence Generation and Evaluation - Haolin Jia's Homepage</title>
 
-<meta name="description" content="Feature Extraction and Disentanglement">
-<link rel="canonical" href="https://harrypotterrrr.github.io//2022/02/21/gan-4.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="Sequence Generation, Generation Evaluation, Inception Score, Fréchet Inception Distance">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2022/03/14/gan-5.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -275,7 +275,7 @@
 
     <div class="grid page__grid">
 
-      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2 active"><a href="/2022/02/21/gan-4">Feature Extraction</a></li><li class="toc-h2"><a href="/2022/03/14/gan-5">Sequence and Evaluation</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2"><a href="/2022/02/21/gan-4">Feature Extraction</a></li><li class="toc-h2 active"><a href="/2022/03/14/gan-5">Sequence and Evaluation</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
 
       <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
       <div class="header__title">
@@ -300,11 +300,11 @@
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Feature Extraction and Disentanglement</h1></header><span class="split-space">&nbsp;</span>
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Sequence Generation and Evaluation</h1></header><span class="split-space">&nbsp;</span>
           <a class="edit-on-github"
             title="Edit on Github"
-            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-02-21-gan-4.md">
-            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Feature Extraction and Disentanglement"><div class="article__info clearfix"><ul class="left-col menu"><li>
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-03-14-gan-5.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Sequence Generation and Evaluation"><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=computer+vision">computer vision</a>
             </li><li>
@@ -313,371 +313,357 @@
             </li><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=notes">notes</a>
-            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-02-21-gan-4">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Feb 21, 2022</span>
-            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-02-21T00:00:00-05:00">
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-03-14-gan-5">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Mar 14, 2022</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-03-14T00:00:00-04:00">
     <meta itemprop="keywords" content="computer vision,generative model,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Feature Extraction and Disentanglement</p>
+<div class="article__content" itemprop="articleBody"><p>Sequence Generation, Generation Evaluation, Inception Score, Fréchet Inception Distance</p>
 
 <!--more-->
 
-<h2 id="feature-disentangle">Feature Disentangle</h2>
+<h2 id="sequence-to-sequence">Sequence to Sequence</h2>
 
 <ul>
-  <li>The GAN receives one vector as input and output a desirable result.
+  <li>
+    <p>The generator is a typical seq2seq model.</p>
+  </li>
+  <li>Conditional Squence Generation
     <ul>
-      <li>We hope to control the characteristic of the output by mopdifying each specific value in the input vector.</li>
+      <li>Reinforcement Learning (human feedback)</li>
+      <li>GAN (discriminator feedback)</li>
     </ul>
   </li>
-  <li>For general GAN, modifying a specific dimension of the vector commonly change the feature of the result <strong>unconsciously</strong>
+  <li>Unsupervised Conditional Sequence Generation
     <ul>
-      <li>Because the actual distribution of each feature are intricate and <strong>entangled</strong> in the latent space.</li>
+      <li>Text style transfer</li>
+      <li>Unsupervised Abstractive Summarization</li>
+      <li>Unsupervised Translation</li>
+    </ul>
+  </li>
+  <li>The problem of seq2seq: the result by maximizing likelihood satisfying the training criterion, but contracting the human sense
+    <ul>
+      <li>For the chat-bot: <code class="language-plaintext highlighter-rouge">I'm good</code> is similar to <code class="language-plaintext highlighter-rouge">I'am XXX</code> but is not the answer to <code class="language-plaintext highlighter-rouge">How are you?</code>.</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="infogan">InfoGAN</h3>
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
 
 <ul>
-  <li>Split input <code class="language-plaintext highlighter-rouge">z</code> to two parts, <code class="language-plaintext highlighter-rouge">c</code> encodes the different feature in each dimension and <code class="language-plaintext highlighter-rouge">z'</code> as input noise.</li>
-  <li>Classifier recover the predict <code class="language-plaintext highlighter-rouge">c</code> from the output <code class="language-plaintext highlighter-rouge">x</code> from the Generator, which supervises the generate to output <code class="language-plaintext highlighter-rouge">x</code> with the feature of <code class="language-plaintext highlighter-rouge">c</code>.</li>
-  <li>Discriminator still output a scalar to represent the result good or not, but shares the parameter with Classifier except for the last output layer.
+  <li>Input sentence $h$, through Chatbot $En$ and $De$, output response sentence $x$.
     <ul>
-      <li>Without Discriminator, the output from Generator will only focus on <code class="language-plaintext highlighter-rouge">c</code> which benefit for the Classifier to predict, but generate bad results.</li>
+      <li>Learn to maximize expected reward by <strong>policy gradient</strong>.</li>
+    </ul>
+  </li>
+  <li>Input sentence $h$ and response sentece $x$, through human, output the reward $R(h,x)$.
+    <ul>
+      <li>Behave as a discriminator.</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/03/OFJjEV.png" alt="gan-4-1" style="margin:auto;display:block;width:70%;" /></p>
+<p><img src="https://s1.ax1x.com/2022/05/16/ORx0RP.png" alt="gan-5-1" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li><strong>Target</strong>: to find the optimal $\theta$ to maximize the expected reward.</li>
+</ul>
+
+\[\theta^{*} =\arg \max _{\theta} \bar{R}_{\theta}\]
+
+<ul>
+  <li>Accumulate over the distribution of input sentence $h$, and over all possibility of output $x$ caused by the randomness in generator.
+    <ul>
+      <li>Accumulation of the possiblity is computing the <strong>expectation</strong>.</li>
+      <li>Approximate the real expectation by sampling as much as possible.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+\bar{R}_{\theta} &amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \\
+&amp;=E_{h \sim P(h)}\left[E_{x \sim P_{\theta}(x \mid h)}[R(h, x)]\right] \\
+&amp;=E_{h \sim P(h), x \sim P_{\theta}(x \mid h)}[R(h, x)] \\
+&amp; \approx \frac{1}{N} \sum_{i=1}^{N} R\left(h^{i}, x^{i}\right)
+\end{aligned}\]
+
+<ul>
+  <li>Sampling approximate the target reward, but $R(h^i,x^i)$ is <strong>unrelated to</strong> the parameter $\theta$ of the network.</li>
+</ul>
+
+\[\begin{aligned}
+\nabla \bar{R}_{\theta} &amp;=\sum_{h} P(h) \sum_{x} R(h, x) \nabla P_{\theta}(x \mid h) \\
+&amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \color{red}{\frac{\nabla P_{\theta}(x \mid h)}{P_{\theta}(x \mid h)}} \\
+&amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \color{red}{\nabla \log P_{\theta}(x \mid h)} \quad \color{black}{ \left( \frac{d \log (f(x))}{dx}=\frac{1}{f(x)} \frac{d f(x)}{d x} \right)} \\
+&amp;=E_{h \sim P(h), x \sim P_{\theta}(x \mid h)}\left[R(h, x) \nabla \log P_{\theta}(x \mid h)\right] \\
+&amp; \approx \frac{1}{N} \sum_{i=1}^{N} \underset{\color{red}{\text{from sampling}}}{\boxed{R\left(h^{i}, x^{i}\right) \nabla \log P_{\theta}(x^i \mid h^i)}}
+\end{aligned}\]
+
+<ul>
+  <li>Now $R$ is related to parameter $\theta$,</li>
+  <li>Update $\theta$ regarding to the reward:
+ $ \theta^{\textit{new}} \leftarrow \theta^{\textit{old}} + \eta \nabla \bar{R}_{\theta^{\textit{old}}} $
+    <ul>
+      <li>When $R\left(h^{i}, x^{i}\right) $ is positive, $P_{\theta}(x^i \mid h^i)$ will increase.</li>
+      <li>When $R\left(h^{i}, x^{i}\right) $ is negative, $P_{\theta}(x^i \mid h^i)$ will decrease.</li>
+    </ul>
+  </li>
+  <li>After each iteration of updating $\theta$, it is necessary to do <strong>sampling again</strong> before computing the gradient.
+    <ul>
+      <li>Because the reward $\bar{R}_{\theta}$ will change after each update operations of $\theta$.</li>
+    </ul>
+  </li>
+  <li>Comparing <strong>Reinforcement Learning</strong> with <strong>Maximize Likelihood</strong>:
+    <ul>
+      <li>Maximum Likelihood is identical to <strong>minimize cross entropy</strong>.
+        <ul>
+          <li>Train the model based on supervised learning using paired data.</li>
+          <li>Gradient descent on tje pnkect function.</li>
+        </ul>
+      </li>
+      <li>Reinforcement learning is kind of <strong>weighted objective function</strong> of maximum likelihood.
+        <ul>
+          <li>RL obtained the training data from the interaction during the training process.</li>
+          <li><strong>Derive the objective function</strong> from the gradient equation, analogy with maximum likelihood.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Maximum Likelihood</th>
+      <th>Reinforcement Learning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Objective Function</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} \log P_{\theta}\left(\hat{x}^{i} \mid c^{i}\right)\)</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} R\left(c^{i}, x^{i}\right) \log P_{\theta}\left(x^{i} \mid c^{i}\right)\)</td>
+    </tr>
+    <tr>
+      <td>Gradient</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} \nabla \log P_{\theta}\left(\hat{x}^{i} \mid c^{i}\right)\)</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} R\left(c^{i}, x^{i}\right) \nabla \log P_{\theta}\left(x^{i} \mid c^{i}\right)\)</td>
+    </tr>
+    <tr>
+      <td>Training Data</td>
+      <td>\(\left\{\left(c^{1}, \hat{x}^{1}\right), \ldots,\left(c^{N}, \hat{x}^{N}\right)\right\} \\ R\left(c^{i}, \hat{x}^{i}\right)=1\)</td>
+      <td>\(\left\{\left(c^{1}, x^{1}\right), \ldots,\left(c^{N}, x^{N}\right)\right\}\) <br /> obtained from interation, weighted by $R(c^i, x^i)$</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
 
-<h3 id="vae-gan">VAE-GAN</h3>
+<h3 id="conditional-gan">Conditional GAN</h3>
 
 <ul>
-  <li>Based on VAE (variational auto-encoder), VAE-GAN combines VAE and GAN
+  <li>Similar to Reinforcement Learning</li>
+  <li>Input sentence $h$, through Chatbot $En$ and $De$, output response sentence $x$.
     <ul>
-      <li>VAE only generates obscure results.</li>
-      <li>Discriminator</li>
+      <li>Learn to maximize expected reward by <strong>policy gradient</strong>.</li>
     </ul>
   </li>
-  <li>Encoder is to encode the input image from the dataset to a normal distribution code <code class="language-plaintext highlighter-rouge">z</code>, regularized by imposing a prior distribution over the latent distribution $p(z)</li>
-  <li>Generator is to generate images and cheat the distriminator
+  <li>Replace Human with <strong>discriminator</strong>
     <ul>
-      <li>Output the reconstruction image from the output <code class="language-plaintext highlighter-rouge">z</code> of Encoder: minimize the reconstruction</li>
-      <li>Output the generated image from the noise sampled from the prior distribution: get <code class="language-plaintext highlighter-rouge">z</code> as closed to the normal distribution as possible.</li>
-    </ul>
-  </li>
-  <li>
-    <p>Discriminator is to distinguish the real, generated or reconstructed images.</p>
-  </li>
-  <li>Algorithm of the training the VAE-GAN
-    <ul>
-      <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
-      <li>In each training iteration:
-        <ul>
-          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(\tilde{z}^i)$.</li>
-          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from decoder, $\hat{x}^i = Dec(z^i)$.</li>
-          <li>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, decrease $\textit{KL-divergence}(P(\tilde{z}^i</td>
-                  <td>x^i) \Vert P(z))$</td>
-                </tr>
-              </tbody>
-            </table>
-          </li>
-          <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, increase binary cross entropy $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
-          <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase binary cross entropy $D(x^i)$, decrease $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
-        </ul>
-      </li>
+      <li>Input sentence $h$ and response sentece $x$, through discriminator, output real or fake (reward).</li>
+      <li>Input human dialogues, through discriminator, output real or fake (reward).</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/03/OFJOH0.png" alt="gan-4-2" style="margin:auto;display:block;width:70%;" /></p>
+<p class="error"><strong>Warning:</strong> Sometimes discriminator may immediately distinguish the fake <strong>one-hot</strong> score, because comparing to the true label where the only exact true dimension contains <code class="language-plaintext highlighter-rouge">1</code>, fake score vector is diffused as <code class="language-plaintext highlighter-rouge">[0.8, 0.1, 0, ..., 0.1]</code>. Thus, <a href="/2022/02/11/gan-3#wgan">WGAN</a> solves this problem by constraining the discriminator with <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> function, whereby the discriminator’s vision becomes ‘fuzzy’ and scores are not distinguished too much.</p>
 
-<p class="success"><strong>Info</strong>: Another kind of discriminator can be implemented to output three labels of the result: real, generated and reconstructed.</p>
+<h2 id="evaluation">Evaluation</h2>
 
 <ul>
-  <li>Algorithm of the training VAE-GAN
+  <li>Evaluate the quality of the generation from GAN</li>
+</ul>
+
+<h3 id="likelihood">Likelihood</h3>
+
+<ul>
+  <li>The traditional method is to measure the likelihood of the generation of the well-trained GAN $P_G$.
     <ul>
-      <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
-      <li>In each training iteration:
-        <ul>
-          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(\tilde{z}^i)$.</li>
-          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
-          <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\hat{x}^{1}, \hat{x}^{2}, \ldots, \hat{x}^{m}\}$ from decoder, $\hat{x}^i = Dec(z^i)$.</li>
-          <li>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, decrease $\textit{KL-divergence}(P(\tilde{z}^i</td>
-                  <td>x^i) \Vert P(z))$</td>
-                </tr>
-              </tbody>
-            </table>
-          </li>
-          <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to decrease reconstruction error of <code class="language-plaintext highlighter-rouge">MSE</code> $\lVert \tilde{x}^i - x^i \rVert$, increase binary cross entropy $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
-          <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase binary cross entropy $D(x^i)$, decrease $D(\tilde{x}^i)$ and $D(\hat{x}^i)$.</li>
-        </ul>
-      </li>
+      <li>Compare the likelihood with the real data distribution.</li>
+      <li>If it has the higher possibility of $P_G$ to generate the real data, we assume $P_G$ is better.</li>
     </ul>
   </li>
 </ul>
 
-<p class="success"><strong>Info</strong>: Another kind of discriminator can be implemented to output three labels of the result: real, generated and reconstructed.</p>
+\[\textit{Likelihood}=\frac{1}{N} \sum_{i} \log P_{G}\left(x^{i}\right)\]
+
+<ul>
+  <li>The problem is <strong>there is no way</strong> to compute the generation distribution $P_G(x^i)$.
+    <ul>
+      <li>Because the data is generated according to the <strong>prior distribution</strong>. The amount of the output is limited and the content is not determinated.</li>
+    </ul>
+  </li>
+  <li><strong>Kernel Density Estimation</strong>: estimate the distribution $P_G(x)$ from sampling, and assume the generated result is Guassian Mixture Model (GMM) to approximate $P_G$.
+    <ul>
+      <li>Each generated sample is the mean of a Gaussian with the same covariance.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/16/ORxdPI.png" alt="gan-5-2" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>The problem still exists:
+    <ul>
+      <li>The number of sampling is <strong>uncertain</strong> which is enough to make sure the accuracy of GMM.</li>
+      <li>GMM is too <strong>naive</strong> to represent a complicated generator.</li>
+      <li>Likelihood can not represent the <strong>quality</strong> of results.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note:</strong> Likelihood only gives the <strong>similarity</strong> of the generation to the real data, but has no indication on the quality of the generated result which is <strong>not in the dataset</strong>. Also, likelihood doesn’t guarantee the diversity of the generation.</p>
 
 <p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
 
-<h3 id="bigan">BiGAN</h3>
+<h3 id="objective-evaluation">Objective Evaluation</h3>
 
 <ul>
-  <li>Make pair of the input and output from Encoder and Decoder to feed into the discriminator, distinguishing the the input come from the encoder or the decoder</li>
-  <li>Encoder takes the image <code class="language-plaintext highlighter-rouge">x</code> from the dataset and generate code <code class="language-plaintext highlighter-rouge">z</code>, and make a pair <code class="language-plaintext highlighter-rouge">(x, z)</code> (the corresponding distribution <code class="language-plaintext highlighter-rouge">P(x, z)</code>) for discriminator.
+  <li>Train an image <strong>classifier</strong> to evaluate the generator good or not.
     <ul>
-      <li>Deceive Discriminator that the <code class="language-plaintext highlighter-rouge">P(x, z)</code> is from eecoder.</li>
+      <li>Intuitively, if the well-trained classifier recognize the image and give the clear category to the result, the generation is generally not bad.</li>
     </ul>
   </li>
-  <li>Decoder takes the code <code class="language-plaintext highlighter-rouge">z'</code> sampled from the prior distribution and generate image <code class="language-plaintext highlighter-rouge">x'</code>, and make a pair <code class="language-plaintext highlighter-rouge">(x', z)</code> (the corresponding distribution <code class="language-plaintext highlighter-rouge">Q(x', z')</code>) for discriminator.
+  <li>If we have the generated image $x$ and the output $y$ from the classifier evaluator,
     <ul>
-      <li>Deceive Discriminator that the <code class="language-plaintext highlighter-rouge">Q(x', z')</code> is from dncoder.</li>
-    </ul>
-  </li>
-  <li>Discriminator evaluate the difference between the distribution from encoder and decoder.</li>
-  <li>After the well training, the discriminator can not distinguish the distribution from encoder and decoder.
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">P(x, z)</code> will be the same as <code class="language-plaintext highlighter-rouge">Q(x', z')</code>.</li>
-      <li>The embedding code <code class="language-plaintext highlighter-rouge">z</code> will be similar to the code generated from the prior distribution, and the image <code class="language-plaintext highlighter-rouge">x'</code> from decoder will be real.</li>
-      <li>The cycle consistency holds, which is similar to <a href="/2022/01/25/gan-2#cyclegan">cycleGAN</a>:
-        <ul>
-          <li>Also, <code class="language-plaintext highlighter-rouge">Enc(x) = z</code> =&gt; <code class="language-plaintext highlighter-rouge">Dec(z') = x</code> for all <code class="language-plaintext highlighter-rouge">x'</code>.</li>
-          <li>Similarly, <code class="language-plaintext highlighter-rouge">Dec(z) = x</code> =&gt; <code class="language-plaintext highlighter-rouge">Enc(x) = z</code> for all <code class="language-plaintext highlighter-rouge">z</code>.</li>
-        </ul>
-      </li>
+      <li>For the quality of the generation, <strong>more concentrated distribution</strong> means the <strong>higher visual quality</strong>.<br />
+ <img src="https://s1.ax1x.com/2022/05/16/ORxwGt.png" alt="gan-5-3" style="margin:auto;display:block;width:70%;" /></li>
+      <li>For the diversity of the generation, the <strong>more uniform distribution</strong> of <strong>all</strong> generated outputs means the <strong>higher diversity</strong>.<br />
+ <img src="https://s1.ax1x.com/2022/05/16/ORxBxf.png" alt="gan-5-4" style="margin:auto;display:block;width:70%;" /></li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/03/OFJvNT.png" alt="gan-4-3" style="margin:auto;display:block;width:70%;" /></p>
+\[P(y)=\frac{1}{N} \sum_{n} P\left(y^{n} \mid x^{n}\right)\]
+
+<h3 id="inception-score">Inception Score</h3>
 
 <ul>
-  <li>Algorithm of the training Bi-GAN</li>
-  <li>Initialize <code class="language-plaintext highlighter-rouge">Enc</code>, <code class="language-plaintext highlighter-rouge">Dec</code>, <code class="language-plaintext highlighter-rouge">D</code></li>
-  <li>In each training iteration:
+  <li>A well-trained <strong>inception network</strong> (Inception Net-V3) as a classifier to evaluate the generation.
     <ul>
-      <li>Sample <code class="language-plaintext highlighter-rouge">m</code> images $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
-      <li>Generate <code class="language-plaintext highlighter-rouge">m</code> codes $\{\tilde{z}^{1}, \tilde{z}^{2}, \ldots, \tilde{z}^{m}\}$ from encoder, $\tilde{z}^i = Enc(x^i)$.</li>
-      <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
-      <li>Generate <code class="language-plaintext highlighter-rouge">m</code> images $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}$ from decoder, $\tilde{x}^i = Dec(z^i)$.</li>
-      <li>Update <code class="language-plaintext highlighter-rouge">D</code> to increase $D(x^i, \tilde{z}^i)$, decrease $D(\tilde{x}^i, z^i)$.</li>
-      <li>Update <code class="language-plaintext highlighter-rouge">Enc</code> to decrease $D(x^i, \tilde{z}^i)$.</li>
-      <li>Update <code class="language-plaintext highlighter-rouge">Dec</code> to increase $D(\tilde{x}^i, z^i)$.</li>
+      <li>Take the image as an input, output <code class="language-plaintext highlighter-rouge">1000</code> dimensional vector, where each dimension represents the possibility of one class.</li>
+      <li>The whole vector represents the <strong>possibility distribution</strong>.</li>
     </ul>
   </li>
 </ul>
 
-<p class="info"><strong>Note</strong>: It doesn’t matter that the <code class="language-plaintext highlighter-rouge">D</code> gives the positive score to the pair from <code class="language-plaintext highlighter-rouge">Enc</code> or another. What matters is that the score <code class="language-plaintext highlighter-rouge">D</code> gives to <code class="language-plaintext highlighter-rouge">Enc</code> or <code class="language-plaintext highlighter-rouge">Dec</code> should be <strong>opposite</strong>. The objective of <code class="language-plaintext highlighter-rouge">Enc</code> and <code class="language-plaintext highlighter-rouge">Dec</code> should also be the opposite of the objective of <code class="language-plaintext highlighter-rouge">D</code> so that <code class="language-plaintext highlighter-rouge">D</code> could not discriminate between the generated pair after the advesarial training.</p>
-
-<ul>
-  <li>Based on the <strong>self-supervised</strong> way ofBiGAN, <a href="/2022/01/25/gan-2#cyclegan">cycleGAN</a> introduces the cycle consistency loss.</li>
-</ul>
-
-<p><span class="ref"><a href="#reference-4">*reference-4</a></span></p>
-
-<h3 id="triple-gan">Triple GAN</h3>
-
-<ul>
-  <li>Semi-supervised learning way of training GAN consists of three parts: classifier, generator, discriminator.</li>
-  <li><strong>Generator</strong> receives the sampling noise $Z_g$ and conditional distribution $Y_g$ from the prior distribution, and output the pair of the image with the label $(X_g, Y_g)$</li>
-  <li><strong>Classifier</strong> outputs the label of the image,and  disentangle the class and style of the input in both supervised and unsupervised way:
+<ol>
+  <li>For each <strong>single generated image</strong>, the entropy of the possibility distribution from the Inception Net should be as <strong>small</strong> as possibile.
     <ul>
-      <li>Take the output image-label pairs from generator, calculate the cross entropy reconstruction loss between predicted label $\tilde{Y}_g$ with $Y_g$. This process is using weak self-supervised sample to train the classifier.</li>
-      <li>Take sampling pair $(X_l, Y_L)$ from the dataset and supervised learning with the cross entropy reconstruction loss between the predicted $\tilde{Y}_l$ and $Y$.</li>
-      <li>Classify sampling image $X_c$ as the predicted label $Y_c$. The predicted pair is sent to the discriminator.</li>
+      <li>The smaller entropy means the more confident on the classification result and the better <strong>quality</strong> of the image.<br />
+  \(\begin{aligned}
+  &amp; E_{x \sim p_{G}}(H(p(y \mid x))) \\
+  =&amp; \sum_{x \in G} P(x) H(p(y \mid x)) \\
+  =&amp; -\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i} \mid x\right) \\
+  \end{aligned}\)</li>
     </ul>
   </li>
-  <li><strong>Discriminator</strong> solely identifies fake image-label pairs.
+  <li>For <strong>the batch of generated image</strong>, the entropy of the average possibility distribution should be as <strong>large</strong> as possibile.
     <ul>
-      <li>Distinguish the real image-label pair sampled from the dataset directly.</li>
-      <li>Distinguish the generated image-label pair from the generator.</li>
-      <li>Distinguish the image and predicted label pair from the classifier.</li>
+      <li>To ensure the <strong>diversity</strong> of generated images, the possibility distribution over different images should <strong>vary</strong> a lot.</li>
+      <li>Larger divergence makes the total distribution more prone to the <strong>uniform distribution</strong>, and the larger entropy.<br />
+  \(\begin{aligned}
+  &amp; H\left(E_{x \sim p_{G}}(p(y \mid x))\right) \\
+  =&amp; H\left(\sum_{x \in G} P(x) p(y \mid x)\right) \\
+  =&amp; H(p(y)) \\
+  =&amp; -\sum_{i=1}^{1000} P\left(y_{i}\right) \log P\left(y_{i}\right) \\
+  =&amp; -\sum_{i=1}^{1000} \sum_{x \in G} P\left(y_{i}, x\right) \log P\left(y_{i}\right) \\
+  =&amp; -\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i}\right)
+  \end{aligned}\)</li>
     </ul>
   </li>
-</ul>
-
-<p><img src="https://s1.ax1x.com/2022/05/03/OFJx4U.png" alt="gan-4-4" style="margin:auto;display:block;width:70%;" /></p>
-
-<p><span class="ref"><a href="#reference-5">*reference-5</a></span></p>
-
-<h3 id="domain-adversarial-training">Domain-adversarial Training</h3>
+</ol>
 
 <ul>
-  <li>The network consists of three parts:
+  <li><strong>Inception score</strong> combines the <strong>negative</strong> of the entropy of image quality and <strong>positive</strong> of the entropy of image diversity, and take exponential.
     <ul>
-      <li><strong>Feature extractor</strong>: extract and map the input $x$ to the latent space.
-        <ul>
-          <li>To maximize label classification accuracy</li>
-          <li>To minimize domain lcassification accuracy</li>
-        </ul>
-      </li>
-      <li><strong>Label predictor</strong>: predict the class label of the feature from the extractor.
-        <ul>
-          <li>To maximize label classification accuracy</li>
-        </ul>
-      </li>
-      <li><strong>Domain classifier</strong>: classify the source domain of the feature from the extractor.
-        <ul>
-          <li>To maximize domain classification accuracy</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Gradient reversal layer is an identity function during the forward propagation, but it multiplies its input by -1 during backpropagation.
-    <ul>
-      <li>Because it leads the gradient ascent on the feature extractor with respect to the classification loss of Domain predictor, but gradient descent on the predictor itself.</li>
+      <li>Inception score is the <code class="language-plaintext highlighter-rouge">KL-divergence</code> of $p(y|x)$ and $p(y)$.</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/03/OFYSCF.png" alt="gan-4-5" style="margin:auto;display:block;width:70%;" /></p>
+\[\begin{aligned}
+IS &amp;= exp\left(\color{red}{-}(-\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i} \mid x\right)) + (-\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i}\right))\right) \\
+&amp;= exp \left( \sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log \frac{P\left(y_{i} \mid x\right)}{P\left(y_{i}\right)} \right) \\
+&amp;= exp \left( E_{x \sim p_{G}} \color{blue}{\textit{KL}(p(y \mid x) \| p(y))} \right) \\
 
-<p><span class="ref"><a href="#reference-6">*reference-6</a></span></p>
-
-<h3 id="feature-disentangle-1">Feature Disentangle</h3>
+\end{aligned}\]
 
 <ul>
-  <li>The encoding from the original encoder includes mixture information, which is <strong>entangled</strong>.</li>
-  <li>Embedding audio signal can be roughly classified as two parts
-    <ul>
-      <li>Phonetic information: audio content, structures and semantic meaning</li>
-      <li>Speaker information: audio speaker acoustic characteristics</li>
-    </ul>
-  </li>
-  <li>Utilize two encoder to <strong>disentangle</strong> the above two information in the latent space: Phonetic encoder and Speaker encoder.</li>
+  <li>In practical, we generate ${x_1,x_2,…,x_n}$ from the generator and compute $P(y_i)$ first and then compute IS by</li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/14/OyWYff.png" alt="gan-4-6" style="margin:auto;display:block;width:80%;" /></p>
+\[\begin{aligned}
+&amp;P(y_i) = \frac{1}{n}  \sum_{i=1}^{1000} P\left(y_{i} \mid x_{j}\right) \\ 
+&amp;IS =\exp \left(\frac{1}{n} \sum_{j=1}^{n} \sum_{i=1}^{1000} P\left(y_{i} \mid x_{j}\right) \log \frac{P\left(y_{i} \mid x_{j}\right)}{P\left(y_{i}\right)}\right)
+\end{aligned}\]
+
+<p class="info"><strong>In summary</strong>: The higher Inception Score (IS) means the better quality and diversity.</p>
+
+<h3 id="fréchet-inception-distance">Fréchet Inception Distance</h3>
 
 <ul>
-  <li>For the audio source from the same or different speakers, the speaker vector $v_s$ from Speaker Encoder $E_s$ will be constrained as close or far apart as possible.
+  <li><strong>Fréchet Inception Distance</strong> (FID): similar to Inception Score, based on Inception Net-V3.
     <ul>
-      <li>To guide the Speaker Encoder $E_s$ <strong>only</strong> extract the <strong>acoustic characteristic</strong> to the speaker vector $v_s$.</li>
-    </ul>
-  </li>
-  <li>For inputs with different content and structures, the Phonetic Encoder $E_p$ embedding the Phonetic vector $v_p$, which is fed into Speaker Discriminator $D_s$ to distinguish if the source is from the same speaker or not.
-    <ul>
-      <li>To instruct the Phonetic Encoder $E_p$ embeds <strong>all information except for the speaker characteristic</strong>.</li>
-    </ul>
-  </li>
-  <li>Speaker Classifier $D_s$ is inspired from domain adversarial training, which outputs the score, representing how <strong>confident</strong> the discriminator $D_s$ will be that two audio source are from the identical speaker.
-    <ul>
-      <li>The higher score means more confident on the same speaker.</li>
-      <li>Phonetic encoder $E_p$ learns to <strong>confuse</strong> Speaker Classifier $D_s$.</li>
-      <li>After the well training, $D_s$ fail to distinguish whether the source is from the same speaker or not, and $E_p$ only generates embeddings with phonetic information.</li>
+      <li>Comparing to IS which evaluate <strong>directly</strong> on the generated images distribution, FID <strong>make comparison</strong> between generated images and real images and <strong>calculate distances</strong>.</li>
+      <li>Assume the generated images is subject to a certain type of distribution, if the generated distribution and real distribution are closed, the generation is reasonable.</li>
     </ul>
   </li>
 </ul>
 
-<p><img src="https://s1.ax1x.com/2022/05/14/OyWNp8.png" alt="gan-4-7" style="margin:auto;display:block;width:70%;" /></p>
-
-<p><span class="ref"><a href="#reference-7">*reference-7</a></span></p>
+\[\begin{aligned} \text{FID}(x,g) = \left\|\mu_x - \mu_g\right\| + \text{Tr}\left(\Sigma_x+\Sigma_g-2\sqrt{\Sigma_x\Sigma_g}\right) \end{aligned}\]
 
 <ul>
-  <li>Each dimension of the input vector <strong>represents some characteristics</strong>, but the explicit relationship is <strong>unknown</strong>.
+  <li>
+    <p>$\mu,\Sigma$ represents the mean and covariance matrix in real image $x$ and generated set $g$, $\text{Tr}$ is the trace of the matrix.</p>
+  </li>
+  <li>
+    <p>The covariance matrix is as large as the size of <code class="language-plaintext highlighter-rouge">pixel*pixel</code> dimensions and spatial expensive.</p>
     <ul>
-      <li><strong>Disentangle</strong>: understand the meaning of each dimension so as to control the output.</li>
+      <li>Thus, replace the last layer of Inception Network with a layer of <code class="language-plaintext highlighter-rouge">2048</code> dimensional predictor output size.</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="attribute-modification">Attribute Modification</h3>
+<p class="info"><strong>In summary</strong>: The lower Fréchet Inception Distance (FID) means the the real distribution are more closed to the real images. The better real image set and the lower FID means the better generation,</p>
+
+<h3 id="other-problems">Other Problems</h3>
 
 <ul>
-  <li>Compute the center of each sampling with the same attributes and compute the distance between different sampling centers.</li>
-</ul>
-
-\[z_{\text {long }}=\frac{1}{N_{1}} \sum_{x \in \text { long }} \operatorname{En}(x)-\frac{1}{N_{2}} \sum_{x^{\prime} \notin \text { long }} \operatorname{En}\left(x^{\prime}\right)\]
-
-<p><img src="https://s1.ax1x.com/2022/05/14/O6NOAJ.png" alt="gan-4-8" style="margin:auto;display:block;width:70%;" /></p>
-
-<ul>
-  <li>Transform the characteristic by <strong>compensating the distance</strong> in the latent space.</li>
-</ul>
-
-\[x \Rightarrow \operatorname{En}(x)+z_{\text {long }}=z^{\prime} \Rightarrow \operatorname{Gen}\left(z^{\prime}\right)\]
-
-<h3 id="photo-editing">Photo Editing</h3>
-
-<ul>
-  <li>Basic idea: find the optimum code $z^*$ in the latent space, closed to the original input image, at the same time fulltill the constraint.</li>
-</ul>
-
-<p><img src="https://s1.ax1x.com/2022/05/14/O6NXN9.png" alt="gan-4-9" style="margin:auto;display:block;width:60%;" /></p>
-
-<ul>
-  <li>Three methods to backtrace code $z^*$ from the input $x$:
-    <ol>
-      <li>Gradient descent to find the optimal target:<br />
- $z^{*}=\arg \min _{z} L\left(G(z), x\right)$<br />
- The difference between $G(z)$ and $x$ can be measured by:</li>
-    </ol>
+  <li>Even the generated result is high quality and clear, it still cannot ensure the good generator.
     <ul>
-      <li>Pixel-wise distance</li>
-      <li>Another extractor network to evaluate the high level distance
-        <ol>
-          <li>Well-trained auto-encoder structure to extract the latent code, transforming the input image back.</li>
-          <li>Using the result from method 2 as the initialization of method 1 and fine-tune.</li>
-        </ol>
-      </li>
+      <li>GAN is inclined to <strong>memory</strong> the image in dataset with <strong>minor modification</strong>.</li>
+      <li>The picture <strong>shifted several pixels</strong> is closed to the original version in Enclidean Distance, but the same amount of distance can produce totally different image with <strong>different semantic category</strong>.</li>
     </ul>
   </li>
-  <li>Editing photos with input constraint:
-    <ul>
-      <li>$z_0$ is the code of the input image previously found.</li>
-      <li>$U$ is the function to judge if the final generation fulfill the constaint of the editing.</li>
-      <li>$\left|z-z_{0}\right|$ make sure the result is not too far away from the original image.</li>
-      <li>$D$ discriminator is to check the image realistic or not.
-\(z^{*}=\arg \min _{z} U(G(z))+\lambda_{1}\left\|z-z_{0}\right\|^{2}-\lambda_{2} D(G(z))\)</li>
-    </ul>
-  </li>
+  <li>In other words, if the generated image is the shifted version of one in dataset, the generator may be rated as good due to the Enclidean similarity, but the <strong>diversity</strong> is still bad.</li>
 </ul>
 
-<p><span class="ref"><a href="#reference-8">*reference-8</a></span>
-<span class="ref"><a href="#reference-9">*reference-9</a></span></p>
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
 
-<h3 id="others">Others</h3>
-
-<p><strong>TODO</strong></p>
-
-<ul>
-  <li>Many tasks as <a href="#reference-10">Image super resolution</a>, <a href="#reference-11">Image completion</a>, etc. are based on condition GAN.</li>
-</ul>
+<p><strong>TODO</strong> DCGAN <br />
+<strong>TODO</strong> ALI</p>
 
 <h2 id="reference">Reference</h2>
 
 <ol>
   <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
-  <li><a href="https://arxiv.org/abs/1606.03657">InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets</a><a name="reference-2"></a></li>
-  <li><a href="https://arxiv.org/abs/1512.09300">Autoencoding beyond pixels using a learned similarity metric</a><a name="reference-3"></a></li>
-  <li><a href="https://arxiv.org/abs/1605.09782">Adversarial Feature Learning</a><a name="reference-4"></a></li>
-  <li><a href="https://arxiv.org/abs/1703.02291">Triple Generative Adversarial Nets</a><a name="reference-5"></a></li>
-  <li><a href="https://arxiv.org/abs/1505.07818">Domain-Adversarial Training of Neural Networks</a><a name="reference-6"></a></li>
-  <li><a href="https://arxiv.org/abs/1811.02775">Improved Audio Embeddings by Adjacency-Based Clustering with Applications in Spoken Term Detection</a><a name="reference-7"></a></li>
-  <li><a href="https://arxiv.org/abs/1609.03552">Generative Visual Manipulation on the Natural Image Manifold</a><a name="reference-8"></a></li>
-  <li><a href="https://arxiv.org/abs/1609.07093">Neural Photo Editing with Introspective Adversarial Networks</a><a name="reference-9"></a></li>
-  <li><a href="https://arxiv.org/abs/1609.04802">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</a><a name="reference-10"></a></li>
-  <li><a href="http://iizuka.cs.tsukuba.ac.jp/projects/completion/data/completion_sig2017.pdf">Globally and Locally Consistent Image Completion</a><a name="reference-11"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.01541">Deep Reinforcement Learning for Dialogue Generation</a><a name="reference-2"></a></li>
+  <li><a href="https://arxiv.org/abs/1511.01844">A note on the evaluation of generative models</a><a name="reference-3"></a></li>
 </ol>
 </div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
-        <time itemprop="dateModified" datetime="2022-02-21T00:00:00-05:00">Feb 21, 2022</time>
+        <time itemprop="dateModified" datetime="2022-03-14T00:00:00-04:00">Mar 14, 2022</time>
     </span><!-- start custom article footer snippet -->
 
 <!-- end custom article footer snippet -->
@@ -732,7 +718,7 @@
 				repo: 'Homepage',
 				owner: 'Harrypotterrrr',
 				admin: ['Harrypotterrrr'],
-				id: 'blog-2022-02-21-gan-4'
+				id: 'blog-2022-03-14-gan-5'
 			});
 			gitalk.render('js-gitalk-container');
 		});
@@ -1490,10 +1476,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
         appClass: 'Blog'
       });
-      var key =   'blog-2022-02-21-gan-4';
-      var title = "Feature Extraction and Disentanglement";
+      var key =   'blog-2022-03-14-gan-5';
+      var title = "Sequence Generation and Evaluation";
       pageview.increase(key, title, function(view) {
-        $("[data-page-key='blog-2022-02-21-gan-4']").text(view);
+        $("[data-page-key='blog-2022-03-14-gan-5']").text(view);
       });
     });
   </script>

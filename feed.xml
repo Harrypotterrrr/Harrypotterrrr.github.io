@@ -1,5 +1,348 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2022-05-14T01:21:04-04:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
-</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">Feature Extraction and Disentanglement</title><link href="https://harrypotterrrr.github.io//2022/02/21/gan-4.html" rel="alternate" type="text/html" title="Feature Extraction and Disentanglement" /><published>2022-02-21T00:00:00-05:00</published><updated>2022-02-21T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/21/gan-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/21/gan-4.html"><![CDATA[<p>Feature Extraction and Disentanglement</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://harrypotterrrr.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://harrypotterrrr.github.io//" rel="alternate" type="text/html" /><updated>2022-05-15T16:33:29-04:00</updated><id>https://harrypotterrrr.github.io//feed.xml</id><title type="html">Haolin Jia’s Homepage</title><subtitle>Keep working hard!
+</subtitle><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><entry><title type="html">Sequence Generation and Evaluation</title><link href="https://harrypotterrrr.github.io//2022/03/14/gan-5.html" rel="alternate" type="text/html" title="Sequence Generation and Evaluation" /><published>2022-03-14T00:00:00-04:00</published><updated>2022-03-14T00:00:00-04:00</updated><id>https://harrypotterrrr.github.io//2022/03/14/gan-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/03/14/gan-5.html"><![CDATA[<p>Sequence Generation, Generation Evaluation, Inception Score, Fréchet Inception Distance</p>
+
+<!--more-->
+
+<h2 id="sequence-to-sequence">Sequence to Sequence</h2>
+
+<ul>
+  <li>
+    <p>The generator is a typical seq2seq model.</p>
+  </li>
+  <li>Conditional Squence Generation
+    <ul>
+      <li>Reinforcement Learning (human feedback)</li>
+      <li>GAN (discriminator feedback)</li>
+    </ul>
+  </li>
+  <li>Unsupervised Conditional Sequence Generation
+    <ul>
+      <li>Text style transfer</li>
+      <li>Unsupervised Abstractive Summarization</li>
+      <li>Unsupervised Translation</li>
+    </ul>
+  </li>
+  <li>The problem of seq2seq: the result by maximizing likelihood satisfying the training criterion, but contracting the human sense
+    <ul>
+      <li>For the chat-bot: <code class="language-plaintext highlighter-rouge">I'm good</code> is similar to <code class="language-plaintext highlighter-rouge">I'am XXX</code> but is not the answer to <code class="language-plaintext highlighter-rouge">How are you?</code>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+
+<ul>
+  <li>Input sentence $h$, through Chatbot $En$ and $De$, output response sentence $x$.
+    <ul>
+      <li>Learn to maximize expected reward by <strong>policy gradient</strong>.</li>
+    </ul>
+  </li>
+  <li>Input sentence $h$ and response sentece $x$, through human, output the reward $R(h,x)$.
+    <ul>
+      <li>Behave as a discriminator.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/16/ORx0RP.png" alt="gan-5-1" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li><strong>Target</strong>: to find the optimal $\theta$ to maximize the expected reward.</li>
+</ul>
+
+\[\theta^{*} =\arg \max _{\theta} \bar{R}_{\theta}\]
+
+<ul>
+  <li>Accumulate over the distribution of input sentence $h$, and over all possibility of output $x$ caused by the randomness in generator.
+    <ul>
+      <li>Accumulation of the possiblity is computing the <strong>expectation</strong>.</li>
+      <li>Approximate the real expectation by sampling as much as possible.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+\bar{R}_{\theta} &amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \\
+&amp;=E_{h \sim P(h)}\left[E_{x \sim P_{\theta}(x \mid h)}[R(h, x)]\right] \\
+&amp;=E_{h \sim P(h), x \sim P_{\theta}(x \mid h)}[R(h, x)] \\
+&amp; \approx \frac{1}{N} \sum_{i=1}^{N} R\left(h^{i}, x^{i}\right)
+\end{aligned}\]
+
+<ul>
+  <li>Sampling approximate the target reward, but $R(h^i,x^i)$ is <strong>unrelated to</strong> the parameter $\theta$ of the network.</li>
+</ul>
+
+\[\begin{aligned}
+\nabla \bar{R}_{\theta} &amp;=\sum_{h} P(h) \sum_{x} R(h, x) \nabla P_{\theta}(x \mid h) \\
+&amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \color{red}{\frac{\nabla P_{\theta}(x \mid h)}{P_{\theta}(x \mid h)}} \\
+&amp;=\sum_{h} P(h) \sum_{x} R(h, x) P_{\theta}(x \mid h) \color{red}{\nabla \log P_{\theta}(x \mid h)} \quad \color{black}{ \left( \frac{d \log (f(x))}{dx}=\frac{1}{f(x)} \frac{d f(x)}{d x} \right)} \\
+&amp;=E_{h \sim P(h), x \sim P_{\theta}(x \mid h)}\left[R(h, x) \nabla \log P_{\theta}(x \mid h)\right] \\
+&amp; \approx \frac{1}{N} \sum_{i=1}^{N} \underset{\color{red}{\text{from sampling}}}{\boxed{R\left(h^{i}, x^{i}\right) \nabla \log P_{\theta}(x^i \mid h^i)}}
+\end{aligned}\]
+
+<ul>
+  <li>Now $R$ is related to parameter $\theta$,</li>
+  <li>Update $\theta$ regarding to the reward:
+ $ \theta^{\textit{new}} \leftarrow \theta^{\textit{old}} + \eta \nabla \bar{R}_{\theta^{\textit{old}}} $
+    <ul>
+      <li>When $R\left(h^{i}, x^{i}\right) $ is positive, $P_{\theta}(x^i \mid h^i)$ will increase.</li>
+      <li>When $R\left(h^{i}, x^{i}\right) $ is negative, $P_{\theta}(x^i \mid h^i)$ will decrease.</li>
+    </ul>
+  </li>
+  <li>After each iteration of updating $\theta$, it is necessary to do <strong>sampling again</strong> before computing the gradient.
+    <ul>
+      <li>Because the reward $\bar{R}_{\theta}$ will change after each update operations of $\theta$.</li>
+    </ul>
+  </li>
+  <li>Comparing <strong>Reinforcement Learning</strong> with <strong>Maximize Likelihood</strong>:
+    <ul>
+      <li>Maximum Likelihood is identical to <strong>minimize cross entropy</strong>.
+        <ul>
+          <li>Train the model based on supervised learning using paired data.</li>
+          <li>Gradient descent on tje pnkect function.</li>
+        </ul>
+      </li>
+      <li>Reinforcement learning is kind of <strong>weighted objective function</strong> of maximum likelihood.
+        <ul>
+          <li>RL obtained the training data from the interaction during the training process.</li>
+          <li><strong>Derive the objective function</strong> from the gradient equation, analogy with maximum likelihood.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Maximum Likelihood</th>
+      <th>Reinforcement Learning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Objective Function</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} \log P_{\theta}\left(\hat{x}^{i} \mid c^{i}\right)\)</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} R\left(c^{i}, x^{i}\right) \log P_{\theta}\left(x^{i} \mid c^{i}\right)\)</td>
+    </tr>
+    <tr>
+      <td>Gradient</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} \nabla \log P_{\theta}\left(\hat{x}^{i} \mid c^{i}\right)\)</td>
+      <td>\(\frac{1}{N} \sum_{i=1}^{N} R\left(c^{i}, x^{i}\right) \nabla \log P_{\theta}\left(x^{i} \mid c^{i}\right)\)</td>
+    </tr>
+    <tr>
+      <td>Training Data</td>
+      <td>\(\left\{\left(c^{1}, \hat{x}^{1}\right), \ldots,\left(c^{N}, \hat{x}^{N}\right)\right\} \\ R\left(c^{i}, \hat{x}^{i}\right)=1\)</td>
+      <td>\(\left\{\left(c^{1}, x^{1}\right), \ldots,\left(c^{N}, x^{N}\right)\right\}\) <br /> obtained from interation, weighted by $R(c^i, x^i)$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<h3 id="conditional-gan">Conditional GAN</h3>
+
+<ul>
+  <li>Similar to Reinforcement Learning</li>
+  <li>Input sentence $h$, through Chatbot $En$ and $De$, output response sentence $x$.
+    <ul>
+      <li>Learn to maximize expected reward by <strong>policy gradient</strong>.</li>
+    </ul>
+  </li>
+  <li>Replace Human with <strong>discriminator</strong>
+    <ul>
+      <li>Input sentence $h$ and response sentece $x$, through discriminator, output real or fake (reward).</li>
+      <li>Input human dialogues, through discriminator, output real or fake (reward).</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="error"><strong>Warning:</strong> Sometimes discriminator may immediately distinguish the fake <strong>one-hot</strong> score, because comparing to the true label where the only exact true dimension contains <code class="language-plaintext highlighter-rouge">1</code>, fake score vector is diffused as <code class="language-plaintext highlighter-rouge">[0.8, 0.1, 0, ..., 0.1]</code>. Thus, <a href="/2022/02/11/gan-3#wgan">WGAN</a> solves this problem by constraining the discriminator with <code class="language-plaintext highlighter-rouge">1-Lipschitz</code> function, whereby the discriminator’s vision becomes ‘fuzzy’ and scores are not distinguished too much.</p>
+
+<h2 id="evaluation">Evaluation</h2>
+
+<ul>
+  <li>Evaluate the quality of the generation from GAN</li>
+</ul>
+
+<h3 id="likelihood">Likelihood</h3>
+
+<ul>
+  <li>The traditional method is to measure the likelihood of the generation of the well-trained GAN $P_G$.
+    <ul>
+      <li>Compare the likelihood with the real data distribution.</li>
+      <li>If it has the higher possibility of $P_G$ to generate the real data, we assume $P_G$ is better.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\textit{Likelihood}=\frac{1}{N} \sum_{i} \log P_{G}\left(x^{i}\right)\]
+
+<ul>
+  <li>The problem is <strong>there is no way</strong> to compute the generation distribution $P_G(x^i)$.
+    <ul>
+      <li>Because the data is generated according to the <strong>prior distribution</strong>. The amount of the output is limited and the content is not determinated.</li>
+    </ul>
+  </li>
+  <li><strong>Kernel Density Estimation</strong>: estimate the distribution $P_G(x)$ from sampling, and assume the generated result is Guassian Mixture Model (GMM) to approximate $P_G$.
+    <ul>
+      <li>Each generated sample is the mean of a Gaussian with the same covariance.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/05/16/ORxdPI.png" alt="gan-5-2" style="margin:auto;display:block;width:70%;" /></p>
+
+<ul>
+  <li>The problem still exists:
+    <ul>
+      <li>The number of sampling is <strong>uncertain</strong> which is enough to make sure the accuracy of GMM.</li>
+      <li>GMM is too <strong>naive</strong> to represent a complicated generator.</li>
+      <li>Likelihood can not represent the <strong>quality</strong> of results.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note:</strong> Likelihood only gives the <strong>similarity</strong> of the generation to the real data, but has no indication on the quality of the generated result which is <strong>not in the dataset</strong>. Also, likelihood doesn’t guarantee the diversity of the generation.</p>
+
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
+
+<h3 id="objective-evaluation">Objective Evaluation</h3>
+
+<ul>
+  <li>Train an image <strong>classifier</strong> to evaluate the generator good or not.
+    <ul>
+      <li>Intuitively, if the well-trained classifier recognize the image and give the clear category to the result, the generation is generally not bad.</li>
+    </ul>
+  </li>
+  <li>If we have the generated image $x$ and the output $y$ from the classifier evaluator,
+    <ul>
+      <li>For the quality of the generation, <strong>more concentrated distribution</strong> means the <strong>higher visual quality</strong>.<br />
+ <img src="https://s1.ax1x.com/2022/05/16/ORxwGt.png" alt="gan-5-3" style="margin:auto;display:block;width:70%;" /></li>
+      <li>For the diversity of the generation, the <strong>more uniform distribution</strong> of <strong>all</strong> generated outputs means the <strong>higher diversity</strong>.<br />
+ <img src="https://s1.ax1x.com/2022/05/16/ORxBxf.png" alt="gan-5-4" style="margin:auto;display:block;width:70%;" /></li>
+    </ul>
+  </li>
+</ul>
+
+\[P(y)=\frac{1}{N} \sum_{n} P\left(y^{n} \mid x^{n}\right)\]
+
+<h3 id="inception-score">Inception Score</h3>
+
+<ul>
+  <li>A well-trained <strong>inception network</strong> (Inception Net-V3) as a classifier to evaluate the generation.
+    <ul>
+      <li>Take the image as an input, output <code class="language-plaintext highlighter-rouge">1000</code> dimensional vector, where each dimension represents the possibility of one class.</li>
+      <li>The whole vector represents the <strong>possibility distribution</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<ol>
+  <li>For each <strong>single generated image</strong>, the entropy of the possibility distribution from the Inception Net should be as <strong>small</strong> as possibile.
+    <ul>
+      <li>The smaller entropy means the more confident on the classification result and the better <strong>quality</strong> of the image.<br />
+  \(\begin{aligned}
+  &amp; E_{x \sim p_{G}}(H(p(y \mid x))) \\
+  =&amp; \sum_{x \in G} P(x) H(p(y \mid x)) \\
+  =&amp; -\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i} \mid x\right) \\
+  \end{aligned}\)</li>
+    </ul>
+  </li>
+  <li>For <strong>the batch of generated image</strong>, the entropy of the average possibility distribution should be as <strong>large</strong> as possibile.
+    <ul>
+      <li>To ensure the <strong>diversity</strong> of generated images, the possibility distribution over different images should <strong>vary</strong> a lot.</li>
+      <li>Larger divergence makes the total distribution more prone to the <strong>uniform distribution</strong>, and the larger entropy.<br />
+  \(\begin{aligned}
+  &amp; H\left(E_{x \sim p_{G}}(p(y \mid x))\right) \\
+  =&amp; H\left(\sum_{x \in G} P(x) p(y \mid x)\right) \\
+  =&amp; H(p(y)) \\
+  =&amp; -\sum_{i=1}^{1000} P\left(y_{i}\right) \log P\left(y_{i}\right) \\
+  =&amp; -\sum_{i=1}^{1000} \sum_{x \in G} P\left(y_{i}, x\right) \log P\left(y_{i}\right) \\
+  =&amp; -\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i}\right)
+  \end{aligned}\)</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li><strong>Inception score</strong> combines the <strong>negative</strong> of the entropy of image quality and <strong>positive</strong> of the entropy of image diversity, and take exponential.
+    <ul>
+      <li>Inception score is the <code class="language-plaintext highlighter-rouge">KL-divergence</code> of $p(y|x)$ and $p(y)$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+IS &amp;= exp\left(\color{red}{-}(-\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i} \mid x\right)) + (-\sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log P\left(y_{i}\right))\right) \\
+&amp;= exp \left( \sum_{x \in G} P(x) \sum_{i=1}^{1000} P\left(y_{i} \mid x\right) \log \frac{P\left(y_{i} \mid x\right)}{P\left(y_{i}\right)} \right) \\
+&amp;= exp \left( E_{x \sim p_{G}} \color{blue}{\textit{KL}(p(y \mid x) \| p(y))} \right) \\
+
+\end{aligned}\]
+
+<ul>
+  <li>In practical, we generate ${x_1,x_2,…,x_n}$ from the generator and compute $P(y_i)$ first and then compute IS by</li>
+</ul>
+
+\[\begin{aligned}
+&amp;P(y_i) = \frac{1}{n}  \sum_{i=1}^{1000} P\left(y_{i} \mid x_{j}\right) \\ 
+&amp;IS =\exp \left(\frac{1}{n} \sum_{j=1}^{n} \sum_{i=1}^{1000} P\left(y_{i} \mid x_{j}\right) \log \frac{P\left(y_{i} \mid x_{j}\right)}{P\left(y_{i}\right)}\right)
+\end{aligned}\]
+
+<p class="info"><strong>In summary</strong>: The higher Inception Score (IS) means the better quality and diversity.</p>
+
+<h3 id="fréchet-inception-distance">Fréchet Inception Distance</h3>
+
+<ul>
+  <li><strong>Fréchet Inception Distance</strong> (FID): similar to Inception Score, based on Inception Net-V3.
+    <ul>
+      <li>Comparing to IS which evaluate <strong>directly</strong> on the generated images distribution, FID <strong>make comparison</strong> between generated images and real images and <strong>calculate distances</strong>.</li>
+      <li>Assume the generated images is subject to a certain type of distribution, if the generated distribution and real distribution are closed, the generation is reasonable.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned} \text{FID}(x,g) = \left\|\mu_x - \mu_g\right\| + \text{Tr}\left(\Sigma_x+\Sigma_g-2\sqrt{\Sigma_x\Sigma_g}\right) \end{aligned}\]
+
+<ul>
+  <li>
+    <p>$\mu,\Sigma$ represents the mean and covariance matrix in real image $x$ and generated set $g$, $\text{Tr}$ is the trace of the matrix.</p>
+  </li>
+  <li>
+    <p>The covariance matrix is as large as the size of <code class="language-plaintext highlighter-rouge">pixel*pixel</code> dimensions and spatial expensive.</p>
+    <ul>
+      <li>Thus, replace the last layer of Inception Network with a layer of <code class="language-plaintext highlighter-rouge">2048</code> dimensional predictor output size.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="info"><strong>In summary</strong>: The lower Fréchet Inception Distance (FID) means the the real distribution are more closed to the real images. The better real image set and the lower FID means the better generation,</p>
+
+<h3 id="other-problems">Other Problems</h3>
+
+<ul>
+  <li>Even the generated result is high quality and clear, it still cannot ensure the good generator.
+    <ul>
+      <li>GAN is inclined to <strong>memory</strong> the image in dataset with <strong>minor modification</strong>.</li>
+      <li>The picture <strong>shifted several pixels</strong> is closed to the original version in Enclidean Distance, but the same amount of distance can produce totally different image with <strong>different semantic category</strong>.</li>
+    </ul>
+  </li>
+  <li>In other words, if the generated image is the shifted version of one in dataset, the generator may be rated as good due to the Enclidean similarity, but the <strong>diversity</strong> is still bad.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-3">*reference-3</a></span></p>
+
+<p><strong>TODO</strong> DCGAN <br />
+<strong>TODO</strong> ALI</p>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a><a name="reference-1"></a></li>
+  <li><a href="https://arxiv.org/abs/1606.01541">Deep Reinforcement Learning for Dialogue Generation</a><a name="reference-2"></a></li>
+  <li><a href="https://arxiv.org/abs/1511.01844">A note on the evaluation of generative models</a><a name="reference-3"></a></li>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Sequence Generation, Generation Evaluation, Inception Score, Fréchet Inception Distance]]></summary></entry><entry><title type="html">Feature Extraction and Disentanglement</title><link href="https://harrypotterrrr.github.io//2022/02/21/gan-4.html" rel="alternate" type="text/html" title="Feature Extraction and Disentanglement" /><published>2022-02-21T00:00:00-05:00</published><updated>2022-02-21T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/21/gan-4</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/21/gan-4.html"><![CDATA[<p>Feature Extraction and Disentanglement</p>
 
 <!--more-->
 
@@ -356,7 +699,7 @@
   <li><a href="https://arxiv.org/abs/1609.07093">Neural Photo Editing with Introspective Adversarial Networks</a><a name="reference-9"></a></li>
   <li><a href="https://arxiv.org/abs/1609.04802">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</a><a name="reference-10"></a></li>
   <li><a href="http://iizuka.cs.tsukuba.ac.jp/projects/completion/data/completion_sig2017.pdf">Globally and Locally Consistent Image Completion</a><a name="reference-11"></a></li>
-</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Feature Extraction and Disentanglement]]></summary></entry><entry><title type="html">Advanced Thoery and Problems of GAN</title><link href="https://harrypotterrrr.github.io//2022/02/11/gan-3.html" rel="alternate" type="text/html" title="Advanced Thoery and Problems of GAN" /><published>2022-02-11T00:00:00-05:00</published><updated>2022-02-11T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/11/gan-3</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/11/gan-3.html"><![CDATA[<p>Advanced Thoery and Problems of GAN</p>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Feature Extraction and Disentanglement]]></summary></entry><entry><title type="html">Advanced Thoery and Problems of GAN</title><link href="https://harrypotterrrr.github.io//2022/02/11/gan-3.html" rel="alternate" type="text/html" title="Advanced Thoery and Problems of GAN" /><published>2022-02-11T00:00:00-05:00</published><updated>2022-02-11T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/02/11/gan-3</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/02/11/gan-3.html"><![CDATA[<p>Drawback of the general framework of GAN, Wasserstein Distance, WGAN-GP</p>
 
 <!--more-->
 
@@ -878,7 +1221,7 @@ V(G, D)
   <li><a href="https://arxiv.org/abs/1802.05957">Spectral Normalization for Generative Adversarial Networks</a><a name="reference-6"></a></li>
   <li><a href="https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/87220341">Spectral Norm Explaination</a></li>
   <li><a href="https://arxiv.org/abs/1609.03126">Energy-based Generative Adversarial Network</a><a name="reference-8"></a></li>
-</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Advanced Thoery and Problems of GAN]]></summary></entry><entry><title type="html">Conditional Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/25/gan-2.html" rel="alternate" type="text/html" title="Conditional Generative Model" /><published>2022-01-25T00:00:00-05:00</published><updated>2022-01-25T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/25/gan-2</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/25/gan-2.html"><![CDATA[<p>Conditional Generative Model</p>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Drawback of the general framework of GAN, Wasserstein Distance, WGAN-GP]]></summary></entry><entry><title type="html">Conditional Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/25/gan-2.html" rel="alternate" type="text/html" title="Conditional Generative Model" /><published>2022-01-25T00:00:00-05:00</published><updated>2022-01-25T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/25/gan-2</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/25/gan-2.html"><![CDATA[<p>Conditional Generative Model</p>
 
 <!--more-->
 
@@ -1193,7 +1536,7 @@ G_X^{*}, G_Y^{*} &amp;= \arg \min _{G_X, G_Y} \max _{D_{X}, D_{Y}} \mathcal{L}\l
   <li><a href="https://arxiv.org/abs/1706.00409">Fader Networks: Manipulating Images by Sliding Attributes</a><a name="reference-12"></a></li>
   <li><a href="https://arxiv.org/abs/1712.06909">ComboGAN: Unrestrained Scalability for Image Domain Translation</a><a name="reference-13"></a></li>
   <li><a href="https://arxiv.org/abs/1711.05139">XGAN: Unsupervised Image-to-Image Translation for Many-to-Many Mappings</a><a name="reference-14"></a></li>
-</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Conditional Generative Model]]></summary></entry><entry><title type="html">Basic Theory of Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/20/gan-1.html" rel="alternate" type="text/html" title="Basic Theory of Generative Model" /><published>2022-01-20T00:00:00-05:00</published><updated>2022-01-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/20/gan-1</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/20/gan-1.html"><![CDATA[<p>Deep Generative Model</p>
+</ol>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Conditional Generative Model]]></summary></entry><entry><title type="html">Basic Theory of Generative Model</title><link href="https://harrypotterrrr.github.io//2022/01/20/gan-1.html" rel="alternate" type="text/html" title="Basic Theory of Generative Model" /><published>2022-01-20T00:00:00-05:00</published><updated>2022-01-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2022/01/20/gan-1</id><content type="html" xml:base="https://harrypotterrrr.github.io//2022/01/20/gan-1.html"><![CDATA[<p>Deep Generative Model, Basic thoery of GAN, Comparison to VAE, Equation derivations</p>
 
 <!--more-->
 
@@ -1670,7 +2013,7 @@ V &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \
 <ul>
   <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a></li>
   <li><a href="https://blog.csdn.net/taoqick/article/details/102621605">分类用交叉熵而不用MSE</a><a name="reference-2"></a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Deep Generative Model]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅹ</title><link href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅹ" /><published>2020-12-20T00:00:00-05:00</published><updated>2020-12-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/12/20/cg-10</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/20/cg-10.html"><![CDATA[<p>Material, Microfacet Theory, Isotropic Material, Anisotropic Material</p>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer vision" /><category term="generative model" /><category term="notes" /><summary type="html"><![CDATA[Deep Generative Model, Basic thoery of GAN, Comparison to VAE, Equation derivations]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅹ</title><link href="https://harrypotterrrr.github.io//2020/12/20/cg-10.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅹ" /><published>2020-12-20T00:00:00-05:00</published><updated>2020-12-20T00:00:00-05:00</updated><id>https://harrypotterrrr.github.io//2020/12/20/cg-10</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/12/20/cg-10.html"><![CDATA[<p>Material, Microfacet Theory, Isotropic Material, Anisotropic Material</p>
 
 <!--more-->
 
@@ -4901,505 +5244,4 @@ f(x, y) = lerp(r, u_{d}, u_{d+1})\]
   <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.htm">雅可比行列式</a></li>
   <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.html">多变量微积分———变量替换</a></li>
   <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Texture, Texture Mapping, Interpolation, Texture Filtering]]></summary></entry><entry><title type="html">The Notes of Computer Graphics Ⅴ</title><link href="https://harrypotterrrr.github.io//2020/09/02/cg-5.html" rel="alternate" type="text/html" title="The Notes of Computer Graphics Ⅴ" /><published>2020-09-02T00:00:00-04:00</published><updated>2020-09-02T00:00:00-04:00</updated><id>https://harrypotterrrr.github.io//2020/09/02/cg-5</id><content type="html" xml:base="https://harrypotterrrr.github.io//2020/09/02/cg-5.html"><![CDATA[<p>Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline</p>
-
-<!--more-->
-
-<h2 id="shading">Shading</h2>
-
-<h3 id="what-we-done-so-far">What we done so far</h3>
-
-<ul>
-  <li>Model transformation</li>
-  <li>View transformation</li>
-  <li>Projection transformation</li>
-  <li>Viewport transformation</li>
-  <li>Rasterization</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwP9U.jpg" alt="cg-5-1" width="600px" /></p>
-
-<ul>
-  <li>The color applied to each pixel has not been determined yet.</li>
-</ul>
-
-<h3 id="blinn-phong-reflectance-model">Blinn-Phong Reflectance Model</h3>
-
-<p><strong>Shading</strong>: The process of applying a material to an object.</p>
-
-<ul>
-  <li><strong>Specular highlight</strong>: the bright spot of light that apperas on shiny objects when illuminated. Direct light</li>
-  <li><strong>Diffuse lighting</strong>: when a surface that faces an angle 90 degrees or less of the light, it will get a percentage of the light source. Direct light, but diverted from the light source</li>
-  <li><strong>Ambient lighting</strong>: light of the environment, most of which comes from reflected surfaces (by diffusion). Indirect light and not in the path of light source</li>
-</ul>
-
-<p class="info"><strong>Tip</strong>: We often assume ambient lighting is a constant.</p>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skw9hT.jpg" alt="cg-5-2" width="600px" /></p>
-
-<h3 id="shading-point">Shading point</h3>
-
-<ul>
-  <li>Compute light reflected toward camera at a specific <strong>shading point</strong></li>
-  <li>Inputs:
-    <ul>
-      <li>Viewer direction $v$</li>
-      <li>Surface normal $n$</li>
-      <li>Light direction $l$</li>
-      <li>Surface parameters, properties (color, shininess, etc.)</li>
-    </ul>
-  </li>
-</ul>
-
-<p class="error"><strong>Caveat</strong>: Above are all <strong>unit</strong> vectors.</p>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwFc4.jpg" alt="cg-5-3" width="400px" /></p>
-
-<ul>
-  <li>
-    <p>Shading is local, so <strong>No Shadows</strong> will be generated! (<strong>shading ≠ shadow</strong>)</p>
-  </li>
-  <li>
-    <p>The below region in red rectangular is blocked by the object from the light source, but we still shade color to it since <strong>shading is local</strong>. The shadow of this area will be discussed <a href="">later</a></p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwi3F.jpg" alt="cg-5-4" width="400px" /></p>
-
-<h2 id="blinn-phong-model">Blinn-Phong Model</h2>
-
-<h3 id="diffuse-reflection">Diffuse reflection</h3>
-
-<ul>
-  <li>Light is scattered uniformly in all directions</li>
-  <li>Surface color is the same for all viewing directions</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwkjJ.jpg" alt="cg-5-5" width="400px" /></p>
-
-<ul>
-  <li>Lambert’s cosine law: determine how much light is received</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwZH1.jpg" alt="cg-5-6" /></p>
-
-<h3 id="light-falloff">Light Falloff</h3>
-
-<ul>
-  <li>Assume that ideally there is no loss of energy, for each moment of energy transmission, each spherical shell carries the same amount of luminous energy. For each unit space $dS$ on the spherical shell, we assume the energy is the same, so the for each spherical shell, the total amount of energy is $\oint IdS = 4\pi r^2 I$. Thus $I$ is inversely proportional to the square of the distance $r$.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwEu9.jpg" alt="cg-5-7" /></p>
-
-<p class="warning"><strong>Note</strong>: Above proof is not strict, but intuitive. More strict prove is as follows:
-We assume there is no energy loss, so the luminous energy $Q$ from the light source per unit time is the same. According to $\Phi = dQ / dt$, we can get the luminous flux $\Phi$ per time unit is the same. From the definition of luminance: $L_{v} = d^2\Phi / d\Omega dA cos\theta$, the total of luminance $4\pi r^2 L_{v} = d\Phi / d\Omega cos\theta$ should be the same. Thus luminance $L_{v}$ is inversely proportional to the square of  the distance $r$.</p>
-
-<p class="error"><strong>Caveat</strong>: More detail and the relationship between Luminous intensity $l_{v}$ and Luminance $L_{v}$ will be discussed in <a href="/2020/11/25/cg-8.html#radiometry">Radiometry part</a>.</p>
-
-<h3 id="diffuse-term">Diffuse Term</h3>
-
-<ul>
-  <li>
-    <p>Lambertian Shading (Diffuse shading)</p>
-  </li>
-  <li>
-    <p>Shading <strong>independent</strong> of view direction $v$</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skwVBR.jpg" alt="cg-5-8" /></p>
-
-<ul>
-  <li>$\max (0, \mathbf{n} \cdot \mathbf{l})$ is to ensure the shading value is always positive even if the light comes from the back of the object</li>
-</ul>
-
-<p class="success"><strong>info</strong>: The energy received is relative to the angle between normal $n$ and light $l$. This is also the reason why we feel cold in winter and hot in summer.</p>
-
-<ul>
-  <li><strong>Diffuse coefficient</strong>: often defined as 3 or 4 dimensional vector to store the percentage of energy the shading point reflects (not absorb in). Indirectly contain the material information of the object.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/skDi38.jpg" alt="cg-5-9" /></p>
-
-<h3 id="specular-term">Specular Term</h3>
-
-<ul>
-  <li>Intensity <strong>depends</strong> on view direction
-    <ul>
-      <li>Specular highlight close to mirror reflection direction</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAURfS.jpg" alt="cg-5-10" width="450px" /></p>
-
-<ul>
-  <li>$v$ close to mirror direction $\Leftrightarrow$ half vector close to normal</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUhlQ.jpg" alt="cg-5-11" /></p>
-
-<ul>
-  <li>
-    <p><strong>Specular coefficient</strong>: similar to <strong>diffuse coefficient</strong>, to describe the property and material of the object, but specular coefficient always set to 1, which means the shading point emmits white color when the specular reflection happens.</p>
-  </li>
-  <li>
-    <p><strong>phong exponent</strong>: increasing phong exponent $p$ will narrow the reflection lobe and accelerate the decay rate of the specular reflection effect as the angle increased.</p>
-    <ul>
-      <li>When the angle between the reflected light and view direction more than 3~5 degree, we suppose specular reflection disappears.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUfSg.jpg" alt="cg-5-12" /></p>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAU2Y8.jpg" alt="cg-5-13" width="780px" /></p>
-
-<p><strong>Tip</strong>: Compared to diffuse reflection, we ignore the <code class="language-plaintext highlighter-rouge">energy received term</code> for simplicity. Note that Blinn-Phong model is just an empirical model.</p>
-
-<h3 id="ambient-term">Ambient Term</h3>
-
-<ul>
-  <li>Shading that does not depend on anything
-    <ul>
-      <li>Independent of light $l$ and view direction $v$</li>
-      <li>Add constant color to account for disregarded illumination and fill in black shadows</li>
-      <li>This is approximate / fake!</li>
-    </ul>
-  </li>
-  <li><strong>Ambient coefficient</strong>: similar to <strong>specular coefficient</strong> and <strong>diffuse coefficient</strong>, but this is always a constant.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUgFf.jpg" alt="cg-5-14" width="750px" /></p>
-
-<h3 id="blinn-phong-model-1">Blinn-Phong Model</h3>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAU5Os.jpg" alt="cg-5-15" /></p>
-
-\[\begin{aligned} L &amp;=L_{a}+L_{d}+L_{s} \\ &amp;=k_{a} I_{a}+k_{d}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{l})+k_{s}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{h})^{p} \end{aligned}\]
-
-<h2 id="shading-frequencies">Shading Frequencies</h2>
-
-<ul>
-  <li>Flat (Face) shading (逐片元)</li>
-  <li>Gouraud (Vertex) shading (逐顶点)</li>
-  <li>Phong (Pixel) shading (逐像素)</li>
-</ul>
-
-<h3 id="flat-shading">Flat shading</h3>
-
-<ul>
-  <li>Shading for each triangle</li>
-  <li><code class="language-plaintext highlighter-rouge">normal vector</code> of each face is caluculated by cross product of triangle’s two edges</li>
-  <li>Not good for smooth surfaces</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUomn.jpg" alt="cg-5-16" width="500px" /></p>
-
-<h3 id="gouraud-shading">Gouraud shading</h3>
-
-<ul>
-  <li>Shading for each vertices and <strong>interpolate</strong> triangle from vertices</li>
-  <li>Each vertex has a normal vector</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAU7T0.jpg" alt="cg-5-17" width="500px" /></p>
-
-<ul>
-  <li>It is easy to obtain vertex normal from the underlying known geometry. e.g. sphere</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAaOEt.jpg" alt="cg-5-20" width="700px" /></p>
-
-<ul>
-  <li>Otherwise vertex normal can be inferred from surrounding triangle:
-    <ul>
-      <li>average surrounding face normals</li>
-      <li>weighted average surrounding face normals according to the area of each triangle</li>
-    </ul>
-  </li>
-</ul>
-
-\[N_{v}=\frac{\sum_{i} N_{i}}{\left\|\sum_{i} N_{i}\right\|}\]
-
-<h3 id="phong-shading">Phong shading</h3>
-
-<ul>
-  <li>Shading for each pixels across triangle</li>
-  <li><code class="language-plaintext highlighter-rouge">normal vector</code> of each pixels is interpolated by vertex vector</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUTwq.jpg" alt="cg-5-18" width="500px" /></p>
-
-<p class="info"><strong>Tip</strong>: <code class="language-plaintext highlighter-rouge">Phong shading</code> is distinct from <code class="language-plaintext highlighter-rouge">Blinn-Phong reflectance model</code></p>
-
-<ul>
-  <li>pixel vector is computed by Barycentric interpolation of vertex normal</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUXpF.jpg" alt="cg-5-22" width="650px" /></p>
-
-<p class="error"><strong>Caveat</strong>: remember to normalize each normal vector after each step of interpolation.</p>
-
-<h3 id="shading-difference">Shading difference</h3>
-
-<ul>
-  <li>As the model becomes more complex and has more vertices, the difference between three shading models become smaller</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/05/sAUqYT.jpg" alt="cg-5-19" width="750px" /></p>
-
-<h2 id="shadow-mapping">Shadow Mapping</h2>
-
-<ul>
-  <li>Draw shadows using rasterization</li>
-  <li>
-    <p>Shadow gives people the feeling of objects in contact with each other</p>
-  </li>
-  <li>An Image-space Algorithm
-    <ul>
-      <li>no knowledge of scene’s geometry required during shadow computation</li>
-      <li>must deal with aliasing artifaces</li>
-    </ul>
-  </li>
-  <li>Key idea: the points NOT in shadow must be seen both by the light and by the camera</li>
-</ul>
-
-<p class="warning"><strong>Note</strong>: Suppose the point light is the only source of light, which means the shadow of the object is 0 or 1, that is so-called <strong>hard shadow</strong>.</p>
-
-<ul>
-  <li><strong>Step 1</strong>: Assume the camera is at the point light source, perform depth test to record the depth information on the buffer.</li>
-  <li><strong>Step 2</strong>: From the view of the real camera, project all point in the view back to the point source light. If the the distance from the point to the light matches the depth, the point is visible, otherwise the point is blocked by other objects.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBaJCF.jpg" alt="cg-5-25" width="80%" /></p>
-
-<h3 id="visualizing-shadow-mapping">Visualizing Shadow Mapping</h3>
-
-<ul>
-  <li>A complex scene with shadows and without shadows</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBa68e.jpg" alt="cg-5-26" width="80%" /></p>
-
-<ul>
-  <li>The depth buffer from the light’s point of view</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBa3NT.jpg" alt="cg-5-27" width="80%" /></p>
-
-<ul>
-  <li>The shadow from the camera’s point of view
-    <ul>
-      <li>Green is where the distance from the light to shading point approximates to depth on buffer</li>
-      <li>Non-green is where shadows should be</li>
-      <li>Quality of shadow mapping is pretty bad due to the error caused by equality comparison of floating value</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBa1EV.jpg" alt="cg-5-28" width="80%" /></p>
-
-<h3 id="problems-with-shadow-mapping">Problems with Shadow Mapping</h3>
-
-<ul>
-  <li>Only hard shadows in point light source can be mapped
-    <ul>
-      <li>If the light source is not limited to one and no more point-like, the shadow will be not hard.</li>
-    </ul>
-  </li>
-  <li>Quality greatly depends on shadow map resolution, which is general problem with image-based rasterization techniques</li>
-</ul>
-
-<p class="success"><strong>Info</strong>: In many games settings, the <strong>shadow quality</strong> refers to the resolution of shadow map. The higher shadow quality sets, the better and more realistic the shadow will be mapped, and the higher it will cost.</p>
-
-<ul>
-  <li>Errors involves equality comparison of floating point
-    <ul>
-      <li>Sometimes use <code class="language-plaintext highlighter-rouge">bias</code> or <code class="language-plaintext highlighter-rouge">eps</code> to approximate the equality between distance and depth in buffer</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="hard-vs-soft-shadow">Hard vs. Soft Shadow</h3>
-
-<ul>
-  <li>Soft shadow is caused by the <strong>size</strong> of light source.
-    <ul>
-      <li>The light is not able to reach anywhere in <strong>Umbra region</strong>.</li>
-      <li>Part of light is blocked but still some light can illuminate <strong>Penumbra</strong> region.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBaQH0.jpg" alt="cg-5-29" width="65%" /></p>
-
-<ul>
-  <li>Soft shadow is the transition from the umbra to penumbra to the illuminated region.
-    <ul>
-      <li>The shadow corresponding to the edge of the object is gradually vague and soft due to the light illumination.</li>
-    </ul>
-  </li>
-  <li>Soft shadow is more realistic and natural because light source is not always point-like.</li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/16/sBaY34.jpg" alt="cg-5-30" width="80%" /></p>
-
-<h2 id="graphics-pipeline">Graphics Pipeline</h2>
-
-<h3 id="real-time-rendering-pipeline">Real-time Rendering pipeline</h3>
-
-<p><img src="https://z3.ax1x.com/2021/01/06/sEh9XR.jpg" alt="cg-5-22" /></p>
-
-<ul>
-  <li>
-    <p>According to different shading frequency (face, vertex, pixel), Shading happens in Vertex Processing or Fragment Processing.</p>
-  </li>
-  <li>
-    <p>Texture mapping also happens in Vertex Processing and Fragment Processing.</p>
-  </li>
-  <li>
-    <p>Texture mapping is to assign vertices with different colors (properties, materials). This is the reason why objects look different in color and material after rendering. Detail in <a href="/2020/09/07/cg-6">Texture</a> later.</p>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/06/sEhPn1.png" alt="cg-5-23" /></p>
-
-<p class="warning"><strong>Note</strong>: Fragment (片元) is widely used in OpenGL and other modern API, which commonly means Pixel. Fragment shading (processing) = Pixel shading (processing).</p>
-
-<h3 id="shader-programs">Shader Programs</h3>
-
-<ul>
-  <li>Modern GPU allows to custom various shader by writing <strong>shader program</strong>
-    <ul>
-      <li>Program vertex and fragment processing stages</li>
-      <li>Describe operation on a single vertex or fragment. Shader function executes once per fragment, thus there is no need to loop or traverse each vertex or fragment</li>
-      <li>Outputs color of surface at the current fragment’s screen sample position</li>
-    </ul>
-  </li>
-</ul>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example GLSL fragment shader program</span>
-<span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">myTexture</span><span class="p">;</span>        <span class="c1">// texture property</span>
-<span class="n">uniform</span> <span class="n">vec3</span> <span class="n">lightDir</span><span class="p">;</span>              <span class="c1">// inversed light direction vector</span>
-<span class="n">varying</span> <span class="n">vec2</span> <span class="n">uv</span><span class="p">;</span>                    <span class="c1">// perfragment value (interp. by rasterizer)</span>
-<span class="n">varying</span> <span class="n">vec3</span> <span class="n">norm</span><span class="p">;</span>                  <span class="c1">// norm vector, perfragment value (interp. by rasterizer)</span>
-
-<span class="kt">void</span> <span class="nf">diffuseShader</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">vec3</span> <span class="n">kd</span><span class="p">;</span>                        <span class="c1">// vector3d to store color value</span>
-    <span class="n">kd</span> <span class="o">=</span> <span class="n">texture2d</span><span class="p">(</span><span class="n">myTexture</span><span class="p">,</span> <span class="n">uv</span><span class="p">);</span>  <span class="c1">// material color and property from texture</span>
-    <span class="n">kd</span> <span class="o">*=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="err">–</span><span class="n">lightDir</span><span class="p">,</span> <span class="n">norm</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span> <span class="c1">// diffuse shading</span>
-    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>   <span class="c1">// assign fragment color value to gl_FragColor</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>This shader performs a texture lookup to obtain the surface’s material color at this point</li>
-  <li>Then performs a diffuse lighting calculation</li>
-  <li>Vertex shader (顶点着色器) programs to each vertex, fragment shader （片元/像素着色器) programs to each pixel</li>
-</ul>
-
-<p><strong>Info</strong>: Incredible shader program and website: shadertoy.com</p>
-
-<h3 id="highly-complex-3d-scenes-in-realtime">Highly Complex 3D Scenes in Realtime</h3>
-
-<ul>
-  <li>Modern GPU could handle much complex 3D scenes in realtime by deploying great amount of computation in parallel.
-    <ul>
-      <li>thousands to millions of triangles in a scene</li>
-      <li>Complex vertex and fragment shader computations</li>
-      <li>High resolution (2-4 megapixel and supersampling)</li>
-      <li>30-60 fps (frames per second) and even higher for VR</li>
-    </ul>
-  </li>
-  <li><strong>Game engine</strong> (architecture) is designed for developers to focus more on constructing games instead of techniques of graphics or rendering. The core functionality typically by a game engine includes a rendering engine (renderer) for 2D or 3D graphics (including shadows, global illumination etc.), a physics engine including collision detection and response, animation, artifical intelligence, sounding, memory management, threading, precomputation etc.</li>
-</ul>
-
-<h3 id="gpu-graphics-pipeline-implementation">GPU: Graphics Pipeline Implementation</h3>
-
-<ul>
-  <li>Specialized processors for executing graphics pipeline computations</li>
-  <li>Heterogeneous, Multi-core Processor</li>
-  <li>Emerge different new shaders:
-    <ul>
-      <li>Geometry shader: govern the processing of primitives and produce more triangles</li>
-      <li>Compute shader: more general purpose for different computing</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="https://z3.ax1x.com/2021/01/06/sVF90I.jpg" alt="cg-5-24" /></p>
-
-<ul>
-  <li>FLOPS (floating point operatins per second): measure of computer performance:</li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Prefix</th>
-      <th style="text-align: center">Abbreviation</th>
-      <th style="text-align: center">Order of magnitude</th>
-      <th style="text-align: center">Computer performance</th>
-      <th style="text-align: center">Storage capacity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">mega-</td>
-      <td style="text-align: center">M</td>
-      <td style="text-align: center">$10^6$</td>
-      <td style="text-align: center">megaFLOPS (MFLOPS)</td>
-      <td style="text-align: center">megabyte (MB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">giga-</td>
-      <td style="text-align: center">G</td>
-      <td style="text-align: center">$10^9$</td>
-      <td style="text-align: center">gigaFLOPS (GFLOPS)</td>
-      <td style="text-align: center">gigabyte (GB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">tera-</td>
-      <td style="text-align: center">T</td>
-      <td style="text-align: center">$10^{12}$</td>
-      <td style="text-align: center">teraFLOPS (TFLOPS)</td>
-      <td style="text-align: center">terabyte (TB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">peta-</td>
-      <td style="text-align: center">P</td>
-      <td style="text-align: center">$10^{15}$</td>
-      <td style="text-align: center">petaFLOPS (PFLOPS)</td>
-      <td style="text-align: center">petabyte (PB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">exa-</td>
-      <td style="text-align: center">E</td>
-      <td style="text-align: center">$10^{18}$</td>
-      <td style="text-align: center">exaFLOPS (EFLOPS)</td>
-      <td style="text-align: center">exabyte (EB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">zetta-</td>
-      <td style="text-align: center">Z</td>
-      <td style="text-align: center">$10^{21}$</td>
-      <td style="text-align: center">zettaFLOPS (ZFLOPS)</td>
-      <td style="text-align: center">zettabyte (ZB)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">yotta-</td>
-      <td style="text-align: center">Y</td>
-      <td style="text-align: center">$10^{24}$</td>
-      <td style="text-align: center">yottaFLOPS (YFLOPS)</td>
-      <td style="text-align: center">yottabyte (YB)</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
-  <li><a href="https://www.zhihu.com/question/53080536/answer/133398317">光能、光通量、光强、亮度</a></li>
-</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Shading, Blinn-Phong Shading Model, Shading Frequency, Shadow Mapping, Graphics Pipeline]]></summary></entry></feed>
+</ul>]]></content><author><name>Haolin Jia</name><email>jiahaolin19971119@gmail.com</email></author><category term="computer graphics" /><category term="notes" /><summary type="html"><![CDATA[Texture, Texture Mapping, Interpolation, Texture Filtering]]></summary></entry></feed>
