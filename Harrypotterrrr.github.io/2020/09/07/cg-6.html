@@ -1,0 +1,1767 @@
+<!DOCTYPE html><html lang="en">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-176496785-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-176496785-1');
+		
+	</script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅵ - Haolin Jia's Homepage</title>
+
+<meta name="description" content="Texture, Texture Mapping, Interpolation, Texture Filtering">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/09/07/cg-6.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><script src="https://kit.fontawesome.com/0970362a03.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/0970362a03.js" > --><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://kit.fontawesome.com/0970362a03.js',
+        jquery: 'https://code.jquery.com/jquery-3.6.0.min.js',
+        leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
+        chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.jss',
+        gitalk: {
+          js: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js',
+          css: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
+        },
+        valine: 'https://unpkg.com/valine/dist/Valine.min.js',
+        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h2,h3,h4'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2 active"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="24px" viewBox="0 0 24 24">
+<style type="text/css">
+	.st0{fill:#515151;}
+</style>
+<path class="st0" d="M1.7,22.3c5.7-5.7,11.3-5.7,17,0c3.3-3.3,3.5-5.3,0.8-6c2.7,0.7,3.5-1.1,2.3-5.6s-3.3-5.2-6.3-2.1
+	c3-3,2.3-5.2-2.1-6.3S7,1.8,7.7,4.6C7,1.8,5,2.1,1.7,5.3C7.3,11,7.3,16.7,1.7,22.3"/>
+</svg>
+<a title="Keep working hard!
+" href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
+
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
+
+              <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅵ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-09-07-cg-6.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅵ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-09-07-cg-6">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 22, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-09-07T00:00:00-04:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>Texture, Texture Mapping, Interpolation, Texture Filtering</p>
+
+<!--more-->
+
+<h2 id="texture-mapping">Texture Mapping</h2>
+
+<ul>
+  <li><strong>Texture mapping</strong> is to apply different colors at different places</li>
+  <li><strong>Texture</strong> defines property and color for each vertex</li>
+</ul>
+
+<h3 id="surface">Surface</h3>
+
+<ul>
+  <li>Surfaces are 2D though lives in 3D world space</li>
+  <li>Every 3D surface point also has a place where it goes in the 2D image (<strong>texture</strong>)</li>
+  <li>In other words, each vertex of primitives in 3D world corresponds to the vertex of the primitive in 2D texture.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/06/sVCEp4.jpg" alt="cg-6-1" /></p>
+
+<h3 id="texture">Texture</h3>
+
+<ul>
+  <li>
+    <p>Texture is applied to Surface</p>
+  </li>
+  <li>
+    <p>We didn’t care about how mapping relationship of triangles produces between model and texture. The mapping and definition of primitives (triangles) are known.</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/06/sVCZc9.jpg" alt="cg-6-2" /></p>
+
+<ul>
+  <li>Generally, texture comes in two ways:
+    <ul>
+      <li>Art designer design and produce the texture</li>
+      <li>Parameterization of triangular meshes</li>
+    </ul>
+  </li>
+  <li><strong>Parameterization</strong> is the process of finding parametric equations of a curve, a surface, a manifold or a variety, defined by an implicit equation.</li>
+</ul>
+
+<h3 id="texture-coordinates">Texture Coordinates</h3>
+
+<ul>
+  <li>Each triangle vertex is assigned a texture coordinate $(u,v)$.</li>
+  <li>Define mapping between points on triangle’s surface (object coordinate space) to points in texture coordinate space.</li>
+  <li>Each vertex corresponds to one texture mapping. Again, this mapping is known and we don’t care how this mapping come from.</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: No matter the texture is square or not, $u$ and $v$ are in range of $(0,1)$.</p>
+
+<p><img src="https://z3.ax1x.com/2021/01/06/sVeE90.jpg" alt="cg-6-3" /></p>
+
+<h3 id="texture-tile">Texture Tile</h3>
+
+<ul>
+  <li>Textures can be applied multiple times</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/06/sVZlSf.jpg" alt="cg-6-4" /></p>
+
+<ul>
+  <li>Well-designed texture is tileable when multiple textures blend together profesionally and seamlessly together, borders of texture is not easily conspicuous.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/06/sVi2kV.png" alt="cg-6-5" /></p>
+
+<h2 id="interpolation">Interpolation</h2>
+
+<h3 id="interpolation-across-triangles-barycentric-coordinates">Interpolation Across Triangles: Barycentric Coordinates</h3>
+
+<ul>
+  <li>Why to interpolate
+    <ul>
+      <li>Specify values at vertices</li>
+      <li>Obtain smoothly varying values across triangles</li>
+    </ul>
+  </li>
+  <li>What to interpolate
+    <ul>
+      <li>Texture coordinates, colors, normal vectors. etc.</li>
+    </ul>
+  </li>
+  <li>How to interpolate
+    <ul>
+      <li>Barycentric coordinate</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="barycentric-coordinate">Barycentric Coordinate</h3>
+
+<ul>
+  <li>Any point $(x,y)$ in the plane can be represented as a linear combination of triangular vertices.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sZUVNq.jpg" alt="cg-6-6" /></p>
+
+<ul>
+  <li>A coordinate system for triangles $(\alpha, \beta, \gamma)$
+    <ul>
+      <li>Proved by using <a href="https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F">point-scored formula</a></li>
+    </ul>
+  </li>
+</ul>
+
+\[(x, y)= \alpha A+\beta B+\gamma C\]
+
+\[\alpha+\beta+\gamma=1\]
+
+\[0 \le \alpha,\ \beta,\ \gamma \le 1\]
+
+<ul>
+  <li>Point $(x,y)$ is not in the plane of $ABC$ if $\alpha+\beta+\gamma \neq1$</li>
+  <li>Point $(x,y)$ is inside the triangle if and only if all three $(\alpha, \beta, \gamma)$ are non-negative.</li>
+  <li>
+    <p>e.g. $A$ is when $(\alpha, \beta, \gamma) = (1, 0, 0)$</p>
+  </li>
+  <li>Geometric viewpoint: proportional areas
+    <ul>
+      <li>It is available to get $(\alpha, \beta, \gamma)$ by given a spcified point $(x,y)$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned} \alpha &amp;=\frac{A_{A}}{A_{A}+A_{B}+A_{C}} \\ \beta &amp;=\frac{A_{B}}{A_{A}+A_{B}+A_{C}} \\ \gamma &amp;=\frac{A_{C}}{A_{A}+A_{B}+A_{C}} \end{aligned}\]
+
+<ul>
+  <li>
+    <p><strong>Barycentric coordinate</strong> of centroid: $(\alpha, \beta, \gamma) = (\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$, then $(x, y)=\frac{1}{3} A+\frac{1}{3} B+\frac{1}{3} C$</p>
+  </li>
+  <li>
+    <p>Linear interpolate values at vertices</p>
+    <ul>
+      <li>$V_A, V_B, V_C$ can be positions, texture coordinates, color, normal, depth, material attributes…</li>
+    </ul>
+  </li>
+</ul>
+
+\[V=\alpha V_{A}+\beta V_{B}+\gamma V_{C}\]
+
+<p class="warning"><strong>Note</strong>: barycentric coordinates are not invariant under projection! Thus interpolate every time after projections.</p>
+
+<h3 id="texture-applying">Texture Applying</h3>
+
+<ul>
+  <li>Simple texture mapping: diffuse color</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">each</span> <span class="n">rasterized</span> <span class="n">screen</span> <span class="nf">sample</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">:</span>           <span class="c1">// Usually a pixel's center</span>
+    <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">=</span> <span class="n">evaluate</span> <span class="n">texture</span> <span class="n">coordinate</span> <span class="n">at</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="c1">// Using barycentric coordinates</span>
+    <span class="n">texcolor</span> <span class="o">=</span> <span class="n">texture</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>                <span class="c1">// get texture (u,v)</span>
+    <span class="n">set</span> <span class="n">sample</span><span class="err">'</span><span class="n">s</span> <span class="n">color</span> <span class="n">to</span> <span class="n">texcolor</span><span class="p">;</span>                 <span class="c1">// Usually the diffuse albedo Kd of Blinn-Phong reflectance model</span>
+
+</code></pre></div></div>
+
+<h2 id="texture-filtering">Texture Filtering</h2>
+
+<ul>
+  <li>To determine the texture color for a texture mapped pixel, using the colors near by <strong>texels</strong>.</li>
+  <li><strong>Texel</strong> (纹素): a pixel on a texture</li>
+  <li>Two main categories of texture filtering, depending on the situation texture filtering
+    <ul>
+      <li><strong>Magnification filtering</strong>: a type of reconstruction filter where sparse data is interpolated to fill gaps</li>
+      <li><strong>Minification filtering</strong>: a type of anti-aliasing (AA), where texture samples exist at a higher frequency than required for the sample frequency needed for texture fill</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="texture-magnification">Texture Magnification</h3>
+
+<ul>
+  <li>Insufficient texture resolution: texture is too small comparing to the object, then the texture has to be enlarged than its actual resolution.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: For each point on the object or scene, mapping it to the corresponding point on the low resolution texture will get non-integer coordinates of texture. Rounding off is the common process to obtain non-floating coordinate texel. As a result, multiple pixels of the object or scene will corresponds to the same texel of the texture, which means the generated figure is obscure of low quality. Thus interpolation handle it.</p>
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sZN7cD.jpg" alt="cg-6-7" /></p>
+
+<h4 id="bilinear-interpolation">Bilinear Interpolation</h4>
+
+<ul>
+  <li>Linear interpolation (1D)</li>
+</ul>
+
+\[\operatorname{lerp}\left(x, v_{0}, v_{1}\right)=v_{0}+x\left(v_{1}-v_{0}\right)\]
+
+<ul>
+  <li>Two horizontal interpolations</li>
+</ul>
+
+\[u_{0}=\operatorname{lerp}\left(s, u_{00}, u_{10}\right) \\
+u_{1}=\operatorname{lerp}\left(s, u_{01}, u_{11}\right)\]
+
+<ul>
+  <li>Final vertical interpolation</li>
+</ul>
+
+\[f(x, y)=\operatorname{lerp}\left(t, u_{0}, u_{1}\right)\]
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sZNOHA.jpg" alt="cg-6-8" width="350px" /></p>
+
+<ul>
+  <li>Red point: want to sample texture value $f(x,y)$</li>
+  <li>
+    <p>Black points: indicate texture sample locations (the center of texel)</p>
+  </li>
+  <li>
+    <p>For the nearest method of texture applying, take the red point as an example, any mapping point in the square which the red point and $u_{11}$ locates at will take $u_{11}$ as a texel. When the object or scene is very large comparing to the texture, multiple pixels will map to the same texel as $u_{11}$. That is the reason why jaggies and artifacts are consipicuous in the above nearest figure.</p>
+  </li>
+  <li>
+    <p>For the bilinear interpolation, it takes 4 nearest sample locations with textrue values as labeled, blending the property and information of 4 texels, so the result is more smooth and realistic.</p>
+  </li>
+  <li>Bilinear interpolation usually gives pretty good results at reasonable costs.</li>
+</ul>
+
+<h4 id="bicubic-interpolation">Bicubic Interpolation</h4>
+
+<ul>
+  <li>Bicubic interpolation is to use 4 x 4 point to do interpolation, which has better performance but higher costs. (Look into the canthus of the above figure, bilinear create jaggies but bicubic is more realistic)</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sZNjAI.png" alt="cg-6-9" width="650px" /></p>
+
+<h3 id="texture-minification">Texture Minification</h3>
+
+<ul>
+  <li>Superadundant texture resolution: Texture is too large comparing to the screen space required, so it has to be shrunken relative to its natural resolution.
+    <ul>
+      <li>Intuitively, when the texture is large, every information is available. But it is incorrect.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sehxtP.jpg" alt="cg-6-10" /></p>
+
+<ul>
+  <li>Screen Pixel’s “Footprint” in Texture
+    <ul>
+      <li>As the pixel in the screen space get growingly further, the number of corresponding texels in texture gets more and more.</li>
+      <li>Take the above image as an example, the pixels close to the horizon represent a large region of texture. The information lost happens when the square which the blue point is inside is selected as texel</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/07/sehvkt.jpg" alt="cg-6-11" /></p>
+
+<ul>
+  <li>
+    <p>Supersampling to antialiasing: yes, high quality, but costly.</p>
+  </li>
+  <li>The reason of aliasing when perform minification
+    <ul>
+      <li>When highly minified, many texels in pixel footprint</li>
+      <li>Signal frequency too large in a pixel</li>
+      <li>Need even higher sampling frequency</li>
+    </ul>
+  </li>
+  <li>Solution: Not do sampling but get the average value within a range, <strong>Range Query</strong>.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Some data structure like K-d tree, segment tree, binary indexed tree etc. are good ways to solve range query problem.</p>
+
+<h4 id="mipmap">Mipmap</h4>
+
+<ul>
+  <li>Precompute and store the averages of the texture over various areas of different size and position.</li>
+  <li>Allowing <strong>fast</strong>, <strong>approximate</strong>, <strong>square</strong> range queries.
+    <ul>
+      <li>“Mip” comes from the Latin, meaning a multitude in a small space.</li>
+      <li>A sequence of textures that contains the same image but at lower and lower resolution. 
+ <img src="https://z3.ax1x.com/2021/01/07/sehXTI.jpg" alt="cg-6-12" /></li>
+      <li>
+        <p>There are total of $log(n)$ images<br />
+ <img src="https://z3.ax1x.com/2021/01/07/sehO0A.jpg" alt="cg-6-13" width="400px" /></p>
+      </li>
+      <li>The total storage overhead of a mipmap is the summation of series: $\frac{4}{3}$ to the original image.</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: We call this kind of structure, with images that represent the same content at a series of lower and lower sampling rates, <code class="language-plaintext highlighter-rouge">image pyramid</code> in computer vision field.</p>
+
+<ul>
+  <li>Computing Mipmap at level $D$: estimate texture footprint using texture coordinates of <strong>neighboring</strong> screen samples</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/su7yKx.jpg" alt="cg-6-14" /></p>
+
+<ul>
+  <li>
+    <p>The distance between the pixel and neighbouring in screen space is 1</p>
+  </li>
+  <li>
+    <p>Denote the pixel $(x,y)$ in screen space and texel $(u,v)$ in texture space</p>
+  </li>
+  <li>
+    <p>Denote transformation $\psi$ the mapping from image sapce to texture space as a linear mapping, the transformation equation, thus $u = \psi_{x}(x, y), v = \psi_{y}(x, y)$.</p>
+  </li>
+  <li>
+    <p><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix"><em>Jacobian matrix</em></a> $J$ is the best linear approximation of $\psi$ in a neighbourhood of $(u,v)$ where $\psi$ is differentiable.</p>
+  </li>
+</ul>
+
+\[\lim_{\Delta p \to 0}\psi(\mathbf{p}+\Delta \mathbf{p})=\psi(\mathbf{p} )+ \mathbf{J}\Delta \mathbf{p}\]
+
+\[\mathbf{J}=\frac{\partial (u, v)}{\partial (x, y)}=\left[\begin{array}{ll}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\]
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKmMo8.gif" alt="cg-6-15" /></p>
+
+<ul>
+  <li>
+    <p>Recall that in linear transformation \(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\left[\begin{array}{l}x \\ y\end{array}\right]=\left[\begin{array}{l}x^{\prime} \\ y^{\prime}\end{array}\right]\),\(\left[\begin{array}{ll}a_{x} &amp; b_{x} \\ a_{y} &amp; b_{y}\end{array}\right]\) is transformation matrix, the two columns of it \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) and \(\left[\begin{array}{l}a_{x} \\ a_{y}\end{array}\right]\) are two basis vector of the new space if the original basis is  \(\left[\begin{array}{l}1 \\ 0\end{array}\right]\) and \(\left[\begin{array}{l}0 \\ 1\end{array}\right]\). Thus, we could take Jacobian matrix as transformation matrix mapping the pixel $(x, y)$ in screen space to the texture space $(u, v)$.</p>
+  </li>
+  <li>
+    <p>In screen space, suppose $(u, v)_{10}$ and $(u, v)_{01}$ as $(1, 0)$ and $(0, 1)$ relatively, the corresponding texel coordinate is computed by multiplying the transformation Jacobian matrix $J$:</p>
+  </li>
+</ul>
+
+\[\left(\begin{array}{l}u^{\prime}_{10} \\ v^{\prime}_{10}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}1 \\ 0\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial x} \\ \frac{\partial v}{\partial x}\end{array}\right)\]
+
+\[\left(\begin{array}{l}u^{\prime}_{01} \\ v^{\prime}_{01}\end{array}\right)=\left[\begin{array}{cc}\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}\end{array}\right]\left(\begin{array}{l}0 \\ 1\end{array}\right)=\left(\begin{array}{c}\frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial y}\end{array}\right)\]
+
+<p class="info"><strong>Tip</strong>: Each column of Jacobian matrix is the new basis vector of the transformed space. <a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/jacobian-prerequisite-knowledge">More details</a></p>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sK3AKg.jpg" alt="cg-6-17" /></p>
+
+<ul>
+  <li>Choose the level $D$ so that the size covered by the texels at that level is roughly the same as the overall size of the pixel footprint.</li>
+</ul>
+
+\[D=\log _{2} L\]
+
+\[\quad L=\max \left(\sqrt{\left(\frac{d u}{d x}\right)^{2}+\left(\frac{d v}{d x}\right)^{2}}, \sqrt{\left(\frac{d u}{d y}\right)^{2}+\left(\frac{d v}{d y}\right)^{2}}\right)\]
+
+<p><img src="https://z3.ax1x.com/2021/01/08/su7UVU.jpg" alt="cg-6-16" /></p>
+
+<ul>
+  <li>$D$ rounded to nearest integer level
+    <ul>
+      <li>near (in red) corresponds to low level of texture</li>
+      <li>far (in blue) corresponds to high level of texture</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKJYZQ.jpg" alt="cg-6-18" /></p>
+
+<ul>
+  <li>
+    <p>But Bilinear filtering only, where $D$ is clamped to nearest level, not support floating $D$ and the level $D$ is not continuous.</p>
+  </li>
+  <li>
+    <p><strong>Trilinear Interpolation</strong>: perform two Bilinear interpolation in neighbouring levels and interpolate the interpolated result again.</p>
+  </li>
+</ul>
+
+\[u_{d}= BilinearInterpolate(p_{d})\\
+u_{d+1}= BilinearInterpolate(p_{d+1})\\
+f(x, y) = lerp(r, u_{d}, u_{d+1})\]
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKs5lQ.jpg" alt="cg-6-19" width="650px" /></p>
+
+<h4 id="isotrpic-limitation">Isotrpic Limitation</h4>
+
+<ul>
+  <li>Mipmap limitation
+    <ul>
+      <li>the pixel footprint might be quite different in shape from the area represented by the texel, not always approximately square</li>
+      <li>Mipmap is unable to handle the pixel footprint with an elongated shape</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKs4Sg.jpg" alt="cg-6-20" /></p>
+
+<ul>
+  <li>Tilinear (<strong>isotropic</strong>) sampling will cause overblur problem most commonly when the points are on the floor that are far away viewed at very steep angles, which results in the pixel footprint covering much larger square areas.</li>
+  <li>As a result, most footprints far from the viewer are averaged over the large area of the texture, which causes <strong>overblur</strong>.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKsffS.jpg" alt="cg-6-21" /></p>
+
+<h4 id="anisotropic-filtering">Anisotropic filtering</h4>
+
+<ul>
+  <li><strong>Anisotropic filtering</strong>(Ripmap, or abbreviated <strong>AF</strong>): use multiple lookups to approximate an elongated footprint better
+    <ul>
+      <li>select the mipmap level based on the shortest axis of the footprint rather than the largest</li>
+      <li>average together several lookups spaced along the long axis</li>
+    </ul>
+  </li>
+  <li>Look up axis-aligned rectangular zones and preserve detail at extreme viewing angles.</li>
+  <li>Comparing to isotropic filtering which consume on third of extra space, anisotropic filtering takes three times of extra space consumption.
+    <ul>
+      <li>Bilinear / trilinear filtering is insotropic and thus will overblur to avoid aliasing</li>
+      <li>Anisotropic texture filtering provides higher image quality at higher computation and memory bandwidth cost</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/08/sKsIyj.png" alt="cg-6-22" /></p>
+
+<p class="success"><strong>Info</strong>: N x Anisotropic filtering in video games means the original figure will be copied of reduced size up to N times along horizontal and vertial axis. No matter the N increases to 4x, 8x, 16x or more, the ceiling of the space consumption is 4 times of the original texture. Generally, as long as the graphics memory is enough, the larger anisotropy will has no influence on the computing performance.</p>
+
+<ul>
+  <li>Limitation so far: diagonal footprints still a problem</li>
+  <li><strong>EWA filtering</strong> (Elliptically Weighted Average Filtering) to enhance further
+    <ul>
+      <li>Use multiple lookups</li>
+      <li>Weighted average</li>
+      <li>Mipmap hierarchy still helps</li>
+      <li>Can handle irregular footprints</li>
+      <li>Trade time for better performance</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="short-summary">Short summary</h3>
+
+<ul>
+  <li>Texture mapping is a sampling operation and is prone to aliasing.</li>
+  <li>Solution: prefilter texture map to eliminate high frequencies in texture signal.</li>
+  <li>Mip-map: precompute and store multiple resampled versions of the texture image, each of which has different amounts of low-pass filtering.</li>
+  <li>During rendering: dynamically select how much low-pass filtering is required based on distance between nighbouring screen samples in texture space.
+    <ul>
+      <li>Goal is to retain as much high-frequency content (detail) in the texture as possible, while avoiding aliasing.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="applications-of-texture">Applications of Texture</h2>
+
+<h3 id="general-texturing">General Texturing</h3>
+
+<ul>
+  <li>Generalize texturing into many usages</li>
+  <li>In modern GPUs, texture = memory + range query (filtering)
+    <ul>
+      <li>General method to bring data to fragment calculations</li>
+    </ul>
+  </li>
+  <li>Many applications
+    <ul>
+      <li>Environment lighting</li>
+      <li>Store microgeometry</li>
+      <li>Procedural textures</li>
+      <li>Solid modeling</li>
+      <li>Volumne rendering</li>
+      <li>etc.</li>
+    </ul>
+  </li>
+  <li>Environment Map: render with the light from the envrionment as texture
+    <ul>
+      <li>We suppose the light is static and comes from an infinite distance. We only care about the direction of the light without any depth information.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iK78.jpg" alt="cg-6-23" /></p>
+
+<p class="success"><strong>Info</strong>: Classic model in CG: Utah teapot, Stanford bunny, Stanford dragon, Cornell Box</p>
+
+<ul>
+  <li><strong>Spherical Map</strong>: Sphere is used to store environment light (map). Unfolding the sphere is texture to render realistic lighting<br />
+ <img src="https://z3.ax1x.com/2021/01/10/s1iu0f.jpg" alt="cg-6-24" />
+    <ul>
+      <li>Sphere texture is prone to <strong>distortion</strong> at top and bottom parts<br />
+ <img src="https://z3.ax1x.com/2021/01/10/s1innP.jpg" alt="cg-6-25" /></li>
+    </ul>
+  </li>
+  <li><strong>Cubic Map</strong>: A vector map to cube point along the direction. The cube is textured with 6 square texture maps<br />
+<img src="https://z3.ax1x.com/2021/01/10/s1iZ6I.jpg" alt="cg-6-26" />
+    <ul>
+      <li>less distortion</li>
+      <li>only need direction to face mapping computation</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/10/s1ieXt.jpg" alt="cg-6-27" /></p>
+
+<h3 id="bump--normal-mapping">Bump / Normal mapping</h3>
+
+<ul>
+  <li>Previously, textures only represent colors (influence $k_d$ coefficient)</li>
+  <li>In fact, textures may store height / normal or other properties</li>
+  <li>Fake the detailed geometry, accordingly change the normal and <strong>affect shading</strong>
+    <ul>
+      <li>Change how an illuminated surface reacts to light, without modifying the size or shape of the surface</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iltg.png" alt="cg-6-28" /></p>
+
+<ul>
+  <li>Add surface detail without adding more triangles
+    <ul>
+      <li>Preturb surface normal per pixel (for shading computations only)</li>
+      <li>“Height shift” per texel defined by a texture</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="normal-in-flatland-case">Normal in flatland case</h4>
+
+<ul>
+  <li><strong>Flatland</strong> (2D): texture in 1D and space in 2D</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/10/s1iQAS.jpg" alt="cg-6-29" /></p>
+
+<ul>
+  <li>Suppose original surface normal $\vec p = (0,1)$ directs upward</li>
+  <li>Approximate derivative at $p$ is $dp = c * [h(p+1) - h(p)]$
+    <ul>
+      <li>$c$ is a constant coefficient to scale the influence of bump texture</li>
+    </ul>
+  </li>
+  <li>Perturbed normal is then $\vec{n_p} = (-dp, 1).normalized()$
+    <ul>
+      <li>$(1, dp)$ rotate 90 degrees counterclockwise using rotate matrix and normalize</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="normal-in-3d-case">Normal in 3D case</h4>
+
+<ul>
+  <li>texture in 2D and space in 3D</li>
+  <li>Suppose original surface normal $\vec p = (0, 0, 1)$</li>
+  <li>
+    <p>Approximate derivatives at $p$ are
+\(dp/du = c_1 * [h(u+1) - h(u)] \\ dp/dv = c_2 * [h(v+1) - h(v)]\)</p>
+  </li>
+  <li>Perturbed normal is $\vec{n_p} = (-dp/du, -dp/dv, 1).normalized()$
+    <ul>
+      <li>// not the cross product result of $(dp/du, 0, 1) \times (dp/dv, 0, 1)$ ?</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note</strong>: These are all in <strong>local coordinate</strong>. Thus, the perturbed normal need to be transformed to <strong>world coordinate</strong>.</p>
+
+<h3 id="displacement-mapping">Displacement mapping</h3>
+
+<ul>
+  <li>Actually moves the vertices (instead of fake changing the normal only)
+    <ul>
+      <li>Actual geometric position of vertices over the textured are displaced</li>
+    </ul>
+  </li>
+  <li>Uses the same texture as in bumping mapping</li>
+  <li>Different with Bump / Normal mapping, Displacement mapping permits particular <strong>silhouettes</strong>, <strong>self-occlusion</strong>, <strong>self-shadowing</strong></li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/11/s3yRFs.jpg" alt="cg-6-30" width="600px" /></p>
+
+<ul>
+  <li>Require primitives in object elaborated and small enough so that the triangles in object catch up with the high frequency in displacement mapping.
+    <ul>
+      <li>Displacement mapping only changes the vertex properties, thus if the primitive is large and displacement mapping is not able to change the properties inside of the triangle, displacementm mapping will cause poor result.</li>
+      <li>In order to render texture with delicated details, the sampling rate must be high enough.</li>
+      <li>Subdivision (细分) is needed to introduce more triangles to increase sampling rate.</li>
+    </ul>
+  </li>
+  <li>Costly computation owing to the large amount of additional geometry</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: In DirectX on Windows system, <strong>dynamic tessellation</strong> (动态曲面细分) is self-adaptive techniques to tessellate object geometry in displacement mapping stage, which dynamically splits the primitives of object into smaller part of triangle to match the frequency requirements of displacement mapping.</p>
+
+<h3 id="noise-function-texture">Noise function Texture</h3>
+
+<ul>
+  <li>3D procedural noise and solid modeling produce texture.</li>
+  <li>Defining the noise function in 3D space, each point of the texture spreading over this space can be calculated by analysis formula of the noise and corresponding operations (binaryzation, linear operation).</li>
+  <li><code class="language-plaintext highlighter-rouge">Perlin noise</code> is a good example of noise function to generate marble crack, mountain fluctuation etc.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/11/s3ygoj.jpg" alt="cg-6-31" width="650px" /></p>
+
+<h3 id="precomputed-shading">Precomputed Shading</h3>
+
+<ul>
+  <li>Texture provide precomputed shading
+    <ul>
+      <li>Precomputed ambnient occlusion and shadow provided by the texture to save time of calculating shadow and occlusion later</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/11/s3ycwQ.jpg" alt="cg-6-32" width="700px" /></p>
+
+<h3 id="3d-texture-and-volumn-rendering">3D Texture and Volumn Rendering</h3>
+
+<ul>
+  <li>Texture can be generalized to 3D space, storing the information and properties (far more than colors) which is to be used and processed in Shader program.</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www3.cs.stonybrook.edu/~gu/lectures/2020/">计算共形几何, 顾险峰，丘成桐</a></li>
+  <li><a href="https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%AF%94%E5%88%86%E7%82%B9%E5%85%AC%E5%BC%8F">定比分点公式</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/65495373">三角形重心坐标</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Texture_filtering">Texture filtering</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian matrix and determinant</a></li>
+  <li><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/jacobian/v/the-jacobian-matrix">Jacobian matrix, Khan Academy</a></li>
+  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.htm">雅可比行列式</a></li>
+  <li><a href="https://www.cnblogs.com/bigmonkey/p/8665498.html">多变量微积分———变量替换</a></li>
+  <li><a href="https://kaba.hilvi.org/homepage/cg/ewa/ewa.htm">Enhanced EWA filtering</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-09-07T00:00:00-04:00">Nov 22, 2020</time>
+    </span><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css');
+		window.Lazyload.js('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: '69b563d6a40e143550a4',
+				clientSecret: '8c179732431d99e3ac53a0a113c6bfc09121530f',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2020-09-07-cg-6'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+            </div></div></div><div class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Haolin Jia"><meta itemprop="url" content="Harrypotterrrr.github.com"><meta itemprop="description" content="I am an amazing person."><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="Harrypotterrrr.github.com"><li title="Send me an Email.">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:jiahaolin19971119@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="Follow me on Facebook.">
+        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/100012241788050" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M767.428571 6.857143l0 150.857143-89.714286 0q-49.142857 0-66.285714 20.571429t-17.142857 61.714286l0 108 167.428571 0-22.285714 169.142857-145.142857 0 0 433.714286-174.857143 0 0-433.714286-145.714286 0 0-169.142857 145.714286 0 0-124.571429q0-106.285714 59.428571-164.857143t158.285714-58.571429q84 0 130.285714 6.857143z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Twitter.">
+        <a class="button button--circle twitter-button" itemprop="sameAs" href="https://twitter.com/Harrypotterrrr7" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1024.032 194.432c-37.664 16.704-78.176 28-120.672 33.088 43.36-26.016 76.672-67.168 92.384-116.224-40.608 24.064-85.568 41.568-133.408 50.976-38.336-40.832-92.928-66.336-153.344-66.336-116.032 0-210.08 94.048-210.08 210.08 0 16.48 1.856 32.512 5.44 47.872-174.592-8.768-329.408-92.416-433.024-219.52-18.08 31.04-28.448 67.104-28.448 105.632 0 72.896 37.088 137.184 93.472 174.88-34.432-1.088-66.816-10.528-95.168-26.272-0.032 0.864-0.032 1.76-0.032 2.656 0 101.792 72.416 186.688 168.512 205.984-17.632 4.8-36.192 7.36-55.36 7.36-13.536 0-26.688-1.312-39.52-3.776 26.72 83.456 104.32 144.192 196.256 145.888-71.904 56.352-162.496 89.92-260.928 89.92-16.96 0-33.664-0.992-50.112-2.944 92.96 59.616 203.392 94.4 322.048 94.4 386.432 0 597.728-320.128 597.728-597.76 0-9.12-0.192-18.176-0.608-27.168 41.056-29.632 76.672-66.624 104.832-108.736z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Zhihu.">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jia-hao-lin-27" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Linkedin.">
+        <a class="button button--circle linkedin-button" itemprop="sameAs" href="https://www.linkedin.com/in/haolin-jia-7b4b49173/" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M260.096 155.648c0 27.307008-9.899008 50.516992-29.696 69.632-19.796992 19.115008-45.396992 28.672-76.8 28.672-30.036992 0-54.612992-9.556992-73.728-28.672-19.115008-19.115008-28.672-42.324992-28.672-69.632 0-28.672 9.556992-52.224 28.672-70.656 19.115008-18.432 44.372992-27.648 75.776-27.648 31.403008 0 56.32 9.216 74.752 27.648 18.432 18.432 28.331008 41.984 29.696 70.656 0 0 0 0 0 0m-202.752 808.96c0 0 0-632.832 0-632.832 0 0 196.608 0 196.608 0 0 0 0 632.832 0 632.832 0 0-196.608 0-196.608 0 0 0 0 0 0 0m313.344-430.08c0-58.708992-1.364992-126.292992-4.096-202.752 0 0 169.984 0 169.984 0 0 0 10.24 88.064 10.24 88.064 0 0 4.096 0 4.096 0 40.96-68.267008 105.812992-102.4 194.56-102.4 68.267008 0 123.220992 22.868992 164.864 68.608 41.643008 45.739008 62.464 113.664 62.464 203.776 0 0 0 374.784 0 374.784 0 0-196.608 0-196.608 0 0 0 0-350.208 0-350.208 0-91.476992-33.451008-137.216-100.352-137.216-47.787008 0-81.236992 24.576-100.352 73.728-4.096 8.192-6.144 24.576-6.144 49.152 0 0 0 364.544 0 364.544 0 0-198.656 0-198.656 0 0 0 0-430.08 0-430.08 0 0 0 0 0 0" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Github.">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/Harrypotterrrr" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div><div class="site-info mt-2">
+      <div>© Haolin Jia's Homepage 2020,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+    </div></div></div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">Search</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        Cancel</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      blog.set('title', title);
+      blog.set('key', key);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://code.jquery.com/jquery-3.6.0.min.js', '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'Q63N3hBVpAOkXqFX2IFRLou7-MdYXbMMI',
+        appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
+        appClass: 'Blog'
+      });
+      var key =   'blog-2020-09-07-cg-6';
+      var title = "The Notes of Computer Graphics Ⅵ";
+      pageview.increase(key, title, function(view) {
+        $("[data-page-key='blog-2020-09-07-cg-6']").text(view);
+      });
+    });
+  </script>
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+

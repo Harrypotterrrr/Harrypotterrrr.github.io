@@ -1,0 +1,2098 @@
+<!DOCTYPE html><html lang="en">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-176496785-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-176496785-1');
+		
+	</script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅸ - Haolin Jia's Homepage</title>
+
+<meta name="description" content="Advanced Ray Tracing, Radiometry, BRDF, Path Tracing">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/12/03/cg-9.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><script src="https://kit.fontawesome.com/0970362a03.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/0970362a03.js" > --><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://kit.fontawesome.com/0970362a03.js',
+        jquery: 'https://code.jquery.com/jquery-3.6.0.min.js',
+        leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
+        chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.jss',
+        gitalk: {
+          js: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js',
+          css: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
+        },
+        valine: 'https://unpkg.com/valine/dist/Valine.min.js',
+        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h2,h3,h4'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2 active"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="24px" viewBox="0 0 24 24">
+<style type="text/css">
+	.st0{fill:#515151;}
+</style>
+<path class="st0" d="M1.7,22.3c5.7-5.7,11.3-5.7,17,0c3.3-3.3,3.5-5.3,0.8-6c2.7,0.7,3.5-1.1,2.3-5.6s-3.3-5.2-6.3-2.1
+	c3-3,2.3-5.2-2.1-6.3S7,1.8,7.7,4.6C7,1.8,5,2.1,1.7,5.3C7.3,11,7.3,16.7,1.7,22.3"/>
+</svg>
+<a title="Keep working hard!
+" href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
+
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
+
+              <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅸ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-12-03-cg-9.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅸ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-12-03-cg-9">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Dec 19, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-12-03T00:00:00-05:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>Advanced Ray Tracing, Radiometry, BRDF, Path Tracing</p>
+
+<!--more-->
+
+<h2 id="radiometry">Radiometry</h2>
+
+<ul>
+  <li>Motivation: Blinn-Phong is experienced model and light intensity corresponding to the amount of shading is not explained well, the output is not realistic but plastic. Whitted-style ray tracing sometimes doesn’t give correct result, especially involving how much light energy is refracted and reflected, and how much the rest is absorbed by the material, etc.
+    <ul>
+      <li>All the answers can be found in radiometry!</li>
+    </ul>
+  </li>
+  <li>Measurement system and units for illumination</li>
+  <li>Accurately measure the spatial properties of light (not temperal dimension, we still suppose light travel in straight line with out wave property)
+    <ul>
+      <li>New terms: Radiant flux, intensity, irradiance, radiance (辐射通量, 光强, 照度, 亮度)</li>
+    </ul>
+  </li>
+  <li>Perform lighting calculations in a physically correct manner</li>
+</ul>
+
+<h3 id="radiant-energy-and-flux">Radiant Energy and Flux</h3>
+
+<ul>
+  <li><strong>Radiant energy</strong>: the energy of electromagnetic radiation. It is measured in units of joules, and denoted by the symbol:</li>
+</ul>
+
+\[Q[J=Joule]\]
+
+<ul>
+  <li><strong>Radiant flux</strong> (<strong>radiant power</strong>, <strong>luminous flux</strong>): the energy emitted, reflected, transmitted or received, <strong>per unit time</strong>.
+    <ul>
+      <li><strong>Flux</strong>: photons flowing through a sensor in unit time</li>
+    </ul>
+  </li>
+</ul>
+
+\[\Phi \equiv \frac{\mathrm{d} Q}{\mathrm{~d} t}\]
+
+\[[\mathrm{~W}=\mathrm{Watt}][\mathrm{lm}=\operatorname{lumen}]^{\star}\]
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sgJQAI.png" alt="cg-9-1" style="margin:auto;display:block;" /></p>
+
+<h3 id="radiant-intensity">Radiant Intensity</h3>
+
+<ul>
+  <li><strong>Radiant Intensity</strong>: The radiant (luminous) intensity is the power per unit solid angle emitted by a point light source.</li>
+</ul>
+
+\[I(\omega) \equiv \frac{\mathrm{d} \Phi}{\mathrm{d} \omega}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{sr}}\right]\left[\frac{\mathrm{lm}}{\mathrm{sr}}=\mathrm{cd}=\mathrm{candela}\right]\]
+
+<ul>
+  <li>The <strong>candela</strong> is one of the seven SI base units</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sg8uxe.jpg" alt="cg-9-2" width="80%" /></p>
+
+<h3 id="angles-and-solid-angles">Angles and Solid Angles</h3>
+
+<ul>
+  <li><strong>Angle</strong>: ratio of subtended arc length on circle to radius
+    <ul>
+      <li>$\theta = l / r$</li>
+      <li>Circle has $2\pi$ radians</li>
+    </ul>
+  </li>
+  <li><strong>Solid angle</strong>: ratio of subtended area on sphere to radius squared
+    <ul>
+      <li>$\omega = A / r^2$</li>
+      <li>Sphere has $4\pi$ steradians</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sg8V56.jpg" alt="cg-9-3" width="80%" /></p>
+
+<ul>
+  <li>Differential Solid Angles
+    <ul>
+      <li>Direction vector $\omega$ to denote direction vector of unit length</li>
+      <li>$\theta$ : elevation, zenith angle (仰角)</li>
+      <li>$\phi$ : azimuth, azimuth angle (方位角)</li>
+    </ul>
+
+\[\mathrm{d} A =(r \mathrm{~d} \theta)(r \sin \theta \mathrm{d} \phi) =r^{2} \sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
+
+\[\mathrm{d} \omega =\frac{\mathrm{d} A}{r^{2}}=\sin \theta \mathrm{d} \theta \mathrm{d} \phi\]
+
+    <ul>
+      <li>Sphere: $S^{2}$</li>
+    </ul>
+  </li>
+</ul>
+
+\[\Omega =\int_{S^{2}} \mathrm{~d} \omega = \int_{0}^{\pi} \sin \theta \mathrm{d} \theta \int_{0}^{2 \pi} \mathrm{d} \phi  =4 \pi\]
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sg8ePK.jpg" alt="cg-9-4" width="80%" /></p>
+
+<ul>
+  <li>Isotropic Point Source</li>
+</ul>
+
+\[\Phi = \int_{S^2}Idw = 4\pi I\]
+
+\[I=\frac{\Phi}{4\pi}\]
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sgqUs0.jpg" alt="cg-9-5" width="80%" /></p>
+
+<ul>
+  <li>Modern LED Light
+    <ul>
+      <li>Output: 815 lumens (11W LED replacement paifor 60W incandescent)</li>
+      <li>Radiant intensity (assume isotropic) = 815 lumens / 4π sr = 65 candelas</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="irradiance">Irradiance</h3>
+
+<ul>
+  <li><strong>Irradiance</strong>: the power per (perpendicular / projected) unit area incident on a surface point.</li>
+</ul>
+
+\[E(\mathbf{x}) \equiv \frac{\mathrm{d} \Phi(\mathbf{x})}{\mathrm{d} A}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{m}^{2}}\right]\left[\frac{\mathrm{lm}}{\mathrm{m}^{2}}=\operatorname{lux}\right]\]
+
+<ul>
+  <li>The <strong>lux</strong> is SI derived unit of illuminance, measuring luminous flux per unit area.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sg8uxe.jpg" alt="cg-9-2" width="80%" /></p>
+
+<ul>
+  <li><strong>Irradiance</strong> at surface is proportional to <strong>cosine</strong> of angle between light direction and surface normal
+    <ul>
+      <li>Recall <a href="/2020/09/02/cg-5#diffuse-reflection">Lambert’s Cosine Law</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2AFXT.jpg" alt="cg-9-6" /></p>
+
+<p class="info"><strong>Tip</strong>: Analogous <strong>Irradiance</strong> to <strong>Electric field intensity</strong>, <strong>Radiant flux</strong> to <strong>Magnetic Flux</strong>.</p>
+
+<ul>
+  <li>The reason why we feel cold and hot in different seasons
+    <ul>
+      <li>Earth’s axis of rotation: ~23.5° off axis</li>
+      <li>Give rise to the different Solar elevation angle</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2AP10.jpg" alt="cg-9-7" /></p>
+
+<ul>
+  <li><a href="/2020/09/02/cg-5#light-falloff">Correction</a> of Irradiance Falloff
+    <ul>
+      <li>Assume light is emitting power $\Phi$ in a uniform angular distribution</li>
+      <li>Compare irradiance at surface of two spheres</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2AicV.jpg" alt="cg-9-8" /></p>
+
+<h3 id="radiance">Radiance</h3>
+
+<ul>
+  <li><strong>Radiance</strong> (<strong>luminance</strong>): the power emitted, reflected, transmitted or received by a surface, <strong>per unit solid angle</strong>, <strong>per projected unit area</strong>.
+    <ul>
+      <li>Radiance is the fundamental field quantity that describes the distribution of light in an environment</li>
+      <li>Radiance is the quantity associated with a ray</li>
+      <li>Rendering is all about computing radiance</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2ACpq.jpg" alt="cg-9-9" style="width:70%;margin:auto;display:block;" /></p>
+
+\[L(\mathrm{p}, \omega) \equiv \frac{\mathrm{d}^{2} \Phi(\mathrm{p}, \omega)}{\mathrm{d} \omega \mathrm{d} A \cos \theta}\]
+
+\[\left[\frac{\mathrm{W}}{\mathrm{sr} \mathrm{m}^{2}}\right]\left[\frac{\mathrm{cd}}{\mathrm{m}^{2}}=\frac{\mathrm{lm}}{\mathrm{sr} \mathrm{m}^{2}}=\mathrm{nit}\right]\]
+
+<ul>
+  <li>$\cos\theta$ accounts for projected surface area</li>
+  <li>The <strong>nit</strong>, the candela per square metre, is the derived SI unit of luminance.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/sg8uxe.jpg" alt="cg-9-2" width="80%" /></p>
+
+<ul>
+  <li>Recall
+    <ul>
+      <li><strong>Irradiance</strong>: power per projected unit area</li>
+      <li><strong>Intensity</strong>: power per solid angle</li>
+      <li><strong>Radiance</strong>: power per solid angle, per projected unit area</li>
+    </ul>
+  </li>
+  <li>Thus
+    <ul>
+      <li><strong>Radiance</strong>: Irradiance per solid angle</li>
+      <li><strong>Radiance</strong>: Intensity per projected unit area</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="incident-radiance">Incident Radiance</h4>
+
+<ul>
+  <li><strong>Incident Radiance</strong>: the irradiance per unit solid angle arriving at the surface
+    <ul>
+      <li>It is the light arriving at the surface along a given ray (point on surface and incident direction).</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2Aphn.jpg" alt="cg-9-10" style="width:70%;margin:auto;display:block;" /></p>
+
+\[L(\mathrm{p}, \omega)=\frac{\mathrm{d} E(\mathrm{p})}{\mathrm{d} \omega \cos \theta}\]
+
+<h4 id="exiting-radiance">Exiting Radiance</h4>
+
+<ul>
+  <li><strong>Exiting Radiance</strong>: the intensity per unit projected area leaving the surface
+    <ul>
+      <li>For an area light, it is the light emitted along a given ray (point on surface and exit direction).</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2ACpq.jpg" alt="cg-9-9" style="width:70%;margin:auto;display:block;" /></p>
+
+\[L(\mathrm{p}, \omega)=\frac{\mathrm{d} I(\mathrm{p}, \omega)}{\mathrm{d} A \cos \theta}\]
+
+<h4 id="irradiance-vs-radiance">Irradiance vs. Radiance</h4>
+
+<ul>
+  <li>Irradiance: total power received by area $dA$</li>
+  <li>Radiance: power received by area $dA$ from direction $d\omega$</li>
+</ul>
+
+\[d E(\mathrm{p}, \omega) =L_{i}(\mathrm{p}, \omega) \cos \theta \mathrm{d} \omega\]
+
+\[E(\mathrm{p}) =\int_{H^{2}} L_{i}(\mathrm{p}, \omega) \cos \theta \mathrm{d} \omega\]
+
+<ul>
+  <li>Unit Hemisphere $H^2$</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/19/s2AAnU.jpg" alt="cg-9-11" style="width:55%;margin:auto;display:block;" /></p>
+
+<h2 id="bidirectional-reflectance-distribution-function">Bidirectional Reflectance Distribution Function</h2>
+
+<ul>
+  <li>Radiance from direction $\omega_i$ turns into the power $E$ that $dA$ receives</li>
+  <li>The npower $E$ will become the radiance to any other direction $\omega_o$</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/29/yihyJx.jpg" alt="cg-9-12" style="width:55%" /></p>
+
+<ul>
+  <li>
+    <p>Differential irradiance incoming: $d E\left(\omega_{i}\right)=L\left(\omega_{i}\right) \cos \theta_{i} d \omega_{i}$</p>
+  </li>
+  <li>
+    <p>Differential radiance exiting (due to $dE(\omega_i)$): $dL_r(\omega_r)$</p>
+  </li>
+  <li>
+    <p>BRDF can be understanded in the way of energy distribution after the point on the surface absorbs the energy from directions all around and then reflects.</p>
+    <ul>
+      <li>For the specular reflection, BRDF specifies the reflected energy is mostly on the reflection direction</li>
+      <li>For the diffuse reflection, BRDF specifies the reflected energy will distributed amoung all directions around.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="brdf">BRDF</h3>
+
+<ul>
+  <li><strong>Bidirectional Reflectance Distribution Function</strong> (BRDF): represents how much light is reflected into each outgoing direction $\omega_r$ from each incoming direction</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/29/yihsF1.jpg" alt="cg-9-13" style="width:65%;margin:auto;display:block;" /></p>
+
+\[f_{r}\left(\omega_{i} \rightarrow \omega_{r}\right)=\frac{\mathrm{d} L_{r}\left(\omega_{r}\right)}{\mathrm{d} E_{i}\left(\omega_{i}\right)}=\frac{\mathrm{d} L_{r}\left(\omega_{r}\right)}{L_{i}\left(\omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}}\left[\frac{1}{\mathrm{sr}}\right]\]
+
+<ul>
+  <li><strong>Conclusion</strong>: The BRDF, the ratio of exitant radiance to incident irradiance, is to characterize the directional properties of how a surface reflects light, which is independent of the strength of the light.
+    <ul>
+      <li>In fact, we use <em>cosine irradiance collector</em> to measure incident irradiance, <em>conical baffler</em> to measure received radiance, and calculate the BRDF corresponding to the surface/texture by dividing the two. <a href="https://www.zhihu.com/question/28476602/answer/41003204">More info</a>, and <a href="/2020/12/20/cg-10.html#Measuring-BRDF">later notes</a></li>
+      <li>In a word, BRDF describes how the light interacts with the object. Accordingly, BRDF describes the property of the texture.</li>
+    </ul>
+  </li>
+  <li>The quantity is between zero and one for reasons of energy conservation.</li>
+</ul>
+
+<h3 id="reflection-equation">Reflection Equation</h3>
+
+<ul>
+  <li>Consider BRDF only takes one direction of incident light, thus integral light (energy) from all directions of hemisphere will get the entire light source directing to the reflection point.
+    <ul>
+      <li>Understand in discrete way: traverse solid angles on the hemisphere, each incident solid angle will make contribution to the radiance of one specified direction. Sum these up will get the entire contribution, that is received energy.</li>
+    </ul>
+  </li>
+</ul>
+
+\[L_{r}\left(\mathrm{p}, \omega_{r}\right)=\int_{H^{2}} f_{r}\left(\mathrm{p}, \omega_{i} \rightarrow \omega_{r}\right) L_{i}\left(\mathrm{p}, \omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i}\]
+
+<p><img src="https://z3.ax1x.com/2021/01/29/yihDoR.jpg" alt="cg-9-14" style="width:70%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li><strong>Challenege</strong>: recursion
+    <ul>
+      <li><strong>Reflected radiance</strong> $L_{r}\left(\mathrm{p}, \omega_{r}\right)$ on the left hand depends on <strong>incoming radiance</strong> $L_{i}\left(\mathrm{p}, \omega_{i}\right)$ on the right hand.</li>
+      <li>But <strong>incoming radiance</strong> depends on reflected radiance at another point in the scene.
+        <ul>
+          <li>Incoming radiance is not limited to the light source, but reflected light etc.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="rendering-equation">Rendering Equation</h3>
+
+<ul>
+  <li>Rewrite the reflection equation by adding an <strong>Emission term</strong> $L_{e}\left(p, \omega_{o}\right)$ to make it general:</li>
+</ul>
+
+\[L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+<p class="error"><strong>Caveat</strong>: we assume that all directions are pointing <strong>outwards</strong>, and field of integration is hemisphere, which is the reason for $\cos\theta$ replacing $max(\cos\theta, 0)$.</p>
+
+<ul>
+  <li>
+    <p>Volume rendering equation is a more general form of rendering equation.</p>
+  </li>
+  <li>
+    <p>The solution of renderings equation will be narrated in the <a href="#path-tracing">following part</a>.</p>
+  </li>
+  <li>
+    <p>Understanding of the rendering equation</p>
+    <ul>
+      <li>for the single light source</li>
+    </ul>
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)}= \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\left(\omega_{i}, n\right)}\]
+
+    <ul>
+      <li>for the multiple light sources</li>
+    </ul>
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \sum \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\left(\omega_{i}, n\right)}\]
+
+    <ul>
+      <li>for the planar light sources</li>
+    </ul>
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image)}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission}{L_{e}\left(x, \omega_{r}\right)} + \int_\omega \underset{\\ \quad \\ Incident \ Light \\ (from\ light \\ source)}{L_{i}\left(x, \omega_{i}\right)} \underset{\\ \quad \\ BRDF}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle}{\cos \theta_i d\omega_i}\]
+
+    <ul>
+      <li>for the surfaces with reflected light (interreflection)</li>
+    </ul>
+
+\[\underset{\\ \quad \\ Reflected\ Light \\ (Output\ image) \\ \quad \color{red}{Unkown}}{L_{r}\left(x, \omega_{r}\right)} = \underset{\\ \quad \\ Emission \\ \color{blue}{Known}}{L_{e}\left(x, \omega_{r}\right)} + \int_\omega \underset{\\ \quad \\ Reflected\ light \\ from\ others \\ \quad \color{red}{Unkown}}{L_{r}\left(x^\prime, -\omega_i\right)} \underset{\\ \quad \\ BRDF \\ \color{blue}{Known}}{f\left(x, \omega_{i}, \omega_{r}\right)} \underset{\\ \quad \\ Cosine\ of \\ Incident\ angle \\ \color{blue}{Known}}{\cos \theta_i d\omega_i}\]
+
+    <p class="info"><strong>Tip</strong>: $-\omega$ is because the light direction is pointing opposite of the incident direction with regards to $x^\prime$.</p>
+
+    <ul>
+      <li>which is the canonical form of <a href="#fredholm-integral-equation">Fredholm Integral Equation</a> of second kind</li>
+    </ul>
+
+\[\underset{\\ \quad \\ Radiance \\ \color{red}{Unkown}}{\color{red}{I(u)}} = \underset{\\ \quad \\ Emission}{e(u)} + \int \underset{\\ \quad \\ Radiance\\ from\ others \\ \color{red}{Unkown}}{\color{red}{I(v)}} \underset{\\ \quad \\ \quad Kernel\ of\ equation \\ \quad Light\ Transport\ Operator}{\boxed{K(u, v)dv}}\]
+
+    <p class="info"><strong>Tip</strong>: Use substitution rule for integrals from the current object to the object of reflected light source will achieve $d\omega_i$ to $dv$, which will be detailed in <a href="#solution-of-rendering-equation">solution part</a>.</p>
+
+    <ul>
+      <li>which can be discretized to a simple matrix equation or system of simultaneous linear equations, where $L,\ E$ are vectors, $K$ is the light transport matrix (<strong>reflection operator</strong>)</li>
+    </ul>
+
+\[\color{red}{L} = E + K\color{red}{L}\]
+
+    <ul>
+      <li>rearrange terms and use taylor expassion</li>
+    </ul>
+
+\[\begin{aligned}\color{red}{L}&amp;=E+K\color{red}{L} \\ I\color{red}{L}-K\color{red}{L} &amp;= E \\ (I-K)\color{red}{L} &amp;= E \\ \color{red}{L} &amp;= (I-K)^{-1}E \\ \color{red}{L} &amp;= (I + K + K^2 + K^3 + ...)E \\ \color{red}{L} &amp;= E + KE + K^2E + K^3E + ...\end{aligned}\]
+
+    <ul>
+      <li>final form of ray tracing is</li>
+    </ul>
+
+\[L = \color{orange}{E + KE} + K^2E + K^3E + ...\]
+
+    <ul>
+      <li>understanding of the expression
+        <ul>
+          <li>$K$ : Reflection operator</li>
+          <li>$E$ : Emission directly from light sources</li>
+          <li>$KE$ : Direct illumination on surfaces</li>
+          <li>$K^2E$ : Indirect illumination (One bounce indirect, mirros, refraction)</li>
+          <li>$K^3E$ : Two bounce indirect illumination</li>
+          <li>$\color{orange}{E + KE}$: <strong>Direct illumination</strong> is all the shading in <em>rasterization</em> can do</li>
+        </ul>
+      </li>
+      <li><strong>Global illumination</strong>: the union of all direct and indirect light</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/06/yJ4T4e.jpg" alt="cg-9-15" /></p>
+
+<ul>
+  <li>The more bounce of illumination, the more realistic. When the bounce of illumination goes to infinity, the image finally becomes factual as in the real world.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/08/yUcPRs.gif" alt="cg-9-16" style="margin:auto;display:block;" /></p>
+
+<h2 id="mathematics-foundation">Mathematics Foundation</h2>
+
+<h3 id="fredholm-integral-equation">Fredholm Integral Equation</h3>
+
+<ul>
+  <li>
+    <p>Equation of the first kind</p>
+
+\[g(t)=\int_{a}^{b} K(t, s) f(s) \mathrm{d} s\]
+
+    <ul>
+      <li>Given the continuous kernel function $K$ and the function $g$, to find the function $f$</li>
+    </ul>
+  </li>
+  <li>
+    <p>Equation of the second kind</p>
+
+\[\varphi(t)=f(t)+\lambda \int_{a}^{b} K(t, s) \varphi(s) \mathrm{d} s\]
+
+    <ul>
+      <li>Given the kernel $K(t,s)$, and the function $f(t)$, the problem is typically to find the function $\varphi(t)$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="linear-operator">Linear Operator</h3>
+
+<ul>
+  <li><strong>Operator</strong>: generally a mapping or function acting on elements of a space to produce elements of another space.</li>
+  <li><strong>Linear Operator</strong> (kernel): $f$ is a linear</li>
+  <li>
+    <p>operator if it has two properties</p>
+
+\[f(x + y) = f(x) + f(y)\]
+
+\[f(cx) = cf(x)\]
+  </li>
+  <li>Thus, $f(ax+by) = af(x)+bf(y)$
+    <ul>
+      <li>If $M$ is a linear operator, $ab$ is constant, $fg$ is function</li>
+    </ul>
+
+\[M \bullet (af + bg) = a(M \bullet f) + b(M\bullet g)\]
+  </li>
+  <li>
+    <p>The most common examples of linear operators $K$ of differentiation and integration</p>
+
+\[(K \bullet f)(u)=\frac{\partial f}{\partial u}(u)\]
+
+\[(K \bullet f)(u)=\int k(u, v) f(v) d v\]
+  </li>
+  <li>Proof of Fredholm Integral Equation as linear operator
+    <ul>
+      <li>Want to show</li>
+    </ul>
+
+\[(K \bullet f)(u)=\int k(u, v) f(v) d v\]
+
+    <ul>
+      <li>Then need to verify the two properties of linear operator</li>
+    </ul>
+
+\[\begin{aligned} &amp;M\bullet(af) = a(M\bullet f) \\ &amp; M\bullet(f+g) = (M\bullet f) + (M \bullet g) \end{aligned}\]
+
+    <ul>
+      <li>Addition</li>
+    </ul>
+
+\[\begin{aligned} (K \bullet (f+g))(u) &amp;= \int k(i, v)(f+g)(v)dv \\ &amp;= \int k(i, v)(f(v) + g(v))dv \\ &amp;= \int k(i, v)f(v)dv + \int k(i, v)g(v)dv \\ &amp;= (K \bullet f) (u) + (K \bullet g) (v) \end{aligned}\]
+
+    <ul>
+      <li>Multiplication</li>
+    </ul>
+
+\[\begin{aligned} (K \bullet af)(u) &amp;= \int k(i, v)(af)(v)dv \\ &amp;= \int ak(i, v)f(v)dv \\ &amp;= a \int k(i, v)f(v)dv \\ &amp;= a(K \bullet f) (u) \end{aligned}\]
+  </li>
+  <li>More info refer to <a href="https://en.wikipedia.org/wiki/Functional_analysis">functional analysis</a></li>
+</ul>
+
+<h3 id="monte-carlo-intergration">Monte Carlo Intergration</h3>
+
+<ul>
+  <li>It is too difficult to solve an integral analytically.
+    <ul>
+      <li>Thus estimate the integral of a function by averaging random samples of the function’s value.</li>
+    </ul>
+  </li>
+  <li>Different with <a href="https://en.wikipedia.org/wiki/Riemann_integral">Riemann integral</a> which solve an integral analytically, <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo</a> estimates the value of integration</li>
+  <li>Define the Monte Carlo estimnator for the definite integral of given function $f(x)$
+    <ul>
+      <li>Definite integral</li>
+    </ul>
+
+\[\int_{a}^{b} f(x) d x\]
+
+    <ul>
+      <li>Random variable, where $p(x)$ is <em>probability density function</em> (<em>pdf</em>)</li>
+    </ul>
+
+\[X_{i} \sim p(x)\]
+
+    <ul>
+      <li>MonteCarlo estimator</li>
+    </ul>
+
+\[F_{N}=\frac{1}{N} \sum_{i=1}^{N} \frac{f\left(X_{i}\right)}{p\left(X_{i}\right)}\]
+  </li>
+  <li>
+    <p>Monte Carlo Integration</p>
+
+\[\int f(x) dx = \frac{1}{N} \sum_{i=1}^{N} \frac{f\left(X_{i}\right)}{p\left(X_{i}\right)}\]
+
+    <ul>
+      <li>The more samples, the less variance</li>
+      <li>Sample on x, integrate on x</li>
+      <li>Don’t care about the domain of integration, but use numerical method sampling to estimate the value of integration</li>
+    </ul>
+  </li>
+  <li>When the random variable distributes between $a$ and $b$ uniformly</li>
+</ul>
+
+\[X_{i} \sim p(x) = \frac{1}{b-a}\]
+
+<ul>
+  <li>Then the Basic Monte Carlo estimator will be</li>
+</ul>
+
+\[F_{N}=\frac{b-a}{N} \sum_{i=1}^{N} f\left(X_{i}\right)\]
+
+<p><img src="https://z3.ax1x.com/2021/02/08/yUcSIg.png" alt="cg-9-17" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>If we want to keep the sampling number but increase the estimation accurarcy, we should sample from a distribution of interest than the uniform distribution, that is <a href="https://en.wikipedia.org/wiki/Importance_sampling">Importance Sampling</a></li>
+</ul>
+
+<h2 id="path-tracing">Path Tracing</h2>
+
+<h3 id="whitted-style-problem">Whitted-style problem</h3>
+
+<ul>
+  <li>Whitted-style ray tracing
+    <ul>
+      <li>Always perform specular reflections or refractions</li>
+      <li>Stop bouncing at diffuse surfaces</li>
+    </ul>
+  </li>
+  <li>
+    <p>But these simplifications are not reasonable</p>
+
+    <ul>
+      <li>Whitted-style ray tracing can not deal with the glossy materials where the ray reflects not the same as the way on mirror material</li>
+    </ul>
+
+    <p><img src="https://z3.ax1x.com/2021/02/08/yUcCGj.jpg" alt="cg-9-18" /></p>
+
+    <ul>
+      <li>Whitted-style ray tracing has no reflection between diffuse material</li>
+    </ul>
+
+    <p><img src="https://z3.ax1x.com/2021/02/08/yUc9iQ.jpg" alt="cg-9-19" /></p>
+  </li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: In the left image of the above figure, the region that are not reached by direct illumination are shadowed in black, whereas the diffuse ambient actually illuminates the region. In the right image, the left side of rectangular is shaded in red, and right side of cubic is shaded in green, This phenomenon in which objects or surfaces are colored by reflection of colored light from nearby surfaces is called <strong>color bleeding</strong>.</p>
+
+<h3 id="solution-of-rendering-equation">Solution of rendering equation</h3>
+
+<ul>
+  <li>The rendering equation to be solved</li>
+</ul>
+
+\[L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+<ul>
+  <li>It involves two problems
+    <ul>
+      <li>Solve an integral over the hemisphere</li>
+      <li>Deal with recursion of $L_{i}\left(p, \omega_{i}\right)$</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="a-sample-monte-carlo-solution">A Sample Monte Carlo Solution</h4>
+
+<ul>
+  <li>Suppose we want to render one pixel (point) in the following scene for <strong>direct illumination</strong> only
+    <ul>
+      <li>No indirect reflection light is considered at this time</li>
+    </ul>
+  </li>
+</ul>
+
+\[L_{o}\left(p, \omega_{o}\right)=\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}\]
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKcwT.jpg" alt="cg-9-20" style="width:50%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li>
+    <p>Use Monte Carlo method to solve this integration numerically</p>
+
+\[\int_{a}^{b} f(x) \mathrm{d} x \approx \frac{1}{N} \sum_{k=1}^{N} \frac{f\left(X_{k}\right)}{p\left(X_{k}\right)} \quad X_{k} \sim p(x)\]
+
+    <ul>
+      <li>$f(x)$: $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)$</li>
+      <li>$pdf$ (assume uniformly sampling the hemisphere): $pdf\left(\omega_{i}\right)=1 / 2 \pi$</li>
+    </ul>
+  </li>
+  <li>
+    <p>Shading algorithm for direct illumination</p>
+  </li>
+</ul>
+
+\[\begin{aligned} L_{o}\left(p, \omega_{o}\right) &amp;=\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i} \\ &amp; \approx \frac{1}{N} \sum_{i=1}^{N} \frac{L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)}{pdf\left(\omega_{i}\right)} \end{aligned}\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="n">Randomly</span> <span class="n">choose</span> <span class="o">**</span><span class="n">N</span><span class="o">**</span> <span class="n">directions</span> <span class="n">wi</span><span class="o">~</span><span class="n">pdf</span>
+    <span class="n">Lo</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">wi</span><span class="p">:</span>
+        <span class="n">Trace</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">the</span> <span class="n">light</span><span class="p">:</span>
+            <span class="n">Lo</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">L_i</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Lo</span>
+</code></pre></div></div>
+
+<h4 id="introducing-global-illumination">Introducing Global Illumination</h4>
+
+<ul>
+  <li>One more step forward: what if a ray hits an object
+    <ul>
+      <li>Point $Q$ also reflects light to $P$, and the amount of radiance is the amount of radiance of direct illumination at point $Q$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydlMYF.jpg" alt="cg-9-21" style="width:80%;" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="n">Randomly</span> <span class="n">choose</span> <span class="o">**</span><span class="n">N</span><span class="o">**</span> <span class="n">directions</span> <span class="n">wi</span><span class="o">~</span><span class="n">pdf</span>
+    <span class="n">Lo</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">wi</span><span class="p">:</span>
+        <span class="n">Trace</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">the</span> <span class="n">light</span><span class="p">:</span>
+            <span class="n">Lo</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">L_i</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+        <span class="c1"># Add the following branch
+</span>        <span class="k">elif</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">an</span> <span class="nb">object</span> <span class="n">at</span> <span class="n">q</span><span class="p">:</span>
+            <span class="n">Lo</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">shade</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">-</span><span class="n">wi</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+            <span class="c1"># minus wi is due to the reversed direction of the light towards object p
+</span>    <span class="k">return</span> <span class="n">Lo</span>
+</code></pre></div></div>
+
+<h4 id="problem-1-number-explosion">Problem 1: Number Explosion</h4>
+
+<ul>
+  <li>Explosion of <code class="language-plaintext highlighter-rouge">num_rays</code> as <code class="language-plaintext highlighter-rouge">num_bounce</code> goes up</li>
+</ul>
+
+\[num\_ray = N^{num\_bounce}\]
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKDln.jpg" alt="cg-9-22" style="width:80%;" /></p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">num_ray</code> will not explode if an only if $\color{red}{N = 1}$</p>
+  </li>
+  <li>
+    <p><strong>Path Tracing</strong>: only <strong>1 ray</strong> is traced at each shading point</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="c1">#  modify N to One
+</span>    <span class="n">Randomly</span> <span class="n">choose</span> <span class="o">**</span><span class="n">One</span><span class="o">**</span> <span class="n">directions</span> <span class="n">wi</span><span class="o">~</span><span class="n">pdf</span>
+    <span class="n">Trace</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">the</span> <span class="n">light</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">L_i</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">an</span> <span class="nb">object</span> <span class="n">at</span> <span class="n">q</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">shade</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">-</span><span class="n">wi</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="success"><strong>info</strong>: <a href="https://en.wikipedia.org/wiki/Distributed_ray_tracing">Distributed Ray Tracing</a>: $ N != 1$</p>
+
+<h4 id="ray-generation">Ray Generation</h4>
+
+<ul>
+  <li>If the ray is only sampled once, the shaded point will be noisy!</li>
+  <li><strong>BUT</strong> it doesn’t matter, because just trace more <strong>paths</strong> thorugh each pixel and average their radiance.
+    <ul>
+      <li><strong>The goal</strong> is to render pixels of the image, instead of each points of objects in the scene.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKBSs.jpg" alt="cg-9-23" style="width:70%;" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ray_generation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="n">Uniformly</span> <span class="n">choose</span> <span class="o">**</span><span class="n">N</span><span class="o">**</span> <span class="n">sample</span> <span class="n">positions</span> <span class="n">within</span> <span class="n">the</span> <span class="n">pixel</span>
+    <span class="n">pixel_radiance</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">pixel</span><span class="p">:</span>
+        <span class="n">shoot</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">cam_pos</span><span class="p">,</span> <span class="n">camera_to_sample</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">the</span> <span class="n">scene</span> <span class="n">at</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">pixel_radiance</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="n">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span> <span class="n">camera_to_sample</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pixel_radiance</span>
+</code></pre></div></div>
+
+<h4 id="problem-2-infinite-recursion">Problem 2: Infinite Recursion</h4>
+
+<ul>
+  <li>Dilemma: the light does not stop bouncing indeed in the real world</li>
+  <li>Further, cut <code class="language-plaintext highlighter-rouge">num_bounce</code> is to cut <code class="language-plaintext highlighter-rouge">energy</code> and reduce authenticity</li>
+  <li>Solution: Russian Roulette (RR)
+    <ul>
+      <li>With probability $ 0 \lt P \lt 1$, condition 1</li>
+      <li>With probablity $1 - P$, otherwise</li>
+    </ul>
+  </li>
+  <li>Previously, we always shoot a ray at a shading point and get the shading result $L_o$</li>
+  <li>Suppose we manually set a probability $P$
+    <ul>
+      <li>With probability $P$, shoot a ray and return the shading result <strong>divided by</strong> $P$: $L_o / P$</li>
+      <li>With probablity $1-P$, don’t shoot a ray and you’ll get $0$</li>
+    </ul>
+  </li>
+  <li>In this way, you can still expect to get $L_o$</li>
+</ul>
+
+\[Expect = P * (L_o / P) + (1-P)* 0 = L_o\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="c1"># Add the following branch
+</span>    <span class="n">Manually</span> <span class="n">specify</span> <span class="n">a</span> <span class="n">probability</span> <span class="n">p_RR</span>
+    <span class="n">Randomly</span> <span class="n">select</span> <span class="n">ksi</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">uniform</span> <span class="n">distribution</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ksi</span> <span class="o">&gt;</span> <span class="n">p_RR</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="n">Randomly</span> <span class="n">choose</span> <span class="o">**</span><span class="n">One</span><span class="o">**</span> <span class="n">directions</span> <span class="n">wi</span><span class="o">~</span><span class="n">pdf</span>
+    <span class="n">Trace</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">the</span> <span class="n">light</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">L_i</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_RR</span>
+    <span class="k">elif</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">an</span> <span class="nb">object</span> <span class="n">at</span> <span class="n">q</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">shade</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">-</span><span class="n">wi</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosine</span> <span class="o">/</span> <span class="n">pdf</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span> <span class="o">/</span> <span class="n">p_RR</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Expected value of bounce number, given probability $p$</li>
+</ul>
+
+\[\begin{aligned}\sum_{n=1}^{+\infty} p^{n} &amp;=\lim _{n \rightarrow+\infty} \frac{p(1-p^{n})}{1-p} \\ &amp;=\frac{p}{1-p}\ (0 \lt p \lt 1) \end{aligned}\]
+
+\[\begin{aligned} E &amp;=\sum_{n=1}^{+\infty} n p(1-p)^{n-1} \\ &amp;=p \sum_{n=1}^{+\infty} n(1-p)^{n-1} \\ &amp;=-p\left(\sum_{n=1}^{+\infty} (1-p)^{n}\right)^{\prime} \\ &amp;=-p\left(\frac{1-p}{p}\right)^{\prime} \\ &amp;=-p \frac{-p-(1-p)}{p^{2}} \\ &amp;=\frac{1}{p} \\ \end{aligned}\]
+
+<h3 id="sampling-the-light">Sampling the Light</h3>
+
+<ul>
+  <li>Path tracing is correct but not efficient actually</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydQ0rq.jpg" alt="cg-9-24" /></p>
+
+<ul>
+  <li>The reason of being inefficient is the sampled 1 ray <strong>may not</strong> hit the light, so that a lot of rays are wasted if we uniformly sample the hemisphere at the shading point</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydK6mV.jpg" alt="cg-9-25" style="width:80%;margin:auto;display:block;" /></p>
+
+<ul>
+  <li>Sampling on the shading point will lead to waste of rays which fail to hit the light source
+    <ul>
+      <li>Monte Carlo methods allows any sampling methods</li>
+      <li>Hence, change the sampling point to the light</li>
+    </ul>
+  </li>
+  <li>Assume uniformly sampling on the light</li>
+</ul>
+
+\[\int pdf \color{red}{dA} = 1\]
+
+\[Hence,\ pdf = \frac{1}{A}\]
+
+<ul>
+  <li>The rendering equation integrates on <strong>the solid angle</strong>
+    <ul>
+      <li>Recall Monte Carlo Integration: Sample on $x$, and integrate on $x$</li>
+      <li>Integral variable substitution</li>
+    </ul>
+  </li>
+</ul>
+
+\[L_o = \int L_r f_BRDF \cos\theta \color{red}{d\omega}\]
+
+<ul>
+  <li>Make the rendering equation converting converting from an integral of $d\omega$ to $dA$.</li>
+  <li>The relationship between $d\omega$ and $dA$
+    <ul>
+      <li>The projected area towards $x^\primex$ at point $x^\prime$ is $d A \cos \theta^{\prime}$</li>
+      <li>Recall that $dS = R^2d\theta$</li>
+    </ul>
+  </li>
+</ul>
+
+\[d \omega=\frac{d A \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}}\]
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKsO0.jpg" alt="cg-9-26" style="width:50%;margin:auto;display:block;" /></p>
+
+<h3 id="final-form-of-path-tracing">Final Form of Path Tracing</h3>
+
+<ul>
+  <li>Rewrite the rendering equation as final form with an integral on $dA$</li>
+</ul>
+
+\[\begin{aligned} L_{o}\left(x, \omega_{o}\right) &amp;=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \\ &amp;=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}} \mathrm{~d} A \end{aligned}\]
+
+<ul>
+  <li>Now integration is on the light, so for Monte Carlo integration:
+    <ul>
+      <li>$f(x)$ : $L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left|x^{\prime}-x\right|^{2}}$</li>
+      <li>$pdf$ : $1 / A$</li>
+    </ul>
+  </li>
+  <li>Previously, we assume the light is accidentally shot by uniform hemisphere sampling</li>
+  <li>Now we consider the radiance coming from two parts:
+    <ul>
+      <li>Light source (direct, no need to have RR), if the ray is <strong>not blocked</strong> in the middle</li>
+      <li>Other reflectors (indirect, need to have RR)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKRkF.jpg" alt="cg-9-27" style="width:70%;margin:auto;display:block;" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shade</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wo</span><span class="p">)</span>
+    <span class="c1"># Contribution from the light source
+</span>    <span class="n">Uniformly</span> <span class="n">sample</span> <span class="n">the</span> <span class="n">light</span> <span class="n">at</span> <span class="n">x</span><span class="s">' (pdf_light = 1 / A)
+    L_dir = 0.0
+    Shoot a ray from p to x'</span>
+    <span class="k">if</span> <span class="n">the</span> <span class="n">ray</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">blocked</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">middle</span><span class="p">:</span>
+        <span class="n">L_dir</span> <span class="o">=</span> <span class="n">Li</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosθ</span> <span class="o">*</span> <span class="n">cosθ</span><span class="s">' / |x'</span> <span class="o">-</span> <span class="n">p</span><span class="o">|^</span><span class="mi">2</span> <span class="o">/</span> <span class="n">pdf_light</span>
+
+    <span class="c1"># Contribution from other reflections
+</span>    <span class="c1">## Test RR
+</span>    <span class="n">Manually</span> <span class="n">specify</span> <span class="n">a</span> <span class="n">probability</span> <span class="n">p_RR</span>
+    <span class="n">Randomly</span> <span class="n">select</span> <span class="n">ksi</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">uniform</span> <span class="n">distribution</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ksi</span> <span class="o">&gt;</span> <span class="n">p_RR</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">L_dir</span>
+    <span class="c1">## Ray Travce
+</span>    <span class="n">L_indir</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">Uniformly</span> <span class="n">sample</span> <span class="n">the</span> <span class="n">hemisphere</span> <span class="n">toward</span> <span class="n">wi</span> <span class="p">(</span><span class="n">pdf_hemi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">Trace</span> <span class="n">a</span> <span class="n">ray</span> <span class="n">r</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">wi</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ray</span> <span class="n">r</span> <span class="n">hit</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="n">emitting</span> <span class="nb">object</span> <span class="n">at</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">L_indir</span> <span class="o">=</span> <span class="n">shade</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">-</span><span class="n">wi</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_r</span> <span class="o">*</span> <span class="n">cosθ</span> <span class="o">/</span> <span class="n">pdf_hemi</span> <span class="o">/</span> <span class="n">p_RR</span>
+    <span class="k">return</span> <span class="n">L_dir</span> <span class="o">+</span> <span class="n">L_indir</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Path tracing is almost 100% correct, a.k.a <strong>Photo-realistic</strong></li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/02/09/ydKgTU.jpg" alt="cg-9-28" /></p>
+
+<h2 id="summary--future-work">Summary &amp; Future work</h2>
+
+<h3 id="summary">Summary</h3>
+
+<ul>
+  <li>Ray tracing: Previous vs. Modern Concepts
+    <ul>
+      <li>Previous: Ray tracing == Whitted-style ray tracing</li>
+      <li>Modern
+        <ul>
+          <li>The general solution of light transport, including:</li>
+          <li>(Unidirectional or Bidirectional) Path tracing</li>
+          <li>Photon mapping</li>
+          <li>Metropolis light transport</li>
+          <li>VCM / UPBP …</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="future-work">Future work</h3>
+
+<ul>
+  <li>Uniformly sampling the hemisphere
+    <ul>
+      <li>How? and in general, how to sample any function? (sampling theory)</li>
+    </ul>
+  </li>
+  <li>Monte Carlo integration allows arbitrary $pdf$
+    <ul>
+      <li>Instead of uniform sampling, what’s the best choice of sampling with regards to different shapes of function? (importance sampling)</li>
+    </ul>
+  </li>
+  <li>Do random numbers matter?
+    <ul>
+      <li>Yes! (low discrepancy sequences)</li>
+    </ul>
+  </li>
+  <li>I can sample the hemisphere and the light
+    <ul>
+      <li>Can I combine them? Yes! (multiple importance sampling)</li>
+    </ul>
+  </li>
+  <li>The radiance of a pixel is the averange of radiance on all paths passing through it
+    <ul>
+      <li>Why? If different weighted sampling at the center of pixel or the edge is needed? (pixel reconstruction filter)</li>
+    </ul>
+  </li>
+  <li>Is the radiance of a pixel the color of a pixel?
+    <ul>
+      <li>No. (gamma correction, curves concerning high dynamic range (HDR) image , color space, photography)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/21376124">基于物理着色：BRDF</a></li>
+  <li><a href="https://blog.csdn.net/leonwei/article/details/44539217">物理渲染(PBR)-基于物理的光照模型</a></li>
+  <li><a href="https://www.zhihu.com/question/28476602/answer/41003204">BRDF单位为sr^-1的原因</a></li>
+  <li><a href="https://web.cs.wpi.edu/~emmanuel/courses/cs563/write_ups/chuckm/chuckm_BRDFs_overview.html">Bi-Directional Reflectance Distribution Functions</a></li>
+  <li><a href="https://www.qiujiawei.com/monte-carlo/">蒙特·卡罗积分</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/146144853">蒙特卡洛积分概述</a></li>
+  <li><a href="http://www.twistedwg.com/2018/05/29/MC-integral.html">蒙特卡洛（Monte Carlo）法求定积分</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/56443239">Rendering Equation求解</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-12-03T00:00:00-05:00">Dec 19, 2020</time>
+    </span><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css');
+		window.Lazyload.js('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: '69b563d6a40e143550a4',
+				clientSecret: '8c179732431d99e3ac53a0a113c6bfc09121530f',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2020-12-03-cg-9'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+            </div></div></div><div class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Haolin Jia"><meta itemprop="url" content="Harrypotterrrr.github.com"><meta itemprop="description" content="I am an amazing person."><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="Harrypotterrrr.github.com"><li title="Send me an Email.">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:jiahaolin19971119@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="Follow me on Facebook.">
+        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/100012241788050" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M767.428571 6.857143l0 150.857143-89.714286 0q-49.142857 0-66.285714 20.571429t-17.142857 61.714286l0 108 167.428571 0-22.285714 169.142857-145.142857 0 0 433.714286-174.857143 0 0-433.714286-145.714286 0 0-169.142857 145.714286 0 0-124.571429q0-106.285714 59.428571-164.857143t158.285714-58.571429q84 0 130.285714 6.857143z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Twitter.">
+        <a class="button button--circle twitter-button" itemprop="sameAs" href="https://twitter.com/Harrypotterrrr7" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1024.032 194.432c-37.664 16.704-78.176 28-120.672 33.088 43.36-26.016 76.672-67.168 92.384-116.224-40.608 24.064-85.568 41.568-133.408 50.976-38.336-40.832-92.928-66.336-153.344-66.336-116.032 0-210.08 94.048-210.08 210.08 0 16.48 1.856 32.512 5.44 47.872-174.592-8.768-329.408-92.416-433.024-219.52-18.08 31.04-28.448 67.104-28.448 105.632 0 72.896 37.088 137.184 93.472 174.88-34.432-1.088-66.816-10.528-95.168-26.272-0.032 0.864-0.032 1.76-0.032 2.656 0 101.792 72.416 186.688 168.512 205.984-17.632 4.8-36.192 7.36-55.36 7.36-13.536 0-26.688-1.312-39.52-3.776 26.72 83.456 104.32 144.192 196.256 145.888-71.904 56.352-162.496 89.92-260.928 89.92-16.96 0-33.664-0.992-50.112-2.944 92.96 59.616 203.392 94.4 322.048 94.4 386.432 0 597.728-320.128 597.728-597.76 0-9.12-0.192-18.176-0.608-27.168 41.056-29.632 76.672-66.624 104.832-108.736z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Zhihu.">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jia-hao-lin-27" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Linkedin.">
+        <a class="button button--circle linkedin-button" itemprop="sameAs" href="https://www.linkedin.com/in/haolin-jia-7b4b49173/" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M260.096 155.648c0 27.307008-9.899008 50.516992-29.696 69.632-19.796992 19.115008-45.396992 28.672-76.8 28.672-30.036992 0-54.612992-9.556992-73.728-28.672-19.115008-19.115008-28.672-42.324992-28.672-69.632 0-28.672 9.556992-52.224 28.672-70.656 19.115008-18.432 44.372992-27.648 75.776-27.648 31.403008 0 56.32 9.216 74.752 27.648 18.432 18.432 28.331008 41.984 29.696 70.656 0 0 0 0 0 0m-202.752 808.96c0 0 0-632.832 0-632.832 0 0 196.608 0 196.608 0 0 0 0 632.832 0 632.832 0 0-196.608 0-196.608 0 0 0 0 0 0 0m313.344-430.08c0-58.708992-1.364992-126.292992-4.096-202.752 0 0 169.984 0 169.984 0 0 0 10.24 88.064 10.24 88.064 0 0 4.096 0 4.096 0 40.96-68.267008 105.812992-102.4 194.56-102.4 68.267008 0 123.220992 22.868992 164.864 68.608 41.643008 45.739008 62.464 113.664 62.464 203.776 0 0 0 374.784 0 374.784 0 0-196.608 0-196.608 0 0 0 0-350.208 0-350.208 0-91.476992-33.451008-137.216-100.352-137.216-47.787008 0-81.236992 24.576-100.352 73.728-4.096 8.192-6.144 24.576-6.144 49.152 0 0 0 364.544 0 364.544 0 0-198.656 0-198.656 0 0 0 0-430.08 0-430.08 0 0 0 0 0 0" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Github.">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/Harrypotterrrr" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div><div class="site-info mt-2">
+      <div>© Haolin Jia's Homepage 2020,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+    </div></div></div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">Search</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        Cancel</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      blog.set('title', title);
+      blog.set('key', key);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://code.jquery.com/jquery-3.6.0.min.js', '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'Q63N3hBVpAOkXqFX2IFRLou7-MdYXbMMI',
+        appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
+        appClass: 'Blog'
+      });
+      var key =   'blog-2020-12-03-cg-9';
+      var title = "The Notes of Computer Graphics Ⅸ";
+      pageview.increase(key, title, function(view) {
+        $("[data-page-key='blog-2020-12-03-cg-9']").text(view);
+      });
+    });
+  </script>
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+

@@ -1,0 +1,1681 @@
+<!DOCTYPE html><html lang="en">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-176496785-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-176496785-1');
+		
+	</script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>The Notes of Computer Graphics Ⅳ - Haolin Jia's Homepage</title>
+
+<meta name="description" content="Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2020/08/19/cg-4.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><script src="https://kit.fontawesome.com/0970362a03.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/0970362a03.js" > --><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://kit.fontawesome.com/0970362a03.js',
+        jquery: 'https://code.jquery.com/jquery-3.6.0.min.js',
+        leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
+        chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.jss',
+        gitalk: {
+          js: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js',
+          css: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
+        },
+        valine: 'https://unpkg.com/valine/dist/Valine.min.js',
+        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h2,h3,h4'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=computer graphics">Computer Graphics</a></li><li class="toc-h2"><a href="/2020/08/10/cg-1">Overview</a></li><li class="toc-h2"><a href="/2020/08/11/cg-2">Linear Algebra</a></li><li class="toc-h2"><a href="/2020/08/15/cg-3">Transformation</a></li><li class="toc-h2 active"><a href="/2020/08/19/cg-4">Rasterization</a></li><li class="toc-h2"><a href="/2020/09/02/cg-5">Shading</a></li><li class="toc-h2"><a href="/2020/09/07/cg-6">Texture</a></li><li class="toc-h2"><a href="/2020/11/19/cg-7">Geometry</a></li><li class="toc-h2"><a href="/2020/11/25/cg-8">Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/03/cg-9">Advanced Ray Tracing</a></li><li class="toc-h2"><a href="/2020/12/20/cg-10">Material</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="24px" viewBox="0 0 24 24">
+<style type="text/css">
+	.st0{fill:#515151;}
+</style>
+<path class="st0" d="M1.7,22.3c5.7-5.7,11.3-5.7,17,0c3.3-3.3,3.5-5.3,0.8-6c2.7,0.7,3.5-1.1,2.3-5.6s-3.3-5.2-6.3-2.1
+	c3-3,2.3-5.2-2.1-6.3S7,1.8,7.7,4.6C7,1.8,5,2.1,1.7,5.3C7.3,11,7.3,16.7,1.7,22.3"/>
+</svg>
+<a title="Keep working hard!
+" href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
+
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
+
+              <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>The Notes of Computer Graphics Ⅳ</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2020/2020-08-19-cg-4.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="The Notes of Computer Graphics Ⅳ"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+graphics">computer graphics</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2020-08-19-cg-4">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Nov 25, 2020</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2020-08-19T00:00:00-04:00">
+    <meta itemprop="keywords" content="computer graphics,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>Rasterization, Sampling, Frequency and Filtering, Antialiasing, Z-buffer</p>
+
+<!--more-->
+
+<h2 id="after-viewing-transformation">After Viewing transformation</h2>
+
+<ul>
+  <li><strong>Viewport transformation</strong>: project the canonical cube $\left[-1, 1\right]^3$, we get from viewing transformation, to the screen.</li>
+</ul>
+
+<h3 id="screen">Screen</h3>
+
+<ul>
+  <li>An array of pixels</li>
+  <li>Size of the array: resolution (i.e. 1920 x 1080)</li>
+  <li>A typical kind of raster display</li>
+</ul>
+
+<h3 id="raster">Raster</h3>
+
+<ul>
+  <li><strong>Raster</strong> == screen in German</li>
+  <li>Rasterize – drawing onto the screen</li>
+</ul>
+
+<h3 id="pixel">Pixel</h3>
+
+<ul>
+  <li>short for <code class="language-plaintext highlighter-rouge">picture element</code></li>
+  <li>For now: A pixel is a little square with uniform color. <a href="#Raster-displays">Actually not</a> in actual electronic display.</li>
+  <li>Color is a mixture of (red, green, blue)</li>
+</ul>
+
+<p>For the real displays of LCD screen. Each pixel is not uniform color, but R,G,B pixel geometry. Even so, now we assume a colored square full-color pixel.</p>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rx0xXT.jpg" alt="cg-4-7" width="600px" /></p>
+
+<p class="success"><strong>Info</strong>: Bayer Pattern(Filter) is shown on the right, where green elements are twice as many as  red or blue to mimic the physiology of the human eye which is more sensitive to green light.</p>
+
+<h3 id="screen-space">Screen space</h3>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxwcR0.jpg" alt="cg-4-1" width="450px" /></p>
+
+<ul>
+  <li>
+    <p>Following definition is slightly different from <code class="language-plaintext highlighter-rouge">tiger book</code></p>
+
+    <ul>
+      <li>Pixels indices are in the form of $(x,y)$, where both $x$ and $y$ are integers</li>
+      <li>Pixels indices are from $(0,0)$ to $(width-1, height-1)$</li>
+      <li>Pixel $(x,y)$ is centered at $(x+0.5, y+0.5)$</li>
+      <li>The screen covers range $(0,0)$ to $(width, height)$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="canonical-cube-to-screen">Canonical Cube to Screen</h3>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxw6Gq.jpg" alt="cg-4-2" /></p>
+
+<ul>
+  <li>irrelevant to $z$</li>
+  <li>Transform in $xy$ plane: $\left[-1, 1\right]^2$ to $\left[0, width\right]^2 \times \left[0, height\right]^2$</li>
+  <li>Viewport transform matrix</li>
+</ul>
+
+\[M_{\text {viewport}}=\left(\begin{array}{cccc}\frac{\text {width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text {width}}{2} \\ 0 &amp; \frac{\text {height}}{2} &amp; 0 &amp; \frac{\text {height}}{2} \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\]
+
+<h3 id="raster-displays">Raster Displays</h3>
+
+<ul>
+  <li>CRT (Cathode Ray Tube)</li>
+  <li>Television: Raster Display CRT</li>
+  <li>In fact, pixel, the component geometry in an image sensor or display, has three primary color: red, blue and green, which can be ordered in different patterns</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: On the memory of PC or Graphic Processing Unit (GPU), <code class="language-plaintext highlighter-rouge">Frame Buffer</code> is the memory for a raster display.</p>
+
+<ul>
+  <li>LCD (Liquid Crystal Display)
+    <ul>
+      <li>Principle: block or transmit light by twisting polarization(极化, 偏振方向)</li>
+      <li>Base on the wave property of light</li>
+    </ul>
+  </li>
+  <li>Electrophoretic</li>
+</ul>
+
+<h2 id="rasterization">Rasterization</h2>
+
+<p><strong>Rasterization</strong>: Drawing to Raster Display</p>
+
+<h3 id="triangles--fundamental-shape">Triangles = Fundamental Shape</h3>
+
+<ul>
+  <li>Most basic polygon
+    <ul>
+      <li>break up other polygons</li>
+    </ul>
+  </li>
+  <li>Unique properties
+    <ul>
+      <li>Guaranteed to be planar</li>
+      <li>Well-defined interior (How about the polygon which has holes in it, and how about concave polygons?)</li>
+      <li>Well-defined method for interpolating values at vertices over triangle (barycentric interpolation)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="from-triangle-to-pixels">From Triangle to pixels</h3>
+
+<ul>
+  <li>Input: position of traingle vertices projected on screen</li>
+  <li>Output: set of pixel values approximating triangle</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxUIII.jpg" alt="cg-4-3" /></p>
+
+<h3 id="sampling-a-function">Sampling a Function</h3>
+
+<ul>
+  <li>Evaluating a function at a point is sampling, we can <strong>discretize</strong> a function by sampling</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxbGnO.jpg" alt="cg-4-8" /></p>
+
+<p class="success"><strong>Info</strong>: Sampling is a core idea in graphics. i.e. We sample time(1D), area (2D), direction (2D), volumn (3D). Here, <strong>the centers</strong> of pixels are used to sample <strong>screen space</strong>.</p>
+
+<h3 id="rasterization-as-2d-sampling">Rasterization as 2D Sampling</h3>
+
+<ul>
+  <li>Sample if each pixel center is inside triangle</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxU5dA.jpg" alt="cg-4-4" width="430px" /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">inside</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// x, y: not necessarily integers</span>
+    <span class="k">if</span> <span class="n">Point</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="n">in</span> <span class="n">triangle</span> <span class="n">t</span><span class="o">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">xmax</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">ymax</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">inside</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use three <a href="/2020/08/11/cg-2#cross-product">cross product</a> to check if the Point is inside the triangle or not.</li>
+  <li>Disregard edge cases when the sample point is exactly on the edge of the triangle.</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: Pixel values are integers so the center should be additional 0.5 amount.</p>
+
+<ul>
+  <li>Use Bounding Box (axis aligned) to avoid checking all pixels on the screen and reduce great time consumption.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxUfqH.jpg" alt="cg-4-5" width="450px" /></p>
+
+<ul>
+  <li>Incremental triangle traversal: traverse from the beginning of the left side of the triangle to the right.
+    <ul>
+      <li>Suitable for thin and rotated triangles, especially for those which has small area but consume the large proportion of bounding box</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/01/rxUTit.jpg" alt="cg-4-6" width="450px" /></p>
+
+<h2 id="sampling">Sampling</h2>
+
+<h3 id="ubiquitous-sampling">Ubiquitous Sampling</h3>
+
+<ul>
+  <li>Rasterization = Sample 2D Positions</li>
+  <li>Photograph = Sample Image Sensor Plane</li>
+  <li>Video =  Sample Time</li>
+</ul>
+
+<h3 id="artifacts">Artifacts</h3>
+
+<ul>
+  <li>
+    <p><strong>Artifacts</strong>: Errors, Mistakes, Inaccuracies</p>
+  </li>
+  <li>
+    <p>Aliasing Artifacts due to sampling</p>
+    <ul>
+      <li>Jaggies: sampling in space
+<img src="https://z3.ax1x.com/2021/01/01/rxbJBD.jpg" alt="cg-4-9" width="600px" /></li>
+      <li>Moire pattern: undersampling (skip odd rows and columns) images
+<img src="https://z3.ax1x.com/2021/01/01/rxbh3q.jpg" alt="cg-4-10" width="600px" /></li>
+      <li>Wagon wheel effect: sampling in time of our eyes
+<img src="https://z3.ax1x.com/2021/01/01/rxbgEQ.gif" alt="cg-4-11" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="the-reason-behind-the-aliasing-artifact">The reason behind the Aliasing Artifact</h3>
+
+<ul>
+  <li>Signals are changing too <strong>fast</strong> (high frequency) but sampled too <strong>slowly</strong></li>
+</ul>
+
+<h2 id="frequency-and-filtering">Frequency and Filtering</h2>
+
+<ul>
+  <li>
+    <p>Central Idea: Blurring (pre-filtering) before sampling</p>
+  </li>
+  <li>
+    <p>Directly sample: pixel values of jaggies in rasterized triangle are pure red or white</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/rzHG59.jpg" alt="cg-4-12" /></p>
+
+<ul>
+  <li>Pre-filter before sample: pixel values of antialiased edges have intermediate values</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/rzH8UJ.jpg" alt="cg-4-13" /></p>
+
+<p class="info"><strong>Tip</strong>: remove frequencies above <a href="#nyquist-theory">Nyquist</a>.</p>
+
+<ul>
+  <li>The order of blurring and sampling matters</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/rzH3E4.jpg" alt="cg-4-14" /></p>
+
+<p>The above figures are sampling, antialiasing (filter then sample), blurred alisaing (sample then filter)</p>
+
+<p>The reason why undersampling introduces aliasing, and prefiltering then sampling can do antialiasing instead of the inversed operation will be explained at <a href="#antialiasing">Antialiasing</a>.</p>
+
+<h3 id="fourier-transform">Fourier Transform</h3>
+
+<ul>
+  <li>
+    <p><strong>Frequency</strong>: $f$ in $sin(2\pi fx)$, where $f = \frac{1}{T}$</p>
+  </li>
+  <li>
+    <p>Represent a function as a weighted sum of sines and cosines.</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/sS9m8O.jpg" alt="cg-4-15" /></p>
+
+<ul>
+  <li>Fourier transform decomposes a signal into frequencies, from spatial domain to frequency domain</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPyISO.png" alt="cg-4-27" width="500px" /></p>
+
+<h3 id="nyquist-theory">Nyquist Theory</h3>
+
+<ul>
+  <li>Low frequency signal: sampled adequately for reasonable reconstruction</li>
+  <li>High frequency signal: insufficiently sampled and reconstruction is correct</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/sSiDZd.jpg" alt="cg-4-16" width="650px" /></p>
+
+<ul>
+  <li>Thus, higher frequencies need faster sampling</li>
+  <li>Strictly, the sampling frequency should at least be <strong>twice</strong> the signal bandwidth. This frequency is called <strong>Nyquist rate</strong></li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/sSi0qH.jpg" alt="cg-4-17" width="500px" /></p>
+
+<ul>
+  <li>Two frequencies (above blue and black) that are indistinguishable at a given sampling rate called <strong>aliases</strong>.</li>
+</ul>
+
+<h3 id="filtering">Filtering</h3>
+
+<p><strong>Filtering</strong>: Getting rid of certain frequency contents</p>
+
+<p><img src="https://z3.ax1x.com/2021/01/02/sSTicV.jpg" alt="cg-4-18" /></p>
+
+<ul>
+  <li>The right image shows the value of frequency domain which is transformed by Fourier Transform from the left image, spatial domain.</li>
+</ul>
+
+\[F(u, v)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x, y) e^{-j 2 \pi(u x+v y)} d x d y\]
+
+<ul>
+  <li>
+    <p>Above two-dimensional transform formula shows that the original image $f(x,y)$ is transformed into $F(u,v)$</p>
+  </li>
+  <li>
+    <p>In the right figure, the center represents $u =0,v=0$, that is $F(0,0)$. This means the center of the image is the low frequency region, otherwise high frequency region.</p>
+  </li>
+  <li>
+    <p>High-pass filter will get rid of all low frequency and keep edges of the image.</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/03/spKY6A.jpg" alt="cg-4-19" /></p>
+
+<ul>
+  <li>Low-pass filter will filter the high frequency and retain the smooth part of the image.</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/03/spKJld.jpg" alt="cg-4-20" /></p>
+
+<p class="info"><strong>Tip</strong>: For the two-dimensional Fourier Transform, the image can be thought of as being tiled (stacked vertically and horizontally) infinitely. Thus two highlight strips in a cross shape at the center of the image is caused by the drastic change of the edges of the left figures.</p>
+
+<h3 id="convolution">Convolution</h3>
+
+<ul>
+  <li>Convolution in spatial domain is equivalent to multiplication in frequency domain, and vice versa</li>
+</ul>
+
+<p class="warning"><strong>An intuitive proof</strong>: The spatial domain signal can be decomposed into a series of sinusoidal signals with different frequencies. According to the distributive property of convolution operation, the convolution of two spatial signals can be regarded as the sum of the convolutions of pairwise sinusoidal signals. Since the result of the convolution of sinusodial signals with different frequencies is zero, only the convolution of sinusoidal signals with the same frequency is left. As a result, the output of convolution is that the frequency remains unchanged and the amplitude is to be multiplied. For frequency domain, it appears as direct multiplication.</p>
+
+<ul>
+  <li>Option 1:
+    <ul>
+      <li>Filter by convolution in the spatial domain</li>
+    </ul>
+  </li>
+  <li>Option 2:
+    <ul>
+      <li>Transform to frequency domain (Fourier transform)</li>
+      <li>Multiply by Fourier transform of convolution kernel</li>
+      <li>Transform back to spatial domain (inverse Fourier)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sCjpr9.jpg" alt="cg-4-21" /></p>
+
+<ul>
+  <li>
+    <p>Regularization term (i.e. $\frac{1}{9}$ in the above image) is to ensure the brightness of theimage does not change after transformation.</p>
+  </li>
+  <li>
+    <p>Wider Filter Kernel = Lower Frequency</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPyhY6.jpg" alt="cg-4-22" /></p>
+
+<ul>
+  <li>Sampling = Repeating Frequency Contents</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPy4fK.jpg" alt="cg-4-23" /></p>
+
+<ul>
+  <li>(a) band-unlimited signal</li>
+  <li>(b) frequency spectrum of (a)</li>
+  <li>(c) unit-impulse function, which is used to simulate sampling</li>
+  <li>(d) frequency spectrum of (b)</li>
+  <li>(e) result of convolution of (a) and (c)</li>
+  <li>
+    <p>(f) result of multiplication of (d) and (f). More intuitive, (f) is copied for many times along the frequency axis.</p>
+  </li>
+  <li>Aliasing = Mixed Frequency Contents</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPygm9.jpg" alt="cg-4-24" /></p>
+
+<ul>
+  <li>When the sampling interval becomes small, the corresponding sampling frequency will become relatively large, which will lead to the overlapping phenomenon in final frequency spectrum. Thus, aliasing is caused by information lost.</li>
+</ul>
+
+<h2 id="antialiasing">Antialiasing</h2>
+
+<h3 id="basic-theory">Basic theory</h3>
+
+<ul>
+  <li>Option 1: Increase sampling rate
+    <ul>
+      <li>Eseentially increasing the distance between replicas in the Fourier domain</li>
+      <li>Higher resolution displays, sensors, framebuffers..</li>
+      <li>Disadvantage: costly &amp; may need very high resolution</li>
+    </ul>
+  </li>
+  <li>Option 2: Antialiasing
+    <ul>
+      <li>Making Fourier contents “narrower” before repeating</li>
+      <li>i.e. Filtering out high frequencies before sampling</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPy2wR.jpg" alt="cg-4-25" /></p>
+
+<p>Perform filtering before the sampling will discard the high frequency and reduce the overlapping phenomenon, consequently reduce the loss of information and aliasing.</p>
+
+<ul>
+  <li>Antialiasing by averaging values in pixel area
+    <ul>
+      <li><strong>Convolve</strong> by a 1-pixel box-blur (convolving = filtering = averaing)</li>
+      <li><strong>Sample</strong> at every pixel’s center</li>
+    </ul>
+  </li>
+  <li>In rasterizing one triangle, the average value inside a pixel area is equal to the area of the pixel covered by the triangle</li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/sPyRT1.jpg" alt="cg-4-26" /></p>
+
+<ul>
+  <li>
+    <p>Sampling is an irreversable mapping, so the combination of convolution mapping and sampling is not commutative.</p>
+  </li>
+  <li>
+    <p>Generally, antialiasing is to filter the high frequency signal so that the sampling frequency could catch up with the signal frequency.</p>
+  </li>
+</ul>
+
+<h3 id="msaa">MSAA</h3>
+
+<ul>
+  <li>MSAA (multi-sample antialiasing) is to antialias by supersampling: Approximate the effect of the 1-pixel box filter by sampling multiple locations within a pixel and averagin their values.
+    <ul>
+      <li>One sample per pixel
+<img src="https://z3.ax1x.com/2021/01/04/sP2Ghq.jpg" alt="cg-4-28" width="650px" /></li>
+      <li>Take N x N samples in each pixel
+<img src="https://z3.ax1x.com/2021/01/04/sP2t3V.jpg" alt="cg-4-29" width="650px" /></li>
+      <li>Average the N x N samples inside each pixel
+<img src="https://z3.ax1x.com/2021/01/04/sP2Y90.jpg" alt="cg-4-30" width="650px" /></li>
+      <li>Until all pixel are averaged
+<img src="https://z3.ax1x.com/2021/01/04/sP28Nn.jpg" alt="cg-4-31" width="650px" /></li>
+      <li>Corresponding signal emitted by the display
+<img src="https://z3.ax1x.com/2021/01/04/sP23As.jpg" alt="cg-4-32" width="650px" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Take 4 x MSAA as an example, given a screen with a resolution of 800 x 600, MSAA firstly render the image to the buffer of 1600 x 1200, and downsample it back to the original 800 x 600.</p>
+
+<ul>
+  <li>
+    <p>The cost of MSAA is time consuming, the size of render target increases to the MSAA multiple times.</p>
+  </li>
+  <li>
+    <p>The more multiplier of MSAA, the better performace of antialiasing, the more cost of time.</p>
+  </li>
+</ul>
+
+<h3 id="milestones-of-antialiasing">Milestones of Antialiasing</h3>
+
+<ul>
+  <li>
+    <p>FXAA (Fast Approximate AA): screen-space anti-aliasing algorithm. Different with MSAA which process the image before the sampling, FXAA postprocess the image after sampled and rasterized. FXAA contrast pixels to heuristically find edges and optimize jaggies in different directions. Very fast!</p>
+  </li>
+  <li>
+    <p>TAA (Temporal AA) : reuse the previous frame and accordingly reduce the effects of temporal aliasing caused by the sampling rate of a scene being too low compared to the transformation speed of objects inside of the scene.</p>
+  </li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: We often pronounce <code class="language-plaintext highlighter-rouge">[temˈporəl]</code> in industry to distinguish with ‘temporary’ meaning.</p>
+
+<ul>
+  <li>Super resolution / super sampling
+    <ul>
+      <li>low resolution to high resolution</li>
+      <li>DLSS (Deep Learning Super Sampling): to understand and predict the missing information</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="visibility-and-occlusion">Visibility and Occlusion</h2>
+
+<h3 id="painters-algorithm">Painter’s Algorithm</h3>
+
+<ul>
+  <li>
+    <p>Solve the problem of triangles rendering order</p>
+  </li>
+  <li>
+    <p>Inspired by how painters paint: Paint from back to front, <strong>overwrite</strong> in the framebuffer.</p>
+  </li>
+  <li>
+    <p>Require sorting in depth $Olog(n)$ for n triangles</p>
+  </li>
+  <li>
+    <p>unresolvable depth order exist:</p>
+  </li>
+</ul>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/si29sS.png" alt="cg-4-33" width="250px" /></p>
+
+<h3 id="z-buffer">Z-Buffer</h3>
+
+<ul>
+  <li>store current minimum of <code class="language-plaintext highlighter-rouge">z-value</code> for each pixel</li>
+  <li>need an additional buffer for depth values
+    <ul>
+      <li>frame buffer stores color values</li>
+      <li>depth buffer (z-buffer) stores depth</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Note</strong>: For simplicity we suppose <em>z is always positive</em> (smaller z is closer, larger z is further)</p>
+
+<p><img src="https://z3.ax1x.com/2021/01/04/si2pM8.jpg" alt="cg-4-34" /></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Initialize</span> <span class="n">depth</span> <span class="n">buffer</span> <span class="n">to</span> <span class="o">+</span><span class="n">inf</span>
+<span class="c1">// During rasterization</span>
+<span class="k">for</span> <span class="n">each</span> <span class="n">triangle</span> <span class="n">T</span><span class="o">:</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="n">in</span> <span class="n">T</span><span class="o">:</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span><span class="o">:</span>  <span class="c1">// closest sample so far</span>
+            <span class="n">frame_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span> <span class="c1">// update color</span>
+            <span class="n">z_buffer</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span>  <span class="c1">// update depth</span>
+        <span class="k">else</span>
+            <span class="n">pass</span> <span class="c1">// do nothing, this sample is occluded</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Complexity: $O(n)$ for traversing $n$ triangles</li>
+  <li>Different order of drawing triangles has nothing to do with the result</li>
+  <li>Most important visibility algorithm implemented in hardware for all GPUs</li>
+</ul>
+
+<p class="info"><strong>Tip</strong>: z-buffer can not deal with transparent objects.</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">GAMES101, Lingqi Yan</a></li>
+  <li><a href="https://www.zhihu.com/question/29246532">图像傅里叶变换的频率</a></li>
+  <li><a href="https://www.zhihu.com/question/22611929">二维傅里叶变换</a></li>
+  <li><a href="https://www.zhihu.com/question/20236638">FXAA、MSAA区别</a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2020-08-19T00:00:00-04:00">Nov 25, 2020</time>
+    </span><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2020/12/20/cg-10">Material</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css');
+		window.Lazyload.js('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: '69b563d6a40e143550a4',
+				clientSecret: '8c179732431d99e3ac53a0a113c6bfc09121530f',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2020-08-19-cg-4'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+            </div></div></div><div class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Haolin Jia"><meta itemprop="url" content="Harrypotterrrr.github.com"><meta itemprop="description" content="I am an amazing person."><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="Harrypotterrrr.github.com"><li title="Send me an Email.">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:jiahaolin19971119@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="Follow me on Facebook.">
+        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/100012241788050" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M767.428571 6.857143l0 150.857143-89.714286 0q-49.142857 0-66.285714 20.571429t-17.142857 61.714286l0 108 167.428571 0-22.285714 169.142857-145.142857 0 0 433.714286-174.857143 0 0-433.714286-145.714286 0 0-169.142857 145.714286 0 0-124.571429q0-106.285714 59.428571-164.857143t158.285714-58.571429q84 0 130.285714 6.857143z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Twitter.">
+        <a class="button button--circle twitter-button" itemprop="sameAs" href="https://twitter.com/Harrypotterrrr7" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1024.032 194.432c-37.664 16.704-78.176 28-120.672 33.088 43.36-26.016 76.672-67.168 92.384-116.224-40.608 24.064-85.568 41.568-133.408 50.976-38.336-40.832-92.928-66.336-153.344-66.336-116.032 0-210.08 94.048-210.08 210.08 0 16.48 1.856 32.512 5.44 47.872-174.592-8.768-329.408-92.416-433.024-219.52-18.08 31.04-28.448 67.104-28.448 105.632 0 72.896 37.088 137.184 93.472 174.88-34.432-1.088-66.816-10.528-95.168-26.272-0.032 0.864-0.032 1.76-0.032 2.656 0 101.792 72.416 186.688 168.512 205.984-17.632 4.8-36.192 7.36-55.36 7.36-13.536 0-26.688-1.312-39.52-3.776 26.72 83.456 104.32 144.192 196.256 145.888-71.904 56.352-162.496 89.92-260.928 89.92-16.96 0-33.664-0.992-50.112-2.944 92.96 59.616 203.392 94.4 322.048 94.4 386.432 0 597.728-320.128 597.728-597.76 0-9.12-0.192-18.176-0.608-27.168 41.056-29.632 76.672-66.624 104.832-108.736z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Zhihu.">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jia-hao-lin-27" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Linkedin.">
+        <a class="button button--circle linkedin-button" itemprop="sameAs" href="https://www.linkedin.com/in/haolin-jia-7b4b49173/" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M260.096 155.648c0 27.307008-9.899008 50.516992-29.696 69.632-19.796992 19.115008-45.396992 28.672-76.8 28.672-30.036992 0-54.612992-9.556992-73.728-28.672-19.115008-19.115008-28.672-42.324992-28.672-69.632 0-28.672 9.556992-52.224 28.672-70.656 19.115008-18.432 44.372992-27.648 75.776-27.648 31.403008 0 56.32 9.216 74.752 27.648 18.432 18.432 28.331008 41.984 29.696 70.656 0 0 0 0 0 0m-202.752 808.96c0 0 0-632.832 0-632.832 0 0 196.608 0 196.608 0 0 0 0 632.832 0 632.832 0 0-196.608 0-196.608 0 0 0 0 0 0 0m313.344-430.08c0-58.708992-1.364992-126.292992-4.096-202.752 0 0 169.984 0 169.984 0 0 0 10.24 88.064 10.24 88.064 0 0 4.096 0 4.096 0 40.96-68.267008 105.812992-102.4 194.56-102.4 68.267008 0 123.220992 22.868992 164.864 68.608 41.643008 45.739008 62.464 113.664 62.464 203.776 0 0 0 374.784 0 374.784 0 0-196.608 0-196.608 0 0 0 0-350.208 0-350.208 0-91.476992-33.451008-137.216-100.352-137.216-47.787008 0-81.236992 24.576-100.352 73.728-4.096 8.192-6.144 24.576-6.144 49.152 0 0 0 364.544 0 364.544 0 0-198.656 0-198.656 0 0 0 0-430.08 0-430.08 0 0 0 0 0 0" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Github.">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/Harrypotterrrr" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div><div class="site-info mt-2">
+      <div>© Haolin Jia's Homepage 2020,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+    </div></div></div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">Search</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        Cancel</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      blog.set('title', title);
+      blog.set('key', key);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://code.jquery.com/jquery-3.6.0.min.js', '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'Q63N3hBVpAOkXqFX2IFRLou7-MdYXbMMI',
+        appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
+        appClass: 'Blog'
+      });
+      var key =   'blog-2020-08-19-cg-4';
+      var title = "The Notes of Computer Graphics Ⅳ";
+      pageview.increase(key, title, function(view) {
+        $("[data-page-key='blog-2020-08-19-cg-4']").text(view);
+      });
+    });
+  </script>
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+

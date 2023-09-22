@@ -1,0 +1,1631 @@
+<!DOCTYPE html><html lang="en">
+  <head><!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-176496785-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-176496785-1');
+		
+	</script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Basic Theory of Generative Model - Haolin Jia's Homepage</title>
+
+<meta name="description" content="Deep Generative Model, Basic thoery of GAN, Comparison to VAE, Equation derivations">
+<link rel="canonical" href="https://harrypotterrrr.github.io//2022/01/20/gan-1.html"><link rel="alternate" type="application/rss+xml" title="Haolin Jia's Homepage" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><script src="https://kit.fontawesome.com/0970362a03.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://kit.fontawesome.com/0970362a03.js" > --><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://kit.fontawesome.com/0970362a03.js',
+        jquery: 'https://code.jquery.com/jquery-3.6.0.min.js',
+        leancloud_js_sdk: '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js',
+        chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.jss',
+        gitalk: {
+          js: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js',
+          css: 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
+        },
+        valine: 'https://unpkg.com/valine/dist/Valine.min.js',
+        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h2,h3,h4'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page layout--page--sidebar clearfix js-page-root">
+  <div class="page__mask d-print-none js-page-mask js-sidebar-hide"></div>
+  <div class="page__viewport">
+    <div class="page__actions d-print-none">
+      <div class="button button--circle button--lg box-shadow-2 sidebar-button js-sidebar-show">
+        <i class="fas fa-bars icon--show"></i>
+      </div>
+    </div>
+
+    <div class="grid page__grid">
+
+      <div class="page__sidebar d-print-none"><div class="sidebar-toc"><ul class="toc toc--navigator"><li class="toc-h1"><a href="/archive.html?tag=generative model">Generative Model</a></li><li class="toc-h2 active"><a href="/2022/01/20/gan-1">Basic Theory Of Generation</a></li><li class="toc-h2"><a href="/2022/01/25/gan-2">Conditional Generative Model</a></li><li class="toc-h2"><a href="/2022/02/11/gan-3">Advanced Thoery and Problems</a></li><li class="toc-h2"><a href="/2022/02/21/gan-4">Feature Extraction</a></li><li class="toc-h2"><a href="/2022/03/14/gan-5">Sequence and Evaluation</a></li></ul></div></div><div class="page__main js-page-main has-aside cell cell--auto">
+
+      <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24px" height="24px" viewBox="0 0 24 24">
+<style type="text/css">
+	.st0{fill:#515151;}
+</style>
+<path class="st0" d="M1.7,22.3c5.7-5.7,11.3-5.7,17,0c3.3-3.3,3.5-5.3,0.8-6c2.7,0.7,3.5-1.1,2.3-5.6s-3.3-5.2-6.3-2.1
+	c3-3,2.3-5.2-2.1-6.3S7,1.8,7.7,4.6C7,1.8,5,2.1,1.7,5.3C7.3,11,7.3,16.7,1.7,22.3"/>
+</svg>
+<a title="Keep working hard!
+" href="/">Haolin Jia's Homepage</a></div><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/blog">Blog</a></li><li class="navigation__item"><a href="/archive">Archive</a></li><li class="navigation__item"><a href="/about">About</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
+
+              <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root"></div>
+</aside></div>
+
+              <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Basic Theory of Generative Model</h1></header><span class="split-space">&nbsp;</span>
+          <a class="edit-on-github"
+            title="Edit on Github"
+            href="https://github.com/Harrypotterrrr/Harrypotterrrr.github.io/tree/master/_posts/2022/2022-01-20-gan-1.md">
+            <i class="far fa-edit"></i></a></div><meta itemprop="headline" content="Basic Theory of Generative Model"><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=computer+vision">computer vision</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=generative+model">generative model</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=notes">notes</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="blog-2022-01-20-gan-1">0</span> views</li><li><i class="far fa-calendar-alt"></i> <span>Jan 20, 2022</span>
+            </li></ul></div><meta itemprop="author" content="Haolin Jia"/><meta itemprop="datePublished" content="2022-01-20T00:00:00-05:00">
+    <meta itemprop="keywords" content="computer vision,generative model,notes"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>Deep Generative Model, Basic thoery of GAN, Comparison to VAE, Equation derivations</p>
+
+<!--more-->
+
+<h2 id="basic-idea-of-gan">Basic Idea of GAN</h2>
+
+<ul>
+  <li>
+    <p>Each dimension of input vector represents some characteristic, which means that change the input of the noise, some of the characteristic of the output image will change.</p>
+  </li>
+  <li>
+    <p>The outout of discriminator is commonly a scalar. The larger value means realistic, while smaller means fake.</p>
+  </li>
+</ul>
+
+<h3 id="algorithm">Algorithm</h3>
+
+<p>Algorithm Initialize $\theta_{d}$ for $\mathrm{D}$, and $\theta_{g}$ for $\mathrm{G}$</p>
+<ul>
+  <li>In each training iteration:
+    <ol>
+      <li>Sample m examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right)$</li>
+      <li>Update discriminator paramters $\theta_{d}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}+\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+      <li>Sample m noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from a distribution</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right)\right) \\
+&amp;\theta_{g} \leftarrow \theta_{g}-\eta \nabla \tilde{V}\left(\theta_{g}\right)
+\end{aligned}\)</li>
+    </ol>
+  </li>
+  <li>Takeaway:
+    <ul>
+      <li>Fix generator G, update discriminator D. Discriminator learns to assign high scores to real objects and low scores to generated result. Gradient <strong>descent</strong> of the final score.</li>
+      <li>Fix discriminator D, and update generator G. Gnerator learns to fool the discriminator. Gradient <strong>ascent</strong> of the final score.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="generator">Generator</h3>
+
+<ul>
+  <li>Generator can be designed as <strong>autoencoder</strong>
+    <ul>
+      <li>Encoder part of the generator maps the original images to the latent space as the compact representation of the input object.</li>
+      <li>Decoder part of the generator reconstructs the original object from code to generated result as closely as possible.</li>
+      <li>After the training, we can <strong>discard</strong> the encoder part, replacing it with the input code as whatever we want.</li>
+      <li>Change the input vector of the input noise, the generated result will <strong>vary smoothly</strong>, but <strong>may not make sense</strong> e.g. linear interpolation of the input noise</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Le3aa4.png" alt="gan-1-1" style="margin:auto;display:block;" /></p>
+
+<p><strong>TODO</strong> VAE</p>
+
+<h3 id="comparing-to-vae">Comparing to VAE</h3>
+
+<p><strong>TODO</strong> TODO result in what?</p>
+
+<ul>
+  <li>VAE: The relation between components are not-correlated since neurons in the same layer of the network will not influence each other and they are independent</li>
+  <li>Thus VAE can not discriminate naunced between features, which cause the result more vague than GAN</li>
+  <li>To catch the correpondence among pixels, deep structure needed.</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/LeoGNT.png" alt="gan-1-2" style="margin:auto;display:block;" /></p>
+
+<h2 id="discriminator">Discriminator</h2>
+
+<ul>
+  <li>Use discriminator to generate?
+    <ul>
+      <li>Inference: Generate object $\widetilde{x}$ that<br />
+ \(\widetilde{x}=\arg \max _{x \in X} D(x)\)</li>
+      <li>Enumerate all possible $x$, which is not always feasible, because the above equations can only be solved when it is linear. However linearity constrain the ability of the network.</li>
+    </ul>
+  </li>
+  <li>Algorithm:
+    <ul>
+      <li>Given a set of positive examples and negative example generated randomly</li>
+      <li>In each iteration
+        <ul>
+          <li>Learn a discriminator D that can discriminate positive and negative examples</li>
+          <li>Find relatively good examples from negative examples by $\widetilde{x}=\arg \max _{x \in X} D(x)$</li>
+          <li>Replace the negative examples with relatively good examples</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/12/Leo8EV.png" alt="gan-1-3" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>From the above figure, we noticed that discriminator can only optimize the distribution corresponding to the generated distribution, which is one of the reason why GAN is difficult to optimize.</li>
+</ul>
+
+<p><strong>TODO</strong> structured learning</p>
+
+<h3 id="gan">GAN</h3>
+
+<ul>
+  <li>From Discriminator’s point of view
+    <ul>
+      <li>Use Generator to generate negative samples, replacing infeasible sovled <code class="language-plaintext highlighter-rouge">argmax</code> function</li>
+    </ul>
+  </li>
+  <li>From Generator’s point of view
+    <ul>
+      <li>Still generate the object <strong>without correspondence</strong> (pixel-by-pixel)</li>
+      <li>But it is led by the instruction of the discriminator with <strong>global view</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="basic-theory">Basic Theory</h2>
+
+<h3 id="generation">Generation</h3>
+
+<ul>
+  <li>The realistic images from dataset can be regarded as the <strong>low-dimensional manifold</strong> in <strong>high-dimensional space</strong>. Sampling from the dataset is the process of sampling from the manifold in the space.</li>
+</ul>
+
+<p class="success"><strong>Info</strong>: Manifold, in short, generalizes the triangle, circle, squares, etc. to higher dimensions. If we take a closer look at the N-dimensional manifold (N-manifold), it looks like N-1 dimensional manifold.</p>
+
+<ul>
+  <li>
+    <p>The ensemble of images from the sampling constitute the data distribution $P_{data}(x)$, which only occupies the tiny part of the whole high-dimensional space.</p>
+  </li>
+  <li>
+    <p>The point outside of the manifold means there will be <strong>low probablity</strong> of the true sampling.</p>
+  </li>
+  <li>
+    <p>Building a generator is the process of building a mapping from one known distribution to the data distribution in high level.</p>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHt9f.png" alt="gan-1-4" style="margin:auto;display:block;width:80%;" /></p>
+
+<h3 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
+
+<ul>
+  <li>Target
+    <ul>
+      <li>Given a data distribution $P_{data}(x)$</li>
+      <li>We target at a distribution $P_{G}(x;\theta)$ parameterized by $\theta$
+        <ul>
+          <li>To find $\theta$ such that $P_{G}(x;\theta)$ closed to $P_{data}(x)$</li>
+          <li>e.g. if we assume $P_{G}(x;\theta)$ is Guassian Mixture Model, $\theta$ are means and variances of the Gaussians</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Step
+    <ul>
+      <li>Derive $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ by sampling from $P_{data}(x)$</li>
+      <li>We can compute corresponding $P_{G}(x^{i};\theta)$</li>
+      <li>Then find $\theta^{\ast}$ maximizing the likelihood</li>
+    </ul>
+
+\[L=\prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right)\]
+  </li>
+  <li><strong>Maximum Likelihood Estimation</strong> = <strong>Minimize KL Divergence</strong>
+    <ul>
+      <li><strong>KL-divergence</strong> measures the difference between two distribution $P_{\text {data}}$ and $P_{\text {G}}$<br />
+ \(\begin{aligned}
+ KL\left(P_{\text {data}} \| P_{G}\right)
+ &amp;= P_{\text {data}} \log P_{data}- P_{data} \log P_{\text {G}} \\[8px]
+ &amp;= P_{\text {data}} \log \frac{P_{data}}{P_{\text {G}}}
+ \end{aligned}\)</li>
+      <li>$x \sim data$ means $x$ is sampled from the distribution of data.</li>
+      <li>$P_{data}(x)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">data</code> at $x$ sampling point.</li>
+      <li>$P_{G}(x;\theta)$ means the probablity of the distribution <code class="language-plaintext highlighter-rouge">G</code> at $x$ sampling point with parameter $\theta$.</li>
+    </ul>
+  </li>
+</ul>
+
+\[\begin{aligned}
+\theta^{*} 
+&amp;=\arg \max _{\theta} \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \log \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\[12px]
+&amp;=\arg \max _{\theta} \sum_{i=1}^{m} \log P_{G}\left(x^{i} ; \theta\right) \quad \color{red}{\{ x^{1}, x^{2}, \ldots, x^{m} \} \text{ from } P_{data}(x) } \\[15px]
+&amp; \approx \arg \max _{\theta} mE_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \quad \color{red}{\text{argmax ignore } m \text{ multiplier}} \\[14px]
+&amp; = \arg \max _{\theta} E_{x \sim P_{\text {data}}}\left[\log P_{G}(x ; \theta)\right] \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x \\[12px]
+&amp;=\arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x - \int_{x} P_{d a t a}(x) \log P_{\text {data}}(x) d x \\
+&amp;\color{white}{= \arg \max _{\theta} \int_{x} P_{\text {data}}(x) \log P_{G}(x ; \theta) d x} \color{red}{\scriptsize {\text{add an item without } \theta \text{ and not influence argmax}}}\\[-15px]
+&amp;=\arg \min_{\theta} K L\left(P_{\text {data}} \| P_{G}\right)
+\end{aligned}\]
+
+<p><strong>TODO</strong>: Expectation Maximum</p>
+
+<ul>
+  <li>What if $P_G$ is not Gaussian Mixture Model but more complex and general model?
+    <ul>
+      <li>The mean and variance of the more complex model is difficult to get, since the <strong>explicit</strong> expression of the corresponding <strong>probability density function</strong> is unknown.</li>
+      <li>Thus parameters $\theta$ are <strong>implicit</strong> and impossible to found.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="drawback-of-gmm">Drawback of GMM</h3>
+
+<ul>
+  <li>In the past, Generator is built as Guassian Mixture model (GMM) with explicit parameters $\theta$.
+    <ul>
+      <li>As mentioned <a href="#generation">before</a>, GMM <strong>fails to represent the low-dimensional manifold</strong> which images lie along in high-dimensional space.</li>
+      <li>Therefore, no matter what <code class="language-plaintext highlighter-rouge">mean</code> and <code class="language-plaintext highlighter-rouge">variance</code> of GMM looks like, it fails to resemble the target distribution.</li>
+      <li>As a result, the output of GMM is obscure and fuzzy.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHGNt.png" alt="gan-1-5" style="margin:auto;display:block;" /></p>
+
+<h3 id="generator-1">Generator</h3>
+
+<ul>
+  <li>Generator <code class="language-plaintext highlighter-rouge">G</code> is a network, which defines a probability distirbution $P_G$, mapping the input distribution to the target.
+    <ul>
+      <li>The network has an ability to approximate any functions.</li>
+      <li>The input distribution is not decisive, normal distribution, uniform distribution, etc.</li>
+      <li>Even the simplest distribution of input $z$ can be mapped to the complex one.</li>
+    </ul>
+  </li>
+</ul>
+
+\[G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\]
+
+<ul>
+  <li>The explicit formulations of $P_G$ and $P_{data}$ are still unknown, so it is impossible to do gradient descent on $G$ to minimize divergence.
+    <ul>
+      <li>But we can <strong>sample</strong> data from two distribution $P_G$ and $P_{data}$.
+        <ul>
+          <li>Sampling from $P_{data}$: randomly sample from the database.</li>
+          <li>Sampling from $P_G$: randomly sample from normal, fed into the network and get outputs.</li>
+        </ul>
+      </li>
+      <li>How to compute the divergence between samplings from two distributions? <strong>Discriminator</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<p class="success"><strong>Info</strong>: <code class="language-plaintext highlighter-rouge">Div</code> is the divergence between two distribution, e.g. KL-divergence, JS-divergence.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHN38.png" alt="gan-1-6" style="margin:auto;display:block;" /></p>
+
+<h3 id="discriminator-1">Discriminator</h3>
+
+<ul>
+  <li>
+    <p>Recall the objective function for generator <code class="language-plaintext highlighter-rouge">G</code>:<br />
+ \(G^{*}=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right)\)</p>
+  </li>
+  <li>The objective function for discriminator <code class="language-plaintext highlighter-rouge">D</code>:<br />
+ \(D^{*}=\arg \max _D \operatorname{V}(D, G) \\
+ V(G, D)=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>This is exactly same as training a <strong>Binary Classifier</strong>
+    <ul>
+      <li>$P_{data}$ is binary class <code class="language-plaintext highlighter-rouge">1</code></li>
+      <li>$P_G$ is binary class <code class="language-plaintext highlighter-rouge">0</code></li>
+      <li><code class="language-plaintext highlighter-rouge">D</code> is a binary classifier</li>
+      <li>Binary classifier is to <em>maximize</em> <strong>Cross Entropy</strong> rather than <strong>Mean Square Error</strong>, since MSE-based objective is non-convex optimization problem</li>
+    </ul>
+  </li>
+  <li>The maximum objective is related to <strong>JS divergence</strong>.</li>
+</ul>
+
+<p><span class="ref"><a href="#reference-2">*reference-2</a></span></p>
+
+<ul>
+  <li>Given <code class="language-plaintext highlighter-rouge">G</code>, the optimal $D^*$ maximizing:<br />
+ \(\begin{aligned}
+ D^{*}&amp;=\arg \max _D \operatorname{V}(D, G) \\[10px]
+ V(G, D) &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[10px]
+ &amp;=\int_{x} P_{d a t a}(x) \log D(x) d x+\int_{x} P_{G}(x) \log (1-D(x)) d x \\[10px]
+ &amp;=\int_{x}\left[P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x))\right] d x
+ \end{aligned}\)</li>
+  <li>Assume that <code class="language-plaintext highlighter-rouge">D(x)</code> can represent <strong>any function</strong>. <a name="d-assumption"></a>
+    <ul>
+      <li>Consider the integral as the sum of each <strong>piecewise function</strong>(分段函数) for $x_1, x_2, …$, since we have assumed <code class="language-plaintext highlighter-rouge">D(x)</code> can represent any function, and neural network indeed can be regarded as piecewise function mathematically.</li>
+      <li>When each piecewise function reaches the largest individually, the final integral must also be the largest.</li>
+    </ul>
+  </li>
+  <li>Discretize the above equation, then the objective will be:<br />
+ \(\begin{cases}
+ P_{d a t a}(x) \log D(x)+P_{G}(x) \log (1-D(x)) \\[10px]
+ a = P_{data},\ b = P_{G}
+ \end{cases}\)
+    <ul>
+      <li>Solve for the extremum point:<br />
+\(\begin{aligned}
+\mathrm{f}(D) &amp;=\operatorname{alog}(D)+b \log (1-D) \\[8px]
+\frac{d \mathrm{f}(D)}{d D} &amp;=a \times \frac{1}{D}+b \times \frac{1}{1-D} \times  (-1) =0 \\[8px]
+a \times\left(1-D^{*}\right) &amp;=b \times D^{*} \\[5px]
+0&lt; D^{*} &amp;=\frac{a}{a+b} =\frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}&lt;1  \\[8px]
+0&lt; D^{*} &amp;&lt;1 
+\end{aligned}\)</li>
+    </ul>
+  </li>
+  <li>Substitue the optimal $D^* = \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}$:</li>
+</ul>
+
+<p>\(\begin{aligned}
+V &amp;=E_{x \sim P_{\text {data}}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))] \\[15px]
+&amp;=E_{x \sim P_{\text {data}}}\left[\log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right]+E_{x \sim P_{G}}\left[\log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)}\right] \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{P_{\text {data}}(x)+P_{G}(x)} d x \\[15px]
+&amp;=\int_{x} P_{\text {data}}(x) \log \frac{\frac{1}{2}P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{\frac{1}{2}P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + \int_{x} P_{\text {data}}(x) \log \frac{P_{\text {data}}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x+\int_{x} P_{G}(x) \log \frac{P_{G}(x)}{\frac{1}{2}[P_{\text {data}}(x)+P_{G}(x)]} d x \\[15px]
+&amp;=-2log2 + K L\left(P_{\text {data}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) + K L\left(P_{\text {G}} \| \frac{P_{\text {data}}(x)+P_{G}(x)}{2}\right) \\[15px]
+&amp;=-2log2 + \color{red}{2JS\left(P_{\text {data}} \| P_{\text {G}}\right)}
+\end{aligned}\)</p>
+<ul>
+  <li>JS divergence is symmetric, while KL divergence is asymmetric.
+   \(\begin{aligned}
+   JS\left(P_{\text {data}} \| P_{G}\right)
+   &amp;= \frac{1}{2}[KL(P_{\text {data}} \| M) + KL(P_{\text {G}} \| M)] \\
+   M &amp;= \frac{1}{2}(P_{data} + P_{G})
+   \end{aligned}\)</li>
+</ul>
+
+<p><strong>TODO</strong>: inverse KL divergence</p>
+
+<h3 id="gan-1">GAN</h3>
+
+<ul>
+  <li>The objective of Generator <code class="language-plaintext highlighter-rouge">G</code> is to minimize the divergence between $P_G$ and $P_{data}$</li>
+  <li>The divergence is measured by Discriminator <code class="language-plaintext highlighter-rouge">D</code>, which maximizes the <strong>cross entropy</strong> as a <strong>binary classifie</strong>r.</li>
+  <li>The maximum objective is related to JS divergence.</li>
+</ul>
+
+\[\begin{aligned}
+ D^{*}&amp;=\operatorname{Div}\left(P_{G}, P_{\text {data}}\right)=\arg \max _D \operatorname{V}(D, G) \\
+ G^{*}&amp;=\arg \min _G \operatorname{Div}\left(P_{G}, P_{\text {data}}\right) \\
+&amp;=\arg \min _G \max _D \operatorname{V}(D, G) 
+\end{aligned}\]
+
+<ul>
+  <li>For each fixed generator, we can find a discriminator with the <strong>maximum</strong> $V(D, G_i)$</li>
+  <li>For each $V(D, G_i)$, we can get a <strong>minimum</strong> generator</li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHJ4P.png" alt="gan-1-7" style="margin:auto;display:block;width:70%" /></p>
+
+<ul>
+  <li>In each iteration
+    <ul>
+      <li>Fix generator <code class="language-plaintext highlighter-rouge">G</code>, update discriminator $D$.</li>
+      <li>Fix discriminator <code class="language-plaintext highlighter-rouge">D</code>, update generator $G$.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="algorithm-1">Algorithm</h4>
+
+<ul>
+  <li>To find the best <code class="language-plaintext highlighter-rouge">G</code> minimizing the loss function<br />
+ \(G^{*}=\arg \min _G \max _D \operatorname{V}(D, G) = \arg\min_G L(G)\\
+ \theta_{G} \leftarrow \theta_{G}-\eta \partial L(G) / \partial \theta_{G}\)
+    <ul>
+      <li>Let the maximum value $\max_D V(G,D)$ as $L(G)$</li>
+      <li>$\theta_G$ defines <code class="language-plaintext highlighter-rouge">G</code></li>
+      <li>The gradient of the max function is the gradient of max value of each piecewise function.</li>
+    </ul>
+  </li>
+  <li>Given $G_0$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_0, D_{0}^{*} )$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_1$<br />
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{0}^{*}\right) / \partial \theta_{G}\)</li>
+  <li>Give $G_1$</li>
+  <li>Find $D^*_0$ maximizing $V(G_0, D)$ , using Gradient Ascent
+    <ul>
+      <li>$V(G_1, D_1^*)$ is the JS divergence between $P_data(x)$ and $P_{G_0}(x)$</li>
+    </ul>
+  </li>
+  <li>Obtain $G_2$
+ \(\theta_{G} \leftarrow \theta_{G}-\eta \partial V\left(G, D_{1}^{*}\right) / \partial \theta_{G}\)</li>
+</ul>
+
+<p class="error"><strong>Critical</strong>: Actually, after we get the optimal $D_i^*$ by maximizing the JS-divergence, given the fixed $G_i$, we do gradient descent optimizing $G_i$ a little bit per step to finally get $G_{i+1}$. However, in the process of the gradient descent of $G_i$ to $G_{i+1}$, the divergence function $V(G_i, D_i)$ may change a lot, which cause the maximum objective value of <code class="language-plaintext highlighter-rouge">JS-divergence</code> shift to somewhere else.</p>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNH8AI.png" alt="gan-1-8" style="margin:auto;display:block;" /></p>
+
+<ul>
+  <li>Therefore, the important thing is that we don’t update $G$ too much for every steps, and $D$ is well-trained comparing to current $G$, so that the function of $V(G_i, D_i)$ won’t change a lot and $D_i^* \approx D_{i+1}^*$.</li>
+</ul>
+
+<h4 id="in-practical">In practical</h4>
+
+<ul>
+  <li>Actually, We can not get the expectation value of $P_{data}$ or $P_G$
+    <ul>
+      <li>In other words, we can not calculate the maximum value of the below equation:<br />
+ \(V =E_{x \sim P_{\text {data }}}[\log D(x)]+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+    </ul>
+  </li>
+  <li>But we can do sampling from $P_{data}$ or $P_G$ to <strong>approximate</strong> the expectation.</li>
+  <li>Given $G$, to compute $\max_D V(G,D)$
+    <ul>
+      <li>Sample ${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$, sample ${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$</li>
+      <li>To maximize:<br />
+ \(\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D(x^{i})+\frac{1}{m} \sum_{i=1}^{m} \log (1-D(\tilde{x}^{i}))\)</li>
+    </ul>
+  </li>
+  <li>Thus, $D$ is a binary classifier with sigmoid output, which can be designed to be very deep.
+    <ul>
+      <li>${\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}}$ from $P_{data}(x)$ is <code class="language-plaintext highlighter-rouge">Positive examples</code>.</li>
+      <li>${x^{1}, x^{2}, \ldots, x^{m}}$ from generator $P_G(x)$ is <code class="language-plaintext highlighter-rouge">Negative examples</code>.</li>
+      <li>This is equivalent to <strong>minimize Cross-entropy</strong>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="total-algorithm">Total Algorithm</h2>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<ul>
+  <li>In each training iteration:
+    <ul>
+      <li><strong>Learning D</strong>: find <strong>lower bound</strong> of $\max_D V(G,D)$ and repeat <code class="language-plaintext highlighter-rouge">k</code> times for fully trained.
+        <ul>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> examples $\{ x^{1}, x^{2}, \ldots, x^{m} \}$ from database distribution $P_{data}(x)$.</li>
+          <li>Sample <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+          <li>Obtaining generated data $\{\tilde{x}^{1}, \tilde{x}^{2}, \ldots, \tilde{x}^{m}\}, \tilde{x}^{i}=G\left(z^{i}\right), \tilde{x}^i = G(z^i)$.</li>
+          <li>Update discriminator paramters $\theta_{d}$ to maximize.<br />
+\(\begin{aligned}
+&amp;\tilde{V}=\frac{1}{m} \sum_{i=1}^{m} \log D\left(x^{i}\right)+\frac{1}{m} \sum_{i=1}^{m} \log \left(1-D\left(\tilde{x}^{i}\right)\right) \\
+&amp;\theta_{d} \leftarrow \theta_{d}\color{red}{+}\eta \nabla \tilde{V}\left(\theta_{d}\right)
+\end{aligned}\)</li>
+        </ul>
+      </li>
+      <li><strong>Learning G</strong>: find the minimum of $\min_G V(G,D)$ <strong>only once</strong>.</li>
+      <li>Sample <strong>another</strong> <code class="language-plaintext highlighter-rouge">m</code> noise samples $\{z^{1}, z^{2}, \ldots, z^{m}\}$ from the prior $P_{prior}(z)$.</li>
+      <li>Update generator parameters $\theta_{g}$ to maximize<br />
+ \(\begin{aligned}
+ &amp;\tilde{V}=\underset{\text{irrelevant to } G}{\boxed{\frac{1}{m} \sum_{i=1}^{m}  \log D\left(x^{i}\right) } } +\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(z^{i}\right)\right) \right) \\
+ &amp;\theta_{g} \leftarrow \theta_{g}\color{red}{-}\eta \nabla \tilde{V}\left(\theta_{g}\right)
+ \end{aligned}\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p class="warning"><strong>Note that</strong> it is impossible for $D$ to find the maximum value of $\max_D V(G,D)$, which means that the JS-divergence can never be reached, because:<br /> <strong>1</strong>. The learning ability of $D$ is limited due to the iteration times and learning rate, the $D$ can not convergence in several update steps.<br /> <strong>2</strong>. Even with the infinite training step and the convergence achieved, it is more likely for $D$ to fall in local minima.<br /> <strong>3</strong>. Even without trapped in local minima, the capcity of the generatlization of $D$ is limited, which contradict the <a href="#d-assumption">assumption</a> that $D$ can represent all functions.</p>
+
+<h3 id="in-real-implementation">In Real Implementation</h3>
+
+<ul>
+  <li>The training of $G$ would be slow because of the initial output of $D(x)$ is closed to $0$ and the corresponding gradient to $G$ is very small.
+ \(V =\underset{\text{irrelevant to } G}{\boxed{E_{x \sim P_{\text {data } }}[\log D(x)]}}+E_{x \sim P_{G}}[\log (1-D(x))]\)</li>
+  <li>Two workarounds
+    <ul>
+      <li>Replace the target with the following, greatly increase the gradient of the very beginning stage, <em>Minimax GAN (MMGAN)</em> 
+\(V = E_{x \sim P_{G}}[- \log (D(x))]\)</li>
+      <li>Replace the negative label of $G$ with the positive label, <em>Non-saturating GAN (NSGAN)</em></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://s1.ax1x.com/2022/04/17/LNHBHs.png" alt="gan-1-9" style="margin:auto;display:block;width:30%;" /></p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://speech.ee.ntu.edu.tw/~hylee/mlds/2018-spring.php">Machine Learning And Having It Deep And Structured 2018 Spring, Hung-yi Lee</a></li>
+  <li><a href="https://blog.csdn.net/taoqick/article/details/102621605">分类用交叉熵而不用MSE</a><a name="reference-2"></a></li>
+</ul>
+</div><section class="article__sharing d-print-none"></section><div class="d-print-none"><footer class="article__footer"><span><i class="fas fa-edit"></i> Create at
+        <time itemprop="dateModified" datetime="2022-01-20T00:00:00-05:00">Jan 20, 2022</time>
+    </span><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<div class="article__subscribe"><div class="subscribe"><i class="fas fa-rss"></i> <a type="application/rss+xml" href="/feed.xml">Subscribe</a></div>
+</div><div class="article__license"><div class="license">
+    <p>This work is licensed under a <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> license.
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>PREVIOUS</span><a href="/2022/03/14/gan-5">Sequence and Evaluation</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section class="page__comments d-print-none"><!-- fix text color in the input textarea of gitalk -->
+	<style type="text/css">
+		.gitalk-wrapper .gt-header-textarea {
+			color: #333 !important;
+		}
+	</style><div class="gitalk-wrapper" id="js-gitalk-container"></div><script>
+		window.Lazyload.css('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css');
+		window.Lazyload.js('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+			var gitalk = new Gitalk({
+				clientID: '69b563d6a40e143550a4',
+				clientSecret: '8c179732431d99e3ac53a0a113c6bfc09121530f',
+				repo: 'Homepage',
+				owner: 'Harrypotterrrr',
+				admin: ['Harrypotterrrr'],
+				id: 'blog-2022-01-20-gan-1'
+			});
+			gitalk.render('js-gitalk-container');
+		});
+	</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+            </div></div></div><div class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Haolin Jia"><meta itemprop="url" content="Harrypotterrrr.github.com"><meta itemprop="description" content="I am an amazing person."><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="Harrypotterrrr.github.com"><li title="Send me an Email.">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:jiahaolin19971119@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="Follow me on Facebook.">
+        <a class="button button--circle facebook-button" itemprop="sameAs" href="https://www.facebook.com/100012241788050" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M767.428571 6.857143l0 150.857143-89.714286 0q-49.142857 0-66.285714 20.571429t-17.142857 61.714286l0 108 167.428571 0-22.285714 169.142857-145.142857 0 0 433.714286-174.857143 0 0-433.714286-145.714286 0 0-169.142857 145.714286 0 0-124.571429q0-106.285714 59.428571-164.857143t158.285714-58.571429q84 0 130.285714 6.857143z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Twitter.">
+        <a class="button button--circle twitter-button" itemprop="sameAs" href="https://twitter.com/Harrypotterrrr7" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1024.032 194.432c-37.664 16.704-78.176 28-120.672 33.088 43.36-26.016 76.672-67.168 92.384-116.224-40.608 24.064-85.568 41.568-133.408 50.976-38.336-40.832-92.928-66.336-153.344-66.336-116.032 0-210.08 94.048-210.08 210.08 0 16.48 1.856 32.512 5.44 47.872-174.592-8.768-329.408-92.416-433.024-219.52-18.08 31.04-28.448 67.104-28.448 105.632 0 72.896 37.088 137.184 93.472 174.88-34.432-1.088-66.816-10.528-95.168-26.272-0.032 0.864-0.032 1.76-0.032 2.656 0 101.792 72.416 186.688 168.512 205.984-17.632 4.8-36.192 7.36-55.36 7.36-13.536 0-26.688-1.312-39.52-3.776 26.72 83.456 104.32 144.192 196.256 145.888-71.904 56.352-162.496 89.92-260.928 89.92-16.96 0-33.664-0.992-50.112-2.944 92.96 59.616 203.392 94.4 322.048 94.4 386.432 0 597.728-320.128 597.728-597.76 0-9.12-0.192-18.176-0.608-27.168 41.056-29.632 76.672-66.624 104.832-108.736z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Zhihu.">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jia-hao-lin-27" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Linkedin.">
+        <a class="button button--circle linkedin-button" itemprop="sameAs" href="https://www.linkedin.com/in/haolin-jia-7b4b49173/" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M260.096 155.648c0 27.307008-9.899008 50.516992-29.696 69.632-19.796992 19.115008-45.396992 28.672-76.8 28.672-30.036992 0-54.612992-9.556992-73.728-28.672-19.115008-19.115008-28.672-42.324992-28.672-69.632 0-28.672 9.556992-52.224 28.672-70.656 19.115008-18.432 44.372992-27.648 75.776-27.648 31.403008 0 56.32 9.216 74.752 27.648 18.432 18.432 28.331008 41.984 29.696 70.656 0 0 0 0 0 0m-202.752 808.96c0 0 0-632.832 0-632.832 0 0 196.608 0 196.608 0 0 0 0 632.832 0 632.832 0 0-196.608 0-196.608 0 0 0 0 0 0 0m313.344-430.08c0-58.708992-1.364992-126.292992-4.096-202.752 0 0 169.984 0 169.984 0 0 0 10.24 88.064 10.24 88.064 0 0 4.096 0 4.096 0 40.96-68.267008 105.812992-102.4 194.56-102.4 68.267008 0 123.220992 22.868992 164.864 68.608 41.643008 45.739008 62.464 113.664 62.464 203.776 0 0 0 374.784 0 374.784 0 0-196.608 0-196.608 0 0 0 0-350.208 0-350.208 0-91.476992-33.451008-137.216-100.352-137.216-47.787008 0-81.236992 24.576-100.352 73.728-4.096 8.192-6.144 24.576-6.144 49.152 0 0 0 364.544 0 364.544 0 0-198.656 0-198.656 0 0 0 0-430.08 0-430.08 0 0 0 0 0 0" />
+</svg>
+</div>
+        </a>
+      </li><li title="Follow me on Github.">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/Harrypotterrrr" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div><div class="site-info mt-2">
+      <div>© Haolin Jia's Homepage 2020,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://github.com/kitian616/jekyll-TeXt-theme">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+    </div></div></div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">Search</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        Cancel</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $pageMask = $('.js-page-mask');
+    var $pageRoot = $('.js-page-root');
+    var $sidebarShow = $('.js-sidebar-show');
+    var $sidebarHide = $('.js-sidebar-hide');
+
+    function freeze(e) {
+      if (e.target === $pageMask[0]) {
+        e.preventDefault();
+      }
+    }
+    function stopBodyScrolling(bool) {
+      if (bool === true) {
+        window.addEventListener('touchmove', freeze, { passive: false });
+      } else {
+        window.removeEventListener('touchmove', freeze, { passive: false });
+      }
+    }
+
+    $sidebarShow.on('click', function() {
+      stopBodyScrolling(true); $pageRoot.addClass('show-sidebar');
+    });
+    $sidebarHide.on('click', function() {
+      stopBodyScrolling(false); $pageRoot.removeClass('show-sidebar');
+    });
+  });
+})();
+</script><script>
+  /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script type="text/x-mathjax-config">
+	var _config = {
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+    };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      blog.set('title', title);
+      blog.set('key', key);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://code.jquery.com/jquery-3.6.0.min.js', '//cdn.jsdelivr.net/npm/leancloud-storage@3.13.2/dist/av-min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'Q63N3hBVpAOkXqFX2IFRLou7-MdYXbMMI',
+        appKey:   '4gLTYm8nQ482qrlMWfHqqxaS',
+        appClass: 'Blog'
+      });
+      var key =   'blog-2022-01-20-gan-1';
+      var title = "Basic Theory of Generative Model";
+      pageview.increase(key, title, function(view) {
+        $("[data-page-key='blog-2022-01-20-gan-1']").text(view);
+      });
+    });
+  </script>
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+
